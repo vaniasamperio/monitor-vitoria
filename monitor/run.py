@@ -37,7 +37,7 @@ SALIDA = RAIZ / "docs" / "datos.json"
 DIAS_HISTORICO = 21          # cuánto tiempo se guarda cada noticia
 DIAS_IDEAS = 7               # antigüedad máxima de las ideas de temas
 MAX_RESUMEN = 420            # caracteres del resumen
-UMBRAL_IDEA = 2.0            # puntuación mínima para que algo sea "idea"
+UMBRAL_IDEA = 5.0            # puntuación mínima para que algo sea "idea"
 USER_AGENT = "MonitorHoyPorHoyVitoria/1.0 (lector RSS para uso periodistico)"
 MADRID = ZoneInfo("Europe/Madrid")
 # Cómo se muestran algunas señales "de fondo" (en temas.yaml van sin tildes)
@@ -251,7 +251,9 @@ class Clasificador:
     def clasifica(self, item: dict, fuente: dict) -> None:
         texto = normaliza(f"{item['titulo']} {item['titulo']} {item.get('texto', '')[:1500]}")
         titulo_n = normaliza(item["titulo"])
-        item["alava"] = bool(fuente.get("local")) or bool(coincidencias(self.rx_alava, texto))
+        # Álava tiene que salir en el titular o al principio (no vale una mención de pasada)
+        inicio = normaliza(f"{item['titulo']} {item.get('texto', '')[:400]}")
+        item["alava"] = bool(fuente.get("local")) or bool(coincidencias(self.rx_alava, inicio))
 
         temas = []
         for nombre, rx, _ in self.temas:
@@ -394,7 +396,10 @@ def main() -> int:
     for it in items_hist.values():
         if it["seccion"] == "ideas":
             ref = de_iso(it["fecha"]) or de_iso(it["visto"])
-            if it.get("puntos", 0) < UMBRAL_IDEA or ref < limite_ideas:
+            if ref < limite_ideas:
+                continue
+            # Lo que ya habla de Álava no es idea: va a "Ya publicado"
+            if not it["alava"] and it.get("puntos", 0) < UMBRAL_IDEA:
                 continue
         publicados.append(it)
 

@@ -211,7 +211,7 @@
   </section>
 
   <section class="panel" id="p-medios" hidden>
-    <p class="intro">Lo que ya han sacado otros medios de Vitoria, para no repetir o para buscar otro ángulo.</p>
+    <p class="intro">Lo que otros medios ya han publicado sobre Vitoria y Álava, para no repetir o para buscar otro ángulo.</p>
     <div class="rejilla" id="medios"></div>
   </section>
 
@@ -386,7 +386,7 @@
 
   function pintaIdeas() {
     const d = estado.datos;
-    let ideas = d.items.filter(i => i.seccion === "ideas" && pasa(i, {usarAlava: false}));
+    let ideas = d.items.filter(i => i.seccion === "ideas" && !i.alava && pasa(i, {usarAlava: false}));
     // filtros por tema
     const cuenta = {};
     ideas.forEach(i => (i.temas || []).forEach(t => cuenta[t] = (cuenta[t] || 0) + 1));
@@ -414,8 +414,10 @@
 
   function pintaMedios() {
     const d = estado.datos;
-    const orden = d.fuentes.filter(f => f.seccion === "medios").map(f => f.id);
-    const items = d.items.filter(i => i.seccion === "medios" && pasa(i, {usarAlava: false}));
+    // Medios locales + lo que la prensa regional ya ha publicado sobre Álava
+    const conAlava = new Set(d.items.filter(i => i.seccion === "ideas" && i.alava).map(i => i.fuente));
+    const orden = d.fuentes.filter(f => f.seccion === "medios" || conAlava.has(f.id)).map(f => f.id);
+    const items = d.items.filter(i => (i.seccion === "medios" || (i.seccion === "ideas" && i.alava)) && pasa(i, {usarAlava: false}));
     pintaGrupos($("#medios"), items, orden);
     return items.length;
   }

@@ -77,12 +77,15 @@ fuentes:
     fecha_es_evento: true   # la fecha del RSS es el día de la reunión
 
   # ---------- YA PUBLICADO EN VITORIA ----------
+  # Gasteiz Hoy bloquea las lecturas desde los servidores de GitHub (error 403).
+  # Se deja desactivada; si algún día lo permite, cambia "activa" a true.
   - id: gasteizhoy
     nombre: "Gasteiz Hoy"
     url: "https://www.gasteizhoy.com/feed/"
     tipo: rss
     seccion: medios
     local: true
+    activa: false
 
   # ---------- IDEAS DE TEMAS (prensa de otros territorios) ----------
   #  Aquí entra lo que otros medios regionales están contando y que
