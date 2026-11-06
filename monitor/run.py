@@ -655,7 +655,7 @@ def lee_kulturklik(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
             f2 = date.fromisoformat((e.get("endDate") or e["startDate"])[:10])
         except (KeyError, ValueError):
             continue
-        if f2 < hoy or f1 > hasta_max:
+        if f2 < hoy or f1 > hasta_max or (f2 - f1).days > 120:   # fuera exposiciones permanentes
             continue
         nombre = html.unescape(e.get("nameEs") or e.get("nameEu") or "").strip()
         nombre = RX_KK_COLA.sub("", re.sub(r"^Entradas\s+", "", nombre)).strip() or nombre
@@ -958,7 +958,12 @@ def main() -> int:
         publicados.append(it)
 
     ideas_pub.sort(key=lambda i: -(i.get("puntos") or 0))
-    publicados += ideas_pub[:80]                      # solo las 80 mejores ideas
+    por_medio, ideas_sel = {}, []
+    for i in ideas_pub:                               # variedad: como mucho 4 temas por medio
+        por_medio[i["fuente"]] = por_medio.get(i["fuente"], 0) + 1
+        if por_medio[i["fuente"]] <= 4:
+            ideas_sel.append(i)
+    publicados += ideas_sel[:80]                      # solo las 80 mejores ideas
 
     # fuera duplicados (mismo enlace o mismo título) y actos de agenda ya pasados
     def _norm(t):
