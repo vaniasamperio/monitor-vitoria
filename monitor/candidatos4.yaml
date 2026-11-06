@@ -1,0 +1,113 @@
+# Cuarta vuelta: más medios para Ideas y la agenda de Kulturklik
+candidatos:
+  - {nombre: "Público [feed]", web: "https://www.publico.es/rss/", categoria: medio, feed: true}
+  - {nombre: "RTVE España [feed]", web: "https://api2.rtve.es/rss/temas_espana.xml", categoria: medio, feed: true}
+  - {nombre: "RTVE Sociedad [feed]", web: "https://api2.rtve.es/rss/temas_sociedad.xml", categoria: medio, feed: true}
+  - {nombre: "RTVE Economía [feed]", web: "https://api2.rtve.es/rss/temas_economia.xml", categoria: medio, feed: true}
+  - {nombre: "Cadena SER [feed]", web: "https://cadenaser.com/arc/outboundfeeds/rss/?outputType=xml", categoria: medio, feed: true}
+  - {nombre: "Cadena SER (2) [feed]", web: "https://cadenaser.com/rss/", categoria: medio, feed: true}
+  - {nombre: "La Voz de Galicia [feed]", web: "https://www.lavozdegalicia.es/rss/portada.xml", categoria: medio, feed: true}
+  - {nombre: "La Voz de Galicia (2) [feed]", web: "https://www.lavozdegalicia.es/index.xml", categoria: medio, feed: true}
+  - {nombre: "Levante-EMV [feed]", web: "https://www.levante-emv.com/rss/", categoria: medio, feed: true}
+  - {nombre: "La Nueva España [feed]", web: "https://www.lne.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Faro de Vigo [feed]", web: "https://www.farodevigo.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Diario de Mallorca [feed]", web: "https://www.diariodemallorca.es/rss/", categoria: medio, feed: true}
+  - {nombre: "La Opinión de Málaga [feed]", web: "https://www.laopiniondemalaga.es/rss/", categoria: medio, feed: true}
+  - {nombre: "La Provincia [feed]", web: "https://www.laprovincia.es/rss/", categoria: medio, feed: true}
+  - {nombre: "El Periódico de Aragón [feed]", web: "https://www.elperiodicodearagon.com/rss/", categoria: medio, feed: true}
+  - {nombre: "El Periódico Extremadura [feed]", web: "https://www.elperiodicoextremadura.com/rss/", categoria: medio, feed: true}
+  - {nombre: "La Opinión de Murcia [feed]", web: "https://www.laopiniondemurcia.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Información [feed]", web: "https://www.informacion.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Mediterráneo [feed]", web: "https://www.elperiodicomediterraneo.com/rss/", categoria: medio, feed: true}
+  - {nombre: "Diario Córdoba [feed]", web: "https://www.diariocordoba.com/rss/", categoria: medio, feed: true}
+  - {nombre: "El Periódico [feed]", web: "https://www.elperiodico.com/es/rss/rss_portada.xml", categoria: medio, feed: true}
+  - {nombre: "La Opinión de Zamora [feed]", web: "https://www.laopiniondezamora.es/rss/", categoria: medio, feed: true}
+  - {nombre: "La Opinión A Coruña [feed]", web: "https://www.laopinioncoruna.es/rss/", categoria: medio, feed: true}
+  - {nombre: "El Día (Tenerife) [feed]", web: "https://www.eldia.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Diario de Ibiza [feed]", web: "https://www.diariodeibiza.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Diario de Burgos [feed]", web: "https://www.diariodeburgos.es/rss/", categoria: medio, feed: true}
+  - {nombre: "El Día de Valladolid [feed]", web: "https://www.eldiadevalladolid.com/rss/", categoria: medio, feed: true}
+  - {nombre: "La Tribuna de Toledo [feed]", web: "https://www.latribunadetoledo.es/rss/", categoria: medio, feed: true}
+  - {nombre: "La Tribuna de Albacete [feed]", web: "https://www.latribunadealbacete.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Diario Palentino [feed]", web: "https://www.diariopalentino.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Deia [feed]", web: "https://www.deia.eus/rss/", categoria: medio, feed: true}
+  - {nombre: "Noticias de Navarra [feed]", web: "https://www.noticiasdenavarra.com/rss/", categoria: medio, feed: true}
+  - {nombre: "Noticias de Gipuzkoa [feed]", web: "https://www.noticiasdegipuzkoa.eus/rss/", categoria: medio, feed: true}
+  - {nombre: "El Confidencial España [feed]", web: "https://rss.elconfidencial.com/espana/", categoria: medio, feed: true}
+  - {nombre: "El Confidencial Sociedad [feed]", web: "https://rss.elconfidencial.com/sociedad/", categoria: medio, feed: true}
+  - {nombre: "El Confidencial Economía [feed]", web: "https://rss.elconfidencial.com/economia/", categoria: medio, feed: true}
+  - {nombre: "EFE [feed]", web: "https://efe.com/feed/", categoria: medio, feed: true}
+  - {nombre: "Agencia SINC [feed]", web: "https://www.agenciasinc.es/var/ezwebin_site/storage/rss/rss_portada.xml", categoria: medio, feed: true}
+  - {nombre: "CTXT [feed]", web: "https://ctxt.es/es/rss", categoria: medio, feed: true}
+  - {nombre: "Granada Hoy [feed]", web: "https://www.granadahoy.com/rss/", categoria: medio, feed: true}
+  - {nombre: "Málaga Hoy [feed]", web: "https://www.malagahoy.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Diario de Jerez [feed]", web: "https://www.diariodejerez.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Huelva Información [feed]", web: "https://www.huelvainformacion.es/rss/", categoria: medio, feed: true}
+  - {nombre: "El Día de Córdoba [feed]", web: "https://www.eldiadecordoba.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Diario de Almería [feed]", web: "https://www.diariodealmeria.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Europa Sur [feed]", web: "https://www.europasur.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Praza [feed]", web: "https://praza.gal/rss", categoria: medio, feed: true}
+  - {nombre: "Nós Diario [feed]", web: "https://www.nosdiario.gal/rss", categoria: medio, feed: true}
+  - {nombre: "Nortes [feed]", web: "https://www.nortes.me/feed/", categoria: medio, feed: true}
+  - {nombre: "Civio [feed]", web: "https://civio.es/feed/", categoria: medio, feed: true}
+  - {nombre: "Maldita [feed]", web: "https://maldita.es/feed/", categoria: medio, feed: true}
+  - {nombre: "La Razón [feed]", web: "https://www.larazon.es/rss/portada.xml", categoria: medio, feed: true}
+  - {nombre: "El Debate [feed]", web: "https://www.eldebate.com/rss/home.xml", categoria: medio, feed: true}
+  - {nombre: "The Objective [feed]", web: "https://theobjective.com/feed/", categoria: medio, feed: true}
+  - {nombre: "Vozpópuli [feed]", web: "https://www.vozpopuli.com/rss/", categoria: medio, feed: true}
+  - {nombre: "El Independiente [feed]", web: "https://www.elindependiente.com/feed/", categoria: medio, feed: true}
+  - {nombre: "El Plural [feed]", web: "https://www.elplural.com/rss", categoria: medio, feed: true}
+  - {nombre: "HuffPost España [feed]", web: "https://www.huffingtonpost.es/feeds/index.xml", categoria: medio, feed: true}
+  - {nombre: "laSexta [feed]", web: "https://www.lasexta.com/rss/351410.xml", categoria: medio, feed: true}
+  - {nombre: "Onda Cero [feed]", web: "https://www.ondacero.es/rss/", categoria: medio, feed: true}
+  - {nombre: "COPE [feed]", web: "https://www.cope.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Redacción Médica [feed]", web: "https://www.redaccionmedica.com/rss/", categoria: medio, feed: true}
+  - {nombre: "Magisterio [feed]", web: "https://www.magisnet.com/feed/", categoria: medio, feed: true}
+  - {nombre: "Agroinformación [feed]", web: "https://agroinformacion.com/feed/", categoria: medio, feed: true}
+  - {nombre: "Última Hora [feed]", web: "https://www.ultimahora.es/rss", categoria: medio, feed: true}
+  - {nombre: "Diario de Avisos [feed]", web: "https://diariodeavisos.elespanol.com/feed/", categoria: medio, feed: true}
+  - {nombre: "NueveCuatroUno (La Rioja) [feed]", web: "https://nuevecuatrouno.com/feed/", categoria: medio, feed: true}
+  - {nombre: "Rioja2 [feed]", web: "https://www.rioja2.com/rss/", categoria: medio, feed: true}
+  - {nombre: "Navarra.com [feed]", web: "https://navarra.com/feed/", categoria: medio, feed: true}
+  - {nombre: "encastillalamancha [feed]", web: "https://www.encastillalamancha.es/feed/", categoria: medio, feed: true}
+  - {nombre: "Lanza [feed]", web: "https://www.lanzadigital.com/feed/", categoria: medio, feed: true}
+  - {nombre: "eldiario Andalucía [feed]", web: "https://www.eldiario.es/rss/andalucia/", categoria: medio, feed: true}
+  - {nombre: "eldiario Galicia [feed]", web: "https://www.eldiario.es/rss/galicia/", categoria: medio, feed: true}
+  - {nombre: "eldiario Asturias [feed]", web: "https://www.eldiario.es/rss/asturias/", categoria: medio, feed: true}
+  - {nombre: "eldiario Comunitat Valenciana [feed]", web: "https://www.eldiario.es/rss/comunitat-valenciana/", categoria: medio, feed: true}
+  - {nombre: "eldiario Política [feed]", web: "https://www.eldiario.es/rss/politica/", categoria: medio, feed: true}
+  - {nombre: "Xataka [feed]", web: "https://www.xataka.com/feedburner.xml", categoria: medio, feed: true}
+  - {nombre: "Galiciapress [feed]", web: "https://www.galiciapress.es/rss", categoria: medio, feed: true}
+  - {nombre: "El Faro de Ceuta [feed]", web: "https://elfarodeceuta.es/feed/", categoria: medio, feed: true}
+  - {nombre: "Aragón Digital [feed]", web: "https://www.aragondigital.es/feed/", categoria: medio, feed: true}
+  - {nombre: "Crónica de Cantabria [feed]", web: "https://cronicadecantabria.com/feed/", categoria: medio, feed: true}
+  - {nombre: "Diario de Teruel [feed]", web: "https://www.diariodeteruel.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Diario del AltoAragón [feed]", web: "https://www.diariodelaltoaragon.es/rss/", categoria: medio, feed: true}
+  - {nombre: "El Adelantado de Segovia [feed]", web: "https://www.eladelantado.com/feed/", categoria: medio, feed: true}
+  - {nombre: "Diario de Soria [feed]", web: "https://www.diariodesoria.es/rss/", categoria: medio, feed: true}
+  - {nombre: "Público", web: "https://www.publico.es/", categoria: medio}
+  - {nombre: "Cadena SER", web: "https://cadenaser.com/", categoria: medio}
+  - {nombre: "La Voz de Galicia", web: "https://www.lavozdegalicia.es/", categoria: medio}
+  - {nombre: "Levante-EMV", web: "https://www.levante-emv.com/", categoria: medio}
+  - {nombre: "Diario de Burgos", web: "https://www.diariodeburgos.es/", categoria: medio}
+  - {nombre: "Deia", web: "https://www.deia.eus/", categoria: medio}
+  - {nombre: "Ultima Hora", web: "https://www.ultimahora.es/", categoria: medio}
+  - {nombre: "Onda Cero", web: "https://www.ondacero.es/", categoria: medio}
+  - {nombre: "COPE", web: "https://www.cope.es/", categoria: medio}
+  - {nombre: "La Razón", web: "https://www.larazon.es/", categoria: medio}
+  - {nombre: "El Debate", web: "https://www.eldebate.com/", categoria: medio}
+  - {nombre: "Vozpópuli", web: "https://www.vozpopuli.com/", categoria: medio}
+  - {nombre: "Redacción Médica", web: "https://www.redaccionmedica.com/", categoria: medio}
+  - {nombre: "El Plural", web: "https://www.elplural.com/", categoria: medio}
+  - {nombre: "Diario del AltoAragón", web: "https://www.diariodelaltoaragon.es/", categoria: medio}
+  - {nombre: "Diario de Soria", web: "https://www.diariodesoria.es/", categoria: medio}
+  - {nombre: "Rioja2", web: "https://www.rioja2.com/", categoria: medio}
+  - {nombre: "Kulturklik", web: "https://www.kulturklik.euskadi.eus/", categoria: medio}
+muestras:
+  - {id: kk-0, url: "https://api.euskadi.eus/culture/events/v1.0/events/upcoming?_elements=20&_page=1&provinceNoraCode=1"}
+  - {id: kk-1, url: "https://api.euskadi.eus/culture/events/v1.0/events/upcoming?_elements=5&_page=1"}
+  - {id: kk-2, url: "https://api.euskadi.eus/culture/events/v1.0/events?_elements=5&_page=1&provinceNoraCode=1"}
+  - {id: kk-3, url: "https://api.euskadi.eus/culture/events/v1.0/events/byProvince/1?_elements=5&_page=1"}
+  - {id: kk-4, url: "https://api.euskadi.eus/culture/events/v1.0/municipalities?_elements=60&_page=1&provinceNoraCode=1"}
+  - {id: kk-5, url: "https://api.euskadi.eus/culture/events/v1.0/eventType"}
+  - {id: kk-web, url: "https://www.kulturklik.euskadi.eus/agenda/"}
