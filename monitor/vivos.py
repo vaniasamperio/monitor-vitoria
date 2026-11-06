@@ -53,8 +53,11 @@ def _trafico(descarga, ahora: datetime) -> list[dict]:
             if (i.get("province") or "").upper() != "ARABA":
                 continue
             tipo, nivel = i.get("incidenceType") or "", i.get("incidenceLevel") or ""
-            if nivel not in NIVELES_TRAFICO and not TIPOS_TRAFICO.search(tipo + " " + (i.get("cause") or "")):
+            causa = i.get("cause") or ""
+            if nivel not in NIVELES_TRAFICO and not TIPOS_TRAFICO.search(tipo + " " + causa):
                 continue
+            if re.search(r"aver[ií]a", causa, re.I) and nivel not in ("Rojo", "Negro"):
+                continue                                           # un coche averiado no es noticia
             try:
                 ini = datetime.fromisoformat(i["startDate"]).replace(tzinfo=timezone(timedelta(hours=1)))
             except (KeyError, ValueError):
