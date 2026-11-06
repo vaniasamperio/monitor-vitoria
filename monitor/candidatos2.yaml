@@ -1,0 +1,83 @@
+# Segunda vuelta: dominios probables de ayuntamientos sin web en Wikidata
+candidatos:
+  - {nombre: "Alegría-Dulantzi (dulantzi.eus)", web: "https://www.dulantzi.eus/", categoria: ayuntamiento}
+  - {nombre: "Alegría-Dulantzi (alegria-dulantzi.eus)", web: "https://www.alegria-dulantzi.eus/", categoria: ayuntamiento}
+  - {nombre: "Amurrio (amurrio.eus)", web: "https://www.amurrio.eus/", categoria: ayuntamiento}
+  - {nombre: "Añana (anana.eus)", web: "https://www.anana.eus/", categoria: ayuntamiento}
+  - {nombre: "Añana (gesaltza-anana.eus)", web: "https://www.gesaltza-anana.eus/", categoria: ayuntamiento}
+  - {nombre: "Aramaio (aramaio.eus)", web: "https://www.aramaio.eus/", categoria: ayuntamiento}
+  - {nombre: "Armiñón (arminon.eus)", web: "https://www.arminon.eus/", categoria: ayuntamiento}
+  - {nombre: "Arratzua-Ubarrundia (arratzua-ubarrundia.eus)", web: "https://www.arratzua-ubarrundia.eus/", categoria: ayuntamiento}
+  - {nombre: "Arratzua-Ubarrundia (ubarrundia.eus)", web: "https://www.ubarrundia.eus/", categoria: ayuntamiento}
+  - {nombre: "Artziniega (artziniega.eus)", web: "https://www.artziniega.eus/", categoria: ayuntamiento}
+  - {nombre: "Artziniega (artziniega.org)", web: "https://www.artziniega.org/", categoria: ayuntamiento}
+  - {nombre: "Asparrena (asparrena.eus)", web: "https://www.asparrena.eus/", categoria: ayuntamiento}
+  - {nombre: "Asparrena (asparrena.net)", web: "https://www.asparrena.net/", categoria: ayuntamiento}
+  - {nombre: "Ayala/Aiara (aiara.eus)", web: "https://www.aiara.eus/", categoria: ayuntamiento}
+  - {nombre: "Ayala/Aiara (aiarakoudala.com)", web: "https://www.aiarakoudala.com/", categoria: ayuntamiento}
+  - {nombre: "Baños de Ebro (banosdeebro.eus)", web: "https://www.banosdeebro.eus/", categoria: ayuntamiento}
+  - {nombre: "Baños de Ebro (mañueta.eus)", web: "https://www.mañueta.eus/", categoria: ayuntamiento}
+  - {nombre: "Berantevilla (berantevilla.eus)", web: "https://www.berantevilla.eus/", categoria: ayuntamiento}
+  - {nombre: "Campezo/Kanpezu (kanpezu.eus)", web: "https://www.kanpezu.eus/", categoria: ayuntamiento}
+  - {nombre: "Campezo/Kanpezu (campezo.org)", web: "https://www.campezo.org/", categoria: ayuntamiento}
+  - {nombre: "Elburgo/Burgelu (burgelu.eus)", web: "https://www.burgelu.eus/", categoria: ayuntamiento}
+  - {nombre: "Elburgo/Burgelu (elburgo.eus)", web: "https://www.elburgo.eus/", categoria: ayuntamiento}
+  - {nombre: "Elvillar/Bilar (elvillar.eus)", web: "https://www.elvillar.eus/", categoria: ayuntamiento}
+  - {nombre: "Elvillar/Bilar (bilar.eus)", web: "https://www.bilar.eus/", categoria: ayuntamiento}
+  - {nombre: "Elvillar/Bilar (elvillar.org)", web: "https://www.elvillar.org/", categoria: ayuntamiento}
+  - {nombre: "Erriberagoitia/Ribera Alta (erriberagoitia.eus)", web: "https://www.erriberagoitia.eus/", categoria: ayuntamiento}
+  - {nombre: "Erriberagoitia/Ribera Alta (riberaalta.eus)", web: "https://www.riberaalta.eus/", categoria: ayuntamiento}
+  - {nombre: "Harana/Valle de Arana (harana.eus)", web: "https://www.harana.eus/", categoria: ayuntamiento}
+  - {nombre: "Iruraiz-Gauna (iruraiz-gauna.eus)", web: "https://www.iruraiz-gauna.eus/", categoria: ayuntamiento}
+  - {nombre: "Kripan (kripan.eus)", web: "https://www.kripan.eus/", categoria: ayuntamiento}
+  - {nombre: "Kripan (cripan.eus)", web: "https://www.cripan.eus/", categoria: ayuntamiento}
+  - {nombre: "Kuartango (kuartango.eus)", web: "https://www.kuartango.eus/", categoria: ayuntamiento}
+  - {nombre: "Labastida/Bastida (labastida.eus)", web: "https://www.labastida.eus/", categoria: ayuntamiento}
+  - {nombre: "Labastida/Bastida (bastida.eus)", web: "https://www.bastida.eus/", categoria: ayuntamiento}
+  - {nombre: "Lagrán (lagran.eus)", web: "https://www.lagran.eus/", categoria: ayuntamiento}
+  - {nombre: "Lagrán (lagran.org)", web: "https://www.lagran.org/", categoria: ayuntamiento}
+  - {nombre: "Laguardia (laguardia.eus)", web: "https://www.laguardia.eus/", categoria: ayuntamiento}
+  - {nombre: "Laguardia (biasteri.eus)", web: "https://www.biasteri.eus/", categoria: ayuntamiento}
+  - {nombre: "Lanciego/Lantziego (lanciego.org)", web: "https://www.lanciego.org/", categoria: ayuntamiento}
+  - {nombre: "Lanciego/Lantziego (lantziego.eus)", web: "https://www.lantziego.eus/", categoria: ayuntamiento}
+  - {nombre: "Lapuebla de Labarca (lapuebladelabarca.eus)", web: "https://www.lapuebladelabarca.eus/", categoria: ayuntamiento}
+  - {nombre: "Lapuebla de Labarca (lapuebladelabarca.org)", web: "https://www.lapuebladelabarca.org/", categoria: ayuntamiento}
+  - {nombre: "Legutio (legutio.eus)", web: "https://www.legutio.eus/", categoria: ayuntamiento}
+  - {nombre: "Leza (leza.eus)", web: "https://www.leza.eus/", categoria: ayuntamiento}
+  - {nombre: "Leza (leza.org)", web: "https://www.leza.org/", categoria: ayuntamiento}
+  - {nombre: "Moreda de Álava (moredadealava.eus)", web: "https://www.moredadealava.eus/", categoria: ayuntamiento}
+  - {nombre: "Moreda de Álava (moredadealava.org)", web: "https://www.moredadealava.org/", categoria: ayuntamiento}
+  - {nombre: "Navaridas (navaridas.eus)", web: "https://www.navaridas.eus/", categoria: ayuntamiento}
+  - {nombre: "Navaridas (navaridas.org)", web: "https://www.navaridas.org/", categoria: ayuntamiento}
+  - {nombre: "Okondo (okondo.eus)", web: "https://www.okondo.eus/", categoria: ayuntamiento}
+  - {nombre: "Oyón-Oion (oion.eus)", web: "https://www.oion.eus/", categoria: ayuntamiento}
+  - {nombre: "Oyón-Oion (oyon-oion.eus)", web: "https://www.oyon-oion.eus/", categoria: ayuntamiento}
+  - {nombre: "Peñacerrada-Urizaharra (urizaharra.eus)", web: "https://www.urizaharra.eus/", categoria: ayuntamiento}
+  - {nombre: "Peñacerrada-Urizaharra (penacerrada-urizaharra.eus)", web: "https://www.penacerrada-urizaharra.eus/", categoria: ayuntamiento}
+  - {nombre: "Samaniego (samaniego.eus)", web: "https://www.samaniego.eus/", categoria: ayuntamiento}
+  - {nombre: "Samaniego (samaniego.org)", web: "https://www.samaniego.org/", categoria: ayuntamiento}
+  - {nombre: "San Millán/Donemiliaga (donemiliaga.eus)", web: "https://www.donemiliaga.eus/", categoria: ayuntamiento}
+  - {nombre: "San Millán/Donemiliaga (sanmillan-donemiliaga.eus)", web: "https://www.sanmillan-donemiliaga.eus/", categoria: ayuntamiento}
+  - {nombre: "Urkabustaiz (urkabustaiz.eus)", web: "https://www.urkabustaiz.eus/", categoria: ayuntamiento}
+  - {nombre: "Valdegovía/Gaubea (gaubea.eus)", web: "https://www.gaubea.eus/", categoria: ayuntamiento}
+  - {nombre: "Valdegovía/Gaubea (valdegovia.eus)", web: "https://www.valdegovia.eus/", categoria: ayuntamiento}
+  - {nombre: "Villabuena de Álava/Eskuernaga (eskuernaga.eus)", web: "https://www.eskuernaga.eus/", categoria: ayuntamiento}
+  - {nombre: "Villabuena de Álava/Eskuernaga (villabuenadealava.eus)", web: "https://www.villabuenadealava.eus/", categoria: ayuntamiento}
+  - {nombre: "Yécora/Iekora (iekora.eus)", web: "https://www.iekora.eus/", categoria: ayuntamiento}
+  - {nombre: "Yécora/Iekora (yecora.eus)", web: "https://www.yecora.eus/", categoria: ayuntamiento}
+  - {nombre: "Zalduondo (zalduondo.eus)", web: "https://www.zalduondo.eus/", categoria: ayuntamiento}
+  - {nombre: "Zalduondo (zalduondo.org)", web: "https://www.zalduondo.org/", categoria: ayuntamiento}
+  - {nombre: "Zambrana (zambrana.eus)", web: "https://www.zambrana.eus/", categoria: ayuntamiento}
+  - {nombre: "Zigoitia (zigoitia.eus)", web: "https://www.zigoitia.eus/", categoria: ayuntamiento}
+  - {nombre: "Zuia (zuia.eus)", web: "https://www.zuia.eus/", categoria: ayuntamiento}
+  - {nombre: "Agurain/Salvatierra (agurain.eus)", web: "https://www.agurain.eus/", categoria: ayuntamiento}
+  - {nombre: "Laudio/Llodio (laudio.eus)", web: "https://www.laudio.eus/", categoria: ayuntamiento}
+  - {nombre: "Kuartango actualidad", web: "https://kuartango.eus/actualidad/", categoria: otro}
+  - {nombre: "Ayala WP", web: "https://aiarakoudala.com/", categoria: otro}
+  - {nombre: "Elkarteak noticias", web: "https://elkarteak.org/?a=ikusi&c=berriak", categoria: otro}
+  - {nombre: "UPV/EHU Campus Araba", web: "https://www.ehu.eus/es/web/araba", categoria: otro}
+  - {nombre: "Juntas Generales actualidad", web: "https://www.jjggalava.eus/es/", categoria: otro}
+  - {nombre: "Ekologistak Martxan Araba", web: "https://www.ekologistakmartxan.org/araba/", categoria: otro}
+muestras:
+  - {id: elkarteak-agenda, url: "https://elkarteak.org/rss_agenda.php?h=es"}
+  - {id: gasteizkultura, url: "https://gasteizkultura.org/feed/"}

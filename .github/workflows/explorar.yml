@@ -3,7 +3,11 @@
 name: Explorar fuentes
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      candidatos:
+        description: 'Fichero de candidatos'
+        default: 'candidatos.yaml'
 
 permissions:
   contents: write
@@ -19,6 +23,9 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - run: python monitor/descubrir.py
+        env:
+          CANDIDATOS: ${{ github.event.inputs.candidatos }}
+          SOLO_CANDIDATOS: ${{ github.event.inputs.candidatos != 'candidatos.yaml' && '1' || '' }}
       - name: Guardar el informe en la rama diagnostico
         run: |
           git config user.name "github-actions[bot]"

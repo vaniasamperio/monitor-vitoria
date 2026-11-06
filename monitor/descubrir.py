@@ -27,7 +27,10 @@ RAIZ = Path(__file__).resolve().parent.parent
 SALIDA = RAIZ / "diagnostico"
 UA = "MonitorHoyPorHoyVitoria/1.0 (lector RSS para uso periodistico)"
 RUTAS_FEED = ["feed/", "rss", "rss.xml", "es/rss", "es/feed/", "feed", "index.php/feed/",
-              "es/noticias/rss", "noticias/rss", "rss/noticias", "es/rss.xml", "atom.xml"]
+              "es/noticias/rss", "noticias/rss", "rss/noticias", "es/rss.xml", "atom.xml",
+              "?format=feed&type=rss", "index.php/es/?format=feed&type=rss", "es/?format=feed&type=rss",
+              "actualidad/feed/", "noticias/feed/", "es/noticias?format=feed&type=rss", "eu/feed/",
+              "es/actualidad?format=feed&type=rss", "index.php?format=feed&type=rss"]
 
 ses = requests.Session()
 ses.headers.update({"User-Agent": UA, "Accept-Language": "es-ES,es;q=0.9"})
@@ -122,7 +125,7 @@ def explora(c: dict, robots: dict) -> dict:
             candidatos += [urljoin(base, ruta), urljoin(raiz, ruta)]
         vistos, feeds = set(), []
         for u in candidatos:
-            if u in vistos or len(feeds) >= 4:
+            if u in vistos or len(feeds) >= 3:
                 continue
             vistos.add(u)
             f = prueba_feed(u)
@@ -150,8 +153,13 @@ def explora(c: dict, robots: dict) -> dict:
 
 def main() -> int:
     SALIDA.mkdir(exist_ok=True)
-    cfg = yaml.safe_load((RAIZ / "monitor" / "candidatos.yaml").read_text(encoding="utf-8"))
+    import os
+    fichero = os.environ.get("CANDIDATOS", "candidatos.yaml")
+    cfg = yaml.safe_load((RAIZ / "monitor" / fichero).read_text(encoding="utf-8"))
+    import os
     try:
+        if os.environ.get("SOLO_CANDIDATOS"):
+            raise RuntimeError("solo candidatos")
         munis = wikidata_municipios()
         print(f"Wikidata: {len(munis)} municipios")
     except Exception as e:
