@@ -78,6 +78,8 @@ ul.lista{list-style:none;margin:0;padding:0}
 .chip{display:inline-block;padding:1px 8px;border-radius:10px;background:#ebe7dc;color:#4b5352;font-size:11.5px;font-weight:500;line-height:18px}
 .chip.alava{background:#dbe8e5;color:var(--verde)}
 .chip.muni{background:#e4ecd6;color:#3c5a18}
+.grupo .extra{padding:9px 16px 12px;border-top:1px solid var(--linea, #e6e1d6);font-size:.86rem}.grupo .extra a{font-weight:600}.grupo .extra span{display:block;color:#6b6457;font-size:.8rem;margin-top:2px}
+.chip.etqf{background:#dfe7ec;color:#24485a}
 .chip.nuevo{background:var(--ambar);color:#3b2604;font-weight:700;letter-spacing:.03em}
 .chip.senal{background:#efe3f4;color:#5a2d6e}
 .chip.tram{background:#eee;color:#777}
@@ -428,7 +430,7 @@ function elemento(it, op = {}) {
   const trib = (st.ia.tribunales || {})[it.id];
   return `<li class="el${st.abiertos.has(it.id) ? " abierto" : ""}${it.rutina ? " rutina" : ""}">
     <a class="tit" data-leido="${esc(it.id)}" href="${esc(it.enlace)}" target="_blank" rel="noopener"${cambiado ? ` title="Título original: ${esc(it.titulo)}"` : ""}>${esc(t)}</a>${estrella(it)}
-    <div class="meta">${chips(it, op)}</div>
+    <div class="meta">${op.etq && op.etq[it.fuente] ? `<span class="chip etqf">${esc(op.etq[it.fuente])}</span>` : ""}${chips(it, op)}</div>
     <div class="res" data-abrir="${esc(it.id)}">${esc(trib || (op.sinResumen ? "" : (it.resumen || "")))}</div></li>`;
 }
 const LIM = 6;
@@ -442,13 +444,23 @@ function grupo(id, titulo, lista, {orden = "fecha", op = {}, sub = "", vacio = "
     ${lista.length ? `<ul class="lista">${ver.map(i => elemento(i, op)).join("")}</ul>${pie}` : `<div class="vacio">${vacio}</div>`}</div>`;
 }
 function porFuente(seccion, opPasa = {}) {
-  const d = st.d, orden = d.fuentes.filter(f => f.seccion === seccion);
+  const d = st.d, fuentes = d.fuentes.filter(f => f.seccion === seccion);
   const items = d.items.filter(i => i.seccion === seccion && pasa(i, opPasa));
-  const html = orden.map(f => {
-    const l = items.filter(i => i.fuente === f.id);
-    if (!f.ok && !l.length) return "";
+  // las fuentes con el mismo "grupo" (p. ej. Ayuntamiento de Vitoria) van juntas, con una etiqueta por tipo
+  const grupos = [];
+  for (const f of fuentes) {
+    const g = f.grupo ? grupos.find(x => x.nombre === f.grupo) : null;
+    if (g) g.fs.push(f); else grupos.push({id: f.grupo ? "g:" + f.grupo : f.id, nombre: f.grupo || f.nombre, fs: [f]});
+  }
+  const html = grupos.map(g => {
+    const ids = new Set(g.fs.map(f => f.id)), ok = g.fs.some(f => f.ok);
+    const l = items.filter(i => ids.has(i.fuente));
+    if (!ok && !l.length) return "";
     if (!l.length && st.q) return "";
-    return grupo(f.id, f.nombre, l, {vacio: f.ok ? "Nada en este periodo." : '<span class="mal">No se pudo leer en la última actualización.</span>'});
+    const etq = g.fs.length > 1 ? Object.fromEntries(g.fs.map(f => [f.id, f.etiqueta || f.nombre])) : null;
+    const ex = g.fs.find(f => f.extra)?.extra;
+    const extra = ex ? `<div class="extra"><a href="${esc(ex.url)}" target="_blank" rel="noopener">${esc(ex.texto)} ↗</a>${ex.nota ? `<span>${esc(ex.nota)}</span>` : ""}</div>` : "";
+    return grupo(g.id, g.nombre, l, {op: etq ? {etq} : {}, vacio: ok ? "Nada en este periodo." : '<span class="mal">No se pudo leer en la última actualización.</span>'}).replace(/<\/div>$/, extra + "</div>");
   }).join("");
   return {html: html || `<div class="grupo"><div class="vacio">Nada con estos filtros.</div></div>`, n: items.length};
 }

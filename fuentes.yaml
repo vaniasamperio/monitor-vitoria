@@ -24,14 +24,15 @@
 fuentes:
 
   # =================== INSTITUCIONES ===================
-  - {id: ayto-notas, nombre: "Ayuntamiento de Vitoria · Notas de prensa", url: "https://blogs.vitoria-gasteiz.org/medios/feed/", tipo: rss, seccion: instituciones, local: true, municipio: Vitoria-Gasteiz, prioridad: alta}
-  - {id: ayto-movilidad, nombre: "Ayuntamiento de Vitoria · Avisos de movilidad", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=contenedorCuadroMando&claveTema=&claveArea=1", tipo: rss, seccion: instituciones, local: true, municipio: Vitoria-Gasteiz, prioridad: baja, clave_por_titulo: true}
+  - {id: ayto-notas, nombre: "Ayuntamiento de Vitoria · Notas de prensa", grupo: "Ayuntamiento de Vitoria", etiqueta: "Nota de prensa", url: "https://blogs.vitoria-gasteiz.org/medios/feed/", tipo: rss, seccion: instituciones, local: true, municipio: Vitoria-Gasteiz, prioridad: alta}
+  - {id: ayto-movilidad, nombre: "Ayuntamiento de Vitoria · Avisos de movilidad", grupo: "Ayuntamiento de Vitoria", etiqueta: "Aviso de movilidad", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=contenedorCuadroMando&claveTema=&claveArea=1", tipo: rss, seccion: instituciones, local: true, municipio: Vitoria-Gasteiz, prioridad: baja, clave_por_titulo: true}
   - {id: diputacion, nombre: "Diputación Foral de Álava · Sala de prensa", url: "https://prentsa.araba.eus/es/inicio", tipo: diputacion, seccion: instituciones, local: true, prioridad: alta}
   - {id: jjgg, nombre: "Juntas Generales de Álava", url: "https://www.jjggalava.eus/es/", tipo: liferay, patron_enlace: "/-/", seccion: instituciones, local: true, prioridad: alta}
   - {id: irekia, nombre: "Gobierno Vasco · Irekia", url: "https://www.irekia.euskadi.eus/es/news.rss", tipo: rss, seccion: instituciones, local: false}
   - {id: ararteko, nombre: "Ararteko", url: "https://ararteko.eus/es/rss.xml", tipo: rss, seccion: instituciones, local: false}
   - {id: euskotren, nombre: "Euskotren (tranvía)", url: "https://www.euskotren.eus/eu/rss.xml", tipo: rss, seccion: instituciones, local: false, prioridad: baja}
-  - {id: tsjpv, nombre: "Tribunales · TSJ del País Vasco (notas de prensa)", url: "https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunales-Superiores-de-Justicia/TSJ-Pais-Vasco/ch.En-Portada.formato1/", tipo: rss, seccion: instituciones, local: false}
+  - {id: tsjpv, nombre: "Tribunales · TSJ del País Vasco (notas de prensa)", url: "https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunales-Superiores-de-Justicia/TSJ-Pais-Vasco/ch.En-Portada.formato1/", tipo: rss, seccion: instituciones, local: false,
+     extra: {texto: "Buscar sentencias de Álava en el CENDOJ", url: "https://www.poderjudicial.es/search/indexAN.jsp", nota: "En Localización, elige País Vasco → Vitoria-Gasteiz y ordena por fecha."}}
 
   # =================== BUZÓN CIUDADANO DE VITORIA ===================
   # Se leen las últimas quejas públicas de cada área y se cuenta lo que se repite.
@@ -105,9 +106,11 @@ fuentes:
   - {id: ayto-agenda, nombre: "Ayuntamiento · Plenos y comisiones", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?accion=calendario&idCalendario=246&idioma=es&claveArea=", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: institucional}
   - {id: agenda-cultura, nombre: "Ayuntamiento · Agenda de cultura y ocio", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=actividadesCuadroMando&claveTema=&claveArea=38", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: cultura, max: 150}
   - {id: elkarteak-agenda, nombre: "Elkarteak.org · Agenda de asociaciones", url: "https://elkarteak.org/rss_agenda.php?h=es", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: asociaciones}
+  - {id: kulturklik, nombre: "Kulturklik · Agenda cultural de Álava", url: "https://api.euskadi.eus/culture/events/v1.0/events/upcoming?_elements=50&_page={PAGINA}&provinceNoraCode=1", tipo: kulturklik, seccion: agenda, local: true, accept: "application/json", paginas: 15, dias: 60, categoria_cal: cultura, solo_calendario: true}
 
   # =================== IDEAS DE TEMAS (medios de toda España) ===================
   # Diario de Navarra, Heraldo y los diarios de Vocento no se incluyen: no permiten este uso.
+  # Prensa Ibérica, Promecal, Grupo Noticias, Público, EFE y RTVE no ofrecen un RSS que se pueda leer.
   - {id: eldiario-euskadi, nombre: "elDiario.es · Euskadi", url: "https://www.eldiario.es/rss/euskadi/", tipo: rss, seccion: ideas}
   - {id: eldiario-navarra, nombre: "elDiario.es · Navarra", url: "https://www.eldiario.es/rss/navarra/", tipo: rss, seccion: ideas}
   - {id: eldiario-cyl, nombre: "elDiario.es · Castilla y León", url: "https://www.eldiario.es/rss/castilla-y-leon/", tipo: rss, seccion: ideas}
@@ -141,6 +144,46 @@ fuentes:
   - {id: eldiario-la-rioja, nombre: "elDiario.es · La Rioja", url: "https://www.eldiario.es/rss/la-rioja/", tipo: rss, seccion: ideas, max: 60}
   - {id: eldiario-sociedad, nombre: "elDiario.es · Sociedad", url: "https://www.eldiario.es/rss/sociedad/", tipo: rss, seccion: ideas, max: 60}
   - {id: eldiario-economia, nombre: "elDiario.es · Economía", url: "https://www.eldiario.es/rss/economia/", tipo: rss, seccion: ideas, max: 60}
+  - {id: cadena-ser, nombre: "Cadena SER", url: "https://cadenaser.com/arc/outboundfeeds/rss/?outputType=xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: lavozdegalicia, nombre: "La Voz de Galicia", url: "https://www.lavozdegalicia.es/index.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: elconfidencial-espana, nombre: "El Confidencial · España", url: "https://rss.elconfidencial.com/espana/", tipo: rss, seccion: ideas, max: 40}
+  - {id: elconfidencial-sociedad, nombre: "El Confidencial · Sociedad", url: "https://rss.elconfidencial.com/sociedad/", tipo: rss, seccion: ideas, max: 40}
+  - {id: elconfidencial-economia, nombre: "El Confidencial · Economía", url: "https://rss.elconfidencial.com/economia/", tipo: rss, seccion: ideas, max: 40}
+  - {id: larazon, nombre: "La Razón", url: "https://www.larazon.es/?outputType=xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: eldebate, nombre: "El Debate", url: "https://www.eldebate.com/rss/home.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: theobjective, nombre: "The Objective", url: "https://theobjective.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: elindependiente, nombre: "El Independiente", url: "https://www.elindependiente.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: elplural, nombre: "El Plural", url: "https://www.elplural.com/uploads/feeds/feed_elplural_es.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: huffpost, nombre: "HuffPost España", url: "https://www.huffingtonpost.es/feeds/index.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: lasexta, nombre: "laSexta", url: "https://www.lasexta.com/rss/351410.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: ondacero, nombre: "Onda Cero", url: "https://www.ondacero.es/rss/8145.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: cope, nombre: "COPE", url: "https://www.cope.es/rss/home.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: civio, nombre: "Civio", url: "https://civio.es/feed.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: maldita, nombre: "Maldita", url: "https://maldita.es/feed", tipo: rss, seccion: ideas, max: 40}
+  - {id: redaccionmedica, nombre: "Redacción Médica", url: "https://www.redaccionmedica.com/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: magisterio, nombre: "Magisterio", url: "https://www.magisnet.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: agroinformacion, nombre: "Agroinformación", url: "https://agroinformacion.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: xataka, nombre: "Xataka", url: "https://www.xataka.com/feedburner.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: granadahoy, nombre: "Granada Hoy", url: "https://www.granadahoy.com/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: malagahoy, nombre: "Málaga Hoy", url: "https://www.malagahoy.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: diariodejerez, nombre: "Diario de Jerez", url: "https://www.diariodejerez.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: huelvainformacion, nombre: "Huelva Información", url: "https://www.huelvainformacion.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: eldiadecordoba, nombre: "El Día de Córdoba", url: "https://www.eldiadecordoba.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: diariodealmeria, nombre: "Diario de Almería", url: "https://www.diariodealmeria.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: europasur, nombre: "Europa Sur", url: "https://www.europasur.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: praza, nombre: "Praza (Galicia)", url: "https://praza.gal/rss/novas", tipo: rss, seccion: ideas, max: 40}
+  - {id: nosdiario, nombre: "Nós Diario (Galicia)", url: "https://www.nosdiario.gal/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: nortes, nombre: "Nortes (Asturias)", url: "https://www.nortes.me/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: ultimahora, nombre: "Última Hora (Baleares)", url: "https://www.ultimahora.es/feed.rss", tipo: rss, seccion: ideas, max: 40}
+  - {id: diariodeavisos, nombre: "Diario de Avisos (Canarias)", url: "https://diariodeavisos.elespanol.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: nuevecuatrouno, nombre: "NueveCuatroUno (La Rioja)", url: "https://nuevecuatrouno.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: rioja2, nombre: "Rioja2", url: "https://www.rioja2.com/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: encastillalamancha, nombre: "encastillalamancha.es", url: "https://www.encastillalamancha.es/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: lanza, nombre: "Lanza (Ciudad Real)", url: "https://www.lanzadigital.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: aragondigital, nombre: "Aragón Digital", url: "https://www.aragondigital.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: diariodelaltoaragon, nombre: "Diario del AltoAragón", url: "https://www.diariodelaltoaragon.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: eladelantado, nombre: "El Adelantado de Segovia", url: "https://eladelantado.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: elfarodeceuta, nombre: "El Faro de Ceuta", url: "https://elfarodeceuta.es/feed/", tipo: rss, seccion: ideas, max: 40}
 
 # ------------------------------------------------------------
 #  Webs que hay que mirar a mano (no se pueden leer solas).

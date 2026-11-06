@@ -639,7 +639,51 @@ def resumen_buzon(items: list[dict], ahora: datetime) -> list[dict]:
     return out
 
 
-LECTORES = {"liferay": lee_liferay, "rss": lee_rss, "html": lee_html, "diputacion": lee_diputacion, "botha": lee_botha, "boe": lee_boe}
+
+# Kulturklik (agenda cultural de Euskadi, API abierta del Gobierno Vasco)
+RX_KK_COLA = re.compile(r"\s*[\(\[]\s*\d{1,2}\s+(?:de\s+)?(?:enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|"
+                        r"octubre|noviembre|diciembre)[^)\]]*[\)\]]\s*$", re.I)
+KK_DESTACAR = {5: "Presentación", 6: "Conferencia", 10: "Jornada"}   # lo que más le sirve a un periodista
+
+
+def lee_kulturklik(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
+    datos = json.loads(contenido)
+    out, hasta_max = [], hoy + timedelta(days=fuente.get("dias", 60))
+    for e in datos.get("items", []):
+        try:
+            f1 = date.fromisoformat(e["startDate"][:10])
+            f2 = date.fromisoformat((e.get("endDate") or e["startDate"])[:10])
+        except (KeyError, ValueError):
+            continue
+        if f2 < hoy or f1 > hasta_max:
+            continue
+        nombre = html.unescape(e.get("nameEs") or e.get("nameEu") or "").strip()
+        nombre = RX_KK_COLA.sub("", re.sub(r"^Entradas\s+", "", nombre)).strip() or nombre
+        if not nombre:
+            continue
+        tipo_n = int(e.get("type") or 0)
+        tipo_txt = e.get("typeEs") or ""
+        if tipo_n in KK_DESTACAR and not normaliza(nombre).startswith(normaliza(KK_DESTACAR[tipo_n])[:6]):
+            nombre = f"{KK_DESTACAR[tipo_n]}: {nombre}"
+        lugar = e.get("establishmentEs") or e.get("placeEs") or ""
+        muni = e.get("municipalityEs") or ""
+        hora = None
+        m = re.match(r"\s*(\d{1,2})[:.](\d{2})", e.get("openingHoursEs") or "")
+        if m and f1 == f2:
+            hora = f"{int(m.group(1)):02d}:{m.group(2)}"
+        frase = " · ".join(x for x in (tipo_txt, lugar, muni if muni != "Vitoria-Gasteiz" else "", e.get("priceEs") or "") if x)
+        enlace = e.get("sourceUrlEs") or e.get("purchaseUrlEs") or e.get("urlEventEs") or "https://www.kulturklik.euskadi.eus/"
+        desc = html_a_texto(e.get("descriptionEs") or "")
+        # en Vitoria la agenda municipal ya trae muchos actos; aquí, en lugar visible solo lo que sale de lo habitual
+        out.append({"titulo": nombre, "enlace": enlace, "texto": frase + (". " + desc if desc else ""),
+                    "texto_largo": "", "fecha": datetime.combine(f1, datetime.min.time(), MADRID),
+                    "categorias": [tipo_txt], "municipio_kk": muni, "clave": f"kk{e.get('id')}",
+                    "cal_ev": {"fecha": f1.isoformat(), "hasta": f2.isoformat() if f2 != f1 else None, "hora": hora,
+                               "tipo": "evento" if tipo_n in KK_DESTACAR else "agenda", "frase": frase[:200]}})
+    return out
+
+LECTORES = {"liferay": lee_liferay, "rss": lee_rss, "html": lee_html, "diputacion": lee_diputacion, "botha": lee_botha, "boe": lee_boe,
+            "kulturklik": lee_kulturklik}
 
 
 # ---------------------------------------------------------------- clasificación
@@ -662,6 +706,8 @@ class Clasificador:
 
         # municipios: primero el organismo (BOTHA), luego la fuente, luego el texto
         munis = self.municipios(org_n) if org_n else []
+        if not munis and it.get("municipio_kk"):
+            munis = self.municipios(normaliza(it["municipio_kk"]))[:1]
         if not munis and fuente.get("municipio"):
             munis = [fuente["municipio"]]
         if not munis:
@@ -749,6 +795,9 @@ def main() -> int:
     cal_hist: dict = hist.get("calendario", {})
     estado = []
 
+    def grupo_de(f):
+        return {k: f[k] for k in ("grupo", "etiqueta", "extra") if f.get(k)}
+
     for fuente in cfg.get("fuentes", []):
         if fuente.get("activa", True) is False:
             continue
@@ -777,25 +826,38 @@ def main() -> int:
                                      "temas": [], "relevancia": 0, "rutina": False, "cal": True}
                 n_n += 0 if previo else 1
             ok_b = fallos_b < len(fuente.get("areas") or {}) or not fuente.get("areas")
-            estado.append({"id": fuente["id"], "nombre": fuente["nombre"], "url": url.replace("{AREA}", "18"),
+            estado.append({"id": fuente["id"], "nombre": fuente["nombre"], **grupo_de(fuente), "url": url.replace("{AREA}", "18"),
                            "seccion": fuente["seccion"], "local": True, "ok": ok_b, "leidos": len(nuevos_b),
                            "nuevos": n_n, **({} if ok_b else {"error": "no se pudo leer ninguna área"})})
             print(f"{'OK  ' if ok_b else 'FALLO'} buzon {len(nuevos_b):>3} quejas leídas, {n_n} nuevas, {fallos_b} áreas con fallo")
             continue
         try:
-            try:
-                crudo = descarga(url, args.fixtures, fuente["id"], fuente.get("accept"))
-            except Exception:
-                if not fuente.get("alternativa"):
-                    raise
-                url = fuente["alternativa"]
-                crudo = descarga(url, args.fixtures, fuente["id"], fuente.get("accept"))
+            if "{PAGINA}" in url:                     # APIs paginadas (Kulturklik): se juntan las páginas
+                todos = []
+                for pag in range(1, fuente.get("paginas", 5) + 1):
+                    trozo = json.loads(descarga(url.replace("{PAGINA}", str(pag)), args.fixtures,
+                                                fuente["id"] + ("" if pag == 1 else f"-{pag}"), fuente.get("accept")))
+                    todos += trozo.get("items", [])
+                    if pag >= (trozo.get("totalPages") or 1) or args.fixtures:
+                        break
+                    time.sleep(0.5)
+                crudo = json.dumps({"items": todos}).encode()
+                url = url.replace("{PAGINA}", "1")
+            else:
+                try:
+                    crudo = descarga(url, args.fixtures, fuente["id"], fuente.get("accept"))
+                except Exception:
+                    if not fuente.get("alternativa"):
+                        raise
+                    url = fuente["alternativa"]
+                    crudo = descarga(url, args.fixtures, fuente["id"], fuente.get("accept"))
             nuevos = LECTORES[fuente.get("tipo", "rss")](crudo, fuente, hoy)
             n_nuevos = 0
             for it in nuevos:
                 clasif.clasifica(it, fuente)
                 tipo = tipo_item(it, fuente)
-                clave = (ident(fuente["id"], normaliza(it["titulo"])) if fuente.get("clave_por_titulo")
+                clave = (ident(fuente["id"], it["clave"]) if it.get("clave")
+                         else ident(fuente["id"], normaliza(it["titulo"])) if fuente.get("clave_por_titulo")
                          else ident(fuente["id"], it["enlace"], it["titulo"] if fuente.get("tipo") == "botha" else ""))
                 previo = items_hist.get(clave)
                 reg = {
@@ -821,7 +883,12 @@ def main() -> int:
                     reg["cal"] = True
                     base_f = (de_iso(reg["fecha"]) or ahora).astimezone(MADRID).date()
                     evs = []
-                    if tipo == "agenda":
+                    if it.get("cal_ev"):
+                        ce = it["cal_ev"]
+                        evs = [{"id": ident(clave, ce["fecha"]), "fecha": ce["fecha"], "hasta": ce["hasta"],
+                                "hora": ce["hora"], "tipo": ce["tipo"], "titulo": it["titulo"], "frase": ce["frase"],
+                                "enlace": reg["enlace"], "fuente": fuente["id"], "origen": clave, "seguimiento": False}]
+                    elif tipo == "agenda":
                         evs = calendario.de_agenda(reg, hoy)
                     elif tipo == "convocatoria":
                         evs = calendario.convocatorias(reg, html_a_texto(it.get("texto_largo", "")) or reg["resumen"], base_f)
@@ -842,12 +909,12 @@ def main() -> int:
                         ev["alava"] = reg["alava"]
                         ev["municipios"] = reg["municipios"]
                         cal_hist[ev["id"]] = ev
-            estado.append({"id": fuente["id"], "nombre": fuente["nombre"], "url": url, "seccion": fuente["seccion"],
+            estado.append({"id": fuente["id"], "nombre": fuente["nombre"], **grupo_de(fuente), "url": url, "seccion": fuente["seccion"],
                            "local": bool(fuente.get("local")), "ok": True, "leidos": len(nuevos), "nuevos": n_nuevos,
                            "segundos": round(time.time() - inicio, 1)})
             print(f"OK   {fuente['id']:<26} {len(nuevos):>3} leídos, {n_nuevos:>3} nuevos")
         except Exception as e:
-            estado.append({"id": fuente["id"], "nombre": fuente["nombre"], "url": url, "seccion": fuente["seccion"],
+            estado.append({"id": fuente["id"], "nombre": fuente["nombre"], **grupo_de(fuente), "url": url, "seccion": fuente["seccion"],
                            "local": bool(fuente.get("local")), "ok": False, "error": f"{type(e).__name__}: {str(e)[:200]}"})
             print(f"FALLO {fuente['id']:<25} {type(e).__name__}: {e}", file=sys.stderr)
 
@@ -877,8 +944,9 @@ def main() -> int:
               and (de_iso(i["fecha"]) or de_iso(i["visto"])) >= ahora - timedelta(days=14)]
     buzon = resumen_buzon(quejas, ahora)
     publicados, ideas_pub = [], []
+    solo_cal = {f["id"] for f in cfg.get("fuentes", []) if f.get("solo_calendario")}
     for it in items_hist.values():
-        if it["seccion"] == "buzon":
+        if it["seccion"] == "buzon" or it["fuente"] in solo_cal:
             continue
         if it["seccion"] == "ideas":
             ref = de_iso(it["fecha"]) or de_iso(it["visto"])
