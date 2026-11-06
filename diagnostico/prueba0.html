@@ -1,0 +1,493 @@
+
+
+function checkComunidad(cb){
+	var com = cb.val().split("@")[2];
+	//console.log(cb);
+	//console.log(cb.val());
+	//console.log(com);
+	if(cb.prop("checked")){
+		//añadirlo a los campos de busqueda
+		addComunidad(com);
+		//Si la lista de PROVINCIAS existe, seleccionar todas
+		$("#listCOM_"+com+ " input").prop("checked", true);
+		
+	}else{
+		//Quitarlo de los campos de busqueda
+		deleteComunidad(com);
+		//Deschequear todos los descedientes
+		$("#listCOM_"+com+ " input").each(function() {
+			$(this).prop("checked", false);
+			checkProvincia($(this));
+		});
+		
+	}
+}
+
+function checkProvincia(cb){
+	var pro = cb.val().split("@")[1];
+	var com = cb.val().split("@")[2];
+	if(cb.prop("checked")){
+		//añadirlo a los campos de busqueda
+		addProvincia(pro);
+		//Si el padre esta checkeado se quita de los campos de busqueda y se añaden todos sus hijos checkeados
+		decheckFather($("#chkCOM_"+com));
+		//Si la lista de SEDES existe, seleccionar todas
+		$("#listPRO_"+pro+ " input").prop("checked", true);
+		
+	}else{
+		//Quitarlo de los campos de busqueda
+		deleteProvincia(pro);
+		//Deschequear todos los descedientes
+		$("#listPRO_"+pro+ " input").each(function() {
+			$(this).prop("checked", false);
+			checkSedeMultiSelect($(this));
+		});
+		
+		//Si el padre esta checkeado se quita de los campos de busqueda y se añaden todos sus hijos checkeados
+		decheckFather($("#chkCOM_"+com));
+	}
+}
+
+
+function checkSedeMultiSelect(cb){
+	var sed = cb.val().split("@")[0];
+	var pro = cb.val().split("@")[1];
+	var com = cb.val().split("@")[2];
+	if(cb.prop("checked")){
+		//añadirlo a los campos de busqueda
+		addSedeMultiSelect(sed);
+	}else{
+		//Quitarlo de los campos de busqueda
+		deleteSedeMultiSelect(sed);
+		//Si el padre esta checkeado se quita de los campos de busqueda y se añaden todos sus hijos checkeados
+		decheckFather($("#chkPRO_"+pro));
+	}
+}
+
+
+function decheckFather(cb){
+	if(cb.prop("checked")){
+		var sed = cb.val().split("@")[0];
+		var pro = cb.val().split("@")[1];
+		var com = cb.val().split("@")[2];
+		var countPro = 0;
+		var countSed = 0;
+		//Añado toda las provincias y sedes chekeadas de la comunidad a la lista
+		$("#listCOM_"+com+ " input").each(function() { 
+			
+			if($(this).prop("checked")){
+				if($(this).data("type")=="PROV"){
+					addProvincia($(this).val().split("@")[1]);
+					countPro++;
+				}
+				if($(this).data("type")=="SEDE" && pro != "ALL"){
+					addSedeMultiSelect($(this).val().split("@")[0]);
+					countSed++;
+				}
+			}
+		});
+		
+		//En caso de que haya provincias checkeadas quito la comunidad
+		if(countPro > 0){
+			deleteComunidad(com);
+		}else{
+			//En caso contrario añado la comunidad a la lista por si se elimino en otra interaccion
+			addComunidad(com);
+		}
+	
+		//Si se llama desde una sede, en caso de que haya sedes chekeadas quito la provincia
+		if(pro != "ALL"){
+			if(countSed > 0){
+				deleteProvincia(pro);
+			}else{
+				//En caso contrario añado la provincia a la lista por si se elimino en otra interaccion
+				addProvincia(pro);
+			}
+			
+		}
+		
+		
+	}
+	
+}
+
+
+function addComunidad(value){
+	//en value viene así: PAÍS_VASCO
+	if (value.length > 0){
+		value = value.replace(/_/g," ");	
+	}
+	var txt = $("#COMUNIDADmultiselec .multiselect-selected-text");
+	if(txt.html().indexOf("Todas")!=-1){
+		txt.html("");
+	}
+	if (value.length > 0 && value != "Todas"){
+		value += "(C) | ";
+		if(txt.html().indexOf(value)==-1){
+			txt.append(value);
+		}
+	}
+	
+	$("#COMUNIDADmultiselec").attr("title", txt.html()).tooltip("fixTitle");
+	$("#frmBusquedajurisprudencia_VALUESCOMUNIDAD").val(txt.html());
+
+	checkLocalizacionClear();
+}
+
+function deleteComunidad(value){
+	//en value viene así: PAÍS_VASCO
+	if (value.length > 0){
+		value = value.replace(/_/g," ");	
+	}
+	var txt = $("#COMUNIDADmultiselec .multiselect-selected-text");
+	var tmp = txt.html();
+	if (value.length > 0 && value != "Todas"){
+		var index = tmp.indexOf(value + "(C) | ");
+		if (index != -1){
+			tmp = tmp.substring(0, index) + tmp.substring((index + value.length + 6));
+		}
+		txt.html(tmp);
+	}
+	if(tmp.length == 0){
+		txt.html("Todas");
+	}
+
+	$("#COMUNIDADmultiselec").attr("title", txt.html()).tooltip("fixTitle");
+	var comunidadVal = txt.html();
+	if (comunidadVal=="Todas"){
+		comunidadVal = "";
+	}
+	$("#frmBusquedajurisprudencia_VALUESCOMUNIDAD").val(comunidadVal);	
+
+	checkLocalizacionClear();
+}
+
+function getProvinciasMultiSelect(comunidad, target, link){
+	var cbParent = $("#chkCOM_"+comunidad);
+	if (!target.data('loaded')){
+		getLocalizaciones("PROVINCIA", comunidad, "", target, cbParent.prop("checked"));
+	}
+	target.toggleClass("hidden");
+	link.find(".fa").toggleClass("fa-plus").toggleClass("fa-minus");
+	
+	
+	$("#COMUNIDADpanel").getNiceScroll().resize();
+}
+
+function addProvincia(value){
+	//en value viene así: PAÍS_VASCO
+	if (value.length > 0){
+		value = value.replace(/_/g," ");	
+	}
+	var txt = $("#COMUNIDADmultiselec .multiselect-selected-text");
+	if(txt.html().indexOf("Todas")!=-1){
+		txt.html("");
+	}
+	if (value.length > 0 && value != "Todas"){
+		value += "(P) | ";
+		if(txt.html().indexOf(value)==-1){
+			txt.append(value);
+		}
+	}
+
+	$("#COMUNIDADmultiselec").attr("title", txt.html()).tooltip("fixTitle");
+	$("#frmBusquedajurisprudencia_VALUESCOMUNIDAD").val(txt.html());
+
+	checkLocalizacionClear();
+}
+
+function deleteProvincia(value){
+	//en value viene así: PAÍS_VASCO
+	if (value.length > 0){
+		value = value.replace(/_/g," ");	
+	}
+	var txt = $("#COMUNIDADmultiselec .multiselect-selected-text");
+	var tmp = txt.html();
+	if (value.length > 0 && value != "Todas"){
+		var index = tmp.indexOf(value + "(P) | ");
+		if (index != -1){
+			tmp = tmp.substring(0, index) + tmp.substring((index + value.length + 6));
+		}
+		txt.html(tmp);
+	}
+	if(tmp.length == 0){
+		txt.html("Todas");
+	}
+
+	$("#COMUNIDADmultiselec").attr("title", txt.html()).tooltip("fixTitle");
+	var comunidadVal = txt.html();
+	if (comunidadVal=="Todas"){
+		comunidadVal = "";
+	}
+	$("#frmBusquedajurisprudencia_VALUESCOMUNIDAD").val(comunidadVal);	
+
+	checkLocalizacionClear();
+}
+
+
+
+function getSedesMultiSelect(comunidad, provincia, target, link){
+	var cbParent = $("#chkPRO_"+provincia);
+	
+	if (!target.data('loaded')){
+		getLocalizaciones("SEDE", comunidad, provincia, target, cbParent.prop("checked"));
+	}
+	target.toggleClass("hidden");
+
+//	if(cbParent.prop("checked")) {
+//		var cbList = $("#listPRO_"+provincia + " input").each(function() { 
+//			checkSedeMultiSelect($(this));
+//		});
+//		deleteProvincia(cbParent.val());
+//	}
+	link.find(".fa").toggleClass("fa-plus").toggleClass("fa-minus");
+
+	$("#COMUNIDADpanel").getNiceScroll().resize();
+}
+
+
+function addSedeMultiSelect(value){
+	//en value viene así: PAÍS_VASCO
+	if (value.length > 0){
+		value = value.replace(/_/g," ");	
+	}
+	var txt = $("#COMUNIDADmultiselec .multiselect-selected-text");
+	if(txt.html().indexOf("Todas")!=-1){
+		txt.html("");
+	}
+	if (value.length > 0 && value != "Todas"){
+		value +=  "(S) | ";
+		if(txt.html().indexOf(value)==-1){
+			txt.append(value);
+		}
+	}
+
+	$("#COMUNIDADmultiselec").attr("title", txt.html()).tooltip("fixTitle");
+	$("#frmBusquedajurisprudencia_VALUESCOMUNIDAD").val(txt.html());
+
+	checkLocalizacionClear();
+}
+
+function deleteSedeMultiSelect(value){
+	//en value viene así: PAÍS_VASCO
+	if (value.length > 0){
+		value = value.replace(/_/g," ");	
+	}
+	var txt = $("#COMUNIDADmultiselec .multiselect-selected-text");
+	var tmp = txt.html();
+	if (value.length > 0 && value != "Todas"){
+		var index = tmp.indexOf(value + "(S) | ");
+		if (index != -1){
+			tmp = tmp.substring(0, index) + tmp.substring((index + value.length + 6));
+		}
+		txt.html(tmp);
+	}
+	if(tmp.length == 0){
+		txt.html("Todas");
+	}
+
+	$("#COMUNIDADmultiselec").attr("title", txt.html()).tooltip("fixTitle");
+	var comunidadVal = txt.html();
+	if (comunidadVal=="Todas"){
+		comunidadVal = "";
+	}
+	$("#frmBusquedajurisprudencia_VALUESCOMUNIDAD").val(comunidadVal);
+
+	checkLocalizacionClear();
+}
+
+
+function getLocalizaciones(field, comunidad, provincia, target, isChecked) {
+    var deferred = $.Deferred();
+	//para utilizar en los checks, con su valor sin espacios
+	var comunidadToCheck = comunidad;
+	var provinciaToCheck = provincia;
+	if (comunidad.length > 0) 
+		comunidad = comunidad.replace(/_/g," ");
+	if (provincia.length > 0) 
+		provincia = provincia.replace(/_/g," ");
+	
+	$.ajax({
+		url: contextPath+"jurisprudencia.action",
+		dataType: "json",
+		type: "POST",
+		data:  {
+			action: "getComunidades",
+			field: field,
+			comunidad: comunidad,
+			provincia: provincia,
+			publicinterface: true
+		},
+		beforeSend: function( ) {
+			//target.html("<center class=\"loading\"><img src=\"" + contextPath + "img/loader.gif\" border=\"0\" alt=\"Cargando...\"></center>");
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			if (jqXHR.status === 401) {
+				//sesion caducada
+				loginpage();
+			} else {
+				errorMessage(errorThrown);
+			}
+			deferred.reject();
+		},
+		success: function( data ) {
+			target.empty();
+			
+			if (target.length>0){
+				if (data.success && data.result.length > 0){
+					var values = data.result.split("|");
+					
+					$.each(values, function(key, item) { 
+						var key = item.split("&")[0].replace(/\s/g, "_");
+						var value = item.split("&")[1];
+						
+						if (key.length>0) {
+							var check = "";
+							var text = "";
+							var ul = "";
+							var id = field.substring(0,3)+"_"+key;
+							
+							if (field == "COMUNIDAD"){
+								var ccaa = $('#COMUNIDADmultiselec').data("ccaa");
+								if (!ccaa || ccaa==value){
+									var onclick="checkComunidad($(this));";
+									if (ccaa){
+										//si hay ccaa no se puede deseleccionar
+										onclick= "return false;";
+									}									
+									check = "<label class=\"checkbox\"><input id=\"chkCOM_"+key+"\" type=\"checkbox\" onclick=\""+onclick+"\" value=\"ALL@ALL@"+key +"\" data-type=\"COM\"> </label>";
+									text = "<a href=\"#\" onclick=\"getProvinciasMultiSelect('"+key+"', $('#list"+id+"'), $(this)); return false;\" ><b><b class=\"fa fa-plus\" aria-hidden=\"true\"></b> "+value+"</b></a>";
+									ul = "<ul class=\"hidden provincias\" id=\"list"+id+"\"></ul>";
+								}
+							}
+							if (field == "PROVINCIA"){
+								check = "<label class=\"checkbox\"><input id=\"chkPRO_"+key+"\" type=\"checkbox\" onclick=\"checkProvincia($(this));\" value=\"ALL@"+key+"@"+comunidadToCheck +"\" data-type=\"PROV\"> </label>";
+								text = "<a href=\"#\" onclick=\"getSedesMultiSelect('"+comunidadToCheck+"','"+key+"', $('#list"+id+"'), $(this)); return false;\"><b><b class=\"fa fa-plus\" aria-hidden=\"true\"></b> "+value+"</b></a>";
+								ul = "<ul class=\"hidden sedes\" id=\"list"+id+"\"></ul>";
+							}
+							if (field == "SEDE"){
+								check = "<label class=\"checkbox\"><input type=\"checkbox\" id=\"chkSEDE_"+key+"\" onclick=\"checkSedeMultiSelect($(this));\" value=\""+key +"@"+provinciaToCheck+"@"+comunidadToCheck+"\" data-type=\"SEDE\"> "+value+"</label>";
+								text = "";
+							}		
+
+							target.append("<li class=\"multiselect-item multiselect-group\">" + check + text + ul + "</li>");
+						}
+						
+					});
+					target.data("loaded", true);
+					
+				}
+				
+				target.find("input").prop("checked", isChecked);
+
+				if (field == "PROVINCIA"){
+					checkLocalizaciones($("#listCOM_" + comunidad));
+				} else if (field == "SEDE"){
+					checkLocalizaciones($("#listPRO_" + provincia));
+				}
+			}
+			
+			$("#COMUNIDADpanel").getNiceScroll().resize();
+	
+			deferred.resolve();
+		}
+	});
+	
+    return deferred.promise();
+	
+
+}
+
+function checkLocalizaciones(panel) {
+	
+	var selectedvalues = $("#frmBusquedajurisprudencia_VALUESCOMUNIDAD").val();
+	
+	//comprobamos los checks que hay que marcar por si se ha cargado una busqueda guardada
+	panel.find("input").each(function() {
+		var val = $(this).val();
+
+		if($(this).data("type")=="COM") {
+			var com = val.split("@")[2];
+			//en value viene así: PAÍS_VASCO
+			if (com.length > 0){
+				com = com.replace(/_/g," ");	
+			}
+			if (selectedvalues.indexOf(com + "(C)|")>=0) {
+				$(this).prop("checked", true);
+			}	
+			
+		} else if($(this).data("type")=="PROV") {
+			var pro = val.split("@")[1];
+			//en value viene así: PAÍS_VASCO
+			if (pro.length > 0){
+				pro = pro.replace(/_/g," ");	
+			}
+			if (selectedvalues.indexOf(pro + "(P)|")>=0) {
+				$(this).prop("checked", true);
+			}	
+			
+		} else if($(this).data("type")=="SEDE") {
+			var sed = val.split("@")[0];
+			//en value viene así: PAÍS_VASCO
+			if (sed.length > 0){
+				sed = sed.replace(/_/g," ");	
+			}
+			if (selectedvalues.indexOf(sed + "(S)|")>=0) {
+				$(this).prop("checked", true);
+			}	
+			
+		}
+		
+	});
+	
+}
+
+
+function checkLocalizacionClear() {
+	if ($("#frmBusquedajurisprudencia_VALUESCOMUNIDAD").val().length>0) {
+		//Hay algo seleccionado mostramos aspa
+		$("#COMUNIDADmultiselec").addClass("state-focus");
+	} else {
+		//Nada seleccionado, quitamos aspa
+		$("#COMUNIDADmultiselec").removeClass("state-focus");
+	}	
+}
+
+function limpiarLocalizaciones() {
+	$("#frmBusquedajurisprudencia_VALUESCOMUNIDAD").val("");
+	var inputs =$("#COMUNIDADpanel").find("input");
+	for (var i=0; i<inputs.length; i++){
+		var input = inputs[i];
+		$(input).prop("checked", false);
+	}
+	$("#COMUNIDADmultiselec .multiselect-selected-text").html("Todas");
+	$("#COMUNIDADmultiselec").attr("title", "Todas").tooltip("fixTitle");
+	//si tenemos ccaa, se indica esa, sino todas
+	var ccaa = $('#COMUNIDADmultiselec').data("ccaa");
+	if (ccaa!=undefined) {
+		addComunidad(ccaa);
+		ccaa = ccaa.replace(/ /g,"_");
+		var cb = $("#chkCOM_" + ccaa);
+		cb.prop("checked", true);
+	}
+	
+	checkLocalizacionClear();
+
+}
+
+function ocultaDesmarcados() {
+	$("#COMUNIDADpanel > li.multiselect-item").each(function(index) {
+		
+		if ($(this).find("ul li input:checked").length==0) {
+			$(this).find("ul.provincias").addClass("hidden");
+			$(this).find("> a .fa ").addClass("fa-plus").removeClass("fa-minus");
+			
+		} 
+		$(this).find("ul.provincias > li.multiselect-item").each(function(index) {
+			if ($(this).find("ul li input:checked").length==0) {
+				$(this).find("ul.sedes").addClass("hidden");
+				$(this).find("> a .fa ").addClass("fa-plus").removeClass("fa-minus");
+			}
+		});
+	});
+}

@@ -1,0 +1,42 @@
+[
+ {
+  "f": "prueba0.html",
+  "url": "https://www.poderjudicial.es/search/js/common-scripts/localizaciones.js?guid=202610271444",
+  "http": 200,
+  "bytes": 14526,
+  "tipo": "application/javascript"
+ },
+ {
+  "f": "prueba1",
+  "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+ },
+ {
+  "f": "prueba2.html",
+  "url": "https://www.poderjudicial.es/search/captchalogin.jsp?prevaction=query&sort=IN_FECHARESOLUCION%3Adecreasing&recordsPerPage=20&databasematch=AN&start=1&TEXT=&HISTORICOPUBLICO=false&VALUESCOMUNIDAD=PA%C3%8DS+VASCO%28C%29%7C&",
+  "http": 200,
+  "bytes": 2058,
+  "tipo": "text/html;charset=UTF-8"
+ },
+ {
+  "f": "prueba3",
+  "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+ },
+ {
+  "f": "prueba4.html",
+  "url": "https://www.poderjudicial.es/search/captchalogin.jsp?prevaction=query&sort=IN_FECHARESOLUCION%3Adecreasing&recordsPerPage=20&databasematch=AN&start=1&TEXT=&HISTORICOPUBLICO=false&VALUESCOMUNIDAD=VITORIA-GASTEIZ%28S%29%7C&",
+  "http": 200,
+  "bytes": 2062,
+  "tipo": "text/html;charset=UTF-8"
+ },
+ {
+  "f": "prueba5",
+  "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+ },
+ {
+  "f": "prueba6.html",
+  "url": "https://www.poderjudicial.es/search/search.action",
+  "http": 500,
+  "bytes": 958,
+  "tipo": "text/html;charset=UTF-8"
+ }
+]
