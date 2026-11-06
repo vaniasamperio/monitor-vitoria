@@ -785,14 +785,14 @@ MESES_ES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "ago
 
 
 def titulo_roj(texto: str, enlace: str) -> str:
-    """'ROJ: SAP VI 1506/2026 - ECLI…' -> 'Sentencia de la Audiencia Provincial de Álava 1506/2026 (4 de noviembre)'."""
+    """'ROJ: SAP VI 1506/2026 - ECLI…' -> 'Sentencia de la Audiencia Provincial de Álava 1506/2026 (publicada el 4 de noviembre)'."""
     m = re.search(r"ROJ:\s*([SA])([A-Z]+(?:\s[A-Z]{2})?)\s+(\d+/\d{4})", texto)
     if not m:
         return texto
     tipo, codigo, num = ROJ_TIPO.get(m.group(1), "Resolución"), m.group(2).strip(), m.group(3)
     organo = next((o for c, o in ROJ_ORGANO if codigo == c.replace(" ", " ")), f"({codigo})")
     f = re.search(r"/(20\d\d)(\d\d)(\d\d)(?:$|[/?])", enlace)
-    fecha = f" ({int(f.group(3))} de {MESES_ES[int(f.group(2)) - 1]})" if f else ""
+    fecha = f" (publicada el {int(f.group(3))} de {MESES_ES[int(f.group(2)) - 1]})" if f else ""
     return f"{tipo} {organo} {num}{fecha}"
 
 
@@ -819,7 +819,7 @@ def lee_correo(contenido: bytes, fuente: dict) -> list[dict]:
                 contexto = " ".join(bloque.get_text(" ").split()).replace(txt, "").strip(" -·|") if bloque else ""
                 contexto = re.sub(r"ECLI:\S+", "", contexto).strip(" -·|")
                 out.append({"titulo": titulo_roj(txt, href) if txt else c["asunto"], "enlace": href,
-                            "texto": (txt + (". " + contexto if contexto else ""))[:500], "texto_largo": "",
+                            "texto": (re.sub(r"\s*-\s*ECLI:\S+", "", txt) + (". " + contexto if contexto else ""))[:500], "texto_largo": "",
                             "fecha": fecha, "categorias": ["CENDOJ"]})
             continue                                  # sin resoluciones (avisos de cuenta, etc.): no se publica
         titulo = RX_ASUNTO_RUIDO.sub("", c["asunto"]).strip() or c["asunto"]
