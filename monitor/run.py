@@ -807,6 +807,14 @@ def lee_correo(contenido: bytes, fuente: dict) -> list[dict]:
         respaldo = "https://mail.google.com/mail/u/0/#search/" + requests.utils.quote(f'subject:"{c["asunto"][:60]}"')
         if fuente.get("modo") == "alertas":
             # alertas del CENDOJ: una entrada por resolución enlazada
+            # datos de cada resolución en la alerta: "ROJ: … <enlace>  * Tipo órgano: …  * Fecha: …  * Tipo Resolución: …"
+            plano = c["texto"] or (cuerpo_html.get_text("\n") if cuerpo_html else "")
+            meta = {}
+            for trozo in re.split(r"(?=ROJ:\s*[A-Z])", plano)[1:]:
+                num = re.match(r"ROJ:\s*([A-Z]+(?:\s[A-Z]{2})?\s+\d+/\d{4})", trozo)
+                if num:
+                    meta[num.group(1)] = {k: (re.search(rf"{k}\s*:\s*([^\n*]+)", trozo, re.I) or [None, ""])[1].strip()
+                                          for k in ("Tipo órgano", "Municipio", "Fecha", "Tipo Resolución", "Nº Recurso")}
             vistos = set()
             anclas = cuerpo_html.find_all("a", href=True) if cuerpo_html else []
             for a in anclas:
@@ -818,9 +826,18 @@ def lee_correo(contenido: bytes, fuente: dict) -> list[dict]:
                 bloque = a.find_parent(["tr", "li", "p"]) or a.parent
                 contexto = " ".join(bloque.get_text(" ").split()).replace(txt, "").strip(" -·|") if bloque else ""
                 contexto = re.sub(r"ECLI:\S+", "", contexto).strip(" -·|")
-                out.append({"titulo": titulo_roj(txt, href) if txt else c["asunto"], "enlace": href,
-                            "texto": (re.sub(r"\s*-\s*ECLI:\S+", "", txt) + (". " + contexto if contexto else ""))[:500], "texto_largo": "",
-                            "fecha": fecha, "categorias": ["CENDOJ"]})
+                num = re.search(r"ROJ:\s*([A-Z]+(?:\s[A-Z]{2})?\s+\d+/\d{4})", txt)
+                m = meta.get(num.group(1), {}) if num else {}
+                titulo = titulo_roj(txt, href) if txt else c["asunto"]
+                if m.get("Fecha"):
+                    d_, me_, a_ = (m["Fecha"].split("/") + ["", "", ""])[:3]
+                    if d_.isdigit() and me_.isdigit():
+                        titulo = re.sub(r"\s*\(publicada[^)]*\)", "", titulo) + f" del {int(d_)} de {MESES_ES[int(me_) - 1]}"
+                datos_m = " · ".join(x for x in (m.get("Tipo órgano"), m.get("Municipio"),
+                                                 f"recurso {m['Nº Recurso']}" if m.get("Nº Recurso") else "",
+                                                 re.sub(r"\s*-\s*ECLI:\S+", "", txt)) if x)
+                out.append({"titulo": titulo, "enlace": href, "texto": datos_m[:500], "texto_largo": "",
+                            "fecha": fecha, "categorias": ["CENDOJ"], "municipio_kk": m.get("Municipio", "")})
             continue                                  # sin resoluciones (avisos de cuenta, etc.): no se publica
         titulo = RX_ASUNTO_RUIDO.sub("", c["asunto"]).strip() or c["asunto"]
         propio = next((h for t, h in enlaces if _dominio("@" + re.sub(r"^https?://(www\.)?", "", h).split("/")[0])
