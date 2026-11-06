@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Monitor de fuentes · Hoy por Hoy Vitoria</title>
+<title>Monitor de fuentes · SER Vitoria</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%231f3a3d'/><circle cx='16' cy='16' r='5' fill='%23e8a33d'/></svg>">
 <style>
 :root{
@@ -159,6 +159,8 @@ ul.lista{list-style:none;margin:0;padding:0}
 .vitoria{background:var(--ambar-f);border-radius:8px;padding:10px 12px;font-size:13.5px}
 .vitoria b{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#7a4c06;margin-bottom:4px}
 .vitoria ul{margin:4px 0 0;padding-left:18px}
+.vitoria .preg li{margin:3px 0}
+.vitoria .llamar{margin-top:7px;font-size:12.5px;color:#5c4210}.vitoria .llamar span{font-weight:700}
 
 /* fuentes */
 table{width:100%;border-collapse:collapse;font-size:13.5px}
@@ -205,7 +207,7 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
     <div class="fila">
       <div>
         <h1>Monitor de fuentes <span>·</span> Vitoria y Álava</h1>
-        <div class="sub">Redacción de Hoy por Hoy Vitoria · instituciones, pueblos, boletines, asociaciones, agenda e ideas</div>
+        <div class="sub">Redacción de SER Vitoria · instituciones, pueblos, boletines, asociaciones, agenda e ideas</div>
       </div>
       <div class="estado" id="estado">Cargando…</div>
     </div>
@@ -217,7 +219,6 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
       <button role="tab" data-p="boletines" aria-selected="false">Boletines<span class="n" id="n-boletines"></span></button>
       <button role="tab" data-p="asociaciones" aria-selected="false">Asociaciones<span class="n" id="n-asociaciones"></span></button>
       <button role="tab" data-p="ideas" aria-selected="false">Ideas de temas<span class="n" id="n-ideas"></span></button>
-      <button role="tab" data-p="medios" aria-selected="false">Ya publicado<span class="n" id="n-medios"></span></button>
       <button role="tab" data-p="fuentes" aria-selected="false">Fuentes</button>
     </nav>
   </div>
@@ -234,12 +235,6 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
       <button data-dias="3" aria-pressed="true">3 días</button>
       <button data-dias="7" aria-pressed="false">7 días</button>
     </div>
-    <label class="interruptor" title="Del Gobierno Vasco, el BOPV y otras fuentes generales, muestra solo lo que menciona Álava">
-      <input type="checkbox" id="soloAlava" checked> Solo Álava
-    </label>
-    <label class="interruptor" title="Notificaciones, nombramientos, correcciones de errores y otros trámites">
-      <input type="checkbox" id="verTramites"> Ver trámites
-    </label>
     <button class="btn" id="abrirGuardados">★ Guardados <span class="n" id="nGuardados">0</span></button>
   </div>
 </div>
@@ -254,6 +249,8 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
       <div style="display:flex;flex-direction:column;gap:16px">
         <div class="grupo"><h3>Próximos 7 días <small>pulsa un día</small></h3><div class="semana" id="semana"></div></div>
         <div class="grupo"><h3>Para seguir <small>plazos, obras, previstos</small></h3><div id="seguir"></div></div>
+        <div class="grupo"><h3>Buzón ciudadano <small>lo que se repite</small></h3><div id="buzonHoy"></div></div>
+        <div class="grupo" id="eustatHoyG" hidden><h3>Eustat <small>datos de Álava</small></h3><div id="eustatHoy"></div></div>
       </div>
     </div>
     <div class="contadores" id="contadores"></div>
@@ -282,6 +279,7 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
   <section class="panel" id="p-instituciones" hidden>
     <p class="intro">Ayuntamiento de Vitoria, Diputación, Juntas Generales, Gobierno Vasco y otras instituciones. En <b>ámbar</b>, lo de las últimas 24 horas.</p>
     <div class="rejilla" id="instituciones"></div>
+    <div class="rejilla" style="margin-top:16px" id="buzonCompleto"></div>
   </section>
 
   <section class="panel" id="p-pueblos" hidden>
@@ -291,7 +289,7 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
   </section>
 
   <section class="panel" id="p-boletines" hidden>
-    <p class="intro">BOTHA del día completo, y del BOPV y el BOE lo que afecta a Álava. Los trámites rutinarios (notificaciones, nombramientos, correcciones…) están ocultos: actívalos con “Ver trámites”.</p>
+    <p class="intro">Lo que trae hoy el BOTHA, y del BOPV y el BOE lo que afecta a Álava, con titulares en lenguaje claro. Los trámites rutinarios (notificaciones, nombramientos, correcciones…) no se muestran.</p>
     <div class="rejilla" id="boletines"></div>
   </section>
 
@@ -304,11 +302,6 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
     <p class="intro">Temas de fondo que cuentan medios de otros territorios y que se pueden <b>bajar a Vitoria o Álava</b>. Se descartan el fútbol, los sucesos y la política de partidos.</p>
     <div class="filtros" id="filtrosTemas"></div>
     <div class="rejilla" id="ideas"></div>
-  </section>
-
-  <section class="panel" id="p-medios" hidden>
-    <p class="intro">Lo que otros medios ya han publicado sobre Vitoria y Álava, para no repetir o buscar otro ángulo.</p>
-    <div class="rejilla" id="medios"></div>
   </section>
 
   <section class="panel" id="p-fuentes" hidden>
@@ -361,7 +354,7 @@ const CATS = {
 const colorEv = e => e.tipo === "convocatoria" ? "var(--c-conv)" : (CATS[e.categoria] || CATS.otros).c;
 
 const st = {
-  d: null, q: "", dias: mem.get("dias", 3), soloAlava: mem.get("soloAlava", true), tramites: false,
+  d: null, ia: {}, q: "", dias: mem.get("dias", 3), soloAlava: true, tramites: false, leidos: mem.get("leidos", {}),
   pestana: (location.hash || "#hoy").slice(1), tema: null, cuadrilla: null,
   guardados: mem.get("guardados", {}), abiertos: new Set(), expandidos: new Set(),
   mes: null, diaSel: null, cats: mem.get("cats", {institucional: true, pueblos: true, asociaciones: true, cultura: true, efemerides: true, otros: true}),
@@ -392,7 +385,7 @@ const diaLargo = k => cap(fDiaC.format(new Date(k + "T12:00:00Z")));
 let fuentes = {};
 const nombreF = id => (fuentes[id] || {}).nombre || (id === "efemerides" ? "Efemérides" : id);
 const esLocal = id => (fuentes[id] || {}).local;
-function textoBusca(it) { return norm([it.titulo, it.resumen, it.frase, (it.temas || []).join(" "), (it.municipios || []).join(" "), it.organismo, nombreF(it.fuente)].join(" ")); }
+function textoBusca(it) { return norm([it.titulo, it.titulo_claro, (st.ia.titulos || {})[it.id], it.resumen, it.frase, (it.temas || []).join(" "), (it.municipios || []).join(" "), it.organismo, nombreF(it.fuente)].join(" ")); }
 function casaQ(it) { return !st.q || norm(st.q).split(/\s+/).every(t => textoBusca(it).includes(t)); }
 function pasa(it, {periodo = true, alava = true, tramites = true} = {}) {
   if (periodo) {
@@ -403,7 +396,15 @@ function pasa(it, {periodo = true, alava = true, tramites = true} = {}) {
   if (tramites && !st.tramites && it.rutina) return false;
   return casaQ(it);
 }
-const esNuevo = it => new Date(it.visto) >= new Date(new Date(st.d.actualizado).getTime() - 24 * 3600e3);
+const esNuevo = it => !st.leidos[it.id] && new Date(it.visto) >= new Date(new Date(st.d.actualizado).getTime() - 24 * 3600e3);
+function marcaLeido(id) {
+  if (!id || st.leidos[id]) return;
+  st.leidos[id] = Date.now();
+  const lim = Date.now() - 30 * 864e5;                        // se olvidan a los 30 días
+  for (const k in st.leidos) if (st.leidos[k] < lim) delete st.leidos[k];
+  mem.set("leidos", st.leidos);
+}
+const tituloDe = it => (st.ia.titulos || {})[it.id] || it.titulo_claro || it.titulo;
 
 // ---------- piezas
 function estrella(o) {
@@ -423,10 +424,12 @@ function chips(it, {fuente = false, muni = true} = {}) {
   return c.join("");
 }
 function elemento(it, op = {}) {
+  const t = tituloDe(it), cambiado = t !== it.titulo;
+  const trib = (st.ia.tribunales || {})[it.id];
   return `<li class="el${st.abiertos.has(it.id) ? " abierto" : ""}${it.rutina ? " rutina" : ""}">
-    <a class="tit" href="${esc(it.enlace)}" target="_blank" rel="noopener">${esc(it.titulo)}</a>${estrella(it)}
+    <a class="tit" data-leido="${esc(it.id)}" href="${esc(it.enlace)}" target="_blank" rel="noopener"${cambiado ? ` title="Título original: ${esc(it.titulo)}"` : ""}>${esc(t)}</a>${estrella(it)}
     <div class="meta">${chips(it, op)}</div>
-    <div class="res" data-abrir="${esc(it.id)}">${esc(op.sinResumen ? "" : (it.resumen || ""))}</div></li>`;
+    <div class="res" data-abrir="${esc(it.id)}">${esc(trib || (op.sinResumen ? "" : (it.resumen || "")))}</div></li>`;
 }
 const LIM = 6;
 function grupo(id, titulo, lista, {orden = "fecha", op = {}, sub = "", vacio = "Nada en este periodo."} = {}) {
@@ -581,6 +584,34 @@ function pintaCalendario() {
   }).join("") : `<div class="vacio">Nada registrado este día.</div>`;
 }
 
+// ---------- buzón y Eustat
+const flecha = (a, b) => a > b * 1.3 && a - b >= 3 ? ' <b style="color:var(--rojo)">↑</b>' : a < b * 0.7 && b - a >= 3 ? ' <span style="color:var(--ok)">↓</span>' : "";
+function lineaBuzon(b) {
+  const rep = [...(b.lugares || []).map(x => `${x.t} ×${x.n}`), ...(b.frases || []).map(x => `“${x.t}” ×${x.n}`)].slice(0, 3);
+  return `<div class="cita" style="grid-template-columns:38px 1fr"><span class="hora">${b.semana}${flecha(b.semana, b.anterior)}</span>
+    <div><a href="${esc((b.ejemplos[0] || {}).e || "#")}" target="_blank" rel="noopener">${esc(b.area)}</a>
+    <div class="det">${rep.length ? "Se repite: " + esc(rep.join(" · ")) : esc(b.ejemplos.slice(0, 2).map(x => x.t).join(" · "))}</div></div></div>`;
+}
+function pintaBuzon() {
+  const d = st.d, b = (d.buzon || []).filter(x => casaQ({titulo: x.area + " " + x.ejemplos.map(e => e.t).join(" ") + " " + (x.lugares || []).map(l => l.t).join(" ")}));
+  const iab = st.ia.buzon;
+  let hoy = "";
+  if (iab && iab.destacados && iab.destacados.length) {
+    hoy = (iab.resumen ? `<div class="vacio" style="color:var(--tinta)">${esc(iab.resumen)}</div>` : "") +
+      iab.destacados.slice(0, 3).map(x => `<div class="cita" style="grid-template-columns:1fr"><div><b>${esc(x.titulo)}</b><div class="det">${esc(x.area || "")}${x.area ? " · " : ""}${esc(x.por_que || "")}</div></div></div>`).join("");
+  } else {
+    hoy = b.slice(0, 4).map(lineaBuzon).join("");
+  }
+  $("#buzonHoy").innerHTML = (hoy || `<div class="vacio">Sin quejas registradas esta semana.</div>`) +
+    `<button class="mas" data-ir="instituciones">Ver todas las áreas</button>`;
+  $("#buzonCompleto").innerHTML = b.length ? `<div class="grupo" style="grid-column:1/-1"><h2>Buzón ciudadano de Vitoria · quejas de la última semana por área<small>↑ sube respecto a la semana anterior</small></h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr))">${b.map(x => `<div style="border-bottom:1px solid var(--linea2);border-right:1px solid var(--linea2)">${lineaBuzon(x)}
+      <ul class="lista" style="padding:0 16px 8px 62px;font-size:13px">${x.ejemplos.slice(0, 3).map(e => `<li style="margin:2px 0"><a href="${esc(e.e)}" target="_blank" rel="noopener" style="text-decoration:none">${esc(e.t)}</a> <span style="color:var(--suave)">· ${esc(cuando(e.f))}</span></li>`).join("")}</ul></div>`).join("")}</div></div>` : "";
+  const eu = st.ia.eustat || [];
+  $("#eustatHoyG").hidden = !eu.length;
+  $("#eustatHoy").innerHTML = eu.slice(0, 4).map(e => `<div class="cita" style="grid-template-columns:1fr"><div><a href="${esc(e.enlace || "#")}" target="_blank" rel="noopener">${esc(e.titulo)}</a><div class="det"><b style="color:var(--tinta)">Álava:</b> ${esc(e.dato_alava)}${e.fecha ? " · " + esc(e.fecha) : ""}</div></div></div>`).join("");
+}
+
 // ---------- secciones
 function pintaInstituciones() {
   const r = porFuente("instituciones"); $("#instituciones").innerHTML = r.html; return r.n;
@@ -610,7 +641,6 @@ function pintaBoletines() {
   let html = secc.map(([t, f]) => grupo("botha:" + t, "BOTHA · " + t, botha.filter(f), {orden: "rel", op: {sinResumen: false}})).join("");
   html += grupo("bopv", "BOPV · lo que afecta a Álava", vis.filter(i => i.fuente === "bopv" && (i.alava || !st.soloAlava)), {orden: "rel"});
   html += grupo("boe", "BOE · lo que afecta a Álava", vis.filter(i => i.fuente === "boe"), {orden: "rel"});
-  if (tram) html += `<div class="grupo"><div class="vacio">${tram} trámites rutinarios ocultos. <button class="btn" id="verTram2">Mostrarlos</button></div></div>`;
   const f = d.fuentes.find(x => x.id === "botha");
   if (f && !f.ok) html = `<div class="grupo"><div class="vacio"><span class="mal">El BOTHA no se pudo leer en la última actualización.</span></div></div>` + html;
   $("#boletines").innerHTML = html;
@@ -628,12 +658,21 @@ function pintaIdeas() {
   if (st.tema) ideas = ideas.filter(i => (i.temas || []).includes(st.tema));
   ideas.sort((a, b) => (b.puntos || 0) - (a.puntos || 0) || ref(b) - ref(a));
   $("#ideas").innerHTML = ideas.length ? ideas.map(i => {
-    const pistas = [...new Set((i.temas || []).flatMap(t => d.pistas[t] || []))].slice(0, 5);
-    return `<article class="idea"><div class="cabeza"><a class="tit" href="${esc(i.enlace)}" target="_blank" rel="noopener">${esc(i.titulo)}</a>${estrella(i)}</div>
+    const p0 = t => (d.pistas[t] && !Array.isArray(d.pistas[t])) ? d.pistas[t] : {pistas: d.pistas[t] || [], preguntas: []};
+    const pistas = [...new Set((i.temas || []).flatMap(t => p0(t).pistas))].slice(0, 4);
+    const enf = (st.ia.enfoques || {})[i.id];
+    // sin IA: preguntas del tema, rotando para que no sean siempre las mismas
+    const h = [...i.id].reduce((a, c) => a + c.charCodeAt(0), 0);
+    const pregTema = [...new Set((i.temas || []).flatMap(t => p0(t).preguntas))];
+    const preg = enf ? enf.preguntas : pregTema.length ? [0, 1].map(k => pregTema[(h + k) % pregTema.length]).filter((v, k, a) => a.indexOf(v) === k) : [];
+    const llamar = enf && enf.llamar && enf.llamar.length ? enf.llamar : pistas;
+    return `<article class="idea"><div class="cabeza"><a class="tit" data-leido="${esc(i.id)}" href="${esc(i.enlace)}" target="_blank" rel="noopener">${esc(i.titulo)}</a>${estrella(i)}</div>
       <div class="meta">${esNuevo(i) ? '<span class="chip nuevo">NUEVO</span>' : ""}<span>${esc(nombreF(i.fuente))}</span><span>${esc(cuando(i.fecha || i.visto))}</span>
       ${(i.temas || []).map(t => `<span class="chip">${esc(t)}</span>`).join("")}${(i.senales || []).filter(s => s.length > 2).slice(0, 3).map(s => `<span class="chip senal">${esc(s)}</span>`).join("")}</div>
       ${i.resumen ? `<p class="res">${esc(i.resumen)}</p>` : ""}
-      <div class="vitoria"><b>¿Y en Vitoria?</b>¿Pasa aquí? ¿Hay datos de Álava? ¿Quién lo vive en un barrio o un pueblo concreto?${pistas.length ? `<ul>${pistas.map(p => `<li>${esc(p)}</li>`).join("")}</ul>` : ""}</div></article>`;
+      <div class="vitoria"><b>¿Y en Vitoria?</b>${enf ? `<div style="margin-bottom:6px">${esc(enf.enfoque)}</div>` : ""}
+        ${preg.length ? `<ul class="preg">${preg.map(q => `<li>${esc(q)}</li>`).join("")}</ul>` : ""}
+        ${llamar.length ? `<div class="llamar"><span>A quién llamar:</span> ${llamar.map(esc).join(" · ")}</div>` : ""}</div></article>`;
   }).join("") : `<div class="grupo"><div class="vacio">No hay ideas con estos filtros. Prueba con “7 días”.</div></div>`;
   return ideas.length;
 }
@@ -647,8 +686,8 @@ function pintaMedios() {
 function pintaFuentes() {
   const d = st.d;
   $("#horaLectura").textContent = cuando(d.actualizado);
-  const orden = ["instituciones", "boletines", "pueblos", "asociaciones", "agenda", "medios", "ideas"];
-  const nombres = {instituciones: "Instituciones", boletines: "Boletines", pueblos: "Pueblos de Álava", asociaciones: "Asociaciones", agenda: "Agendas (calendario)", medios: "Medios", ideas: "Ideas de temas"};
+  const orden = ["instituciones", "buzon", "boletines", "pueblos", "asociaciones", "agenda", "ideas"];
+  const nombres = {instituciones: "Instituciones", boletines: "Boletines", pueblos: "Pueblos de Álava", asociaciones: "Asociaciones", agenda: "Agendas (calendario)", buzon: "Buzón ciudadano", ideas: "Ideas de temas"};
   $("#tablaFuentes").innerHTML = `<table><tbody>` + orden.map(s => {
     const fs = d.fuentes.filter(f => f.seccion === s); if (!fs.length) return "";
     return `<tr><th colspan="2">${nombres[s]} · ${fs.filter(f => f.ok).length}/${fs.length}</th></tr>` + fs.map(f => `<tr><td><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.nombre)}</a></td>
@@ -660,14 +699,15 @@ function pintaEstado() {
   const d = st.d, horas = (Date.now() - new Date(d.actualizado)) / 3600e3, fallos = d.fuentes.filter(f => !f.ok).length;
   $("#estado").innerHTML = `Actualizado <b>${esc(cuando(d.actualizado))}</b> · ${d.fuentes.length - fallos}/${d.fuentes.length} fuentes` +
     (horas > 30 ? `<div class="aviso">⚠ Hace más de un día que no se actualiza.</div>` : "") +
-    (fallos ? `<div class="aviso">${fallos} sin leer · <a href="#fuentes" style="color:inherit">ver Fuentes</a></div>` : "");
+    (fallos ? `<div class="aviso">${fallos} sin leer · <a href="#fuentes" style="color:inherit">ver Fuentes</a></div>` : "") +
+    (st.ia.actualizado ? `<div style="opacity:.8">Titulares y enfoques revisados ${esc(cuando(st.ia.actualizado))}</div>` : "");
 }
 function pinta() {
   if (!st.d) return;
   const n = {instituciones: pintaInstituciones(), pueblos: pintaPueblos(), boletines: pintaBoletines(),
-             asociaciones: pintaAsociaciones(), ideas: pintaIdeas(), medios: pintaMedios()};
+             asociaciones: pintaAsociaciones(), ideas: pintaIdeas()};
   Object.entries(n).forEach(([k, v]) => { const e = $("#n-" + k); if (e) e.textContent = v; });
-  pintaHoy(); pintaCalendario(); pintaFuentes(); pintaEstado(); pintaGuardados();
+  pintaHoy(); pintaBuzon(); pintaCalendario(); pintaFuentes(); pintaEstado(); pintaGuardados();
 }
 
 // ---------- navegación
@@ -688,9 +728,6 @@ $$("#periodo button").forEach(b => {
   b.setAttribute("aria-pressed", +b.dataset.dias === st.dias);
   b.addEventListener("click", () => { st.dias = +b.dataset.dias; mem.set("dias", st.dias); $$("#periodo button").forEach(x => x.setAttribute("aria-pressed", x === b)); pinta(); });
 });
-$("#soloAlava").checked = st.soloAlava;
-$("#soloAlava").addEventListener("change", e => { st.soloAlava = e.target.checked; mem.set("soloAlava", st.soloAlava); pinta(); });
-$("#verTramites").addEventListener("change", e => { st.tramites = e.target.checked; pinta(); });
 $("#soloSeguir").addEventListener("change", e => { st.soloSeguir = e.target.checked; pintaCalendario(); });
 $("#mesAnt").onclick = () => { const [y, m] = st.mes.split("-").map(Number); const d = new Date(Date.UTC(y, m - 2, 1)); st.mes = d.toISOString().slice(0, 7); pintaCalendario(); };
 $("#mesSig").onclick = () => { const [y, m] = st.mes.split("-").map(Number); const d = new Date(Date.UTC(y, m, 1)); st.mes = d.toISOString().slice(0, 7); pintaCalendario(); };
@@ -702,9 +739,11 @@ function buscaGuardable(id) {
     return e && {id, titulo: (e.hora ? e.hora + " · " : "") + e.titulo + " (" + fF.format(new Date(e.fecha + "T12:00:00Z")) + ")", enlace: e.enlace, fuente: nombreF(e.fuente), fecha: e.fecha};
   }
   const it = st.d.items.find(i => i.id === id);
-  return it && {id, titulo: it.titulo, enlace: it.enlace, fuente: nombreF(it.fuente), fecha: it.fecha || it.visto};
+  return it && {id, titulo: tituloDe(it), enlace: it.enlace, fuente: nombreF(it.fuente), fecha: it.fecha || it.visto};
 }
 document.addEventListener("click", e => {
+  const lk = e.target.closest("[data-leido]");
+  if (lk) { marcaLeido(lk.dataset.leido); setTimeout(pinta, 50); return; }
   const g = e.target.closest("[data-guardar]");
   if (g) { const id = g.dataset.guardar; if (st.guardados[id]) delete st.guardados[id]; else { const o = buscaGuardable(id); if (o) st.guardados[id] = o; } mem.set("guardados", st.guardados); pinta(); return; }
   const x = e.target.closest("[data-expandir]");
@@ -718,7 +757,6 @@ document.addEventListener("click", e => {
   if (ir) { e.preventDefault(); st.diaSel = ir.dataset.irdia; st.mes = st.diaSel.slice(0, 7); muestra("calendario"); pintaCalendario(); return; }
   const irp = e.target.closest("[data-ir]"); if (irp) { muestra(irp.dataset.ir); scrollTo(0, 0); return; }
   const cat = e.target.closest("[data-cat]"); if (cat) { const c = cat.dataset.cat; st.cats[c] = st.cats[c] === false; mem.set("cats", st.cats); pintaCalendario(); return; }
-  if (e.target.id === "verTram2") { st.tramites = true; $("#verTramites").checked = true; pinta(); return; }
   const q = e.target.closest("[data-quitar]"); if (q) { delete st.guardados[q.dataset.quitar]; mem.set("guardados", st.guardados); pinta(); }
 });
 
@@ -764,6 +802,7 @@ async function carga() {
     const r = await fetch("datos.json?t=" + Date.now(), {cache: "no-store"});
     if (!r.ok) throw new Error(r.status);
     st.d = await r.json();
+    try { const ri = await fetch("ia.json?t=" + Date.now(), {cache: "no-store"}); if (ri.ok) st.ia = await ri.json(); } catch {}
     fuentes = Object.fromEntries(st.d.fuentes.map(f => [f.id, f]));
     pinta();
   } catch (e) {

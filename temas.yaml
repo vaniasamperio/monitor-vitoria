@@ -12,69 +12,85 @@
 #  principio de la palabra: "viviend" encuentra vivienda y viviendas.
 #
 #  "pistas" son las fuentes de Vitoria/Álava donde buscar el ángulo
-#  local. Aparecen debajo de cada idea como "¿Y en Vitoria?".
+#  local, y "preguntas" las que se plantea un periodista. Aparecen en
+#  "¿Y en Vitoria?" cuando la IA no ha escrito un enfoque propio.
 # ============================================================
 
 temas:
   - nombre: Vivienda
     palabras: [viviend, alquiler, hipotec, desahuci, okupa, piso, pisos, inquilin, vpo, vivienda protegida, ascensor, rehabilitacion, comunidad de vecinos]
     pistas: ["Ensanche 21 Zabalgunea", "Observatorio Vasco de la Vivienda", "Alokabide", "Etxebide", "Ayudas municipales a la rehabilitación"]
+    preguntas: ["¿Cuántos pisos de Ensanche 21 o Alokabide hay vacíos o pendientes de adjudicar en Vitoria ahora mismo?", "¿Cuánto ha subido el alquiler en Zabalgana o Salburua frente al Casco Viejo en el último año?", "¿Qué le pasa a una familia que lleva años en la lista de Etxebide sin piso? Buscar un caso con nombre."]
 
   - nombre: Mayores y cuidados
     palabras: [mayores, envejec, residencia, soledad no deseada, cuidador, dependencia, jubilad, pension, centro de dia, longev]
     pistas: ["IFBS · Instituto Foral de Bienestar Social", "Centros socioculturales de mayores del Ayuntamiento", "Eustat: población por edad", "Asociaciones de jubilados de barrio"]
+    preguntas: ["¿Cuánto se espera hoy en Álava por una plaza residencial pública del IFBS?", "¿Cuántas personas mayores viven solas en el Ensanche o el Casco Viejo según el padrón municipal?", "¿Quién cuida a quien cuida? Hablar con una cuidadora migrante de un barrio concreto."]
 
   - nombre: Juventud
     palabras: [jovenes, juventud, adolescent, emancip, ocio juvenil, gazte, primer empleo, salud mental juvenil]
     pistas: ["Observatorio Vasco de la Juventud", "Servicio municipal de Juventud", "Campus de Álava de la UPV/EHU", "Gazteleku de los centros cívicos"]
+    preguntas: ["¿A qué edad se emancipa de media la juventud alavesa y cuánto pagan los que lo consiguen?", "¿Qué pasa en los gaztelekus de los centros cívicos un viernes por la tarde?", "¿Cuántos jóvenes del campus de Álava se quedan a trabajar en Vitoria al acabar?"]
 
   - nombre: Salud
     palabras: [sanidad, sanitari, hospital, urgencias, lista de espera, atencion primaria, medico de familia, pediatr, salud mental, enfermer, farmac, osakidetza]
     pistas: ["OSI Araba (Txagorritxu, Santiago)", "Colegio de Médicos de Álava", "Plataformas de pacientes de Álava", "Datos de listas de espera de Osakidetza"]
+    preguntas: ["¿Cuánto se tarda hoy en conseguir cita con el médico de cabecera en un centro de salud de Vitoria concreto?", "¿Qué especialidades de la OSI Araba tienen más lista de espera y desde cuándo?", "¿Cómo se vive esto en un pueblo de la Montaña Alavesa con consultorio de dos días a la semana?"]
 
   - nombre: Educación
     palabras: [colegio, escuela, alumn, profesor, docente, aula, universidad, matricul, bachiller, fp, formacion profesional, comedor escolar, acoso escolar, ikastola]
     pistas: ["Delegación de Educación en Álava", "Campus de Álava de la UPV/EHU", "AMPAs y federaciones de familias", "Matrícula por centros (Gobierno Vasco)"]
+    preguntas: ["¿Qué colegios de Vitoria pierden alumnado y cuáles tienen lista de espera?", "¿Cuánto cuesta el comedor escolar a una familia alavesa y quién se queda fuera de las becas?", "¿Qué dicen las AMPAs y la delegación de Educación en Álava sobre esto?"]
 
   - nombre: Movilidad
     palabras: [tranvia, autobus, transporte publico, bicicleta, bici, carril, trafico, aparcamiento, peaton, zona de bajas emisiones, patinete, tren, estacion]
     pistas: ["TUVISA", "Tranvía (Euskotren)", "Plan de Movilidad Sostenible municipal", "Asociaciones ciclistas de Vitoria"]
+    preguntas: ["¿Cuántos viajeros ha ganado o perdido esa línea de TUVISA o el tranvía en el último año?", "¿Qué barrio de Vitoria sigue peor conectado y qué dicen sus vecinos?", "¿Se cumplen en Vitoria los plazos del Plan de Movilidad para esto?"]
 
   - nombre: Comercio y barrio
     palabras: [comercio local, tienda, persiana, local vacio, locales vacios, hosteleria, bar, bares, mercado, franquicia, pequeno comercio, barrio]
     pistas: ["Gasteiz On (comercio)", "Asociación de Hostelería de Álava", "Mercado de Abastos", "Asociaciones vecinales"]
+    preguntas: ["¿Cuántos locales comerciales están vacíos en calles como Dato, Portal de Castilla o el Casco Viejo?", "¿Qué negocio de toda la vida ha cerrado este año en un barrio concreto y por qué?", "¿Qué opina Gasteiz On y qué ayudas municipales existen para esto?"]
 
   - nombre: Empleo y economía
     palabras: [empleo, paro, desemple, trabajo, salario, sueldo, precariedad, autonomo, industria, cierre de empresa, ere, huelga, teletrabajo, convenio]
     pistas: ["Lanbide (datos de Álava)", "SEA Empresas Alavesas", "Cámara de Comercio de Álava", "Sindicatos en Álava"]
+    preguntas: ["¿Cómo está el paro en Álava frente a Bizkaia y Gipuzkoa en el último dato de Lanbide?", "¿Qué empresas alavesas del sector están contratando o despidiendo?", "¿Qué cuenta un trabajador o trabajadora afectada en Vitoria?"]
 
   - nombre: Medio ambiente
     palabras: [clima, climatic, calor, ola de calor, sequia, contaminacion, calidad del aire, ruido, residuo, reciclaj, arbol, zonas verdes, anillo verde, biodiversidad, energia, renovable, placas solares]
     pistas: ["CEA · Centro de Estudios Ambientales", "Anillo Verde", "AMVISA (agua)", "Datos de calidad del aire de Vitoria"]
+    preguntas: ["¿Qué dicen los datos de calidad del aire o ruido de Vitoria sobre esto en el último año?", "¿Cómo afecta al Anillo Verde o a Salburua, según el CEA?", "¿Qué está haciendo un pueblo alavés concreto al respecto?"]
 
   - nombre: Igualdad
     palabras: [igualdad, violencia machista, violencia de genero, feminis, brecha, conciliacion, lgtbi, diversidad, mujeres]
     pistas: ["Servicio municipal de Igualdad", "Emakunde", "Asociaciones feministas de Vitoria"]
+    preguntas: ["¿Qué datos tiene el Servicio municipal de Igualdad o Emakunde sobre esto en Álava?", "¿Cómo lo viven las mujeres en un pueblo pequeño frente a la capital?", "¿Qué asociación feminista de Vitoria trabaja este tema y qué reclama?"]
 
   - nombre: Migración y convivencia
     palabras: [migrant, inmigra, refugiad, racismo, convivencia, sinhogar, sin hogar, personas sin techo, exclusion, pobreza]
     pistas: ["Ikuspegi · Observatorio Vasco de Inmigración", "Servicios sociales municipales", "Cáritas Vitoria", "Ararteko"]
+    preguntas: ["¿Qué dice el último informe de Ikuspegi sobre la población de origen extranjero en Álava?", "¿Cuántas personas duermen en la calle en Vitoria según el último recuento?", "¿Qué hace Cáritas Vitoria o una asociación de barrio ante esto?"]
 
   - nombre: Cultura y patrimonio
     palabras: [cultura, museo, patrimonio, biblioteca, libreria, teatro, cine, festival, concierto, artista, euskera, archivo, historia]
     pistas: ["Departamento municipal de Cultura", "Museos de Álava (Diputación)", "Artium", "Fundación Catedral Santa María"]
+    preguntas: ["¿Cuánto público tienen los equipamientos culturales de Vitoria para esto y está creciendo?", "¿Qué patrimonio alavés está en una situación parecida (cerrado, en obras, olvidado)?", "¿Qué artista o colectivo de Vitoria trabaja en esto y quiere contarlo en antena?"]
 
   - nombre: Mundo rural y despoblación
     palabras: [despoblac, rural, pueblo, pueblos, concejo, agricult, ganader, vino, viñedo, vendimia, campo]
     pistas: ["Concejos de Álava", "Cuadrillas (Llanada, Rioja Alavesa, Montaña...)", "Diputación · Agricultura", "UAGA (sindicato agrario)"]
+    preguntas: ["¿Qué concejos de Álava han perdido más vecinos en la última década?", "¿Qué servicio básico (bar, tienda, autobús, médico) ha desaparecido de algún pueblo alavés este año?", "¿Qué alcalde o presidente de junta administrativa quiere contarlo?"]
 
   - nombre: Consumo y bolsillo
     palabras: [precio, inflacion, cesta de la compra, factura, luz, gas, gasolina, consumidor, estafa, timo, alimentos]
     pistas: ["Kontsumobide (Álava)", "OMIC municipal", "Asociaciones de consumidores"]
+    preguntas: ["¿Cuánto cuesta esto en Vitoria frente a la media vasca o española?", "¿Cuántas reclamaciones ha recibido Kontsumobide o la OMIC de Vitoria sobre esto?", "¿Cómo lo nota una familia o un comercio concreto de un barrio?"]
 
   - nombre: Tecnología y ciencia
     palabras: [inteligencia artificial, ia, digital, ciberseguridad, ciencia, investigac, startup, innovacion, robot, brecha digital]
     pistas: ["BIC Araba", "Campus de Álava de la UPV/EHU", "Centros tecnológicos (Tecnalia)", "Robotekin"]
+    preguntas: ["¿Qué empresa o grupo del campus de Álava o del BIC Araba trabaja en esto?", "¿Hay brecha digital en los mayores o los pueblos alaveses respecto a esto?", "¿Quién en Vitoria puede explicarlo de forma sencilla para la radio?"]
 
 # Señales de que una noticia es "de fondo" (suman puntos)
 fondo:

@@ -483,6 +483,159 @@ def lee_liferay(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
     return out[:25]
 
 
+# ---------------------------------------------------------------- titulares claros (reglas)
+INFINITIVOS = {"aprobar": "aprueba", "conceder": "concede", "convocar": "convoca", "autorizar": "autoriza",
+               "adjudicar": "adjudica", "modificar": "modifica", "declarar": "declara", "desestimar": "desestima",
+               "estimar": "estima", "ordenar": "ordena", "resolver": "resuelve", "establecer": "establece",
+               "regular": "regula", "aceptar": "acepta", "ratificar": "ratifica", "designar": "designa",
+               "prorrogar": "prorroga", "iniciar": "inicia", "someter": "somete", "dar": "da"}
+RX_CABECERA = re.compile(
+    r"^(?:(moci[oó]n|decreto foral|decreto|acuerdo|orden foral|orden|resoluci[oó]n|norma foral|ley|anuncio|edicto|"
+    r"instrucci[oó]n|circular|proposici[oó]n no de ley)\s*(?:n\.?[ºo°]\s*)?[\d/\-]*\s*,?\s*(?:de\s+\d{1,2}\s+de\s+\w+(?:\s+de\s+\d{4})?)?"
+    r"(?:,?\s*(?:del|de la|de los)\s+[^.,]{3,90})?[.,]?\s*)", re.I)
+RX_FORMULA = re.compile(r"^(?:al objeto de|por (?:la|el) que se|por (?:la|el) que|relativ[oa] a|sobre|para)\s+", re.I)
+
+
+def _verbo(t: str) -> str:
+    m = re.match(r"^(\w+)\b(.*)$", t)
+    if m and m.group(1).lower() in INFINITIVOS:
+        return INFINITIVOS[m.group(1).lower()] + m.group(2)
+    return t
+
+
+def actor(it: dict, fuente: dict) -> str:
+    org = normaliza(it.get("organismo", "") + " " + it.get("texto", ""))
+    if fuente.get("tipo") == "botha":
+        if "juntas generales" in org:
+            return "Juntas Generales"
+        if "diputacion" in org or "departamento" in org or "consejo de gobierno" in org or "foral" in org:
+            return "Diputación"
+        if it.get("municipios"):
+            return it["municipios"][0]
+        if "cuadrilla" in org:
+            return it.get("organismo", "").title().replace(" De ", " de ").replace(" La ", " la ")
+        if "junta administrativa" in org:
+            return "Concejo de " + it.get("organismo", "").title().split(" De ", 1)[-1].replace(" De ", " de ").replace(" Del ", " del ")
+    return ""
+
+
+def titulo_claro(it: dict, fuente: dict) -> str:
+    """Quita la jerga de los boletines: números de expediente, fechas y fórmulas."""
+    t = " ".join(it["titulo"].split())
+    if fuente.get("seccion") not in ("boletines",) and len(t) < 140:
+        return t
+    m = RX_CABECERA.match(t)
+    tipo = ""
+    if m and m.group(1):
+        tipo = m.group(1).lower()
+        t = t[m.end():]
+    t = RX_FORMULA.sub("", t).strip(" .,-")
+    t = re.sub(r"\s+del ayuntamiento de [\w\-áéíóúñ/ ]+$", "", t, flags=re.I)
+    t = re.sub(r"\b(ordenanza(?: fiscal| municipal)?) reguladora\b", r"\1", t, flags=re.I)
+    t = re.sub(r"\s{2,}", " ", t).strip(" .,-")
+    if not t:
+        return it["titulo"]
+    if tipo.startswith("moci"):
+        t = "moción para " + t[0].lower() + t[1:]
+    else:
+        t = _verbo(t[0].lower() + t[1:]) if not t[:3].isupper() else t
+    quien = actor(it, fuente)
+    if quien and not normaliza(t).startswith(normaliza(quien)):
+        verbo = re.match(r"^(" + "|".join(INFINITIVOS.values()) + r")\b", t)
+        t = f"{quien} {t}" if verbo else f"{quien}: {t}"
+    t = t[0].upper() + t[1:]
+    if len(t) < 30 and not quien:          # demasiado corto: mejor el original
+        return it["titulo"]
+    if len(t) > 150:
+        t = t[:150].rsplit(" ", 1)[0] + "…"
+    return t or it["titulo"]
+
+
+# ---------------------------------------------------------------- buzón ciudadano
+RX_HACE = re.compile(r"hace\s+(\d+)\s+(minuto|hora|d[ií]a)", re.I)
+RX_FH = re.compile(r"(\d{2})/(\d{2})/(20\d\d)\s+(\d{2}):(\d{2})")
+
+
+def lee_buzon_area(contenido: bytes, area: str, ahora: datetime) -> list[dict]:
+    sopa = BeautifulSoup(contenido, "html.parser")
+    out, vistos = [], set()
+    for a in sopa.find_all("a", href=re.compile(r"verComentarios")):
+        titulo = " ".join(a.get_text(" ").split())
+        enlace = urljoin("https://www.vitoria-gasteiz.org/wb021/was/", a["href"])
+        mid = re.search(r"claveAsuntoCom=(\d+)", a["href"])
+        if not titulo or not mid or mid.group(1) in vistos:
+            continue
+        vistos.add(mid.group(1))
+        fila = a
+        for _ in range(6):                       # subir hasta el bloque que trae la fecha
+            fila = fila.parent
+            if fila is None or RX_FH.search(fila.get_text(" ")) or RX_HACE.search(fila.get_text(" ")):
+                break
+        texto = " ".join(fila.get_text(" ").split()) if fila else ""
+        cuerpo = texto.replace(titulo, "", 1)
+        cuerpo = re.split(r"hace\s+\d+|\d{2}/\d{2}/20\d\d", cuerpo)[0].strip(" :")
+        fecha = None
+        m = RX_FH.search(texto)
+        if m:
+            d, mo, y, h, mi = map(int, m.groups())
+            fecha = datetime(y, mo, d, h, mi, tzinfo=MADRID)
+        else:
+            m = RX_HACE.search(texto)
+            if m:
+                n, u = int(m.group(1)), m.group(2).lower()
+                fecha = ahora - (timedelta(minutes=n) if u.startswith("min") else timedelta(hours=n) if u.startswith("hor") else timedelta(days=n))
+        out.append({"titulo": titulo.strip("\u200b "), "enlace": enlace, "texto": recorta(cuerpo, 260), "texto_largo": "",
+                    "fecha": fecha, "categorias": [area], "area": area})
+    return out
+
+
+RX_LUGAR = re.compile(r"\b(?:calle|c/|c\.|plaza|pza\.?|avenida|avda\.?|av\.|paseo|parque|portal de|camino|rotonda|"
+                      r"barrio|bulevar|travesía|pasaje|kalea|plazuela)\s+((?:de\s+(?:la\s+|los\s+|las\s+)?)?[A-ZÁÉÍÓÚÑ0-9][\wáéíóúñü\-\.]*"
+                      r"(?:\s+(?:de|del|la|las|los|y|[A-ZÁÉÍÓÚÑ0-9][\wáéíóúñü\-\.]*)){0,3})", re.I)
+BARRIOS = ["zabalgana", "salburua", "lakua", "arriaga", "judimendi", "zaramaga", "sansomendi", "abetxuko", "arana",
+           "adurtza", "ariznabarra", "aranbizkarra", "txagorritxu", "gazalbide", "el pilar", "coronacion", "desamparados",
+           "casco viejo", "alde zaharra", "ensanche", "lovaina", "san martin", "mendizorrotza", "armentia", "betoño",
+           "santa lucia", "santiago", "errekaleor", "jundiz", "ali", "gamarra", "ibaiondo", "aldaia", "mariturri",
+           "borinbizkarra", "elejalde", "arkaiate", "larrein", "ibaialde", "goikolarra", "anglo vasco", "abendaño"]
+RX_BARRIO = re.compile(r"\b(" + "|".join(re.escape(b) for b in BARRIOS) + r")\b")
+VACIAS = set("de del la las los el en y a por para con sin que una uno un no se su al lo hay muy mas más ya".split())
+
+
+def resumen_buzon(items: list[dict], ahora: datetime) -> list[dict]:
+    """Por área: quejas de la última semana, tendencia y lugares o frases que se repiten."""
+    from collections import Counter, defaultdict
+    hace7, hace14 = ahora - timedelta(days=7), ahora - timedelta(days=14)
+    por_area = defaultdict(list)
+    for it in items:
+        por_area[it.get("area") or it.get("resumen", "")].append(it)
+    out = []
+    for area, l in por_area.items():
+        sem = [i for i in l if (de_iso(i["fecha"]) or de_iso(i["visto"])) >= hace7]
+        ant = [i for i in l if hace14 <= (de_iso(i["fecha"]) or de_iso(i["visto"])) < hace7]
+        lugares, frases = Counter(), Counter()
+        for i in sem:
+            t = i["titulo"]
+            for m in RX_LUGAR.finditer(t):
+                lugares[" ".join(m.group(0).split()).rstrip(".").title().replace(" De ", " de ").replace(" Del ", " del ")] += 1
+            for m in RX_BARRIO.finditer(normaliza(t)):
+                lugares[m.group(1).title()] += 1
+            pal = [w for w in re.findall(r"[a-záéíóúñü]+", t.lower()) if w not in VACIAS and len(w) > 2]
+            for k in range(len(pal) - 1):
+                frases[pal[k] + " " + pal[k + 1]] += 1
+        rep_l = [(k, v) for k, v in lugares.most_common(4) if v >= 2]
+        rep_f = [(k, v) for k, v in frases.most_common(3) if v >= 3]
+        if not sem:
+            continue
+        sem.sort(key=lambda i: i["fecha"] or i["visto"], reverse=True)
+        out.append({"area": area, "semana": len(sem), "anterior": len(ant),
+                    "lugares": [{"t": k, "n": v} for k, v in rep_l], "frases": [{"t": k, "n": v} for k, v in rep_f],
+                    "ejemplos": [{"t": i["titulo"], "e": i["enlace"], "f": i["fecha"] or i["visto"],
+                                  "x": (i.get("resumen") or "")[:160]} for i in sem[:6]],
+                    "url": None})
+    out.sort(key=lambda x: (len(x["lugares"]) + len(x["frases"]), x["semana"]), reverse=True)
+    return out
+
+
 LECTORES = {"liferay": lee_liferay, "rss": lee_rss, "html": lee_html, "diputacion": lee_diputacion, "botha": lee_botha, "boe": lee_boe}
 
 
@@ -491,6 +644,7 @@ class Clasificador:
     def __init__(self, temas_cfg: dict):
         self.temas = [(t["nombre"], patron(t.get("palabras", [])), t.get("pistas", []))
                       for t in temas_cfg.get("temas", [])]
+        self.preguntas = {t["nombre"]: t.get("preguntas", []) for t in temas_cfg.get("temas", [])}
         self.rx_fondo = patron(temas_cfg.get("fondo", []))
         self.rx_excluir = patron(temas_cfg.get("excluir", []))
 
@@ -544,7 +698,7 @@ class Clasificador:
             it["senales"] = [BONITO.get(s, s) for s in sorted(fondo)][:4]
 
     def pistas(self) -> dict:
-        return {n: p for n, _, p in self.temas}
+        return {n: {"pistas": p, "preguntas": self.preguntas.get(n, [])} for n, _, p in self.temas}
 
 
 def tipo_item(it: dict, fuente: dict) -> str:
@@ -598,6 +752,33 @@ def main() -> int:
         fuente.setdefault("seccion", "instituciones")
         inicio = time.time()
         url = fuente["url"].replace("{HOY}", hoy.strftime("%Y%m%d"))
+        if fuente.get("tipo") == "buzon":
+            nuevos_b, fallos_b = [], 0
+            for clave_area, nombre_area in (fuente.get("areas") or {}).items():
+                u = url.replace("{AREA}", str(clave_area))
+                try:
+                    nuevos_b += lee_buzon_area(descarga(u, args.fixtures, f"buzon-{clave_area}"), nombre_area, ahora)
+                except Exception as e:
+                    fallos_b += 1
+                    print(f"  buzón área {clave_area}: {type(e).__name__}", file=sys.stderr)
+                time.sleep(0.5 if not args.fixtures else 0)
+            n_n = 0
+            for it in nuevos_b:
+                clave = ident("buzon", it["enlace"])
+                previo = items_hist.get(clave)
+                items_hist[clave] = {"id": clave, "fuente": "buzon", "seccion": "buzon", "tipo": "queja",
+                                     "titulo": it["titulo"], "enlace": it["enlace"], "resumen": it["texto"],
+                                     "area": it["area"], "fecha": iso(it["fecha"]),
+                                     "visto": previo["visto"] if previo else iso(ahora), "alava": True,
+                                     "municipios": ["Vitoria-Gasteiz"], "cuadrilla": "Vitoria-Gasteiz",
+                                     "temas": [], "relevancia": 0, "rutina": False, "cal": True}
+                n_n += 0 if previo else 1
+            ok_b = fallos_b < len(fuente.get("areas") or {}) or not fuente.get("areas")
+            estado.append({"id": fuente["id"], "nombre": fuente["nombre"], "url": url.replace("{AREA}", "18"),
+                           "seccion": fuente["seccion"], "local": True, "ok": ok_b, "leidos": len(nuevos_b),
+                           "nuevos": n_n, **({} if ok_b else {"error": "no se pudo leer ninguna área"})})
+            print(f"{'OK  ' if ok_b else 'FALLO'} buzon {len(nuevos_b):>3} quejas leídas, {n_n} nuevas, {fallos_b} áreas con fallo")
+            continue
         try:
             try:
                 crudo = descarga(url, args.fixtures, fuente["id"], fuente.get("accept"))
@@ -616,7 +797,7 @@ def main() -> int:
                 previo = items_hist.get(clave)
                 reg = {
                     "id": clave, "fuente": fuente["id"], "seccion": fuente["seccion"], "tipo": tipo,
-                    "titulo": it["titulo"], "enlace": it["enlace"],
+                    "titulo": it["titulo"], "titulo_claro": titulo_claro(it, fuente), "enlace": it["enlace"],
                     "resumen": recorta(it["texto"], 1800 if tipo == "convocatoria" else MAX_RESUMEN),
                     "fecha": iso(it["fecha"]), "visto": previo["visto"] if previo else iso(ahora),
                     "alava": it["alava"], "temas": it["temas"], "municipios": it["municipios"],
@@ -689,8 +870,13 @@ def main() -> int:
                 if date.fromisoformat(v.get("hasta") or v["fecha"]) >= hoy - timedelta(days=45)}
 
     limite_ideas = ahora - timedelta(days=DIAS_IDEAS)
+    quejas = [i for i in items_hist.values() if i["seccion"] == "buzon"
+              and (de_iso(i["fecha"]) or de_iso(i["visto"])) >= ahora - timedelta(days=14)]
+    buzon = resumen_buzon(quejas, ahora)
     publicados = []
     for it in items_hist.values():
+        if it["seccion"] == "buzon":
+            continue
         if it["seccion"] == "ideas":
             ref = de_iso(it["fecha"]) or de_iso(it["visto"])
             if ref < limite_ideas or (not it["alava"] and it.get("puntos", 0) < UMBRAL_IDEA):
@@ -713,6 +899,7 @@ def main() -> int:
         "municipios": {n: c for n, (c, _) in MUNICIPIOS.items()},
         "tipos_calendario": calendario.ETIQUETAS,
         "items": sorted(publicados, key=lambda i: i["fecha"] or i["visto"], reverse=True),
+        "buzon": buzon,
         "calendario": cal,
     })
     fallos = sum(1 for s in estado if not s["ok"])

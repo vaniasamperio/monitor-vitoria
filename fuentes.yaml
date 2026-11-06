@@ -31,6 +31,38 @@ fuentes:
   - {id: irekia, nombre: "Gobierno Vasco · Irekia", url: "https://www.irekia.euskadi.eus/es/news.rss", tipo: rss, seccion: instituciones, local: false}
   - {id: ararteko, nombre: "Ararteko", url: "https://ararteko.eus/es/rss.xml", tipo: rss, seccion: instituciones, local: false}
   - {id: euskotren, nombre: "Euskotren (tranvía)", url: "https://www.euskotren.eus/eu/rss.xml", tipo: rss, seccion: instituciones, local: false, prioridad: baja}
+  - {id: tsjpv, nombre: "Tribunales · TSJ del País Vasco (notas de prensa)", url: "https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunales-Superiores-de-Justicia/TSJ-Pais-Vasco/ch.En-Portada.formato1/", tipo: rss, seccion: instituciones, local: false}
+
+  # =================== BUZÓN CIUDADANO DE VITORIA ===================
+  # Se leen las últimas quejas públicas de cada área y se cuenta lo que se repite.
+  - id: buzon
+    nombre: "Buzón ciudadano de Vitoria"
+    url: "https://www.vitoria-gasteiz.org/wb021/was/areaAction.do?idioma=es&accion=areas&claveArea={AREA}"
+    tipo: buzon
+    seccion: buzon
+    local: true
+    municipio: Vitoria-Gasteiz
+    areas:
+      18: "Alumbrado público"
+      12: "Desperfectos en la vía pública"
+      14: "Obras en la vía pública"
+      16: "Zonas verdes"
+      17: "Mobiliario urbano"
+      19: "Accesibilidad"
+      22: "Limpieza"
+      23: "Contaminación y ruido"
+      24: "Reciclaje y residuos"
+      2: "TUVISA"
+      4: "Tráfico"
+      5: "Coches y aparcamiento"
+      6: "Seguridad vial"
+      9: "Bicicleta"
+      13: "AMVISA (agua)"
+      36: "Instalaciones deportivas"
+      41: "Centros cívicos"
+      65: "Policía Local"
+      70: "Vivienda"
+      260: "Personas mayores"
 
   # =================== BOLETINES ===================
   - {id: botha, nombre: "BOTHA · Boletín Oficial de Álava", url: "https://www.araba.eus/botha/inicio/SGBO5001.aspx", tipo: botha, seccion: boletines, local: true, prioridad: media}
@@ -74,13 +106,8 @@ fuentes:
   - {id: agenda-cultura, nombre: "Ayuntamiento · Agenda de cultura y ocio", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=actividadesCuadroMando&claveTema=&claveArea=38", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: cultura, max: 150}
   - {id: elkarteak-agenda, nombre: "Elkarteak.org · Agenda de asociaciones", url: "https://elkarteak.org/rss_agenda.php?h=es", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: asociaciones}
 
-  # =================== YA PUBLICADO (medios de Álava) ===================
-  - {id: gasteizberri, nombre: "Gasteiz Berri", url: "https://gasteizberri.com/feed/", tipo: rss, seccion: medios, local: true}
-  - {id: halabedi, nombre: "Hala Bedi", url: "https://halabedi.eus/feed", tipo: rss, seccion: medios, local: true}
-  # Gasteiz Hoy bloquea las lecturas desde GitHub (error 403).
-  - {id: gasteizhoy, nombre: "Gasteiz Hoy", url: "https://www.gasteizhoy.com/feed/", tipo: rss, seccion: medios, local: true, activa: false}
-
-  # =================== IDEAS DE TEMAS (prensa de otros territorios) ===================
+  # =================== IDEAS DE TEMAS (medios de toda España) ===================
+  # Diario de Navarra, Heraldo y los diarios de Vocento no se incluyen: no permiten este uso.
   - {id: eldiario-euskadi, nombre: "elDiario.es · Euskadi", url: "https://www.eldiario.es/rss/euskadi/", tipo: rss, seccion: ideas}
   - {id: eldiario-navarra, nombre: "elDiario.es · Navarra", url: "https://www.eldiario.es/rss/navarra/", tipo: rss, seccion: ideas}
   - {id: eldiario-cyl, nombre: "elDiario.es · Castilla y León", url: "https://www.eldiario.es/rss/castilla-y-leon/", tipo: rss, seccion: ideas}
@@ -90,6 +117,30 @@ fuentes:
   - {id: eldiario-asturias, nombre: "elDiario.es · Asturias", url: "https://www.eldiario.es/rss/asturias/", tipo: rss, seccion: ideas}
   - {id: eldiario-cv, nombre: "elDiario.es · Comunitat Valenciana", url: "https://www.eldiario.es/rss/comunitat-valenciana/", tipo: rss, seccion: ideas}
   - {id: eldiario-andalucia, nombre: "elDiario.es · Andalucía", url: "https://www.eldiario.es/rss/andalucia/", tipo: rss, seccion: ideas}
+
+  - {id: 20minutos, nombre: "20minutos", url: "https://www.20minutos.es/rss", tipo: rss, seccion: ideas, max: 60}
+  - {id: europapress, nombre: "Europa Press", url: "https://www.europapress.es/rss/rss.aspx?ch=94", tipo: rss, seccion: ideas, max: 60}
+  - {id: infolibre, nombre: "infoLibre", url: "https://www.infolibre.es/rss/", tipo: rss, seccion: ideas, max: 60}
+  - {id: elsalto, nombre: "El Salto", url: "https://www.elsaltodiario.com/actualidad/feed/", tipo: rss, seccion: ideas, max: 60}
+  - {id: elpais, nombre: "El País", url: "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada", tipo: rss, seccion: ideas, max: 60}
+  - {id: elmundo, nombre: "El Mundo", url: "https://www.elmundo.es/rss/googlenews/portada.xml", tipo: rss, seccion: ideas, max: 60}
+  - {id: lavanguardia, nombre: "La Vanguardia", url: "https://www.lavanguardia.com/rss/home.xml", tipo: rss, seccion: ideas, max: 60}
+  - {id: elespanol, nombre: "El Español", url: "https://www.elespanol.com/rss/", tipo: rss, seccion: ideas, max: 60}
+  - {id: newtral, nombre: "Newtral", url: "https://www.newtral.es/feed/", tipo: rss, seccion: ideas, max: 60}
+  - {id: lamarea, nombre: "La Marea", url: "https://www.lamarea.com/feed/", tipo: rss, seccion: ideas, max: 60}
+  - {id: diariodeleon, nombre: "Diario de León", url: "https://www.diariodeleon.es/rss/home.xml", tipo: rss, seccion: ideas, max: 60}
+  - {id: diariodesevilla, nombre: "Diario de Sevilla", url: "https://www.diariodesevilla.es/rss/", tipo: rss, seccion: ideas, max: 60}
+  - {id: diariodecadiz, nombre: "Diario de Cádiz", url: "https://www.diariodecadiz.es/rss/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-catalunya, nombre: "elDiario.es · Catalunya", url: "https://www.eldiario.es/rss/catalunya/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-madrid, nombre: "elDiario.es · Madrid", url: "https://www.eldiario.es/rss/madrid/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-canariasahora, nombre: "elDiario.es · Canarias Ahora", url: "https://www.eldiario.es/rss/canariasahora/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-castilla-la-mancha, nombre: "elDiario.es · Castilla-La Mancha", url: "https://www.eldiario.es/rss/castilla-la-mancha/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-extremadura, nombre: "elDiario.es · Extremadura", url: "https://www.eldiario.es/rss/extremadura/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-murcia, nombre: "elDiario.es · Murcia", url: "https://www.eldiario.es/rss/murcia/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-illes-balears, nombre: "elDiario.es · Illes Balears", url: "https://www.eldiario.es/rss/illes-balears/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-la-rioja, nombre: "elDiario.es · La Rioja", url: "https://www.eldiario.es/rss/la-rioja/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-sociedad, nombre: "elDiario.es · Sociedad", url: "https://www.eldiario.es/rss/sociedad/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-economia, nombre: "elDiario.es · Economía", url: "https://www.eldiario.es/rss/economia/", tipo: rss, seccion: ideas, max: 60}
 
 # ------------------------------------------------------------
 #  Webs que hay que mirar a mano (no se pueden leer solas).
@@ -102,6 +153,5 @@ enlaces_manuales:
   - {nombre: "Parlamento Vasco", url: "https://www.legebiltzarra.eus/", nota: "Preguntas e iniciativas sobre Álava."}
   - {nombre: "UPV/EHU · Campus de Álava", url: "https://www.ehu.eus/es/web/araba", nota: "Sin RSS."}
   - {nombre: "Artium", url: "https://www.artium.eus/", nota: "Sin RSS. Exposiciones y actividades."}
-  - {nombre: "CENDOJ · Sentencias TSJPV", url: "https://www.poderjudicial.es/search/indexAN.jsp", nota: "Buscar por 'Vitoria' o 'Álava'."}
-  - {nombre: "Ayuntamiento · Buzón ciudadano", url: "https://www.vitoria-gasteiz.org/", nota: "Quejas vecinales: cantera de temas de barrio."}
+  - {nombre: "CENDOJ · buscador de sentencias", url: "https://www.poderjudicial.es/search/indexAN.jsp", nota: "Las notas de prensa del TSJPV ya entran en Instituciones; aquí, para buscar sentencias concretas."}
   - {nombre: "Asociaciones vecinales sin web", url: "https://judimendikoak.com/beste-auzo-elkarteak/", nota: "Listado de contactos de otras asociaciones de Vitoria (muchas solo usan redes sociales)."}

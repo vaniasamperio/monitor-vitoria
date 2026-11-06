@@ -12,7 +12,7 @@ on:
   workflow_dispatch: {}       # botón "Run workflow"
   push:
     branches: [main]
-    paths: ["fuentes.yaml", "temas.yaml", "monitor/**", "docs/index.html"]
+    paths: ["fuentes.yaml", "temas.yaml", "efemerides.yaml", "monitor/**", "docs/index.html", "docs/ia.json"]
 
 permissions:
   contents: write
