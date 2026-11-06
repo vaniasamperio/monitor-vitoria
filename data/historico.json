@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-06T18:46:32+00:00",
+ "actualizado": "2026-11-06T19:00:38+00:00",
  "items": {
   "75a1ce1971ba455f": {
    "id": "75a1ce1971ba455f",
@@ -11806,6 +11806,79 @@
    "senales": [
     "testimonio"
    ]
+  },
+  "69fb9c1cdd6b3242": {
+   "id": "69fb9c1cdd6b3242",
+   "fuente": "eldiario-asturias",
+   "seccion": "ideas",
+   "tipo": "noticia",
+   "titulo": "228 titulos, con 46 estrenos mundiales, configuran la nueva y ambiciosa edición del Festival de Cine de Gijón",
+   "enlace": "https://www.eldiario.es/asturias/228-titulos-46-estrenos-mundiales-configuran-nueva-ambiciosa-edicion-festival-cine-gijon_1_13645142.html",
+   "resumen": "El festival asturiano, que se celebra del 13 al 21 de noviembre, vuelve a poner su mirada en el cine independiente con títulos como 'El debut' de Jesse Eisenberg, 'Yo soy Rocky' de Peter Farrelly o 'La invitada' de Mads Mengel\nEl Festival de Cine de Gijón rendirá homenaje al fallecido José Luis Cienfuegos, su director durante 16 años\n La programación presencial del Festival Internacional de Cine de Gijón (FICX), que…",
+   "fecha": "2026-11-06T17:04:27+00:00",
+   "visto": "2026-11-06T19:00:38+00:00",
+   "alava": false,
+   "temas": [
+    "Cultura y patrimonio",
+    "Igualdad"
+   ],
+   "categorias": [
+    "Asturias",
+    "Gijón",
+    "Festivales de cine"
+   ],
+   "puntos": 2.5,
+   "senales": [
+    "por ciento"
+   ]
+  },
+  "f1d6099ba1749883": {
+   "id": "f1d6099ba1749883",
+   "fuente": "eldiario-asturias",
+   "seccion": "ideas",
+   "tipo": "noticia",
+   "titulo": "La nueva delegada del Gobierno en Asturias considera prioritario luchar contra el machismo",
+   "enlace": "https://www.eldiario.es/asturias/nueva-delegada-gobierno-asturias-considera-prioritario-luchar-machismo_1_13643910.html",
+   "resumen": "Adrián Barbón insiste en que, a pesar de la nminencia electoral, Celia Pérez no se una \"interina\" porque en el servicio público \"nunca se deben hacer esos cálculos\" y que quienes los hacen \"se van a equivocar\"\nAdriana Lastra cesa como delegada del Gobierno en Asturias para concurrir a las elecciones generales\n La nueva delegada del Gobierno en Asturias, Cecilia Pérez, ha definido este viernes la lucha contra la…",
+   "fecha": "2026-11-06T12:23:42+00:00",
+   "visto": "2026-11-06T19:00:38+00:00",
+   "alava": false,
+   "temas": [
+    "Migración y convivencia",
+    "Igualdad",
+    "Empleo y economía"
+   ],
+   "categorias": [
+    "Asturias",
+    "Gobierno",
+    "Adrián Barbón",
+    "Adriana Lastra"
+   ],
+   "puntos": -2.0,
+   "senales": []
+  },
+  "faf3ada0e18a1773": {
+   "id": "faf3ada0e18a1773",
+   "fuente": "eldiario-asturias",
+   "seccion": "ideas",
+   "tipo": "noticia",
+   "titulo": "Cuenta atrás para la entrada en vigor de las leyes LGTBI y de Infancia de Asturias: del 23 de noviembre al 23 de diciembre",
+   "enlace": "https://www.eldiario.es/asturias/cuenta-entrada-vigor-leyes-lgtbi-infancia-asturias-23-noviembre-23-diciembre_1_13643094.html",
+   "resumen": "El BOE recoge este viernes las dos normas aprobadas en octubre por la Junta General del Principado que refuerzan la protección frente a la discriminación por orientación sexual e identidad de género y la que amplía los derechos de los menores y el protección infantil\nLa ley LGTBI de Asturias sale adelante con el apoyo del PP y la única oposición de Vox\nAsturias aprueba el proyecto de Ley de Infancia y Adolescencia…",
+   "fecha": "2026-11-06T09:29:54+00:00",
+   "visto": "2026-11-06T19:00:38+00:00",
+   "alava": false,
+   "temas": [
+    "Igualdad"
+   ],
+   "categorias": [
+    "Asturias",
+    "LGTBI",
+    "Leyes",
+    "Junta General del Principado de Asturias"
+   ],
+   "puntos": -6.0,
+   "senales": []
   }
  }
 }

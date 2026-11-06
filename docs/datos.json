@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-06T18:46:32+00:00",
+ "actualizado": "2026-11-06T19:00:38+00:00",
  "fuentes": [
   {
    "id": "ayto-notas",
@@ -10,7 +10,7 @@
    "ok": true,
    "leidos": 10,
    "nuevos": 3,
-   "segundos": 1.7
+   "segundos": 1.8
   },
   {
    "id": "ayto-movilidad",
@@ -21,7 +21,7 @@
    "ok": true,
    "leidos": 15,
    "nuevos": 0,
-   "segundos": 1.0
+   "segundos": 0.9
   },
   {
    "id": "diputacion",
@@ -32,7 +32,7 @@
    "ok": true,
    "leidos": 4,
    "nuevos": 0,
-   "segundos": 4.9
+   "segundos": 4.7
   },
   {
    "id": "irekia",
@@ -54,7 +54,7 @@
    "ok": true,
    "leidos": 26,
    "nuevos": 0,
-   "segundos": 0.5
+   "segundos": 0.6
   },
   {
    "id": "ayto-convocatorias",
@@ -65,7 +65,7 @@
    "ok": true,
    "leidos": 10,
    "nuevos": 0,
-   "segundos": 1.4
+   "segundos": 1.3
   },
   {
    "id": "ayto-agenda",
@@ -76,7 +76,7 @@
    "ok": true,
    "leidos": 51,
    "nuevos": 0,
-   "segundos": 0.9
+   "segundos": 1.1
   },
   {
    "id": "eldiario-euskadi",
@@ -87,7 +87,7 @@
    "ok": true,
    "leidos": 65,
    "nuevos": 0,
-   "segundos": 1.2
+   "segundos": 1.1
   },
   {
    "id": "eldiario-navarra",
@@ -98,7 +98,7 @@
    "ok": true,
    "leidos": 23,
    "nuevos": 0,
-   "segundos": 0.5
+   "segundos": 0.3
   },
   {
    "id": "eldiario-cyl",
@@ -109,7 +109,7 @@
    "ok": true,
    "leidos": 30,
    "nuevos": 0,
-   "segundos": 0.3
+   "segundos": 1.0
   },
   {
    "id": "eldiario-aragon",
@@ -120,7 +120,7 @@
    "ok": true,
    "leidos": 43,
    "nuevos": 0,
-   "segundos": 1.2
+   "segundos": 0.5
   },
   {
    "id": "eldiario-cantabria",
@@ -131,7 +131,7 @@
    "ok": true,
    "leidos": 42,
    "nuevos": 0,
-   "segundos": 0.4
+   "segundos": 1.4
   },
   {
    "id": "eldiario-galicia",
@@ -142,7 +142,7 @@
    "ok": true,
    "leidos": 28,
    "nuevos": 0,
-   "segundos": 1.1
+   "segundos": 0.3
   },
   {
    "id": "eldiario-asturias",
@@ -151,9 +151,9 @@
    "seccion": "ideas",
    "local": false,
    "ok": true,
-   "leidos": 60,
-   "nuevos": 0,
-   "segundos": 1.1
+   "leidos": 61,
+   "nuevos": 3,
+   "segundos": 1.3
   },
   {
    "id": "eldiario-cv",
@@ -164,7 +164,7 @@
    "ok": true,
    "leidos": 71,
    "nuevos": 0,
-   "segundos": 0.8
+   "segundos": 0.6
   },
   {
    "id": "eldiario-andalucia",
@@ -175,7 +175,7 @@
    "ok": true,
    "leidos": 56,
    "nuevos": 0,
-   "segundos": 0.6
+   "segundos": 0.9
   }
  ],
  "manuales": [
