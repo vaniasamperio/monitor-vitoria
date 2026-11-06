@@ -122,7 +122,7 @@ fuentes:
   # =================== CORREO DE LA REDACCIÓN (Gmail propio) ===================
   # Se leen solo estos remitentes (por dominio). Ver README: "Correo de la redacción".
   - {id: correo-ayto, nombre: "Ayuntamiento de Vitoria · por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, municipio: Vitoria-Gasteiz, grupo: "Ayuntamiento de Vitoria", etiqueta: "Por correo", remitentes: [vitoria-gasteiz.org]}
-  - {id: correo-diputacion, nombre: "Diputación Foral de Álava · por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, grupo: "Diputación Foral de Álava", etiqueta: "Por correo", remitentes: [araba.eus, alava.eus]}
+  - {id: correo-diputacion, nombre: "Diputación Foral de Álava · por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, grupo: "Diputación Foral de Álava", etiqueta: "Por correo", remitentes: [araba.eus, alava.eus]}   # incluye komunikazioa@araba.eus
   - {id: correo-jjgg, nombre: "Juntas Generales · por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, grupo: "Juntas Generales de Álava", etiqueta: "Por correo", remitentes: [jjggarabaktbb.eus, jjggalava.eus]}
   - {id: correo-gv, nombre: "Gobierno Vasco · por correo", tipo: correo, url: "correo", seccion: instituciones, grupo: "Gobierno Vasco · Irekia", etiqueta: "Por correo", remitentes: [euskadi.eus, irekia.eus]}
   - {id: correo-cendoj, nombre: "CENDOJ · alertas de resoluciones de Álava", tipo: correo, modo: alertas, url: "correo", seccion: sucesos, local: true, remitentes: [poderjudicial.es, cgpj.es]}

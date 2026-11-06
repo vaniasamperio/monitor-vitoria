@@ -715,6 +715,19 @@ def _dominio(remitente: str) -> str:
     return m.group(1).lower() if m else ""
 
 
+RX_REENVIO = re.compile(r"^\s*(rv|fw|fwd|reenv|i)\s*:", re.I)
+RX_DE_ORIGINAL = re.compile(r"(?:^|\n|>)\s*(?:\*\s*)?(?:de|from|nork)\s*:\s*\**[^\n<]*<?\s*([\w.+-]+@[\w.-]+)", re.I)
+
+
+def dominios_de(c: dict) -> list[str]:
+    """Dominio del remitente y, si es un reenvío, también el del remitente original que aparece en el cuerpo."""
+    doms = [_dominio(c["de"])]
+    if RX_REENVIO.match(c["asunto"]) or "forwarded message" in (c["texto"] or "").lower() or "mensaje reenviado" in (c["texto"] or "").lower():
+        cuerpo = c["texto"] or BeautifulSoup(c["html"] or "", "html.parser").get_text("\n")
+        doms += [m.lower().split("@")[1] for m in RX_DE_ORIGINAL.findall(cuerpo)[:3]]
+    return doms
+
+
 def correos_recientes(dias: int = 4) -> list[dict]:
     """Descarga una vez por ejecución los correos de los últimos días (solo lectura, no marca nada como leído)."""
     global _CORREOS
@@ -959,7 +972,7 @@ def main() -> int:
                 else:
                     doms = tuple(fuente.get("remitentes", []))
                     crudo = json.dumps([c for c in correos_recientes()
-                                        if doms and (_dominio(c["de"]).endswith(doms))]).encode()
+                                        if doms and any(d.endswith(doms) for d in dominios_de(c))]).encode()
             elif "{PAGINA}" in url:                     # APIs paginadas (Kulturklik): se juntan las páginas
                 todos = []
                 for pag in range(1, fuente.get("paginas", 5) + 1):
