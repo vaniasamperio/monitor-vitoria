@@ -37,6 +37,13 @@ Siempre en castellano (traduce si el original está en euskera), en tono de reda
 - `resumen`: dos frases. `destacados`: tres como máximo, y en `por_que` di las cifras (por ejemplo, "4 quejas en 3 días en la calle Txiribia").
 - No incluyas datos personales de quien se queja.
 
+**sucesos** (`{"resumen": "...", "destacados": [{"titulo", "detalle", "id"}]}`)
+- Es el "parte del día" de Álava a partir de `sucesos` (Policía Local, Ertzaintza, emergencias, teletipos y tribunales de las últimas 36 horas).
+- `resumen`: tres o cuatro frases, como lo contaría un boletín de radio: lo más grave primero, con lugar y hora si se sabe.
+- `destacados`: cuatro como máximo, con el `id` del elemento original y en `detalle` una frase con lo esencial.
+- Agrupa lo que sea el mismo hecho contado por varias fuentes. Si no hay nada relevante, no escribas `sucesos`.
+- Nunca pongas nombres de detenidos, víctimas ni menores, aunque salgan en el original; solo edad y sexo si los da la fuente.
+
 ## Formato de `data/ia_respuesta.json`
 
 ```json
@@ -45,6 +52,7 @@ Siempre en castellano (traduce si el original está en euskera), en tono de reda
   "tribunales": {"def456": "Qué ha pasado"},
   "enfoques": {"ghi789": {"enfoque": "...", "preguntas": ["...", "...", "..."], "llamar": ["...", "..."]}},
   "eustat": [{"titulo": "...", "dato_alava": "...", "fecha": "2026-11-07", "enlace": "https://..."}],
-  "buzon": {"resumen": "...", "destacados": [{"titulo": "...", "por_que": "...", "area": "..."}]}
+  "buzon": {"resumen": "...", "destacados": [{"titulo": "...", "por_que": "...", "area": "..."}]},
+  "sucesos": {"resumen": "...", "destacados": [{"titulo": "...", "detalle": "...", "id": "..."}]}
 }
 ```

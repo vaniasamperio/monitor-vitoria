@@ -7,6 +7,7 @@ Lee docs/datos.json y docs/ia.json y escribe data/ia_pendiente.json con:
   - ideas:    ideas de temas que aún no tienen enfoque propio
   - buzon:    resumen del buzón ciudadano (para destacar lo que se repite)
   - tribunales: notas del TSJPV recientes (para contar qué ha pasado)
+  - sucesos:  partes policiales y sucesos de Álava de las últimas 36 horas (para el parte del día)
 """
 import json
 from datetime import datetime, timedelta, timezone
@@ -47,9 +48,13 @@ ideas = [{"id": i["id"], "medio": nombres.get(i["fuente"], i["fuente"]), "titulo
 tribunales = [{"id": i["id"], "titulo": i["titulo"], "texto": (i.get("resumen") or "")[:600], "enlace": i["enlace"]}
               for i in datos["items"] if i["fuente"] == "tsjpv" and ref(i) >= ahora - timedelta(days=7)]
 
+sucesos = [{"id": i["id"], "fuente": nombres.get(i["fuente"], i["fuente"]), "titulo": i["titulo"],
+            "texto": (i.get("resumen") or "")[:400], "municipios": i.get("municipios", [])}
+           for i in datos["items"] if i.get("suceso") and i.get("alava") and ref(i) >= ahora - timedelta(hours=36)]
+
 salida = {"generado": ahora.isoformat(), "titulos": titulos, "ideas": ideas,
-          "buzon": datos.get("buzon", [])[:12], "tribunales": tribunales}
+          "buzon": datos.get("buzon", [])[:12], "tribunales": tribunales, "sucesos": sucesos[:60]}
 (RAIZ / "data").mkdir(exist_ok=True)
 (RAIZ / "data" / "ia_pendiente.json").write_text(json.dumps(salida, ensure_ascii=False, indent=1), encoding="utf-8")
 print(f"Pendiente: {len(titulos)} titulares, {len(ideas)} ideas, {len(salida['buzon'])} áreas del buzón, "
-      f"{len(tribunales)} notas de tribunales -> data/ia_pendiente.json")
+      f"{len(tribunales)} notas de tribunales, {len(sucesos)} sucesos -> data/ia_pendiente.json")

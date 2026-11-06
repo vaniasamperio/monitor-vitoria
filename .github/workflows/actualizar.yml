@@ -53,7 +53,7 @@ jobs:
             echo "Sin cambios"
           else
             git commit -m "Actualización $(date -u +'%Y-%m-%d %H:%M') UTC"
-            git pull --rebase --autostash || true
+            git pull --rebase --autostash -X theirs || { git checkout --theirs data/historico.json docs/datos.json 2>/dev/null; git add data/historico.json docs/datos.json; GIT_EDITOR=true git rebase --continue; }
             git push
           fi
 

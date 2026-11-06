@@ -1,0 +1,65 @@
+# Séptima vuelta: más asociaciones y medios alaveses
+candidatos:
+  - {nombre: "Elkarteak noticias", web: "https://elkarteak.org/rss_noticias.php?h=es", categoria: f, feed: true}
+  - {nombre: "Elkarteak rss", web: "https://elkarteak.org/rss.php?h=es", categoria: f, feed: true}
+  - {nombre: "Elkarteak noticias2", web: "https://elkarteak.org/rss_noticias.php", categoria: f, feed: true}
+  - {nombre: "El Pilar Gure Auzune", web: "https://www.elpilar-gureauzune.org/feed/", categoria: f, feed: true}
+  - {nombre: "Errota Zaharra", web: "https://www.errota.org/feed/", categoria: f, feed: true}
+  - {nombre: "Gasteiz Txiki blog", web: "https://gasteiztxiki.blogspot.com/feeds/posts/default", categoria: f, feed: true}
+  - {nombre: "Ipar Arriaga blog", web: "https://ipar-arriaga.blogspot.com/feeds/posts/default", categoria: f, feed: true}
+  - {nombre: "Mariturri", web: "https://www.mariturri.com/feed/", categoria: f, feed: true}
+  - {nombre: "Salburua Bizirik", web: "https://www.salburuabizirik.org/feed/", categoria: f, feed: true}
+  - {nombre: "Zabalgana Batuz", web: "https://www.zabalganabatuz.org/feed/", categoria: f, feed: true}
+  - {nombre: "Iparralde Zaramaga blog", web: "https://vecinosdeiparralde.blogspot.com/feeds/posts/default", categoria: f, feed: true}
+  - {nombre: "FAVA", web: "https://www.vecinosva.org/feed/", categoria: f, feed: true}
+  - {nombre: "Lakua Bizkarra", web: "https://www.lakuabizkarra.org/feed/", categoria: f, feed: true}
+  - {nombre: "Ekologistak Araba", web: "https://www.ekologistakmartxan.org/araba/feed/", categoria: f, feed: true}
+  - {nombre: "Ekologistak Araba2", web: "https://araba.ekologistakmartxan.org/feed/", categoria: f, feed: true}
+  - {nombre: "Fracking Ez Araba", web: "https://frackingezaraba.org/feed/", categoria: f, feed: true}
+  - {nombre: "Alea feed", web: "https://alea.eus/feed", categoria: f, feed: true}
+  - {nombre: "Alea rss2", web: "https://alea.eus/?format=rss", categoria: f, feed: true}
+  - {nombre: "Aiaraldea feed", web: "https://aiaraldea.eus/feed", categoria: f, feed: true}
+  - {nombre: "Aiaraldea rss2", web: "https://aiaraldea.eus/?format=rss", categoria: f, feed: true}
+  - {nombre: "Onda Vasca rss", web: "https://www.ondavasca.com/rss/", categoria: f, feed: true}
+  - {nombre: "Noticias de Álava portada", web: "https://www.noticiasdealava.eus/rss/portada.xml", categoria: f, feed: true}
+  - {nombre: "Noticias de Álava araba", web: "https://www.noticiasdealava.eus/rss/araba.xml", categoria: f, feed: true}
+  - {nombre: "UPV/EHU noticias", web: "https://www.ehu.eus/es/web/campusa-magazine/rss", categoria: f, feed: true}
+  - {nombre: "Cruz Roja Euskadi", web: "https://www2.cruzroja.es/rss", categoria: f, feed: true}
+  - {nombre: "Gasteiz On", web: "https://www.gasteizon.eus/es/?format=feed&type=rss", categoria: f, feed: true}
+  - {nombre: "Arabako Bertsozale", web: "https://www.bertsozale.eus/es/rss", categoria: f, feed: true}
+  - {nombre: "Emaús Fundación Social", web: "https://emaus.com/feed/", categoria: f, feed: true}
+  - {nombre: "Fundación Itaka Escolapios", web: "https://www.itakaescolapios.org/feed/", categoria: f, feed: true}
+  - {nombre: "Sartu Álava", web: "https://www.sartu.org/feed/", categoria: f, feed: true}
+  - {nombre: "Agiantza", web: "https://www.agiantza.org/feed/", categoria: f, feed: true}
+  - {nombre: "Goiztiri", web: "https://www.goiztiri.org/feed/", categoria: f, feed: true}
+  - {nombre: "Zuzenean? Gasteiz Antzokia", web: "https://www.gasteizantzokia.eus/feed/", categoria: f, feed: true}
+  - {nombre: "Ortzadar", web: "https://www.ortzadar.org/feed/", categoria: f, feed: true}
+  - {nombre: "Txagorritxu AAVV", web: "https://txagorritxu.org/feed/", categoria: f, feed: true}
+  - {nombre: "Hegoak Araba", web: "https://hegoak.eus/feed/", categoria: f, feed: true}
+  - {nombre: "Arabako Emakumeen Asanblada", web: "https://www.emakumeenasanblada.eus/feed/", categoria: f, feed: true}
+  - {nombre: "Ikuspegi", web: "https://www.ikuspegi.eus/es/rss", categoria: f, feed: true}
+  - {nombre: "Harresiak Apurtuz", web: "https://www.harresiak.org/feed/", categoria: f, feed: true}
+  - {nombre: "SOS Arrazakeria", web: "https://www.sosracismo.eus/eu/feed/", categoria: f, feed: true}
+  - {nombre: "Gizakia", web: "https://gizakia.org/feed/", categoria: f, feed: true}
+  - {nombre: "Asociación Bidesari", web: "https://www.bidesari.org/feed/", categoria: f, feed: true}
+  - {nombre: "ADISA? Afaraba", web: "https://www.afaraba.org/feed/", categoria: f, feed: true}
+  - {nombre: "Zabalgana Batuz web", web: "https://www.zabalganabatuz.org/", categoria: w}
+  - {nombre: "El Pilar web", web: "https://www.elpilar-gureauzune.org/", categoria: w}
+  - {nombre: "Mariturri web", web: "https://www.mariturri.com/", categoria: w}
+  - {nombre: "Errota web", web: "https://www.errota.org/", categoria: w}
+  - {nombre: "FAVA web", web: "https://www.vecinosva.org/", categoria: w}
+  - {nombre: "Salburua Bizirik web", web: "https://www.salburuabizirik.org/", categoria: w}
+  - {nombre: "Elkarteak web", web: "https://elkarteak.org/", categoria: w}
+  - {nombre: "Alea web", web: "https://alea.eus/", categoria: w}
+  - {nombre: "Aiaraldea web", web: "https://aiaraldea.eus/", categoria: w}
+  - {nombre: "Sartu", web: "https://www.sartu.org/", categoria: w}
+  - {nombre: "Emaus", web: "https://emaus.com/", categoria: w}
+  - {nombre: "Itaka", web: "https://www.itakaescolapios.org/", categoria: w}
+  - {nombre: "Zuzeu? Gasteiz Antzokia", web: "https://www.gasteizantzokia.eus/", categoria: w}
+muestras:
+  - {id: efe-pv, url: "https://efe.com/pais-vasco/"}
+  - {id: efe-es, url: "https://efe.com/espana/"}
+  - {id: ep-euskadi, url: "https://www.europapress.es/euskadi/"}
+  - {id: elkarteak-home, url: "https://elkarteak.org/"}
+  - {id: ertzaintza-notas, url: "https://www.ertzaintza.euskadi.eus/lfr/es/web/ertzaintza/prensa"}
+  - {id: irekia-seguridad, url: "https://www.irekia.euskadi.eus/es/news?dept=seguridad"}

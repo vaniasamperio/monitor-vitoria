@@ -142,6 +142,13 @@ RX_NOTICIA = patron(["presupuesto", "subvencion", "ayudas", "ordenanza", "impues
                      "residencia", "colegio", "centro de salud", "estudio", "informe", "encuesta",
                      "premio", "record", "acuerdo", "convenio", "proyecto", "reforma", "rehabilitacion",
                      "fiestas", "festival", "jornadas", "presenta", "denuncia", "alerta"])
+RX_SUCESO = patron(["detenido", "detenida", "detenidos", "detencion", "arrestad", "robo", "robos", "hurto", "atraco",
+                    "agresion", "agredid", "apunal", "herido", "herida", "heridos", "fallecid", "muere", "muerto",
+                    "accidente", "atropell", "colision", "choque", "incendio", "fuego", "rescate", "rescatad",
+                    "desaparecid", "policia local", "ertzaintza", "guardia civil", "estafa", "violencia machista",
+                    "violencia de genero", "droga", "incautad", "juicio", "condena", "condenad", "sentencia",
+                    "tribunal", "audiencia provincial", "juzgado", "fiscalia", "denuncia", "investigad", "bomberos",
+                    "sanitario", "emergencias", "sos deiak", "ocupacion ilegal", "pelea", "reyerta"])
 RX_RUTINA = patron(["notificacion", "notificaciones", "citacion", "emplazamiento", "edicto", "cedula",
                     "embargo", "padron", "nombramiento", "nombra ", "delegacion de funciones",
                     "correccion de errores", "cuenta general", "cese ", "jubilacion", "comision de servicios",
@@ -869,6 +876,10 @@ def main() -> int:
                     "cuadrilla": it["cuadrilla"], "relevancia": it["relevancia"], "rutina": it["rutina"],
                     "cal": bool(previo and previo.get("cal")),
                 }
+                if fuente["seccion"] == "sucesos" or (
+                        fuente["seccion"] in ("instituciones", "pueblos", "teletipos") and it["alava"]
+                        and coincidencias(RX_SUCESO, normaliza(it["titulo"]))):
+                    reg["suceso"] = True
                 for extra in ("organismo", "boletin", "bloque"):
                     if it.get(extra):
                         reg[extra] = it[extra]

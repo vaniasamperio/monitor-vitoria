@@ -8,7 +8,8 @@ Formato de data/ia_respuesta.json (todo opcional):
   "enfoques": {"<id>": {"enfoque": "...", "preguntas": ["...", "..."], "llamar": ["...", "..."]}},
   "tribunales": {"<id>": "Qué ha pasado, en una o dos frases"},
   "eustat":   [{"titulo": "...", "dato_alava": "...", "fecha": "AAAA-MM-DD", "enlace": "https://..."}],
-  "buzon":    {"resumen": "...", "destacados": [{"titulo": "...", "por_que": "...", "area": "..."}]}
+  "buzon":    {"resumen": "...", "destacados": [{"titulo": "...", "por_que": "...", "area": "..."}]},
+  "sucesos":  {"resumen": "...", "destacados": [{"titulo": "...", "detalle": "...", "id": "..."}]}
 }
 """
 import json
@@ -55,6 +56,12 @@ if resp.get("buzon"):
     ia["buzon"] = {"resumen": limpio(b.get("resumen"), 500),
                    "destacados": [{k: limpio(x.get(k), 220) for k in ("titulo", "por_que", "area")}
                                   for x in (b.get("destacados") or [])][:5]}
+if resp.get("sucesos"):
+    sc = resp["sucesos"]
+    ia["sucesos"] = {"resumen": limpio(sc.get("resumen"), 700),
+                     "destacados": [{k: limpio(x.get(k), 260) for k in ("titulo", "detalle", "id")}
+                                    for x in (sc.get("destacados") or [])][:6],
+                     "fecha": datetime.now(timezone.utc).replace(microsecond=0).isoformat()}
 ia["actualizado"] = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 ia_f.write_text(json.dumps(ia, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 print(f"ia.json: {len(ia['titulos'])} titulares, {len(ia['enfoques'])} enfoques, "
