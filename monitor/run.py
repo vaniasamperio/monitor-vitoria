@@ -757,6 +757,7 @@ def correos_recientes(dias: int = 4) -> list[dict]:
     return _CORREOS
 
 
+RX_ENLACE_CUENTA = re.compile(r"activat|activar|password|contrase|login|registro|verif|unsubscribe|token", re.I)
 RX_ASUNTO_RUIDO = re.compile(r"^\s*((re|rv|fw|fwd|reenv)\s*:\s*)+|\s*\[(nota de prensa|prentsa oharra)\]\s*", re.I)
 
 
@@ -773,16 +774,16 @@ def lee_correo(contenido: bytes, fuente: dict) -> list[dict]:
             # alertas del CENDOJ: una entrada por resolución enlazada
             vistos = set()
             for txt, href in enlaces:
-                if "poderjudicial.es" not in href or "openDocument" not in href and "/search/" not in href or href in vistos:
+                if "poderjudicial.es" not in href or "openDocument" not in href or href in vistos:
                     continue
                 vistos.add(href)
                 out.append({"titulo": txt or c["asunto"], "enlace": href, "texto": "", "texto_largo": "",
                             "fecha": fecha, "categorias": ["CENDOJ"]})
-            if out:
-                continue
+            continue                                  # sin resoluciones (avisos de cuenta, etc.): no se publica
         titulo = RX_ASUNTO_RUIDO.sub("", c["asunto"]).strip() or c["asunto"]
         propio = next((h for t, h in enlaces if _dominio("@" + re.sub(r"^https?://(www\.)?", "", h).split("/")[0])
-                       in fuente.get("remitentes", []) and not re.search(r"unsubscribe|baja|logo|facebook|twitter|instagram", h, re.I)), None)
+                       in fuente.get("remitentes", []) and not re.search(r"unsubscribe|baja|logo|facebook|twitter|instagram", h, re.I)
+                       and not RX_ENLACE_CUENTA.search(h)), None)
         out.append({"titulo": titulo, "enlace": propio or respaldo, "texto": cuerpo[:700], "texto_largo": cuerpo[:3000],
                     "fecha": fecha, "categorias": ["correo"], "clave": "mail" + c["id"]})
     return out
@@ -1083,6 +1084,8 @@ def main() -> int:
     for it in items_hist.values():
         if it["seccion"] == "buzon" or it["fuente"] in solo_cal:
             continue
+        if it["fuente"].startswith("correo") and RX_ENLACE_CUENTA.search(it.get("enlace") or ""):
+            continue                                  # enlaces de activación o de contraseña: nunca a la página
         if it["seccion"] == "teletipos":
             if (de_iso(it["fecha"]) or de_iso(it["visto"])) < ahora - timedelta(days=3):
                 continue
