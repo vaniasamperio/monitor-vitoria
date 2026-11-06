@@ -128,6 +128,11 @@ fuentes:
   - {id: correo-cendoj, nombre: "CENDOJ · alertas de resoluciones de Álava", tipo: correo, modo: alertas, url: "correo", seccion: sucesos, local: true, remitentes: [poderjudicial.es, cgpj.es]}
   - {id: correo-otros, nombre: "Otras notas de prensa por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, remitentes: [ertzaintza.eus, ararteko.eus, uaga.eus, ehu.eus, fundacionvital.eus, sea.es, cuadrillas.eus]}
 
+  # =================== DINERO PÚBLICO ===================
+  # BDNS: "regiones=14" es Araba/Álava (ES211). Los contratos salen de los boletines (pestaña Dinero los junta).
+  - {id: bdns-convocatorias, nombre: "Ayudas convocadas que afectan a Álava (BDNS)", url: "https://www.infosubvenciones.es/bdnstrans/api/convocatorias/busqueda?page=0&pageSize=50&order=fechaRecepcion&direccion=desc&regiones=14", tipo: bdns, accept: "application/json", seccion: dinero, local: true, cada: 3}
+  - {id: bdns-concesiones, nombre: "Subvenciones concedidas a entidades alavesas (BDNS)", url: "https://www.infosubvenciones.es/bdnstrans/api/concesiones/busqueda?page=0&pageSize=200&order=fechaConcesion&direccion=desc&regiones=14", tipo: bdns, modo: concesiones, importe_minimo: 20000, accept: "application/json", seccion: dinero, local: true, cada: 3}
+
   # =================== TELETIPOS ===================
   - {id: ep-euskadi, nombre: "Europa Press · Euskadi", url: "https://www.europapress.es/euskadi/", tipo: html, patron_enlace: "/euskadi/noticia-", seccion: teletipos, calendario: true}
   - {id: efe-pv, nombre: "EFE · País Vasco", url: "https://efe.com/pais-vasco/", tipo: html, patron_enlace: "efe.com/pais-vasco/20", seccion: teletipos}

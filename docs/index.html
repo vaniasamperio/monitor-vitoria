@@ -90,6 +90,7 @@ ul.lista{list-style:none;margin:0;padding:0}
 .temas-form{display:flex;gap:6px;padding:10px 16px 6px}.temas-form input{flex:1;min-width:0;padding:6px 9px;border:1px solid #d9d3c5;border-radius:7px;font:inherit;font-size:14px}.temas-form button{padding:6px 12px;border:0;border-radius:7px;background:#1d3a3a;color:#fff;font:inherit;font-size:13px;cursor:pointer}
 .temas-chips{display:flex;flex-wrap:wrap;gap:5px;padding:4px 16px 10px}
 .btn-archivo{padding:0 12px;border:1px solid #d9d3c5;border-radius:8px;background:#fff;font:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
+.viv{display:flex;gap:10px;align-items:flex-start;grid-template-columns:none}.viv .dot{flex:none;width:11px;height:11px;border-radius:50%;margin-top:5px}.viv .ico{flex:none;width:16px;text-align:center}.viv .det{font-size:12.5px;color:#6b6457}.viv a{color:inherit}
 .chip.etqf{background:#dfe7ec;color:#24485a}
 .chip.nuevo{background:var(--ambar);color:#3b2604;font-weight:700;letter-spacing:.03em}
 .chip.senal{background:#efe3f4;color:#5a2d6e}
@@ -231,6 +232,7 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
       <button role="tab" data-p="pueblos" aria-selected="false">Pueblos<span class="n" id="n-pueblos"></span></button>
       <button role="tab" data-p="boletines" aria-selected="false">Boletines<span class="n" id="n-boletines"></span></button>
       <button role="tab" data-p="asociaciones" aria-selected="false">Asociaciones<span class="n" id="n-asociaciones"></span></button>
+      <button role="tab" data-p="dinero" aria-selected="false">Dinero<span class="n" id="n-dinero"></span></button>
       <button role="tab" data-p="sucesos" aria-selected="false">Sucesos<span class="n" id="n-sucesos"></span></button>
       <button role="tab" data-p="teletipos" aria-selected="false">Teletipos<span class="n" id="n-teletipos"></span></button>
       <button role="tab" data-p="ideas" aria-selected="false">Ideas<span class="n" id="n-ideas"></span></button>
@@ -261,7 +263,10 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
     <div class="hoy-cab"><h2 id="hoyFecha">Hoy</h2><a class="btn-reunion" href="reunion.html" target="_blank" rel="noopener" title="Una página limpia para la reunión de la mañana, lista para imprimir">🖨 Vista para la reunión</a><div class="efes" id="hoyEfes"></div></div>
     <div class="tres">
       <div class="grupo"><h3>Agenda <small id="agendaHoyN"></small></h3><div id="agendaHoy"><div class="cargando">Cargando…</div></div></div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="grupo" id="vivosG" hidden><h3>Datos del día <small id="vivosHora"></small></h3><div id="vivos"></div></div>
       <div class="grupo"><h3>Lo más relevante <small>últimas horas</small></h3><ul class="lista" id="relevante"></ul></div>
+      </div>
       <div style="display:flex;flex-direction:column;gap:16px">
         <div class="grupo" id="temasHoyG"><h3>Temas que sigo <small>solo en tu navegador</small></h3><div id="temasHoy"></div></div>
         <div class="grupo"><h3>Próximos 7 días <small>pulsa un día</small></h3><div class="semana" id="semana"></div></div>
@@ -314,6 +319,11 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
   <section class="panel" id="p-asociaciones" hidden>
     <p class="intro">Asociaciones vecinales, sindicatos, comerciantes, entidades sociales y culturales. Sus actividades con fecha también van al calendario.</p>
     <div class="rejilla" id="asociaciones"></div>
+  </section>
+
+  <section class="panel" id="p-dinero" hidden>
+    <p class="intro">Dónde va el dinero público en Álava: ayudas que se convocan, subvenciones que reciben empresas y entidades alavesas (desde 20.000 €, sin personas físicas) y los contratos que salen en los boletines.</p>
+    <div class="rejilla" id="dinero"></div>
   </section>
 
   <section class="panel" id="p-sucesos" hidden>
@@ -469,7 +479,7 @@ function elemento(it, op = {}) {
 const LIM = 6;
 function grupo(id, titulo, lista, {orden = "fecha", op = {}, sub = "", vacio = "Nada en este periodo.", lim = LIM} = {}) {
   if (orden === "rel") lista.sort((a, b) => (b.relevancia || 0) - (a.relevancia || 0) || ref(b) - ref(a));
-  else lista.sort((a, b) => ref(b) - ref(a));
+  else if (orden !== "nada") lista.sort((a, b) => ref(b) - ref(a));
   const nuevos = lista.filter(esNuevo).length;
   const ver = st.expandidos.has(id) ? lista : lista.slice(0, lim);
   const pie = lista.length > lim ? `<button class="mas" data-expandir="${esc(id)}">${st.expandidos.has(id) ? "Ver menos" : `Ver ${lista.length - lim} más`}</button>` : "";
@@ -758,6 +768,34 @@ function pintaIdeas() {
   }).join("") : `<div class="grupo"><div class="vacio">No hay ideas con estos filtros. Prueba con “7 días”.</div></div>`;
   return ideas.length;
 }
+function pintaVivos() {
+  const v = st.d.vivos || {};
+  const filas = [];
+  for (const a of v.avisos || []) {
+    const col = /rojo/i.test(a.titulo) ? "#b3261e" : /naranja/i.test(a.titulo) ? "#d9731a" : "#c9a400";
+    filas.push(`<li class="viv"><span class="dot" style="background:${col}"></span><div><a href="${esc(a.enlace)}" target="_blank" rel="noopener"><b>${esc(a.titulo)}</b></a><div class="det">${esc(a.detalle)}</div></div></li>`);
+  }
+  if ((v.embalses || []).length) filas.push(`<li class="viv"><span class="ico">💧</span><div><b>Embalses:</b> ${v.embalses.map(e => `<a href="${esc(e.enlace)}" target="_blank" rel="noopener">${esc(e.nombre)} ${esc(String(e.porcentaje).replace(".", ","))}%</a>`).join(" · ")}<div class="det">${esc(v.embalses_nota || "")}</div></div></li>`);
+  for (const t of v.trafico || []) filas.push(`<li class="viv"><span class="ico">🚗</span><div><b>${esc(t.titulo)}</b><div class="det">${esc(t.detalle)}</div></div></li>`);
+  if (v.aire) filas.push(`<li class="viv"><span class="ico">🌫</span><div><b>Calidad del aire.</b> ${esc(v.aire)}</div></li>`);
+  if (!(v.avisos || []).length && v.actualizado) filas.unshift(`<li class="viv"><span class="dot" style="background:#3c8d4f"></span><div>Sin avisos meteorológicos en Álava.</div></li>`);
+  $("#vivosG").hidden = !filas.length;
+  $("#vivos").innerHTML = `<ul class="lista">${filas.join("")}</ul>`;
+  $("#vivosHora").textContent = v.actualizado ? "AEMET · tráfico · embalses · aire" : "";
+}
+function pintaDinero() {
+  const d = st.d;
+  // la BDNS publica con retraso: aquí se miran 14 días (ayudas) y 30 días (concesiones), con el periodo que sea más largo
+  const desde = n => new Date(new Date(d.actualizado).getTime() - Math.max(n, st.dias) * 864e5);
+  const conv = d.items.filter(i => i.fuente === "bdns-convocatorias" && ref(i) >= desde(14) && casaQ(i));
+  const conc = d.items.filter(i => i.fuente === "bdns-concesiones" && ref(i) >= desde(30) && casaQ(i)).sort((a, b) => (b.importe || 0) - (a.importe || 0));
+  const RX = /licitaci|adjudica|formaliza|contrat|concesi[oó]n de (obra|servicio)|lizitazio|esleipen/i;
+  const contr = d.items.filter(i => i.seccion === "boletines" && i.alava && RX.test(i.titulo + " " + (i.titulo_claro || "")) && pasa(i));
+  $("#dinero").innerHTML = grupo("din:conc", "Subvenciones concedidas", conc, {orden: "nada", sub: `${conc.length} · últimos 30 días`, vacio: "Ninguna de 20.000 € o más en los últimos 30 días."}) +
+    grupo("din:conv", "Ayudas convocadas", conv, {sub: `${conv.length} · últimos 14 días`, vacio: "Ninguna convocatoria en los últimos 14 días."}) +
+    grupo("din:contr", "Contratos en los boletines", contr, {op: {fuente: true}, vacio: "Ningún contrato en los boletines en este periodo."});
+  return conv.length + conc.length + contr.length;
+}
 function pintaSucesos() {
   const d = st.d, ia = st.ia.sucesos;
   const items = d.items.filter(i => (i.suceso || i.seccion === "sucesos") && pasa(i, {alava: false}));
@@ -809,8 +847,8 @@ function pintaMedios() {
 function pintaFuentes() {
   const d = st.d;
   $("#horaLectura").textContent = cuando(d.actualizado);
-  const orden = ["instituciones", "buzon", "boletines", "pueblos", "asociaciones", "sucesos", "teletipos", "medios", "agenda", "ideas"];
-  const nombres = {instituciones: "Instituciones", boletines: "Boletines", pueblos: "Pueblos de Álava", asociaciones: "Asociaciones", agenda: "Agendas (calendario)", buzon: "Buzón ciudadano", ideas: "Ideas de temas", sucesos: "Sucesos y tribunales", teletipos: "Teletipos", medios: "Medios alaveses (solo calendario)"};
+  const orden = ["instituciones", "buzon", "boletines", "pueblos", "asociaciones", "dinero", "sucesos", "teletipos", "medios", "agenda", "ideas"];
+  const nombres = {instituciones: "Instituciones", boletines: "Boletines", pueblos: "Pueblos de Álava", asociaciones: "Asociaciones", agenda: "Agendas (calendario)", dinero: "Dinero público", buzon: "Buzón ciudadano", ideas: "Ideas de temas", sucesos: "Sucesos y tribunales", teletipos: "Teletipos", medios: "Medios alaveses (solo calendario)"};
   $("#tablaFuentes").innerHTML = `<table><tbody>` + orden.map(s => {
     const fs = d.fuentes.filter(f => f.seccion === s); if (!fs.length) return "";
     return `<tr><th colspan="2">${nombres[s]} · ${fs.filter(f => f.ok).length}/${fs.length}</th></tr>` + fs.map(f => `<tr><td><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.nombre)}</a></td>
@@ -830,9 +868,9 @@ function pintaEstado() {
 function pinta() {
   if (!st.d) return;
   const n = {instituciones: pintaInstituciones(), pueblos: pintaPueblos(), boletines: pintaBoletines(),
-             asociaciones: pintaAsociaciones(), sucesos: pintaSucesos(), teletipos: pintaTeletipos(), ideas: pintaIdeas()};
+             asociaciones: pintaAsociaciones(), dinero: pintaDinero(), sucesos: pintaSucesos(), teletipos: pintaTeletipos(), ideas: pintaIdeas()};
   Object.entries(n).forEach(([k, v]) => { const e = $("#n-" + k); if (e) e.textContent = v; });
-  pintaHoy(); pintaTemas(); pintaBuzon(); pintaCalendario(); pintaFuentes(); pintaEstado(); pintaGuardados();
+  pintaHoy(); pintaVivos(); pintaTemas(); pintaBuzon(); pintaCalendario(); pintaFuentes(); pintaEstado(); pintaGuardados();
 }
 
 // ---------- navegación

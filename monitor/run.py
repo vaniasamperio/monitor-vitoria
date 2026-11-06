@@ -34,6 +34,7 @@ from bs4 import BeautifulSoup
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import calendario  # noqa: E402
+import vivos as vivos_mod  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
 HISTORICO = RAIZ / "data" / "historico.json"
@@ -847,8 +848,63 @@ def lee_correo(contenido: bytes, fuente: dict) -> list[dict]:
                     "fecha": fecha, "categorias": ["correo"], "clave": "mail" + c["id"]})
     return out
 
+
+MINUSCULAS = {"de", "del", "la", "las", "los", "el", "y", "e", "en", "para", "por", "a", "al", "con"}
+SIGLAS = {"sl", "sa", "slu", "sau", "aie", "ep", "sll", "sc", "scp", "cb", "ute", "osi", "upv", "ehu", "bbva", "icex", "sae"}
+
+
+def bonito(t: str) -> str:
+    """'AYUNTAMIENTO DE VITORIA-GASTEIZ' -> 'Ayuntamiento de Vitoria-Gasteiz' (solo si viene todo en mayúsculas)."""
+    if not t or not t.isupper():
+        return t
+    out = []
+    for i, w in enumerate(t.lower().split()):
+        limpio = re.sub(r"\W", "", w)
+        if limpio in SIGLAS:
+            out.append(w.upper())
+        elif i and limpio in MINUSCULAS:
+            out.append(w)
+        else:
+            out.append("-".join(x[:1].upper() + x[1:] for x in w.split("-")))
+    return " ".join(out)
+
+
+# BDNS (Base de Datos Nacional de Subvenciones): ayudas convocadas que afectan a Álava y subvenciones concedidas
+# a beneficiarios alaveses (filtro "regiones=14" = ES211 Araba/Álava). Personas físicas: fuera.
+def lee_bdns(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
+    d = json.loads(contenido)
+    out = []
+    minimo = fuente.get("importe_minimo", 0)
+    for c in d.get("content", []):
+        num = c.get("numeroConvocatoria") or ""
+        enlace = f"https://www.infosubvenciones.es/bdnstrans/GE/es/convocatorias/{num}" if num else "https://www.infosubvenciones.es/"
+        organo = (c.get("nivel3") or c.get("nivel2") or "").strip()
+        if fuente.get("modo") == "concesiones":
+            ben = (c.get("beneficiario") or "").strip()
+            if ben.startswith("*") or not ben:
+                continue                                  # personas físicas (anonimizadas): no se publican
+            imp = c.get("importe") or 0
+            if imp < minimo:
+                continue
+            ben = re.sub(r"^[A-Z]\d{7,8}[A-Z0-9]?\s+", "", ben).strip()   # quita el NIF
+            titulo = f"{bonito(ben)} recibe {f'{imp:,.0f}'.replace(',', '.')} € de {bonito(organo)}"
+            texto = recorta(c.get("convocatoria") or "", 300)
+            fecha = c.get("fechaConcesion")
+        else:
+            desc = " ".join((c.get("descripcion") or "").split())
+            titulo = f"{bonito(organo)}: {desc[:1].upper() + desc[1:].lower() if desc.isupper() else desc}"
+            texto, imp = "", None
+            fecha = c.get("fechaRecepcion")
+        try:
+            f = datetime.combine(date.fromisoformat(fecha[:10]), datetime.min.time(), MADRID)
+        except (TypeError, ValueError):
+            f = None
+        out.append({"titulo": titulo[:300], "enlace": enlace, "texto": texto, "texto_largo": texto, "fecha": f,
+                    "categorias": [], "clave": f"bdns{c.get('id')}", **({"importe": imp} if imp else {})})
+    return out
+
 LECTORES = {"liferay": lee_liferay, "rss": lee_rss, "html": lee_html, "diputacion": lee_diputacion, "botha": lee_botha, "boe": lee_boe,
-            "kulturklik": lee_kulturklik, "correo": lambda c, f, h: lee_correo(c, f)}
+            "kulturklik": lee_kulturklik, "bdns": lee_bdns, "correo": lambda c, f, h: lee_correo(c, f)}
 
 
 # ---------------------------------------------------------------- clasificación
@@ -1094,7 +1150,7 @@ def main() -> int:
                     "cuadrilla": it["cuadrilla"], "relevancia": it["relevancia"], "rutina": it["rutina"],
                     "cal": bool(previo and previo.get("cal")),
                 }
-                for extra in ("organismo", "boletin", "bloque"):
+                for extra in ("organismo", "boletin", "bloque", "importe"):
                     if it.get(extra):
                         reg[extra] = it[extra]
                 if "puntos" in it:
@@ -1238,8 +1294,14 @@ def main() -> int:
     cal.sort(key=lambda e: (e["fecha"], e.get("hora") or "99"))
 
     guarda_json(HISTORICO, {"actualizado": iso(ahora), "items": items_hist, "calendario": cal_hist, "lecturas": lecturas})
+    previo_vivos = carga_json(SALIDA, {}).get("vivos")
+    if args.fixtures:
+        vivos_d = previo_vivos or {}
+    else:
+        vivos_d = vivos_mod.recoge(lambda u: descarga(u, None, "vivos"), ahora, previo_vivos)
     guarda_json(SALIDA, {
         "actualizado": iso(ahora),
+        "vivos": vivos_d,
         "fuentes": estado,
         "manuales": cfg.get("enlaces_manuales", []),
         "pistas": clasif.pistas(),
