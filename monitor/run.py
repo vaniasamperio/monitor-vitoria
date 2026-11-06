@@ -937,7 +937,9 @@ def main() -> int:
         return de_iso(it["visto"]) >= limite
     items_hist = {k: v for k, v in items_hist.items() if vigente(v)}
     cal_hist = {k: v for k, v in cal_hist.items()
-                if date.fromisoformat(v.get("hasta") or v["fecha"]) >= hoy - timedelta(days=45)}
+                if date.fromisoformat(v.get("hasta") or v["fecha"]) >= hoy - timedelta(days=45)
+                and not (v.get("fuente") == "kulturklik" and v.get("hasta")
+                         and (date.fromisoformat(v["hasta"]) - date.fromisoformat(v["fecha"])).days > 120)}
 
     limite_ideas = ahora - timedelta(days=DIAS_IDEAS)
     quejas = [i for i in items_hist.values() if i["seccion"] == "buzon"
