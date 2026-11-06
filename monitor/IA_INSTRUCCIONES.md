@@ -37,7 +37,7 @@ Siempre en castellano (traduce si el original está en euskera), en tono de reda
 - `resumen`: dos frases. `destacados`: tres como máximo, y en `por_que` di las cifras (por ejemplo, "4 quejas en 3 días en la calle Txiribia").
 - No incluyas datos personales de quien se queja.
 
-**tribunales**: incluye también las alertas del CENDOJ que llegan por correo (fuente `correo-cendoj`). Si solo traen el número de resolución, abre el enlace del CENDOJ en el navegador si puedes; si no, escribe "Nueva resolución de [órgano] de [fecha]" sin inventar el contenido.
+**tribunales**: las alertas del CENDOJ que llegan por correo (fuente `correo-cendoj`) solo traen el número de resolución; el texto está tras un captcha y no se debe intentar abrir ni saltar. Para esas, escribe nota solo si la misma resolución aparece en una nota del TSJPV o en un teletipo (cuéntalo con esa información); si no, no escribas nada.
 
 **sucesos** (`{"resumen": "...", "destacados": [{"titulo", "detalle", "id"}]}`)
 - Es el "parte del día" de Álava a partir de `sucesos` (Policía Local, Ertzaintza, emergencias, teletipos y tribunales de las últimas 36 horas).
