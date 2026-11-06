@@ -574,6 +574,8 @@ def lee_buzon_area(contenido: bytes, area: str, ahora: datetime) -> list[dict]:
         texto = " ".join(fila.get_text(" ").split()) if fila else ""
         cuerpo = texto.replace(titulo, "", 1)
         cuerpo = re.split(r"hace\s+\d+|\d{2}/\d{2}/20\d\d", cuerpo)[0].strip(" :")
+        if cuerpo.startswith("Buzón Ciudadano") or "Del 1 al 20 de un total" in cuerpo:
+            cuerpo = ""                           # cabecera de la página, no la queja
         fecha = None
         m = RX_FH.search(texto)
         if m:
@@ -889,6 +891,26 @@ def main() -> int:
 
     ideas_pub.sort(key=lambda i: -(i.get("puntos") or 0))
     publicados += ideas_pub[:80]                      # solo las 80 mejores ideas
+
+    # fuera duplicados (mismo enlace o mismo título) y actos de agenda ya pasados
+    def _norm(t):
+        return re.sub(r"[^a-z0-9]+", "", normaliza(t or "").lower())[:70]
+    publicados.sort(key=lambda i: (i.get("visto") or ""), reverse=True)
+    vistos_pub, limpios = set(), []
+    for it in publicados:
+        ev = it.get("evento")
+        if ev and date.fromisoformat(ev[:10]) < hoy - timedelta(days=14):
+            continue
+        if it["seccion"] == "medios":                 # sección retirada: restos del histórico
+            continue
+        claves = {("e", it.get("enlace") or it["id"]),
+                  ("t", it.get("fuente"), it.get("organismo") or "", " ".join(it.get("municipios") or []),
+                   _norm(it.get("titulo"))[:50])}
+        if claves & vistos_pub:
+            continue
+        vistos_pub |= claves
+        limpios.append(it)
+    publicados = limpios
 
     # calendario publicado: efemérides (este mes y los 3 siguientes) + lo extraído
     desde = hoy.replace(day=1) - timedelta(days=31)

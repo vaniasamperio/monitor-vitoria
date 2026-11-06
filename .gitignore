@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 *.tmp
+data/ia_pendiente.json
+data/ia_respuesta.json
