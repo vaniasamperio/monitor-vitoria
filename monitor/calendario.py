@@ -58,6 +58,8 @@ def _frases(texto: str) -> list[str]:
 
 def _tipo(frase: str) -> str:
     n = _norm(frase)
+    if any(p in n for p in ("pleno", "sesion ordinaria", "sesion extraordinaria", "junta de gobierno", "osoko bilkura")):
+        return "evento"
     for clave, _, palabras in TIPOS:
         if any(p in n for p in palabras):
             return clave
