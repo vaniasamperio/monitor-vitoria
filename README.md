@@ -92,3 +92,18 @@ Muchas asociaciones vecinales solo publican en redes sociales, que no se pueden 
 - Pruebas sin internet: `python tests/crea_fixtures.py && python monitor/run.py --fixtures tests/fixtures` y después `python -m http.server -d docs`.
 
 Creado por Vania para la redacción de SER Vitoria (noviembre de 2026).
+
+## Correo de la redacción (Gmail propio)
+
+La página puede leer un Gmail creado para la redacción: notas de prensa que llegan por correo y alertas del CENDOJ.
+Solo mira los remitentes que aparecen en `fuentes.yaml` (campo `remitentes` de las fuentes `correo-…`); el resto del buzón no se toca ni se publica.
+
+1. Crea la cuenta de Gmail y activa la verificación en dos pasos.
+2. En https://myaccount.google.com/apppasswords crea una «contraseña de aplicación» (16 letras).
+3. En GitHub, en este repositorio: Settings → Secrets and variables → Actions → New repository secret. Crea dos:
+   - `GMAIL_USER`: la dirección completa del Gmail.
+   - `GMAIL_APP_PASSWORD`: la contraseña de aplicación.
+4. Pide a los gabinetes de prensa que añadan ese Gmail a sus listas y crea en el CENDOJ una alerta (búsqueda de Álava) que avise a ese correo.
+
+Para añadir un remitente nuevo, pon su dominio en la lista `remitentes` de la fuente que corresponda.
+La página es pública: no metas en esa lista remitentes personales.

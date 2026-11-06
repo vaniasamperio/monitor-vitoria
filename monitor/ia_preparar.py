@@ -46,7 +46,7 @@ ideas = [{"id": i["id"], "medio": nombres.get(i["fuente"], i["fuente"]), "titulo
           "texto": (i.get("resumen") or "")[:500], "temas": i.get("temas", [])} for i in ideas[:25]]
 
 tribunales = [{"id": i["id"], "titulo": i["titulo"], "texto": (i.get("resumen") or "")[:600], "enlace": i["enlace"]}
-              for i in datos["items"] if i["fuente"] == "tsjpv" and ref(i) >= ahora - timedelta(days=7)]
+              for i in datos["items"] if i["fuente"] in ("tsjpv", "correo-cendoj") and ref(i) >= ahora - timedelta(days=7)]
 
 sucesos = [{"id": i["id"], "fuente": nombres.get(i["fuente"], i["fuente"]), "titulo": i["titulo"],
             "texto": (i.get("resumen") or "")[:400], "municipios": i.get("municipios", [])}

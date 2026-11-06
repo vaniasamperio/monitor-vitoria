@@ -719,14 +719,15 @@ function pintaIdeas() {
 function pintaSucesos() {
   const d = st.d, ia = st.ia.sucesos;
   const items = d.items.filter(i => (i.suceso || i.seccion === "sucesos") && pasa(i, {alava: false}));
-  const trib = items.filter(i => i.fuente === "tsjpv");
+  const TRIB = new Set(["tsjpv", "correo-cendoj"]);
+  const trib = items.filter(i => TRIB.has(i.fuente));
   const tele = items.filter(i => i.seccion === "teletipos" && i.alava);
-  const poli = items.filter(i => i.fuente !== "tsjpv" && i.seccion !== "teletipos");
+  const poli = items.filter(i => !TRIB.has(i.fuente) && i.seccion !== "teletipos");
   const tsj = d.fuentes.find(f => f.id === "tsjpv"), ex = tsj && tsj.extra;
   const cendoj = ex ? `<div class="extra"><a href="${esc(ex.url)}" target="_blank" rel="noopener">${esc(ex.texto)} ↗</a><span>${esc(ex.nota || "")}</span></div>` : "";
   const html = [
     grupo("suc:poli", "Policía, emergencias y sucesos", poli, {op: {fuente: true}, vacio: "Ningún parte en este periodo."}),
-    grupo("suc:trib", "Tribunales", trib, {vacio: "Ninguna nota del TSJPV en este periodo."}).replace(/<\/div>$/, cendoj + "</div>"),
+    grupo("suc:trib", "Tribunales", trib, {op: {fuente: true}, vacio: "Ninguna nota del TSJPV ni alerta del CENDOJ en este periodo."}).replace(/<\/div>$/, cendoj + "</div>"),
     grupo("suc:tele", "En los teletipos (Álava)", tele, {op: {fuente: true}, vacio: "Nada de Álava en los teletipos."})
   ].join("");
   $("#sucesos").innerHTML = html;

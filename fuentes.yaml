@@ -26,9 +26,9 @@ fuentes:
   # =================== INSTITUCIONES ===================
   - {id: ayto-notas, nombre: "Ayuntamiento de Vitoria · Notas de prensa", grupo: "Ayuntamiento de Vitoria", etiqueta: "Nota de prensa", url: "https://blogs.vitoria-gasteiz.org/medios/feed/", tipo: rss, seccion: instituciones, local: true, municipio: Vitoria-Gasteiz, prioridad: alta}
   - {id: ayto-movilidad, nombre: "Ayuntamiento de Vitoria · Avisos de movilidad", grupo: "Ayuntamiento de Vitoria", etiqueta: "Aviso de movilidad", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=contenedorCuadroMando&claveTema=&claveArea=1", tipo: rss, seccion: instituciones, local: true, municipio: Vitoria-Gasteiz, prioridad: baja, clave_por_titulo: true}
-  - {id: diputacion, nombre: "Diputación Foral de Álava · Sala de prensa", url: "https://prentsa.araba.eus/es/inicio", tipo: diputacion, seccion: instituciones, local: true, prioridad: alta}
-  - {id: jjgg, nombre: "Juntas Generales de Álava", url: "https://www.jjggalava.eus/es/", tipo: liferay, patron_enlace: "/-/", seccion: instituciones, local: true, prioridad: alta}
-  - {id: irekia, nombre: "Gobierno Vasco · Irekia", url: "https://www.irekia.euskadi.eus/es/news.rss", tipo: rss, seccion: instituciones, local: false}
+  - {id: diputacion, grupo: "Diputación Foral de Álava", etiqueta: "Web", nombre: "Diputación Foral de Álava · Sala de prensa", url: "https://prentsa.araba.eus/es/inicio", tipo: diputacion, seccion: instituciones, local: true, prioridad: alta}
+  - {id: jjgg, grupo: "Juntas Generales de Álava", etiqueta: "Web", nombre: "Juntas Generales de Álava", url: "https://www.jjggalava.eus/es/", tipo: liferay, patron_enlace: "/-/", seccion: instituciones, local: true, prioridad: alta}
+  - {id: irekia, grupo: "Gobierno Vasco · Irekia", etiqueta: "Web", nombre: "Gobierno Vasco · Irekia", url: "https://www.irekia.euskadi.eus/es/news.rss", tipo: rss, seccion: instituciones, local: false}
   - {id: ararteko, nombre: "Ararteko", url: "https://ararteko.eus/es/rss.xml", tipo: rss, seccion: instituciones, local: false}
   - {id: euskotren, nombre: "Euskotren (tranvía)", url: "https://www.euskotren.eus/eu/rss.xml", tipo: rss, seccion: instituciones, local: false, prioridad: baja}
   - {id: tsjpv, nombre: "Tribunales · TSJ del País Vasco (notas de prensa)", url: "https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunales-Superiores-de-Justicia/TSJ-Pais-Vasco/ch.En-Portada.formato1/", tipo: rss, seccion: sucesos, local: false,
@@ -118,6 +118,15 @@ fuentes:
   - {id: agenda-cultura, nombre: "Ayuntamiento · Agenda de cultura y ocio", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=actividadesCuadroMando&claveTema=&claveArea=38", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: cultura, max: 150}
   - {id: elkarteak-agenda, nombre: "Elkarteak.org · Agenda de asociaciones", url: "https://elkarteak.org/rss_agenda.php?h=es", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: asociaciones}
   - {id: kulturklik, nombre: "Kulturklik · Agenda cultural de Álava", url: "https://api.euskadi.eus/culture/events/v1.0/events/upcoming?_elements=50&_page={PAGINA}&provinceNoraCode=1", tipo: kulturklik, seccion: agenda, local: true, accept: "application/json", paginas: 15, dias: 60, categoria_cal: cultura, solo_calendario: true}
+
+  # =================== CORREO DE LA REDACCIÓN (Gmail propio) ===================
+  # Se leen solo estos remitentes (por dominio). Ver README: "Correo de la redacción".
+  - {id: correo-ayto, nombre: "Ayuntamiento de Vitoria · por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, municipio: Vitoria-Gasteiz, grupo: "Ayuntamiento de Vitoria", etiqueta: "Por correo", remitentes: [vitoria-gasteiz.org]}
+  - {id: correo-diputacion, nombre: "Diputación Foral de Álava · por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, grupo: "Diputación Foral de Álava", etiqueta: "Por correo", remitentes: [araba.eus, alava.eus]}
+  - {id: correo-jjgg, nombre: "Juntas Generales · por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, grupo: "Juntas Generales de Álava", etiqueta: "Por correo", remitentes: [jjggarabaktbb.eus, jjggalava.eus]}
+  - {id: correo-gv, nombre: "Gobierno Vasco · por correo", tipo: correo, url: "correo", seccion: instituciones, grupo: "Gobierno Vasco · Irekia", etiqueta: "Por correo", remitentes: [euskadi.eus, irekia.eus]}
+  - {id: correo-cendoj, nombre: "CENDOJ · alertas de resoluciones de Álava", tipo: correo, modo: alertas, url: "correo", seccion: sucesos, local: true, remitentes: [poderjudicial.es, cgpj.es]}
+  - {id: correo-otros, nombre: "Otras notas de prensa por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, remitentes: [ertzaintza.eus, ararteko.eus, uaga.eus, ehu.eus, fundacionvital.eus, sea.es, cuadrillas.eus]}
 
   # =================== TELETIPOS ===================
   - {id: ep-euskadi, nombre: "Europa Press · Euskadi", url: "https://www.europapress.es/euskadi/", tipo: html, patron_enlace: "/euskadi/noticia-", seccion: teletipos, calendario: true}

@@ -43,6 +43,10 @@ jobs:
 
       - name: Leer las fuentes
         run: python monitor/run.py
+        env:
+          # Correo de la redacción (opcional): Settings → Secrets and variables → Actions
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
 
       - name: Guardar el histórico en el repositorio
         run: |

@@ -16,6 +16,7 @@ import argparse
 import hashlib
 import html
 import json
+import os
 import re
 import sys
 import time
@@ -702,8 +703,92 @@ def lee_kulturklik(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
                                "tipo": "evento" if tipo_n in KK_DESTACAR else "agenda", "frase": frase[:200]}})
     return out
 
+
+# Correo de la redacción (Gmail propio): notas de prensa y alertas del CENDOJ que llegan por mail.
+# Se lee por IMAP con una contraseña de aplicación guardada como secreto en GitHub (GMAIL_USER, GMAIL_APP_PASSWORD).
+# Solo se miran los remitentes de la lista blanca de cada fuente; el resto del buzón no se toca.
+_CORREOS = None
+
+
+def _dominio(remitente: str) -> str:
+    m = re.search(r"@([\w.-]+)", remitente or "")
+    return m.group(1).lower() if m else ""
+
+
+def correos_recientes(dias: int = 4) -> list[dict]:
+    """Descarga una vez por ejecución los correos de los últimos días (solo lectura, no marca nada como leído)."""
+    global _CORREOS
+    if _CORREOS is not None:
+        return _CORREOS
+    import email, imaplib
+    from email.header import decode_header, make_header
+    from email.utils import parsedate_to_datetime
+    usuario, clave = os.environ.get("GMAIL_USER"), os.environ.get("GMAIL_APP_PASSWORD")
+    _CORREOS = []
+    if not (usuario and clave):
+        return _CORREOS
+    imap = imaplib.IMAP4_SSL("imap.gmail.com", 993, timeout=60)
+    imap.login(usuario, clave.replace(" ", ""))
+    imap.select("INBOX", readonly=True)
+    desde = (datetime.now(MADRID) - timedelta(days=dias)).strftime("%d-%b-%Y")
+    _, datos = imap.search(None, "SINCE", desde)
+    for num in (datos[0].split() if datos and datos[0] else [])[-300:]:
+        _, partes = imap.fetch(num, "(BODY.PEEK[])")
+        msg = email.message_from_bytes(partes[0][1])
+        texto, html_ = "", ""
+        for parte in msg.walk():
+            if parte.get_content_maintype() == "multipart" or parte.get_filename():
+                continue
+            carga = parte.get_payload(decode=True) or b""
+            cs = parte.get_content_charset() or "utf-8"
+            if parte.get_content_type() == "text/plain" and not texto:
+                texto = carga.decode(cs, "replace")
+            elif parte.get_content_type() == "text/html" and not html_:
+                html_ = carga.decode(cs, "replace")
+        try:
+            fecha = parsedate_to_datetime(msg.get("Date")).astimezone(MADRID)
+        except Exception:
+            fecha = datetime.now(MADRID)
+        _CORREOS.append({"de": str(make_header(decode_header(msg.get("From", "")))),
+                         "asunto": " ".join(str(make_header(decode_header(msg.get("Subject", "")))).split()),
+                         "id": msg.get("Message-ID", "") or f"n{num.decode()}",
+                         "fecha": fecha.isoformat(), "texto": texto, "html": html_})
+    imap.logout()
+    return _CORREOS
+
+
+RX_ASUNTO_RUIDO = re.compile(r"^\s*((re|rv|fw|fwd|reenv)\s*:\s*)+|\s*\[(nota de prensa|prentsa oharra)\]\s*", re.I)
+
+
+def lee_correo(contenido: bytes, fuente: dict) -> list[dict]:
+    out = []
+    for c in json.loads(contenido):
+        cuerpo_html = BeautifulSoup(c["html"], "html.parser") if c["html"] else None
+        cuerpo = " ".join((c["texto"] or (cuerpo_html.get_text(" ") if cuerpo_html else "")).split())
+        enlaces = [(a.get_text(" ", strip=True), a["href"]) for a in (cuerpo_html.find_all("a", href=True) if cuerpo_html else [])
+                   if a["href"].startswith("http")] or [("", u) for u in re.findall(r"https?://[^\s<>\"]+", c["texto"] or "")]
+        fecha = datetime.fromisoformat(c["fecha"])
+        respaldo = "https://mail.google.com/mail/u/0/#search/" + requests.utils.quote(f'subject:"{c["asunto"][:60]}"')
+        if fuente.get("modo") == "alertas":
+            # alertas del CENDOJ: una entrada por resolución enlazada
+            vistos = set()
+            for txt, href in enlaces:
+                if "poderjudicial.es" not in href or "openDocument" not in href and "/search/" not in href or href in vistos:
+                    continue
+                vistos.add(href)
+                out.append({"titulo": txt or c["asunto"], "enlace": href, "texto": "", "texto_largo": "",
+                            "fecha": fecha, "categorias": ["CENDOJ"]})
+            if out:
+                continue
+        titulo = RX_ASUNTO_RUIDO.sub("", c["asunto"]).strip() or c["asunto"]
+        propio = next((h for t, h in enlaces if _dominio("@" + re.sub(r"^https?://(www\.)?", "", h).split("/")[0])
+                       in fuente.get("remitentes", []) and not re.search(r"unsubscribe|baja|logo|facebook|twitter|instagram", h, re.I)), None)
+        out.append({"titulo": titulo, "enlace": propio or respaldo, "texto": cuerpo[:700], "texto_largo": cuerpo[:3000],
+                    "fecha": fecha, "categorias": ["correo"], "clave": "mail" + c["id"]})
+    return out
+
 LECTORES = {"liferay": lee_liferay, "rss": lee_rss, "html": lee_html, "diputacion": lee_diputacion, "botha": lee_botha, "boe": lee_boe,
-            "kulturklik": lee_kulturklik}
+            "kulturklik": lee_kulturklik, "correo": lambda c, f, h: lee_correo(c, f)}
 
 
 # ---------------------------------------------------------------- clasificación
@@ -863,8 +948,18 @@ def main() -> int:
                            "nuevos": n_n, **({} if ok_b else {"error": "no se pudo leer ninguna área"})})
             print(f"{'OK  ' if ok_b else 'FALLO'} buzon {len(nuevos_b):>3} quejas leídas, {n_n} nuevas, {fallos_b} áreas con fallo")
             continue
+        if fuente.get("tipo") == "correo":
+            if not os.environ.get("GMAIL_USER") and not args.fixtures:
+                continue                              # buzón aún sin configurar: no se muestra
         try:
-            if "{PAGINA}" in url:                     # APIs paginadas (Kulturklik): se juntan las páginas
+            if fuente.get("tipo") == "correo":
+                if args.fixtures:
+                    crudo = descarga(url, args.fixtures, fuente["id"])
+                else:
+                    doms = tuple(fuente.get("remitentes", []))
+                    crudo = json.dumps([c for c in correos_recientes()
+                                        if doms and (_dominio(c["de"]).endswith(doms))]).encode()
+            elif "{PAGINA}" in url:                     # APIs paginadas (Kulturklik): se juntan las páginas
                 todos = []
                 for pag in range(1, fuente.get("paginas", 5) + 1):
                     trozo = json.loads(descarga(url.replace("{PAGINA}", str(pag)), args.fixtures,
@@ -1016,6 +1111,10 @@ def main() -> int:
     def _norm(t):
         return re.sub(r"[^a-z0-9]+", "", normaliza(t or "").lower())[:70]
     publicados.sort(key=lambda i: (i.get("visto") or ""), reverse=True)
+    # una nota que llega por correo y también está en la web se queda solo con la de la web
+    tit_web = {_norm(i.get("titulo"))[:45] for i in publicados if cfg_f.get(i["fuente"], {}).get("tipo") != "correo"}
+    publicados = [i for i in publicados if cfg_f.get(i["fuente"], {}).get("tipo") != "correo"
+                  or _norm(i.get("titulo"))[:45] not in tit_web]
     vistos_pub, limpios = set(), []
     for it in publicados:
         ev = it.get("evento")
