@@ -31,7 +31,7 @@ fuentes:
   - {id: irekia, nombre: "Gobierno Vasco · Irekia", url: "https://www.irekia.euskadi.eus/es/news.rss", tipo: rss, seccion: instituciones, local: false}
   - {id: ararteko, nombre: "Ararteko", url: "https://ararteko.eus/es/rss.xml", tipo: rss, seccion: instituciones, local: false}
   - {id: euskotren, nombre: "Euskotren (tranvía)", url: "https://www.euskotren.eus/eu/rss.xml", tipo: rss, seccion: instituciones, local: false, prioridad: baja}
-  - {id: tsjpv, nombre: "Tribunales · TSJ del País Vasco (notas de prensa)", url: "https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunales-Superiores-de-Justicia/TSJ-Pais-Vasco/ch.En-Portada.formato1/", tipo: rss, seccion: instituciones, local: false,
+  - {id: tsjpv, nombre: "Tribunales · TSJ del País Vasco (notas de prensa)", url: "https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunales-Superiores-de-Justicia/TSJ-Pais-Vasco/ch.En-Portada.formato1/", tipo: rss, seccion: sucesos, local: false,
      extra: {texto: "Buscar sentencias de Álava en el CENDOJ", url: "https://www.poderjudicial.es/search/indexAN.jsp", nota: "En Localización, elige País Vasco → Vitoria-Gasteiz y ordena por fecha."}}
 
   # =================== BUZÓN CIUDADANO DE VITORIA ===================
@@ -100,6 +100,17 @@ fuentes:
   - {id: diocesis, nombre: "Diócesis de Vitoria", url: "https://diocesisvitoria.org/feed/", tipo: rss, seccion: asociaciones, local: true, prioridad: baja}
   - {id: fundacion-vital, nombre: "Fundación Vital", url: "https://www.fundacionvital.eus/rss.xml", tipo: rss, seccion: asociaciones, local: true}
   - {id: gasteiz-kultura, nombre: "Gasteiz Kultura (blog municipal de cultura)", url: "https://gasteizkultura.org/feed/", tipo: rss, seccion: asociaciones, local: true, municipio: Vitoria-Gasteiz, prioridad: baja}
+  - {id: lab, nombre: "LAB (sindicato)", url: "https://www.lab.eus/es/feed/", tipo: rss, seccion: asociaciones}
+  - {id: ccoo, nombre: "CCOO Euskadi", url: "https://ccoo.eus/rss.php", tipo: rss, seccion: asociaciones}
+  - {id: steilas, nombre: "STEILAS (enseñanza)", url: "https://steilas.eus/feed/", tipo: rss, seccion: asociaciones}
+  - {id: esk, nombre: "ESK (sindicato)", url: "https://www.esk.eus/index.php/es/?filter_tag%5B0%5D=&format=feed&type=rss", tipo: rss, seccion: asociaciones}
+  - {id: gasteizon, nombre: "Gasteiz On (comerciantes de Vitoria)", url: "https://www.gasteizon.eus/es/?format=feed&type=rss", tipo: rss, seccion: asociaciones, local: true, municipio: Vitoria-Gasteiz}
+  - {id: apdema, nombre: "APDEMA (discapacidad intelectual)", url: "https://www.apdema.org/feed/", tipo: rss, seccion: asociaciones, local: true}
+  - {id: aspace, nombre: "ASPACE Álava (parálisis cerebral)", url: "https://www.aspacealava.org/feed/", tipo: rss, seccion: asociaciones, local: true}
+  - {id: ortzadar, nombre: "Ortzadar (folklore)", url: "https://www.ortzadar.eus/feed/", tipo: rss, seccion: asociaciones, local: true, municipio: Vitoria-Gasteiz}
+  - {id: itaka, nombre: "Itaka Escolapios", url: "https://www.itakaescolapios.org/es/feed/", tipo: rss, seccion: asociaciones}
+  - {id: bidesari, nombre: "Bidesari (pastoral penitenciaria)", url: "https://bidesari.org/es/feed/", tipo: rss, seccion: asociaciones}
+  - {id: ehu, nombre: "UPV/EHU · Campusa", url: "https://www.ehu.eus/es/web/campusa-magazine/rss/-/asset_publisher/a7TL/rss", alternativa: "https://www.ehu.eus:443/en/web/campusa-magazine/rss/-/asset_publisher/a7TL/rss", tipo: rss, seccion: asociaciones}
 
   # =================== AGENDA (van al calendario) ===================
   - {id: ayto-convocatorias, nombre: "Ayuntamiento · Convocatorias de prensa", url: "https://blogs.vitoria-gasteiz.org/medios/category/convocatorias/feed/", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz}
@@ -107,6 +118,16 @@ fuentes:
   - {id: agenda-cultura, nombre: "Ayuntamiento · Agenda de cultura y ocio", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=actividadesCuadroMando&claveTema=&claveArea=38", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: cultura, max: 150}
   - {id: elkarteak-agenda, nombre: "Elkarteak.org · Agenda de asociaciones", url: "https://elkarteak.org/rss_agenda.php?h=es", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: asociaciones}
   - {id: kulturklik, nombre: "Kulturklik · Agenda cultural de Álava", url: "https://api.euskadi.eus/culture/events/v1.0/events/upcoming?_elements=50&_page={PAGINA}&provinceNoraCode=1", tipo: kulturklik, seccion: agenda, local: true, accept: "application/json", paginas: 15, dias: 60, categoria_cal: cultura, solo_calendario: true}
+
+  # =================== TELETIPOS ===================
+  - {id: ep-euskadi, nombre: "Europa Press · Euskadi", url: "https://www.europapress.es/euskadi/", tipo: html, patron_enlace: "/euskadi/noticia-", seccion: teletipos, calendario: true}
+  - {id: efe-pv, nombre: "EFE · País Vasco", url: "https://efe.com/pais-vasco/", tipo: html, patron_enlace: "efe.com/pais-vasco/20", seccion: teletipos}
+  - {id: ep-nacional, nombre: "Europa Press · Nacional", url: "https://www.europapress.es/nacional/", tipo: html, patron_enlace: "/nacional/noticia-", seccion: teletipos, calendario: false}
+  - {id: efe-es, nombre: "EFE · España", url: "https://efe.com/espana/", tipo: html, patron_enlace: "efe.com/espana/20", seccion: teletipos, calendario: false}
+  - {id: ep-sociedad, nombre: "Europa Press · Sociedad", url: "https://www.europapress.es/rss/rss.aspx?ch=00073", tipo: rss, seccion: teletipos, calendario: false}
+
+  # =================== MEDIOS ALAVESES (solo para el calendario) ===================
+  - {id: halabedi, nombre: "Hala Bedi irratia", url: "https://halabedi.eus/feed", tipo: rss, seccion: medios, local: true, municipio: Vitoria-Gasteiz, solo_calendario: true}
 
   # =================== IDEAS DE TEMAS (medios de toda España) ===================
   # Diario de Navarra, Heraldo y los diarios de Vocento no se incluyen: no permiten este uso.

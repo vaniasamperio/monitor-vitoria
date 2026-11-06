@@ -319,7 +319,17 @@ def lee_html(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
             except ValueError:
                 pass
             b = b[:m.start()]
+        if not it["fecha"]:                      # fecha en la dirección (EFE: /2026-11-06/, Europa Press: -20261106...)
+            m = re.search(r"/(20\d\d)-(\d\d)-(\d\d)/", it["enlace"]) or re.search(r"-(20\d\d)(\d\d)(\d\d)(\d\d)(\d\d)\d*\.html", it["enlace"])
+            if m:
+                g = list(map(int, m.groups()))
+                try:
+                    it["fecha"] = datetime(g[0], g[1], g[2], *(g[3:5] if len(g) > 3 else (0, 0)), tzinfo=MADRID)
+                except ValueError:
+                    pass
         it["texto"] = " ".join(b.replace(it["titulo"], " ").split()).strip(" ·|-")
+        if len(it["texto"]) < 30:                 # restos de maquetación ("marcatime", "Leer más"…)
+            it["texto"] = ""
         it["texto_largo"] = it["texto"]
         out.append(it)
     return out
@@ -916,7 +926,8 @@ def main() -> int:
                     for ev in evs:
                         ev["categoria"] = fuente.get("categoria_cal") or {
                             "instituciones": "institucional", "boletines": "institucional", "pueblos": "pueblos",
-                            "asociaciones": "asociaciones", "agenda": "institucional", "medios": "medios"}.get(fuente["seccion"], "otros")
+                            "asociaciones": "asociaciones", "agenda": "institucional", "medios": "medios",
+                            "teletipos": "medios", "sucesos": "institucional"}.get(fuente["seccion"], "otros")
                         ev["alava"] = reg["alava"]
                         ev["municipios"] = reg["municipios"]
                         cal_hist[ev["id"]] = ev
@@ -960,6 +971,8 @@ def main() -> int:
     solo_cal = {f["id"] for f in cfg.get("fuentes", []) if f.get("solo_calendario")}
     for it in items_hist.values():
         if it["seccion"] == "buzon" or it["fuente"] in solo_cal:
+            continue
+        if it["seccion"] == "teletipos" and (de_iso(it["fecha"]) or de_iso(it["visto"])) < ahora - timedelta(days=3):
             continue
         if it["seccion"] == "ideas":
             ref = de_iso(it["fecha"]) or de_iso(it["visto"])
