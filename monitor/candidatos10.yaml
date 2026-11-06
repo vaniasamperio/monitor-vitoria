@@ -1,0 +1,7 @@
+candidatos: []
+muestras:
+  - {id: emb-ullibarri, url: "https://www.embalses.net/pantano-1148-ullibarri-arrazua.html"}
+  - {id: emb-urrunaga, url: "https://www.embalses.net/pantano-1153-urrunaga.html"}
+  - {id: bdns-conv-reg, url: "https://www.infosubvenciones.es/bdnstrans/api/convocatorias/busqueda?page=0&pageSize=20&order=fechaRecepcion&direccion=desc&regiones=14"}
+  - {id: bdns-conc-reg, url: "https://www.infosubvenciones.es/bdnstrans/api/concesiones/busqueda?page=0&pageSize=20&order=fechaConcesion&direccion=desc&regiones=14"}
+  - {id: air-stations-all, url: "https://api.euskadi.eus/air-quality/stations?_elements=200"}
