@@ -1,0 +1,85 @@
+# ============================================================
+#  TEMAS PARA EL BUSCADOR DE IDEAS  ·  Hoy por Hoy Vitoria
+# ============================================================
+#  El buscador lee la prensa de otros territorios y puntúa cada
+#  noticia según:
+#    - si toca uno de estos temas (palabras clave),
+#    - si es "de fondo" (estudios, datos, tendencias...),
+#    - y le resta si es pura actualidad (fútbol, sucesos, política
+#      de partidos), que ya cubre la SER nacional o deportes.
+#
+#  Las palabras se escriben en minúscula y sin tildes. Basta con el
+#  principio de la palabra: "viviend" encuentra vivienda y viviendas.
+#
+#  "pistas" son las fuentes de Vitoria/Álava donde buscar el ángulo
+#  local. Aparecen debajo de cada idea como "¿Y en Vitoria?".
+# ============================================================
+
+temas:
+  - nombre: Vivienda
+    palabras: [viviend, alquiler, hipotec, desahuci, okupa, piso, pisos, inquilin, vpo, vivienda protegida, ascensor, rehabilitacion, comunidad de vecinos]
+    pistas: ["Ensanche 21 Zabalgunea", "Observatorio Vasco de la Vivienda", "Alokabide", "Etxebide", "Ayudas municipales a la rehabilitación"]
+
+  - nombre: Mayores y cuidados
+    palabras: [mayores, envejec, residencia, soledad no deseada, cuidador, dependencia, jubilad, pension, centro de dia, longev]
+    pistas: ["IFBS · Instituto Foral de Bienestar Social", "Centros socioculturales de mayores del Ayuntamiento", "Eustat: población por edad", "Asociaciones de jubilados de barrio"]
+
+  - nombre: Juventud
+    palabras: [jovenes, juventud, adolescent, emancip, ocio juvenil, gazte, primer empleo, salud mental juvenil]
+    pistas: ["Observatorio Vasco de la Juventud", "Servicio municipal de Juventud", "Campus de Álava de la UPV/EHU", "Gazteleku de los centros cívicos"]
+
+  - nombre: Salud
+    palabras: [sanidad, sanitari, hospital, urgencias, lista de espera, atencion primaria, medico de familia, pediatr, salud mental, enfermer, farmac, osakidetza]
+    pistas: ["OSI Araba (Txagorritxu, Santiago)", "Colegio de Médicos de Álava", "Plataformas de pacientes de Álava", "Datos de listas de espera de Osakidetza"]
+
+  - nombre: Educación
+    palabras: [colegio, escuela, alumn, profesor, docente, aula, universidad, matricul, bachiller, fp, formacion profesional, comedor escolar, acoso escolar, ikastola]
+    pistas: ["Delegación de Educación en Álava", "Campus de Álava de la UPV/EHU", "AMPAs y federaciones de familias", "Matrícula por centros (Gobierno Vasco)"]
+
+  - nombre: Movilidad
+    palabras: [tranvia, autobus, transporte publico, bicicleta, bici, carril, trafico, aparcamiento, peaton, zona de bajas emisiones, patinete, tren, estacion]
+    pistas: ["TUVISA", "Tranvía (Euskotren)", "Plan de Movilidad Sostenible municipal", "Asociaciones ciclistas de Vitoria"]
+
+  - nombre: Comercio y barrio
+    palabras: [comercio local, tienda, persiana, local vacio, locales vacios, hosteleria, bar, bares, mercado, franquicia, pequeno comercio, barrio]
+    pistas: ["Gasteiz On (comercio)", "Asociación de Hostelería de Álava", "Mercado de Abastos", "Asociaciones vecinales"]
+
+  - nombre: Empleo y economía
+    palabras: [empleo, paro, desemple, trabajo, salario, sueldo, precariedad, autonomo, industria, cierre de empresa, ere, huelga, teletrabajo, convenio]
+    pistas: ["Lanbide (datos de Álava)", "SEA Empresas Alavesas", "Cámara de Comercio de Álava", "Sindicatos en Álava"]
+
+  - nombre: Medio ambiente
+    palabras: [clima, climatic, calor, ola de calor, sequia, contaminacion, calidad del aire, ruido, residuo, reciclaj, arbol, zonas verdes, anillo verde, biodiversidad, energia, renovable, placas solares]
+    pistas: ["CEA · Centro de Estudios Ambientales", "Anillo Verde", "AMVISA (agua)", "Datos de calidad del aire de Vitoria"]
+
+  - nombre: Igualdad
+    palabras: [igualdad, violencia machista, violencia de genero, feminis, brecha, conciliacion, lgtbi, diversidad, mujeres]
+    pistas: ["Servicio municipal de Igualdad", "Emakunde", "Asociaciones feministas de Vitoria"]
+
+  - nombre: Migración y convivencia
+    palabras: [migrant, inmigra, refugiad, racismo, convivencia, sinhogar, sin hogar, personas sin techo, exclusion, pobreza]
+    pistas: ["Ikuspegi · Observatorio Vasco de Inmigración", "Servicios sociales municipales", "Cáritas Vitoria", "Ararteko"]
+
+  - nombre: Cultura y patrimonio
+    palabras: [cultura, museo, patrimonio, biblioteca, libreria, teatro, cine, festival, concierto, artista, euskera, archivo, historia]
+    pistas: ["Departamento municipal de Cultura", "Museos de Álava (Diputación)", "Artium", "Fundación Catedral Santa María"]
+
+  - nombre: Mundo rural y despoblación
+    palabras: [despoblac, rural, pueblo, pueblos, concejo, agricult, ganader, vino, viñedo, vendimia, campo]
+    pistas: ["Concejos de Álava", "Cuadrillas (Llanada, Rioja Alavesa, Montaña...)", "Diputación · Agricultura", "UAGA (sindicato agrario)"]
+
+  - nombre: Consumo y bolsillo
+    palabras: [precio, inflacion, cesta de la compra, factura, luz, gas, gasolina, consumidor, estafa, timo, alimentos]
+    pistas: ["Kontsumobide (Álava)", "OMIC municipal", "Asociaciones de consumidores"]
+
+  - nombre: Tecnología y ciencia
+    palabras: [inteligencia artificial, ia, digital, ciberseguridad, ciencia, investigac, startup, innovacion, robot, brecha digital]
+    pistas: ["BIC Araba", "Campus de Álava de la UPV/EHU", "Centros tecnológicos (Tecnalia)", "Robotekin"]
+
+# Señales de que una noticia es "de fondo" (suman puntos)
+fondo:
+  [estudio, informe, encuesta, estadistica, observatorio, radiografia, datos, "cada vez mas", record, "se dispara", "se duplica", "se triplica", crece, aumenta, aumento, descenso, "la mitad", "uno de cada", "una de cada", "por ciento", "%", tendencia, "lista de espera", escasez, "falta de", deficit, "por primera vez", "en los ultimos anos", perfil, testimonio, "asi viven", reportaje]
+
+# Señales de pura actualidad que ya cubren otros (restan puntos)
+excluir:
+  [futbol, baloncesto, liga, gol, goles, entrenador, fichaje, champions, euroliga, osasuna, alaves, baskonia, detenid, muere, fallece, fallecid, asesin, tiroteo, agresion, apunal, juicio, condena, fiscalia, guardia civil, ertzaintza, accidente de trafico, atropell, loteria, sorteo, horoscopo, "prevision del tiempo", pp, psoe, vox, bildu, pnv, sumar, podemos, upn, elecciones, candidat, "sesion de control", "cortes", "pleno del parlamento", "congreso de los diputados", feijoo, sanchez, abascal]

@@ -1,0 +1,175 @@
+# ============================================================
+#  FUENTES DEL MONITOR  ·  Hoy por Hoy Vitoria
+# ============================================================
+#  Este archivo se puede editar desde la web de GitHub (icono del lápiz).
+#  Para añadir una fuente, copia un bloque de los de abajo, cámbiale
+#  el "id" (una palabra única, sin espacios), el "nombre" y la "url",
+#  y guarda ("Commit changes"). En la siguiente actualización aparecerá.
+#
+#  Campos:
+#    id        identificador único, sin espacios ni tildes
+#    nombre    cómo se verá en la página
+#    url       dirección del feed RSS (o de la página, si tipo: html)
+#    tipo      rss  -> un feed RSS/Atom (lo normal)
+#              html -> una página sin RSS; hay que indicar "patron_enlace"
+#    seccion   instituciones | agenda | medios | ideas
+#    local     true  -> todo lo que publica es de Vitoria/Álava
+#              false -> publica de todo Euskadi o de fuera; el programa
+#                       marca solo lo que menciona Álava
+#    activa    false para desactivarla sin borrarla
+# ============================================================
+
+fuentes:
+
+  # ---------- INSTITUCIONES ----------
+  - id: ayto-notas
+    nombre: "Ayuntamiento · Notas de prensa"
+    url: "https://blogs.vitoria-gasteiz.org/medios/feed/"
+    tipo: rss
+    seccion: instituciones
+    local: true
+
+  - id: ayto-movilidad
+    nombre: "Ayuntamiento · Avisos de movilidad (TUVISA, obras)"
+    url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=contenedorCuadroMando&claveTema=&claveArea=1"
+    tipo: rss
+    seccion: instituciones
+    local: true
+    clave_por_titulo: true  # este feed repite el mismo aviso varias veces
+
+  - id: diputacion
+    nombre: "Diputación Foral de Álava · Sala de prensa"
+    url: "https://prentsa.araba.eus/es/inicio"
+    tipo: html
+    patron_enlace: "/web/arabapress/-/"
+    base: "https://prentsa.araba.eus"
+    seccion: instituciones
+    local: true
+
+  - id: irekia
+    nombre: "Gobierno Vasco · Irekia"
+    url: "https://www.irekia.euskadi.eus/es/news.rss"
+    tipo: rss
+    seccion: instituciones
+    local: false
+
+  - id: bopv
+    nombre: "BOPV · Boletín del día"
+    url: "https://www.euskadi.eus/bopv2/datos/Ultimo.xml"
+    tipo: rss
+    seccion: instituciones
+    local: false
+
+  # ---------- AGENDA ----------
+  - id: ayto-convocatorias
+    nombre: "Ayuntamiento · Convocatorias de prensa"
+    url: "https://blogs.vitoria-gasteiz.org/medios/category/convocatorias/feed/"
+    tipo: rss
+    seccion: agenda
+    local: true
+
+  - id: ayto-agenda
+    nombre: "Ayuntamiento · Agenda institucional (plenos, comisiones)"
+    url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?accion=calendario&idCalendario=246&idioma=es&claveArea="
+    tipo: rss
+    seccion: agenda
+    local: true
+    fecha_es_evento: true   # la fecha del RSS es el día de la reunión
+
+  # ---------- YA PUBLICADO EN VITORIA ----------
+  - id: gasteizhoy
+    nombre: "Gasteiz Hoy"
+    url: "https://www.gasteizhoy.com/feed/"
+    tipo: rss
+    seccion: medios
+    local: true
+
+  # ---------- IDEAS DE TEMAS (prensa de otros territorios) ----------
+  #  Aquí entra lo que otros medios regionales están contando y que
+  #  se podría "bajar" a Vitoria/Álava. Puedes añadir más periódicos.
+  - id: eldiario-euskadi
+    nombre: "elDiario.es · Euskadi"
+    url: "https://www.eldiario.es/rss/euskadi/"
+    tipo: rss
+    seccion: ideas
+    local: false
+
+  - id: eldiario-navarra
+    nombre: "elDiario.es · Navarra"
+    url: "https://www.eldiario.es/rss/navarra/"
+    tipo: rss
+    seccion: ideas
+    local: false
+
+  - id: eldiario-cyl
+    nombre: "elDiario.es · Castilla y León"
+    url: "https://www.eldiario.es/rss/castilla-y-leon/"
+    tipo: rss
+    seccion: ideas
+    local: false
+
+  - id: eldiario-aragon
+    nombre: "elDiario.es · Aragón"
+    url: "https://www.eldiario.es/rss/aragon/"
+    tipo: rss
+    seccion: ideas
+    local: false
+
+  - id: eldiario-cantabria
+    nombre: "elDiario.es · Cantabria"
+    url: "https://www.eldiario.es/rss/cantabria/"
+    tipo: rss
+    seccion: ideas
+    local: false
+
+  - id: eldiario-galicia
+    nombre: "elDiario.es · Galicia"
+    url: "https://www.eldiario.es/rss/galicia/"
+    tipo: rss
+    seccion: ideas
+    local: false
+
+  - id: eldiario-asturias
+    nombre: "elDiario.es · Asturias"
+    url: "https://www.eldiario.es/rss/asturias/"
+    tipo: rss
+    seccion: ideas
+    local: false
+
+  - id: eldiario-cv
+    nombre: "elDiario.es · Comunitat Valenciana"
+    url: "https://www.eldiario.es/rss/comunitat-valenciana/"
+    tipo: rss
+    seccion: ideas
+    local: false
+
+  - id: eldiario-andalucia
+    nombre: "elDiario.es · Andalucía"
+    url: "https://www.eldiario.es/rss/andalucia/"
+    tipo: rss
+    seccion: ideas
+    local: false
+
+# ------------------------------------------------------------
+#  Enlaces de consulta manual (webs que no se pueden leer
+#  automáticamente). Aparecen en la pestaña "Fuentes".
+# ------------------------------------------------------------
+enlaces_manuales:
+  - nombre: "BOTHA · Boletín Oficial de Álava"
+    url: "https://www.araba.eus/botha/"
+    nota: "Su web no permite la lectura automática. Mirar a diario: subvenciones, ordenanzas, oposiciones."
+  - nombre: "Juntas Generales de Álava"
+    url: "https://www.jjggalava.eus/"
+    nota: "Orden del día de plenos y comisiones."
+  - nombre: "Parlamento Vasco"
+    url: "https://www.legebiltzarra.eus/"
+    nota: "Preguntas e iniciativas que mencionan Álava."
+  - nombre: "Eustat · Novedades"
+    url: "https://www.eustat.eus/"
+    nota: "Estadísticas nuevas: siempre hay dato por territorio."
+  - nombre: "CENDOJ · Sentencias TSJPV"
+    url: "https://www.poderjudicial.es/search/indexAN.jsp"
+    nota: "Buscar por 'Vitoria' o 'Álava'."
+  - nombre: "Ayuntamiento · Web municipal (Buzón ciudadano, avisos)"
+    url: "https://www.vitoria-gasteiz.org/"
+    nota: "Las quejas vecinales del Buzón ciudadano son buena cantera de temas de barrio."
