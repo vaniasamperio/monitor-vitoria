@@ -100,6 +100,11 @@ def explora(c: dict, robots: dict) -> dict:
     if not web:
         res["estado"] = "sin_web"
         return res
+    directo = prueba_feed(web) if c.get("feed") else None
+    if directo:
+        directo["robots_ok"] = permitido(directo["url"], robots)
+        res.update({"estado": "rss", "feeds": [directo], "url_final": web})
+        return res
     try:
         r = ses.get(web, timeout=25, allow_redirects=True)
         res["http"] = r.status_code

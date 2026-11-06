@@ -1,0 +1,61 @@
+# Tercera vuelta: medios de toda España para Ideas de temas
+candidatos:
+  - {nombre: "20minutos", web: "https://www.20minutos.es/", categoria: medio}
+  - {nombre: "Europa Press", web: "https://www.europapress.es/", categoria: medio}
+  - {nombre: "Público", web: "https://www.publico.es/", categoria: medio}
+  - {nombre: "infoLibre", web: "https://www.infolibre.es/", categoria: medio}
+  - {nombre: "El Salto", web: "https://www.elsaltodiario.com/", categoria: medio}
+  - {nombre: "RTVE Noticias", web: "https://www.rtve.es/noticias/", categoria: medio}
+  - {nombre: "Cadena SER", web: "https://cadenaser.com/", categoria: medio}
+  - {nombre: "El País", web: "https://elpais.com/", categoria: medio}
+  - {nombre: "La Voz de Galicia", web: "https://www.lavozdegalicia.es/", categoria: medio}
+  - {nombre: "Levante-EMV", web: "https://www.levante-emv.com/", categoria: medio}
+  - {nombre: "La Nueva España", web: "https://www.lne.es/", categoria: medio}
+  - {nombre: "Faro de Vigo", web: "https://www.farodevigo.es/", categoria: medio}
+  - {nombre: "Diario de Mallorca", web: "https://www.diariodemallorca.es/", categoria: medio}
+  - {nombre: "La Opinión de Málaga", web: "https://www.laopiniondemalaga.es/", categoria: medio}
+  - {nombre: "La Provincia", web: "https://www.laprovincia.es/", categoria: medio}
+  - {nombre: "El Periódico de Aragón", web: "https://www.elperiodicodearagon.com/", categoria: medio}
+  - {nombre: "El Periódico Extremadura", web: "https://www.elperiodicoextremadura.com/", categoria: medio}
+  - {nombre: "Diario de Burgos", web: "https://www.diariodeburgos.es/", categoria: medio}
+  - {nombre: "El Día de Valladolid", web: "https://www.eldiadevalladolid.com/", categoria: medio}
+  - {nombre: "Diario de León", web: "https://www.diariodeleon.es/", categoria: medio}
+  - {nombre: "Diario de Sevilla", web: "https://www.diariodesevilla.es/", categoria: medio}
+  - {nombre: "Diario de Cádiz", web: "https://www.diariodecadiz.es/", categoria: medio}
+  - {nombre: "Noticias de Navarra", web: "https://www.noticiasdenavarra.com/", categoria: medio}
+  - {nombre: "Noticias de Gipuzkoa", web: "https://www.noticiasdegipuzkoa.eus/", categoria: medio}
+  - {nombre: "Deia", web: "https://www.deia.eus/", categoria: medio}
+  - {nombre: "Berria", web: "https://www.berria.eus/", categoria: medio}
+  - {nombre: "Ara", web: "https://www.ara.cat/", categoria: medio}
+  - {nombre: "VilaWeb", web: "https://www.vilaweb.cat/", categoria: medio}
+  - {nombre: "Nació Digital", web: "https://www.naciodigital.cat/", categoria: medio}
+  - {nombre: "Newtral", web: "https://www.newtral.es/", categoria: medio}
+  - {nombre: "La Marea", web: "https://www.lamarea.com/", categoria: medio}
+  - {nombre: "CTXT", web: "https://ctxt.es/", categoria: medio}
+  - {nombre: "El Confidencial", web: "https://www.elconfidencial.com/", categoria: medio}
+  - {nombre: "El Español", web: "https://www.elespanol.com/", categoria: medio}
+  - {nombre: "El Mundo", web: "https://www.elmundo.es/", categoria: medio}
+  - {nombre: "La Vanguardia", web: "https://www.lavanguardia.com/", categoria: medio}
+  - {nombre: "El Periódico", web: "https://www.elperiodico.com/", categoria: medio}
+  - {nombre: "Agencia SINC", web: "https://www.agenciasinc.es/", categoria: medio}
+  - {nombre: "EFE", web: "https://efe.com/", categoria: medio}
+  - {nombre: "Canarias7", web: "https://www.canarias7.es/", categoria: medio}
+  - {nombre: "Diario de Navarra", web: "https://www.diariodenavarra.es/", categoria: medio}
+  - {nombre: "La Opinión de Murcia", web: "https://www.laopiniondemurcia.es/", categoria: medio}
+  - {nombre: "Información (Alicante)", web: "https://www.informacion.es/", categoria: medio}
+  - {nombre: "Mediterráneo", web: "https://www.elperiodicomediterraneo.com/", categoria: medio}
+  - {nombre: "Diario Córdoba", web: "https://www.diariocordoba.com/", categoria: medio}
+  - {nombre: "elDiario.es · catalunya", web: "https://www.eldiario.es/rss/catalunya/", categoria: medio, feed: true}
+  - {nombre: "elDiario.es · madrid", web: "https://www.eldiario.es/rss/madrid/", categoria: medio, feed: true}
+  - {nombre: "elDiario.es · canariasahora", web: "https://www.eldiario.es/rss/canariasahora/", categoria: medio, feed: true}
+  - {nombre: "elDiario.es · castilla-la-mancha", web: "https://www.eldiario.es/rss/castilla-la-mancha/", categoria: medio, feed: true}
+  - {nombre: "elDiario.es · extremadura", web: "https://www.eldiario.es/rss/extremadura/", categoria: medio, feed: true}
+  - {nombre: "elDiario.es · murcia", web: "https://www.eldiario.es/rss/murcia/", categoria: medio, feed: true}
+  - {nombre: "elDiario.es · illes-balears", web: "https://www.eldiario.es/rss/illes-balears/", categoria: medio, feed: true}
+  - {nombre: "elDiario.es · la-rioja", web: "https://www.eldiario.es/rss/la-rioja/", categoria: medio, feed: true}
+  - {nombre: "elDiario.es · sociedad", web: "https://www.eldiario.es/rss/sociedad/", categoria: medio, feed: true}
+  - {nombre: "elDiario.es · economia", web: "https://www.eldiario.es/rss/economia/", categoria: medio, feed: true}
+muestras:
+  - {id: buzon-18, url: "https://www.vitoria-gasteiz.org/wb021/was/areaAction.do?idioma=es&accion=areas&claveArea=18"}
+  - {id: buzon-22, url: "https://www.vitoria-gasteiz.org/wb021/was/areaAction.do?idioma=es&accion=areas&claveArea=22"}
+  - {id: tsjpv, url: "https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunales-Superiores-de-Justicia/TSJ-Pais-Vasco/ch.En-Portada.formato1/"}
