@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-06T18:43:08+00:00",
+ "actualizado": "2026-11-06T18:44:27+00:00",
  "fuentes": [
   {
    "id": "ayto-notas",
@@ -9,8 +9,8 @@
    "local": true,
    "ok": true,
    "leidos": 10,
-   "nuevos": 10,
-   "segundos": 1.4
+   "nuevos": 3,
+   "segundos": 1.5
   },
   {
    "id": "ayto-movilidad",
@@ -20,7 +20,7 @@
    "local": true,
    "ok": true,
    "leidos": 15,
-   "nuevos": 13,
+   "nuevos": 0,
    "segundos": 0.7
   },
   {
@@ -31,8 +31,8 @@
    "local": true,
    "ok": true,
    "leidos": 4,
-   "nuevos": 4,
-   "segundos": 4.3
+   "nuevos": 0,
+   "segundos": 4.0
   },
   {
    "id": "irekia",
@@ -42,8 +42,8 @@
    "local": false,
    "ok": true,
    "leidos": 15,
-   "nuevos": 15,
-   "segundos": 2.2
+   "nuevos": 0,
+   "segundos": 1.0
   },
   {
    "id": "bopv",
@@ -53,7 +53,7 @@
    "local": false,
    "ok": true,
    "leidos": 26,
-   "nuevos": 26,
+   "nuevos": 0,
    "segundos": 0.5
   },
   {
@@ -64,8 +64,8 @@
    "local": true,
    "ok": true,
    "leidos": 10,
-   "nuevos": 10,
-   "segundos": 1.0
+   "nuevos": 0,
+   "segundos": 1.1
   },
   {
    "id": "ayto-agenda",
@@ -75,8 +75,8 @@
    "local": true,
    "ok": true,
    "leidos": 51,
-   "nuevos": 51,
-   "segundos": 0.9
+   "nuevos": 0,
+   "segundos": 0.7
   },
   {
    "id": "gasteizhoy",
@@ -95,8 +95,8 @@
    "local": false,
    "ok": true,
    "leidos": 65,
-   "nuevos": 65,
-   "segundos": 1.0
+   "nuevos": 0,
+   "segundos": 1.2
   },
   {
    "id": "eldiario-navarra",
@@ -106,8 +106,8 @@
    "local": false,
    "ok": true,
    "leidos": 23,
-   "nuevos": 23,
-   "segundos": 0.8
+   "nuevos": 0,
+   "segundos": 0.4
   },
   {
    "id": "eldiario-cyl",
@@ -117,8 +117,8 @@
    "local": false,
    "ok": true,
    "leidos": 30,
-   "nuevos": 30,
-   "segundos": 0.5
+   "nuevos": 0,
+   "segundos": 0.2
   },
   {
    "id": "eldiario-aragon",
@@ -128,7 +128,7 @@
    "local": false,
    "ok": true,
    "leidos": 43,
-   "nuevos": 43,
+   "nuevos": 0,
    "segundos": 0.6
   },
   {
@@ -139,8 +139,8 @@
    "local": false,
    "ok": true,
    "leidos": 42,
-   "nuevos": 42,
-   "segundos": 0.7
+   "nuevos": 0,
+   "segundos": 0.6
   },
   {
    "id": "eldiario-galicia",
@@ -150,8 +150,8 @@
    "local": false,
    "ok": true,
    "leidos": 28,
-   "nuevos": 28,
-   "segundos": 0.9
+   "nuevos": 0,
+   "segundos": 0.8
   },
   {
    "id": "eldiario-asturias",
@@ -161,8 +161,8 @@
    "local": false,
    "ok": true,
    "leidos": 60,
-   "nuevos": 60,
-   "segundos": 1.1
+   "nuevos": 0,
+   "segundos": 0.9
   },
   {
    "id": "eldiario-cv",
@@ -172,8 +172,8 @@
    "local": false,
    "ok": true,
    "leidos": 71,
-   "nuevos": 71,
-   "segundos": 0.6
+   "nuevos": 0,
+   "segundos": 1.4
   },
   {
    "id": "eldiario-andalucia",
@@ -183,8 +183,8 @@
    "local": false,
    "ok": true,
    "leidos": 56,
-   "nuevos": 56,
-   "segundos": 0.5
+   "nuevos": 0,
+   "segundos": 1.1
   }
  ],
  "manuales": [
