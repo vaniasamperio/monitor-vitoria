@@ -1,0 +1,100 @@
+# Sexta vuelta: asociaciones, medios alaveses, teletipos y sucesos
+candidatos:
+  - {nombre: "ELA", web: "https://www.ela.eus/es/", categoria: asoc}
+  - {nombre: "LAB", web: "https://www.lab.eus/es/", categoria: asoc}
+  - {nombre: "CCOO Euskadi", web: "https://www.ccoo.eus/", categoria: asoc}
+  - {nombre: "UGT Euskadi", web: "https://www.ugteuskadi.org/", categoria: asoc}
+  - {nombre: "STEILAS", web: "https://www.steilas.eus/", categoria: asoc}
+  - {nombre: "ESK", web: "https://www.esk.eus/", categoria: asoc}
+  - {nombre: "SEA Empresas Alavesas", web: "https://www.sea.es/", categoria: asoc}
+  - {nombre: "Cámara de Álava", web: "https://www.camaradealava.com/", categoria: asoc}
+  - {nombre: "Gasteiz On", web: "https://gasteizon.eus/", categoria: asoc}
+  - {nombre: "Ekologistak Martxan", web: "https://www.ekologistakmartxan.org/", categoria: asoc}
+  - {nombre: "Eguzkizaleak", web: "https://www.eguzkizaleak.org/", categoria: asoc}
+  - {nombre: "SOS Racismo", web: "https://www.sosracismo.eus/", categoria: asoc}
+  - {nombre: "Banco de Alimentos de Álava", web: "https://www.bancoalimentosalava.org/", categoria: asoc}
+  - {nombre: "APDEMA", web: "https://www.apdema.org/", categoria: asoc}
+  - {nombre: "Down Araba", web: "https://www.downaraba.org/", categoria: asoc}
+  - {nombre: "ASPACE Álava", web: "https://www.aspacealava.org/", categoria: asoc}
+  - {nombre: "AFADES Álava", web: "https://www.afadesalava.org/", categoria: asoc}
+  - {nombre: "Colegio de Médicos de Álava", web: "https://www.comalava.es/", categoria: asoc}
+  - {nombre: "Colegio de Abogados de Álava", web: "https://www.icaalava.com/", categoria: asoc}
+  - {nombre: "EKA consumidores", web: "https://www.eka-ocuv.eus/", categoria: asoc}
+  - {nombre: "Kalebegiak", web: "https://kalebegiak.org/", categoria: asoc}
+  - {nombre: "Gasteiz Txiki", web: "https://gasteiztxiki.org/", categoria: asoc}
+  - {nombre: "Errekaleor Bizirik", web: "https://errekaleorbizirik.org/", categoria: asoc}
+  - {nombre: "Hika Ateneo", web: "https://hika-ateneo.org/", categoria: asoc}
+  - {nombre: "Zabalgana Batuz", web: "https://zabalganabatuz.org/", categoria: asoc}
+  - {nombre: "Salburuko auzo elkartea", web: "https://salburua.eus/", categoria: asoc}
+  - {nombre: "Bizilur", web: "https://www.bizilur.org/", categoria: asoc}
+  - {nombre: "Cruz Roja Álava", web: "https://www2.cruzroja.es/-/alava", categoria: asoc}
+  - {nombre: "Médicos del Mundo Euskadi", web: "https://www.medicosdelmundo.org/euskadi", categoria: asoc}
+  - {nombre: "CEAR Euskadi", web: "https://www.cear-euskadi.org/", categoria: asoc}
+  - {nombre: "Pensionistas de Euskal Herria", web: "https://pentsionistakbizkaia.eus/", categoria: asoc}
+  - {nombre: "Fundación Estadio", web: "https://www.fundacionestadio.com/", categoria: asoc}
+  - {nombre: "Arabako Gorrak", web: "https://www.arabakogorrak.org/", categoria: asoc}
+  - {nombre: "Asociación Clara Campoamor", web: "https://www.claracampoamor.com/", categoria: asoc}
+  - {nombre: "EHNE Bizkaia/Araba", web: "https://ehnebizkaia.eus/", categoria: asoc}
+  - {nombre: "Federación de AAVV de Vitoria", web: "https://www.gasteizkoauzoelkarteak.org/", categoria: asoc}
+  - {nombre: "Hostelería Gasteiz", web: "https://www.hosteleriagasteiz.com/", categoria: asoc}
+  - {nombre: "Ikuspegi", web: "https://www.ikuspegi.eus/", categoria: asoc}
+  - {nombre: "Sare Antifaxista", web: "https://www.sareantifaxista.org/", categoria: asoc}
+  - {nombre: "Hala Bedi", web: "https://halabedi.eus/", categoria: medio}
+  - {nombre: "Onda Vasca", web: "https://www.ondavasca.com/", categoria: medio}
+  - {nombre: "Alea", web: "https://alea.eus/", categoria: medio}
+  - {nombre: "Aiaraldea", web: "https://aiaraldea.eus/", categoria: medio}
+  - {nombre: "Noticias de Álava", web: "https://www.noticiasdealava.eus/", categoria: medio}
+  - {nombre: "EITB", web: "https://www.eitb.eus/es/", categoria: medio}
+  - {nombre: "Gasteiz Hoy", web: "https://www.gasteizhoy.com/", categoria: medio}
+  - {nombre: "Pausoka? Arabako Hitza", web: "https://www.hitza.eus/", categoria: medio}
+  - {nombre: "Rioja Alavesa (cuadrilla)", web: "https://www.cuadrillariojaalavesa.eus/", categoria: medio}
+  - {nombre: "Radio Vitoria", web: "https://www.eitb.eus/es/radio/radio-vitoria/", categoria: medio}
+  - {nombre: "SER Vitoria", web: "https://cadenaser.com/euskadi/", categoria: medio}
+  - {nombre: "Europa Press Euskadi", web: "https://www.europapress.es/euskadi/", categoria: tele}
+  - {nombre: "Europa Press Nacional", web: "https://www.europapress.es/nacional/", categoria: tele}
+  - {nombre: "EFE España", web: "https://efe.com/espana/", categoria: tele}
+  - {nombre: "EFE País Vasco", web: "https://efe.com/pais-vasco/", categoria: tele}
+  - {nombre: "Servimedia", web: "https://www.servimedia.es/", categoria: tele}
+  - {nombre: "Ertzaintza", web: "https://www.ertzaintza.euskadi.eus/", categoria: suc}
+  - {nombre: "Subdelegación Álava", web: "https://mpt.gob.es/delegaciones_gobierno/delegaciones/pais_vasco/actualidad/notas_de_prensa.html", categoria: suc}
+  - {nombre: "Guardia Civil prensa", web: "https://www.guardiacivil.es/es/prensa/noticias/index.html", categoria: suc}
+  - {nombre: "Fiscalía", web: "https://www.fiscal.es/", categoria: suc}
+  - {nombre: "Europa Press Euskadi f1 [feed]", web: "https://www.europapress.es/rss/rss.aspx?ch=00313", categoria: f, feed: true}
+  - {nombre: "Europa Press Euskadi f2 [feed]", web: "https://www.europapress.es/rss/rss.aspx?ch=00284", categoria: f, feed: true}
+  - {nombre: "Europa Press Nacional [feed]", web: "https://www.europapress.es/rss/rss.aspx?ch=00066", categoria: f, feed: true}
+  - {nombre: "Europa Press portada [feed]", web: "https://www.europapress.es/rss/rss.aspx", categoria: f, feed: true}
+  - {nombre: "Europa Press sociedad [feed]", web: "https://www.europapress.es/rss/rss.aspx?ch=00073", categoria: f, feed: true}
+  - {nombre: "EFE feed [feed]", web: "https://efe.com/feed", categoria: f, feed: true}
+  - {nombre: "EFE espana feed [feed]", web: "https://efe.com/espana/feed/", categoria: f, feed: true}
+  - {nombre: "EFE pais vasco feed [feed]", web: "https://efe.com/pais-vasco/feed/", categoria: f, feed: true}
+  - {nombre: "EFE rss [feed]", web: "https://efe.com/rss", categoria: f, feed: true}
+  - {nombre: "EFE news sitemap [feed]", web: "https://efe.com/news-sitemap.xml", categoria: f, feed: true}
+  - {nombre: "EITB es rss [feed]", web: "https://www.eitb.eus/es/rss/noticias/", categoria: f, feed: true}
+  - {nombre: "EITB araba [feed]", web: "https://www.eitb.eus/es/rss/noticias/euskadi/araba/", categoria: f, feed: true}
+  - {nombre: "Hala Bedi feed [feed]", web: "https://halabedi.eus/feed/", categoria: f, feed: true}
+  - {nombre: "Onda Vasca feed [feed]", web: "https://www.ondavasca.com/feed/", categoria: f, feed: true}
+  - {nombre: "Onda Vasca araba [feed]", web: "https://www.ondavasca.com/category/araba/feed/", categoria: f, feed: true}
+  - {nombre: "Alea feed [feed]", web: "https://alea.eus/rss", categoria: f, feed: true}
+  - {nombre: "Aiaraldea feed [feed]", web: "https://aiaraldea.eus/rss", categoria: f, feed: true}
+  - {nombre: "Gasteiz Hoy feed [feed]", web: "https://www.gasteizhoy.com/feed/", categoria: f, feed: true}
+  - {nombre: "Gasteiz Hoy agenda [feed]", web: "https://www.gasteizhoy.com/agenda/feed/", categoria: f, feed: true}
+  - {nombre: "Noticias de Álava rss [feed]", web: "https://www.noticiasdealava.eus/rss/", categoria: f, feed: true}
+  - {nombre: "SER Vitoria arc [feed]", web: "https://cadenaser.com/arc/outboundfeeds/rss/category/euskadi/?outputType=xml", categoria: f, feed: true}
+  - {nombre: "Irekia seguridad [feed]", web: "https://www.irekia.euskadi.eus/es/departments/42/news.rss", categoria: f, feed: true}
+  - {nombre: "Ertzaintza rss [feed]", web: "https://www.ertzaintza.euskadi.eus/rss/noticias.xml", categoria: f, feed: true}
+  - {nombre: "ELA feed [feed]", web: "https://www.ela.eus/es/rss", categoria: f, feed: true}
+  - {nombre: "LAB feed [feed]", web: "https://www.lab.eus/es/feed/", categoria: f, feed: true}
+  - {nombre: "CCOO feed [feed]", web: "https://www.ccoo.eus/rss/", categoria: f, feed: true}
+  - {nombre: "SEA feed [feed]", web: "https://www.sea.es/feed/", categoria: f, feed: true}
+  - {nombre: "Hika feed [feed]", web: "https://hika-ateneo.org/feed/", categoria: f, feed: true}
+  - {nombre: "Kalebegiak feed [feed]", web: "https://kalebegiak.org/feed/", categoria: f, feed: true}
+  - {nombre: "Ekologistak feed [feed]", web: "https://www.ekologistakmartxan.org/feed/", categoria: f, feed: true}
+  - {nombre: "Eguzkizaleak feed [feed]", web: "https://www.eguzkizaleak.org/feed/", categoria: f, feed: true}
+  - {nombre: "SOS Racismo feed [feed]", web: "https://www.sosracismo.eus/feed/", categoria: f, feed: true}
+  - {nombre: "Bizilur feed [feed]", web: "https://www.bizilur.org/feed/", categoria: f, feed: true}
+  - {nombre: "Servimedia feed [feed]", web: "https://www.servimedia.es/rss", categoria: f, feed: true}
+muestras:
+  - {id: judi-lista, url: "https://judimendikoak.com/beste-auzo-elkarteak/"}
+  - {id: efe-home, url: "https://efe.com/"}
+  - {id: ep-rss, url: "https://www.europapress.es/rss/"}
+  - {id: halabedi-agenda, url: "https://halabedi.eus/agenda/"}
