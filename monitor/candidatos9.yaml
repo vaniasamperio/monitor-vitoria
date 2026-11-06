@@ -1,0 +1,13 @@
+# Novena vuelta: filtros de la BDNS, embalses del Ebro, avisos
+candidatos: []
+muestras:
+  - {id: bdns-regiones, url: "https://www.infosubvenciones.es/bdnstrans/api/regiones"}
+  - {id: bdns-organos-l, url: "https://www.infosubvenciones.es/bdnstrans/api/organos?idAdmon=L"}
+  - {id: bdns-organos-a, url: "https://www.infosubvenciones.es/bdnstrans/api/organos?idAdmon=A"}
+  - {id: bdns-conv-alava, url: "https://www.infosubvenciones.es/bdnstrans/api/convocatorias/busqueda?page=0&pageSize=20&order=fechaRecepcion&direccion=desc&descripcion=Vitoria"}
+  - {id: bdns-conc-alava, url: "https://www.infosubvenciones.es/bdnstrans/api/concesiones/busqueda?page=0&pageSize=20&order=fechaConcesion&direccion=desc&nivel2=ARABA"}
+  - {id: embalses-ebro5, url: "https://www.embalses.net/cuenca-5-ebro.html"}
+  - {id: embalses-pv, url: "https://www.embalses.net/comunidad-5-pais-vasco.html"}
+  - {id: traffic-p2, url: "https://api.euskadi.eus/traffic/v1.0/incidences?_page=2"}
+  - {id: air-station, url: "https://api.euskadi.eus/air-quality/stations/83"}
+  - {id: air-index, url: "https://api.euskadi.eus/air-quality/measurements/daily/stations/83/from/2026-11-05/to/2026-11-06"}
