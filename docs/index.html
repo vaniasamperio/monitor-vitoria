@@ -85,6 +85,7 @@ ul.lista{list-style:none;margin:0;padding:0}
 .parte{padding:14px 18px;margin-bottom:16px;border-left:4px solid #8a2f2f}.parte h2{margin:0 0 6px}.parte p{margin:0 0 8px;line-height:1.5}.parte ul{margin:0;padding-left:18px}.parte li{margin:3px 0}
 #teletipos{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media (max-width:860px){#teletipos{grid-template-columns:1fr}}
+.btn-reunion{display:inline-block;margin-left:14px;padding:5px 11px;border:1px solid var(--linea, #d9d3c5);border-radius:7px;font-size:13px;text-decoration:none;color:inherit;vertical-align:middle;background:#fff}.btn-reunion:hover{background:#f6f1e6}
 .chip.etqf{background:#dfe7ec;color:#24485a}
 .chip.nuevo{background:var(--ambar);color:#3b2604;font-weight:700;letter-spacing:.03em}
 .chip.senal{background:#efe3f4;color:#5a2d6e}
@@ -252,7 +253,7 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
 <main class="marco">
   <!-- HOY -->
   <section class="panel" id="p-hoy">
-    <div class="hoy-cab"><h2 id="hoyFecha">Hoy</h2><div class="efes" id="hoyEfes"></div></div>
+    <div class="hoy-cab"><h2 id="hoyFecha">Hoy</h2><a class="btn-reunion" href="reunion.html" target="_blank" rel="noopener" title="Una página limpia para la reunión de la mañana, lista para imprimir">🖨 Vista para la reunión</a><div class="efes" id="hoyEfes"></div></div>
     <div class="tres">
       <div class="grupo"><h3>Agenda <small id="agendaHoyN"></small></h3><div id="agendaHoy"><div class="cargando">Cargando…</div></div></div>
       <div class="grupo"><h3>Lo más relevante <small>últimas horas</small></h3><ul class="lista" id="relevante"></ul></div>

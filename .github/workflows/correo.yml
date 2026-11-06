@@ -1,0 +1,27 @@
+# Correo de la mañana a la redacción (7:45 en Vitoria, invierno y verano).
+# Destinos: secreto CORREO_DESTINOS (direcciones separadas por comas). Remitente: el Gmail de la redacción.
+name: Correo de la mañana
+on:
+  schedule:
+    - cron: "45 5 * * *"   # 7:45 en verano (UTC+2)
+    - cron: "45 6 * * *"   # 7:45 en invierno (UTC+1); el script solo envía si en Madrid son las 7
+  workflow_dispatch:
+    inputs:
+      forzar:
+        description: "Enviar ahora aunque no sean las 7"
+        default: "no"
+permissions:
+  contents: read
+jobs:
+  correo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: python monitor/resumen_diario.py --enviar ${{ github.event.inputs.forzar == 'si' && '--forzar' || '' }}
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          CORREO_DESTINOS: ${{ secrets.CORREO_DESTINOS }}

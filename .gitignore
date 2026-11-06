@@ -3,3 +3,4 @@ __pycache__/
 *.tmp
 data/ia_pendiente.json
 data/ia_respuesta.json
+docs/reunion.html
