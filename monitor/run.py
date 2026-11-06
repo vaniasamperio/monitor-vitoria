@@ -491,7 +491,7 @@ INFINITIVOS = {"aprobar": "aprueba", "conceder": "concede", "convocar": "convoca
                "prorrogar": "prorroga", "iniciar": "inicia", "someter": "somete", "dar": "da"}
 RX_CABECERA = re.compile(
     r"^(?:(moci[oó]n|decreto foral|decreto|acuerdo|orden foral|orden|resoluci[oó]n|norma foral|ley|anuncio|edicto|"
-    r"instrucci[oó]n|circular|proposici[oó]n no de ley)\s*(?:n\.?[ºo°]\s*)?[\d/\-]*\s*,?\s*(?:de\s+\d{1,2}\s+de\s+\w+(?:\s+de\s+\d{4})?)?"
+    r"instrucci[oó]n|circular|proposici[oó]n no de ley)\b\s*(?:n\.?[ºo°]\s*)?[\d/\-]*\s*,?\s*(?:de\s+\d{1,2}\s+de\s+\w+(?:\s+de\s+\d{4})?)?"
     r"(?:,?\s*(?:del|de la|de los)\s+[^.,]{3,90})?[.,]?\s*)", re.I)
 RX_FORMULA = re.compile(r"^(?:al objeto de|por (?:la|el) que se|por (?:la|el) que|relativ[oa] a|sobre|para)\s+", re.I)
 
@@ -621,7 +621,8 @@ def resumen_buzon(items: list[dict], ahora: datetime) -> list[dict]:
                 lugares[m.group(1).title()] += 1
             pal = [w for w in re.findall(r"[a-záéíóúñü]+", t.lower()) if w not in VACIAS and len(w) > 2]
             for k in range(len(pal) - 1):
-                frases[pal[k] + " " + pal[k + 1]] += 1
+                if pal[k] != pal[k + 1]:
+                    frases[pal[k] + " " + pal[k + 1]] += 1
         rep_l = [(k, v) for k, v in lugares.most_common(4) if v >= 2]
         rep_f = [(k, v) for k, v in frases.most_common(3) if v >= 3]
         if not sem:
@@ -873,7 +874,7 @@ def main() -> int:
     quejas = [i for i in items_hist.values() if i["seccion"] == "buzon"
               and (de_iso(i["fecha"]) or de_iso(i["visto"])) >= ahora - timedelta(days=14)]
     buzon = resumen_buzon(quejas, ahora)
-    publicados = []
+    publicados, ideas_pub = [], []
     for it in items_hist.values():
         if it["seccion"] == "buzon":
             continue
@@ -881,7 +882,13 @@ def main() -> int:
             ref = de_iso(it["fecha"]) or de_iso(it["visto"])
             if ref < limite_ideas or (not it["alava"] and it.get("puntos", 0) < UMBRAL_IDEA):
                 continue
+            if not it["alava"]:
+                ideas_pub.append(it)
+                continue
         publicados.append(it)
+
+    ideas_pub.sort(key=lambda i: -(i.get("puntos") or 0))
+    publicados += ideas_pub[:80]                      # solo las 80 mejores ideas
 
     # calendario publicado: efemérides (este mes y los 3 siguientes) + lo extraído
     desde = hoy.replace(day=1) - timedelta(days=31)

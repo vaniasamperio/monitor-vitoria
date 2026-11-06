@@ -585,10 +585,10 @@ function pintaCalendario() {
 }
 
 // ---------- buzón y Eustat
-const flecha = (a, b) => a > b * 1.3 && a - b >= 3 ? ' <b style="color:var(--rojo)">↑</b>' : a < b * 0.7 && b - a >= 3 ? ' <span style="color:var(--ok)">↓</span>' : "";
+const flecha = (a, b) => b < 3 ? "" : a > b * 1.3 && a - b >= 3 ? ' <b style="color:var(--rojo)">↑</b>' : a < b * 0.7 && b - a >= 3 ? ' <span style="color:var(--ok)">↓</span>' : "";
 function lineaBuzon(b) {
   const rep = [...(b.lugares || []).map(x => `${x.t} ×${x.n}`), ...(b.frases || []).map(x => `“${x.t}” ×${x.n}`)].slice(0, 3);
-  return `<div class="cita" style="grid-template-columns:38px 1fr"><span class="hora">${b.semana}${flecha(b.semana, b.anterior)}</span>
+  return `<div class="cita" style="grid-template-columns:38px 1fr"><span class="hora" title="quejas en 7 días">${b.semana >= 20 ? "20+" : b.semana}${flecha(b.semana, b.anterior)}</span>
     <div><a href="${esc((b.ejemplos[0] || {}).e || "#")}" target="_blank" rel="noopener">${esc(b.area)}</a>
     <div class="det">${rep.length ? "Se repite: " + esc(rep.join(" · ")) : esc(b.ejemplos.slice(0, 2).map(x => x.t).join(" · "))}</div></div></div>`;
 }
