@@ -132,6 +132,9 @@ def patron(palabras: list[str]) -> re.Pattern | None:
 RX_MUNI = [(nombre, cuadrilla, re.compile(r"\b(" + "|".join(re.escape(v) for v in variantes) + r")\b"))
            for nombre, (cuadrilla, variantes) in MUNICIPIOS.items()]
 RX_ALAVA_GENERAL = patron(ALAVA_GENERAL)
+RX_EUSKADI = patron(["euskadi", "pais vasco", "vasco", "vasca", "vascos", "vascas", "bizkaia", "vizcaya", "gipuzkoa",
+                     "guipuzcoa", "bilbao", "donostia", "san sebastian", "lehendakari", "osakidetza", "ertzaintza",
+                     "pradales", "eusko", "euskera", "euskal", "lanbide", "eitb"])
 
 # Relevancia: lo que suele ser noticia y lo que es trámite
 RX_NOTICIA = patron(["presupuesto", "subvencion", "ayudas", "ordenanza", "impuesto", "tasa", "plan ", "licitac",
@@ -985,8 +988,13 @@ def main() -> int:
     for it in items_hist.values():
         if it["seccion"] == "buzon" or it["fuente"] in solo_cal:
             continue
-        if it["seccion"] == "teletipos" and (de_iso(it["fecha"]) or de_iso(it["visto"])) < ahora - timedelta(days=3):
-            continue
+        if it["seccion"] == "teletipos":
+            if (de_iso(it["fecha"]) or de_iso(it["visto"])) < ahora - timedelta(days=3):
+                continue
+            # de los teletipos nacionales, solo lo que toca a Álava o a Euskadi
+            if cfg_f.get(it["fuente"], {}).get("filtro") == "euskadi" and not it.get("alava") \
+                    and not coincidencias(RX_EUSKADI, normaliza(it["titulo"] + " " + (it.get("resumen") or "")[:300])):
+                continue
         if it["seccion"] == "ideas":
             ref = de_iso(it["fecha"]) or de_iso(it["visto"])
             if ref < limite_ideas or (not it["alava"] and it.get("puntos", 0) < UMBRAL_IDEA):

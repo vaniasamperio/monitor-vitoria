@@ -120,11 +120,12 @@ fuentes:
   - {id: kulturklik, nombre: "Kulturklik · Agenda cultural de Álava", url: "https://api.euskadi.eus/culture/events/v1.0/events/upcoming?_elements=50&_page={PAGINA}&provinceNoraCode=1", tipo: kulturklik, seccion: agenda, local: true, accept: "application/json", paginas: 15, dias: 60, categoria_cal: cultura, solo_calendario: true}
 
   # =================== TELETIPOS ===================
+  # Los nacionales (filtro: euskadi) solo dejan pasar lo que toca a Álava o a Euskadi.
   - {id: ep-euskadi, nombre: "Europa Press · Euskadi", url: "https://www.europapress.es/euskadi/", tipo: html, patron_enlace: "/euskadi/noticia-", seccion: teletipos, calendario: true}
   - {id: efe-pv, nombre: "EFE · País Vasco", url: "https://efe.com/pais-vasco/", tipo: html, patron_enlace: "efe.com/pais-vasco/20", seccion: teletipos}
-  - {id: ep-nacional, nombre: "Europa Press · Nacional", url: "https://www.europapress.es/nacional/", tipo: html, patron_enlace: "/nacional/noticia-", seccion: teletipos, calendario: false}
-  - {id: efe-es, nombre: "EFE · España", url: "https://efe.com/espana/", tipo: html, patron_enlace: "efe.com/espana/20", seccion: teletipos, calendario: false}
-  - {id: ep-sociedad, nombre: "Europa Press · Sociedad", url: "https://www.europapress.es/rss/rss.aspx?ch=00073", tipo: rss, seccion: teletipos, calendario: false}
+  - {id: ep-nacional, filtro: euskadi, nombre: "Europa Press · Nacional", url: "https://www.europapress.es/nacional/", tipo: html, patron_enlace: "/nacional/noticia-", seccion: teletipos, calendario: false}
+  - {id: efe-es, filtro: euskadi, nombre: "EFE · España", url: "https://efe.com/espana/", tipo: html, patron_enlace: "efe.com/espana/20", seccion: teletipos, calendario: false}
+  - {id: ep-sociedad, filtro: euskadi, nombre: "Europa Press · Sociedad", url: "https://www.europapress.es/rss/rss.aspx?ch=00073", tipo: rss, seccion: teletipos, calendario: false}
 
   # =================== MEDIOS ALAVESES (solo para el calendario) ===================
   - {id: halabedi, nombre: "Hala Bedi irratia", url: "https://halabedi.eus/feed", tipo: rss, seccion: medios, local: true, municipio: Vitoria-Gasteiz, solo_calendario: true}
