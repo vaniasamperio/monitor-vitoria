@@ -787,7 +787,7 @@ function pintaEstado() {
     `Actualizado <b>${esc(cuando(d.actualizado))}</b> · ${d.fuentes.length - fallos}/${d.fuentes.length} fuentes` +
     (st.msgRefresco ? `<div class="refmsg">${esc(st.msgRefresco)}</div>` : "") +
     (horas > 30 ? `<div class="aviso">⚠ Hace más de un día que no se actualiza.</div>` : "") +
-    (fallos ? `<div class="aviso">${fallos} sin leer · <a href="#fuentes" style="color:inherit">ver Fuentes</a></div>` : "") +
+    (fallos ? `<div class="aviso">${fallos === 1 ? "1 web no respondió" : fallos + " webs no respondieron"} en esta lectura · <a href="#fuentes" style="color:inherit">cuáles</a></div>` : "") +
     (st.ia.actualizado ? `<div style="opacity:.8">Titulares y enfoques revisados ${esc(cuando(st.ia.actualizado))}</div>` : "");
 }
 function pinta() {
