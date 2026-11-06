@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-06T18:44:27+00:00",
+ "actualizado": "2026-11-06T18:46:32+00:00",
  "fuentes": [
   {
    "id": "ayto-notas",
@@ -10,7 +10,7 @@
    "ok": true,
    "leidos": 10,
    "nuevos": 3,
-   "segundos": 1.5
+   "segundos": 1.7
   },
   {
    "id": "ayto-movilidad",
@@ -21,7 +21,7 @@
    "ok": true,
    "leidos": 15,
    "nuevos": 0,
-   "segundos": 0.7
+   "segundos": 1.0
   },
   {
    "id": "diputacion",
@@ -32,7 +32,7 @@
    "ok": true,
    "leidos": 4,
    "nuevos": 0,
-   "segundos": 4.0
+   "segundos": 4.9
   },
   {
    "id": "irekia",
@@ -43,7 +43,7 @@
    "ok": true,
    "leidos": 15,
    "nuevos": 0,
-   "segundos": 1.0
+   "segundos": 1.2
   },
   {
    "id": "bopv",
@@ -65,7 +65,7 @@
    "ok": true,
    "leidos": 10,
    "nuevos": 0,
-   "segundos": 1.1
+   "segundos": 1.4
   },
   {
    "id": "ayto-agenda",
@@ -76,16 +76,7 @@
    "ok": true,
    "leidos": 51,
    "nuevos": 0,
-   "segundos": 0.7
-  },
-  {
-   "id": "gasteizhoy",
-   "nombre": "Gasteiz Hoy",
-   "url": "https://www.gasteizhoy.com/feed/",
-   "seccion": "medios",
-   "local": true,
-   "ok": false,
-   "error": "HTTPError: 403 Client Error: Forbidden for url: https://www.gasteizhoy.com/feed/"
+   "segundos": 0.9
   },
   {
    "id": "eldiario-euskadi",
@@ -107,7 +98,7 @@
    "ok": true,
    "leidos": 23,
    "nuevos": 0,
-   "segundos": 0.4
+   "segundos": 0.5
   },
   {
    "id": "eldiario-cyl",
@@ -118,7 +109,7 @@
    "ok": true,
    "leidos": 30,
    "nuevos": 0,
-   "segundos": 0.2
+   "segundos": 0.3
   },
   {
    "id": "eldiario-aragon",
@@ -129,7 +120,7 @@
    "ok": true,
    "leidos": 43,
    "nuevos": 0,
-   "segundos": 0.6
+   "segundos": 1.2
   },
   {
    "id": "eldiario-cantabria",
@@ -140,7 +131,7 @@
    "ok": true,
    "leidos": 42,
    "nuevos": 0,
-   "segundos": 0.6
+   "segundos": 0.4
   },
   {
    "id": "eldiario-galicia",
@@ -151,7 +142,7 @@
    "ok": true,
    "leidos": 28,
    "nuevos": 0,
-   "segundos": 0.8
+   "segundos": 1.1
   },
   {
    "id": "eldiario-asturias",
@@ -162,7 +153,7 @@
    "ok": true,
    "leidos": 60,
    "nuevos": 0,
-   "segundos": 0.9
+   "segundos": 1.1
   },
   {
    "id": "eldiario-cv",
@@ -173,7 +164,7 @@
    "ok": true,
    "leidos": 71,
    "nuevos": 0,
-   "segundos": 1.4
+   "segundos": 0.8
   },
   {
    "id": "eldiario-andalucia",
@@ -184,7 +175,7 @@
    "ok": true,
    "leidos": 56,
    "nuevos": 0,
-   "segundos": 1.1
+   "segundos": 0.6
   }
  ],
  "manuales": [
@@ -1126,7 +1117,7 @@
    "resumen": "La directora general de Osakidetza, Lore Bilbao, destaca que la participación de más de 21.400 personas “demuestra que Osakidetza sigue siendo una organización atractiva para trabajar”\nLa OPE, la mayor de la historia de Osakidetza con 5.425 plazas en 107 categorías, responde al compromiso del Pacto Vasco de Salud de estabilizar plantilla y hacer del sistema sanitario público un espacio atractivo para atraer y…",
    "fecha": "2026-11-06T17:18:00+00:00",
    "visto": "2026-11-06T18:43:08+00:00",
-   "alava": true,
+   "alava": false,
    "temas": [
     "Salud",
     "Empleo y economía",
@@ -1204,27 +1195,6 @@
     "estudio",
     "informe",
     "radiografía"
-   ]
-  },
-  {
-   "id": "0cae779067899b8f",
-   "fuente": "eldiario-aragon",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Zaragoza celebra la 31ª edición de su Concurso de Tapas con más participantes y nuevas propuestas gastronómicas",
-   "enlace": "https://www.eldiario.es/aragon/contenido-patrocinado/zaragoza-celebra-31a-edicion-concurso-tapas-participantes-nuevas-propuestas-gastronomicas_1_13643082.html",
-   "resumen": "Los establecimientos participantes ofrecerán sus elaboraciones al público durante once días, antes de las semifinales y la gran final del certamen\n Zaragoza se prepara para vivir una de sus grandes citas gastronómicas del año. El Concurso Oficial de Tapas de Zaragoza y Provincia regresa con su XXXI edición, consolidándose como uno de los eventos más destacados para la hostelería aragonesa.\n La edición de 2026 llega…",
-   "fecha": "2026-11-06T15:18:29+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Comercio y barrio",
-    "Empleo y economía"
-   ],
-   "categorias": [],
-   "puntos": 4.5,
-   "senales": [
-    "récord"
    ]
   },
   {
@@ -1361,32 +1331,6 @@
    ]
   },
   {
-   "id": "8b2ab10fc9163edd",
-   "fuente": "eldiario-cantabria",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "La Policía Local de Santander multa a unos 20 participantes en la acampada por la vivienda",
-   "enlace": "https://www.eldiario.es/cantabria/sindicato-vivienda-informa-ayuntamiento-santander-multado-20-participantes-acampada_1_13643394.html",
-   "resumen": "Las sanciones, que los afectados han empezado a recibir desde el viernes 30 de octubre, coinciden con la mitad de las personas identificadas durante la protesta ciudadana, según el Sindicato de Vivienda\n El Sindicato de Vivienda de Cantabria ha informado este viernes de que el Ayuntamiento de Santander ha emitido notificaciones de multa a casi una veintena de participantes de la acampada por la vivienda en la Plaza…",
-   "fecha": "2026-11-06T13:23:12+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Vivienda",
-    "Empleo y economía"
-   ],
-   "categorias": [
-    "Cantabria",
-    "Santander",
-    "Sindicatos",
-    "Vivienda"
-   ],
-   "puntos": 4.5,
-   "senales": [
-    "la mitad"
-   ]
-  },
-  {
    "id": "25087be802f71e20",
    "fuente": "eldiario-cyl",
    "seccion": "ideas",
@@ -1450,30 +1394,6 @@
     "Educación"
    ],
    "categorias": []
-  },
-  {
-   "id": "c5c55b9b1e77ea88",
-   "fuente": "eldiario-cv",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "La defensa del exjefe de Emergencias de Mazón cuestiona a la jueza que la víctima 234 fuera a consecuencia de la dana",
-   "enlace": "https://www.eldiario.es/comunitat-valenciana/defensa-exjefe-emergencias-mazon-cuestiona-jueza-victima-234-fuera-consecuencia-dana_1_13644030.html",
-   "resumen": "El abogado José María Bueno Manzanares concluye que el hombre de 73 años falleció por la \"reiterada desatención médica\" del ambulatorio de Paiporta tras la catástrofe\nSe acabó la paz entre los imputados por la dana: Pradas señala a Argüeso por la convocatoria del Cecopi y el Es-Alert\n La defensa del exsecretario autonómico de Emergencias investigado en la causa de la dana, Emilio Argüeso, cuestiona en un escrito, al…",
-   "fecha": "2026-11-06T12:44:30+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Vivienda",
-    "Salud"
-   ],
-   "categorias": [
-    "Comunitat Valenciana",
-    "País Valenciano",
-    "Tribunales",
-    "DANA"
-   ],
-   "puntos": 2.0,
-   "senales": []
   },
   {
    "id": "3d1c31941732ea76",
@@ -1708,74 +1628,6 @@
    ]
   },
   {
-   "id": "75cb94c2186a706f",
-   "fuente": "eldiario-euskadi",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "The xx, Teddy Swims, Pixies y The War on Drugs, cabezas de cartel del BBK Live, del 8 al 10 de julio de 2027",
-   "enlace": "https://www.eldiario.es/euskadi/the-xx-teddy-swims-pixies-the-war-on-drugs-cabezas-cartel-bbk-live-8-10-julio-2027_1_13643264.html",
-   "resumen": "Entre los primeros artistas confirmados están también Jack Johnson, Two Door Cinema Club, Viva Suecia y Alcalá Norte\nBittor Arginzoniz, el discreto maestro de la parrilla que ha llevado al Etxebarri a la cima mundial de la gastronomía\n El BBK Live ha desvelado este viernes sus primeras cabezas de cartel para la edición de 2027, que será la vigesimoprimera y se celebrará los días 8, 9 y 10 de julio. Son The xx, Teddy…",
-   "fecha": "2026-11-06T10:20:59+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Cultura y patrimonio",
-    "Medio ambiente"
-   ],
-   "categorias": [
-    "Bizkaia",
-    "Bilbao",
-    "BBK Live",
-    "Musical"
-   ],
-   "puntos": 3.0,
-   "senales": []
-  },
-  {
-   "id": "7e6f49290f46d1a3",
-   "fuente": "eldiario-cyl",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "La Policía esclarece una falsificación documental en una bolsa de empleo de celadores del servicio de salud de Castilla y León",
-   "enlace": "https://www.eldiario.es/castilla-y-leon/politica/policia-esclarece-falsificacion-documental-bolsa-empleo-celadores-servicio-salud-castilla-leon_1_13643350.html",
-   "resumen": "El investigado, que realizó las comunicaciones fraudulentas desde un domicilio de Motril (Granada) llegó a presionar a la Junta de Castilla y León con supuestos correos de un abogado de Plasencia\n La Policía Nacional en Valladolid ha dado por concluida una investigación de más de un año de duración en la que ha dado con el autor de una falsificación de documentos públicos con los que presionó a Sacyl. La denuncia…",
-   "fecha": "2026-11-06T10:18:53+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Empleo y economía",
-    "Tecnología y ciencia"
-   ],
-   "categorias": [
-    "Castilla y León",
-    "Junta de Castilla y León",
-    "Policía Nacional",
-    "Falsificaciones"
-   ],
-   "puntos": 3.0,
-   "senales": []
-  },
-  {
-   "id": "aada39eb3e37eab2",
-   "fuente": "eldiario-cv",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Ya está aquí La Séptima",
-   "enlace": "https://www.eldiario.es/comunitat-valenciana/opinion/septima_129_13643162.html",
-   "resumen": "Este jueves 5 de noviembre La Séptima empezó a emitir desde su sede de San Sebastián de los Reyes, en Madrid después de una original promoción por parte de sus directivos y sus presentadores y presentadoras. \n Después de trabajar 30 años en televisión, una aprende que en este medio, rara vez se abre nada: lo habitual es que se baje la persiana, se recorte o se repita. Por eso un canal generalista nuevo y en abierto,…",
-   "fecha": "2026-11-06T09:47:34+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Comercio y barrio"
-   ],
-   "categorias": [],
-   "puntos": 3.5,
-   "senales": [
-    "porcentajes"
-   ]
-  },
-  {
    "id": "2054e4732b12863d",
    "fuente": "irekia",
    "seccion": "instituciones",
@@ -1790,52 +1642,6 @@
     "Medio ambiente"
    ],
    "categorias": []
-  },
-  {
-   "id": "da41844128438a4c",
-   "fuente": "eldiario-cv",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Los creadores de ‘South Park’ desmontan con música y humor el tinglado creado por Joseph Smith en “El libro de Mormón”",
-   "enlace": "https://www.eldiario.es/comunitat-valenciana/eldiario-de-la-cultura/creadores-south-park-desmontan-musica-humor-tinglado-creado-joseph-smith-libro-mormon_132_13643097.html",
-   "resumen": "La obra, que ha batido récords de público en todo el mundo, llega al Teatro Olympia de València\nAntes de retirarse al cielo definitivamente, Jesús se fue a Estados Unidos y se apareció a los nefitas, un pueblo inexistente fundado por un profeta (igualmente trucho) que, en el siglo VII, se supone que viajó desde Jerusalén a América, Allí se dedicó a evangelizar a los nativos y acabó siendo la piedra de toque de una…",
-   "fecha": "2026-11-06T09:26:59+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Mundo rural y despoblación",
-    "Igualdad",
-    "Cultura y patrimonio"
-   ],
-   "categorias": [],
-   "puntos": 3.5,
-   "senales": [
-    "récord"
-   ]
-  },
-  {
-   "id": "dafcb43923b5eea2",
-   "fuente": "eldiario-aragon",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Descubren en Huesca una nueva especie de anfibio que vivió poco antes de la extinción de los dinosaurios",
-   "enlace": "https://www.eldiario.es/aragon/sociedad/descubren-huesca-nueva-especie-anfibio-vivio-extincion-dinosaurios_1_13643043.html",
-   "resumen": "Una investigación internacional con participación de la Universidad de Zaragoza identifica una especie desconocida a partir de fósiles de hace 66 millones de años hallados en Arén, en la comarca de la Ribagorza\n Un conjunto de diminutos fósiles hallados hace casi tres décadas en la localidad oscense de Arén ha permitido identificar una nueva especie de anfibio que habitó la península ibérica hace aproximadamente 66…",
-   "fecha": "2026-11-06T09:19:52+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Tecnología y ciencia",
-    "Educación",
-    "Cultura y patrimonio"
-   ],
-   "categorias": [
-    "Investigación científica",
-    "Huesca",
-    "Dinosaurios"
-   ],
-   "puntos": 3.0,
-   "senales": []
   },
   {
    "id": "5606a2f1684df600",
@@ -1886,48 +1692,6 @@
    "alava": true,
    "temas": [],
    "categorias": []
-  },
-  {
-   "id": "69dfa6432e23dab3",
-   "fuente": "eldiario-andalucia",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Nita, cantante: “Ser madre sola es una vorágine bastante interesante”",
-   "enlace": "https://www.eldiario.es/andalucia/lacajanegra/musica/nita-cantante-madre-sola-voragine-interesante_1_13606250.html",
-   "resumen": "La cordobesa, excantante de Fuel Fandango, ha regresado en solitario con ‘Magma’, un disco producido por Bronquio que gira en torno al encuentro con uno mismo y con la naturaleza \nEl grupo Fuel Fandango anuncia su separación\n Cordobesa, procedente de una familia de músicos, Cristina Manjón se dio a conocer en la década pasada con el dúo Fuel Fandango. Tras embarcarse en varias aventuras musicales, ahora regresa en…",
-   "fecha": "2026-11-06T05:01:47+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Medio ambiente",
-    "Igualdad",
-    "Cultura y patrimonio"
-   ],
-   "categorias": [
-    "Música"
-   ],
-   "puntos": 2.0,
-   "senales": []
-  },
-  {
-   "id": "8b16eca4b4219815",
-   "fuente": "eldiario-aragon",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "La maldición del cuatripartito",
-   "enlace": "https://www.eldiario.es/aragon/el-prismatico/maldicion-cuatripartito_132_13642746.html",
-   "resumen": "Que las medallas del presente no te abrumen: las grandes inversiones que están germinando ahora en Aragón se fraguaron mucho antes, no en una venturosa noche de Vive Latino escuchando a Taburete\n La política aragonesa ha vivido otra luctuosa semana: otra más.\n Esta vez la desgracia le ha tocado a la exconsejera Marta Gastón. Una persona muy apreciada, con un carácter fuerte y tenaz, vehemente, trabajadora como pocos…",
-   "fecha": "2026-11-06T05:00:38+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Medio ambiente"
-   ],
-   "categorias": [],
-   "puntos": 3.5,
-   "senales": [
-    "en los últimos años"
-   ]
   },
   {
    "id": "eb8c4cf1198cb395",
@@ -2418,27 +2182,6 @@
    "senales": []
   },
   {
-   "id": "7727eeb5e3f2de06",
-   "fuente": "eldiario-cv",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Antifraude investiga al Ayuntamiento de El Palomar por la compra de una parcela de las hermanas del alcalde por 41.000 euros",
-   "enlace": "https://www.eldiario.es/comunitat-valenciana/antifraude-investiga-ayuntamiento-palomar-compra-parcela-hermanas-alcalde-41-000-euros_1_13642053.html",
-   "resumen": "La Agencia admite a trámite una denuncia anónima que advierte del uso de una subvención directa por la que la Diputación de Valencia otorgó 300.000 euros al consistorio: “Es una operación de la que se ha beneficiado económicamente la familia del cargo electo del municipio destinatario”, considera el denunciante\nEl ayuntamiento valenciano de El Palomar compra por 41.000 euros una parcela a las hermanas del alcalde…",
-   "fecha": "2026-11-05T21:57:06+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Mayores y cuidados"
-   ],
-   "categorias": [
-    "Diputación de Valencia",
-    "Agencia Antifraude"
-   ],
-   "puntos": 3.0,
-   "senales": []
-  },
-  {
    "id": "cefa3b9656a3de8f",
    "fuente": "eldiario-cyl",
    "seccion": "ideas",
@@ -2466,30 +2209,29 @@
    ]
   },
   {
-   "id": "b2bf4f3a91bc8f6c",
+   "id": "7eac75365524858d",
    "fuente": "eldiario-euskadi",
    "seccion": "ideas",
    "tipo": "noticia",
-   "titulo": "El Gobierno vasco ejecutó en 2025 el 16% de los 25 millones reservados para las ayudas juveniles Emantzipa",
-   "enlace": "https://www.eldiario.es/euskadi/gobierno-vasco-ejecuto-2025-16-25-millones-reservados-ayudas-juveniles-emantzipa_1_13641329.html",
-   "resumen": "Se gastaron 4,04 millones, según los datos facilitados al Parlamento por la consejera Melgosa\nLos presupuestos vascos de 2027 congelarán por cuarto año en 300 euros las prestaciones de vivienda\n La consejera de Bienestar, Juventud y Reto Demográfico, Nerea Melgosa, del PNV, ha informado al Parlamento Vasco de que en 2025 se ejecutó un 16,17% del presupuesto previsto para las ayudas a la emancipación juvenil, el…",
-   "fecha": "2026-11-05T20:46:06+00:00",
+   "titulo": "Otra vez el fútbol: un nuevo partido europeo de \"alto riesgo\" en Donostia obliga a redoblar la seguridad y cortar calles",
+   "enlace": "https://www.eldiario.es/euskadi/vez-futbol-nuevo-partido-europeo-alto-riesgo-donostia-obliga-redoblar-seguridad-cortar-calles_1_13641355.html",
+   "resumen": "Se esperaba la visita de dos centenares de ultras del Olympique de Lyon y la Ertzaintza ha incautado armas blancas, porras extensibles y pirotecnia a radicales locales de la Real Sociedad, acompañados por los de Deportivo Alavés, Baskonia y hasta Celta de Vigo\nLa Ertzaintza modifica su estructura para tener 'hackers' y una nueva unidad contra la violencia hacia las mujeres\n El fútbol europeo masculino ha vuelto a…",
+   "fecha": "2026-11-05T20:46:07+00:00",
    "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
+   "alava": true,
    "temas": [
-    "Juventud",
-    "Vivienda"
+    "Igualdad",
+    "Comercio y barrio"
    ],
    "categorias": [
     "Euskadi",
-    "Parlamento Vasco",
-    "Presupuestos",
-    "Nerea Melgosa"
+    "Gipuzkoa",
+    "Donostia",
+    "Fútbol"
    ],
-   "puntos": 2.0,
+   "puntos": -15.5,
    "senales": [
-    "porcentajes",
-    "datos"
+    "récord"
    ]
   },
   {
@@ -2543,28 +2285,6 @@
    "senales": [
     "falta de"
    ]
-  },
-  {
-   "id": "7640223be9660e67",
-   "fuente": "eldiario-euskadi",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Bittor Arginzoniz, el discreto maestro de la parrilla que ha llevado al Etxebarri a la cima mundial de la gastronomía",
-   "enlace": "https://www.eldiario.es/euskadi/bittor-arginzoniz-discreto-maestro-parrilla-llevado-etxebarri-cima-mundial-gastronomia_1_13640932.html",
-   "resumen": "El dueño del ahora reconocido como mejor restaurante del mundo se lanzó a la aventura de abrir en 1990 solo con el conocimiento de la cocina de su infancia en la que todo se hacía a fuego porque no había ni gas ni electricidad\nEl Asador Etxebarri, mejor restaurante del mundo 2026: otros cuatro españoles entre los 50 destacados\n Bittor Arginzoniz dirige el mejor restaurante del mundo. Pero, a diferencia de otros…",
-   "fecha": "2026-11-05T17:51:28+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Consumo y bolsillo"
-   ],
-   "categorias": [
-    "Euskadi",
-    "Bizkaia",
-    "Gastronomía"
-   ],
-   "puntos": 2.0,
-   "senales": []
   },
   {
    "id": "b3285dadd5070183",
@@ -2635,27 +2355,6 @@
    ]
   },
   {
-   "id": "7637abc322d9f27c",
-   "fuente": "eldiario-cantabria",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "El consejero Media dice que el PSIR del complejo turístico de surf \"no se va a paralizar\"",
-   "enlace": "https://www.eldiario.es/cantabria/consejero-media-dice-psir-complejo-turistico-surf-no-paralizar_1_13640974.html",
-   "resumen": "Saldrá adelante \"si no tiene ningún reparo técnico\" porque el Gobierno de Cantabria ya ha aprobado el interés público de la operación urbanística de recalificación y expropiación en favor de un promotor privado\n El consejero de Fomento, Vivienda, Ordenación del Territorio y Medio Ambiente, Roberto Media, ha asegurado que el Proyecto Singular de Interés Regional (PSIR) OLUCAS Surf Center en Villaverde de Pontones…",
-   "fecha": "2026-11-05T17:23:03+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Vivienda",
-    "Empleo y economía"
-   ],
-   "categorias": [],
-   "puntos": 3.5,
-   "senales": [
-    "porcentajes"
-   ]
-  },
-  {
    "id": "0cdee1a594faaa55",
    "fuente": "irekia",
    "seccion": "instituciones",
@@ -2672,25 +2371,6 @@
    "categorias": []
   },
   {
-   "id": "336158e236c7e7aa",
-   "fuente": "eldiario-cantabria",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Industria destina 31 millones de euros a La Pasiega en su presupuesto para 2027",
-   "enlace": "https://www.eldiario.es/cantabria/industria-destina-31-millones-euros-pasiega-presupuesto-2027_1_13641618.html",
-   "resumen": "El presupuesto de la Consejería para el año próximo será de 221,7 millones de euros\n La Consejería de Industria destina 31 millones del presupuesto de 2027 al centro logístico de La Pasiega ya que el próximo año se iniciará “el desarrollo conjunto de la conclusión” de las Fases 1 y 2 de este proyecto para que esté disponible en 2030, “adelantándose dos años” a la fecha prevista.\n El consejero Eduardo Arasti ha…",
-   "fecha": "2026-11-05T17:10:13+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Empleo y economía",
-    "Movilidad"
-   ],
-   "categorias": [],
-   "puntos": 4.0,
-   "senales": []
-  },
-  {
    "id": "79477dec33a96e34",
    "fuente": "irekia",
    "seccion": "instituciones",
@@ -2705,30 +2385,6 @@
     "Empleo y economía"
    ],
    "categorias": []
-  },
-  {
-   "id": "e61a6a5075347c0f",
-   "fuente": "eldiario-cantabria",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "El Gobierno aprobará el PROT antes de finalizar el año: \"Cuando hay interés, yo he visto aprobar leyes en una semana\"",
-   "enlace": "https://www.eldiario.es/cantabria/consejero-media-prot-aprobara-ano-he-visto-aprobar-leyes-semana_1_13641277.html",
-   "resumen": "El consejero de Fomento pretende impulsar el Plan Regional de Ordenación Territorial de Cantabria antes de que acabe la legislatura y traslada la responsabilidad a los grupos parlamentarios de la oposición\nAntecedentes - El futuro plan urbanístico de Cantabria permitirá que la mitad de las viviendas de algunos municipios sean turísticas\n El Consejo de Gobierno aprobará el Plan Regional de Ordenación Territorial…",
-   "fecha": "2026-11-05T14:32:25+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Vivienda"
-   ],
-   "categorias": [
-    "Cantabria",
-    "Urbanismo",
-    "Consejería de Fomento"
-   ],
-   "puntos": 2.5,
-   "senales": [
-    "la mitad"
-   ]
   },
   {
    "id": "da6b4a584093f7da",
@@ -2765,6 +2421,26 @@
    "categorias": []
   },
   {
+   "id": "a626f3689d708b35",
+   "fuente": "eldiario-cyl",
+   "seccion": "ideas",
+   "tipo": "noticia",
+   "titulo": "La Justicia confirma cuatro años de prisión por abusar sexualmente de una menor de 12 años",
+   "enlace": "https://www.eldiario.es/castilla-y-leon/tribunales/justicia-confirma-cuatro-anos-prision-abusar-sexualmente-menor-12-anos_1_13641262.html",
+   "resumen": "El acusado tenía antecedentes por una condena previa de la Audiencia Provincial de Vitoria por agresión sexual\nEl 10% de hombres en España reconoce haber tenido conductas de violencia sexual contra menores al menos una vez\n El Tribunal Superior de Justicia de Castilla y León (TSJCyL) ha confirmado cuatro años de prisión por abuso sexual a una menor, con agravante de reincidencia, para un hombre que realizó…",
+   "fecha": "2026-11-05T13:43:20+00:00",
+   "visto": "2026-11-06T18:43:08+00:00",
+   "alava": true,
+   "temas": [],
+   "categorias": [
+    "Abusos a menores"
+   ],
+   "puntos": -9.5,
+   "senales": [
+    "porcentajes"
+   ]
+  },
+  {
    "id": "3f4c05f2a8d582c0",
    "fuente": "eldiario-aragon",
    "seccion": "ideas",
@@ -2789,31 +2465,6 @@
    "senales": [
     "porcentajes",
     "aumenta"
-   ]
-  },
-  {
-   "id": "dec3e29bb91420d3",
-   "fuente": "eldiario-aragon",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Pinchazo en la oferta de vuelos desde el aeropuerto de Zaragoza: más de la mitad de las nuevas rutas quedan desiertas",
-   "enlace": "https://www.eldiario.es/aragon/economia/pinchazo-oferta-vuelos-aeropuerto-zaragoza-mitad-nuevas-rutas-quedan-desiertas_1_13641031.html",
-   "resumen": "Solo nueve de las 20 conexiones presentadas en septiembre han recibido ofertas, pero el Gobierno de Aragón califica el resultado de la licitación de “éxito” y anuncia una segunda fase para intentar recuperar las conexiones descartadas\nAyuntamiento y DGA pagarán hasta 3.665 euros a las aerolíneas por ida y vuelta para atraer rutas al aeropuerto de Zaragoza\n Once de los 20 nuevos vuelos que el Gobierno de Aragón y el…",
-   "fecha": "2026-11-05T13:12:33+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Comercio y barrio"
-   ],
-   "categorias": [
-    "Aeropuertos",
-    "Zaragoza",
-    "Vuelos",
-    "Aerolíneas"
-   ],
-   "puntos": 2.5,
-   "senales": [
-    "la mitad"
    ]
   },
   {
@@ -2864,31 +2515,6 @@
    "senales": []
   },
   {
-   "id": "72d3c1dd067f7f5b",
-   "fuente": "eldiario-aragon",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Aragón exige al Ministerio una mesa permanente para seguir las obras de la línea del AVE Madrid-Barcelona-Francia",
-   "enlace": "https://www.eldiario.es/aragon/economia/aragon-exige-ministerio-mesa-permanente-seguir-obras-linea-ave-madrid-barcelona-francia_1_13640754.html",
-   "resumen": "El Gobierno autonómico, el Ayuntamiento de Zaragoza y los agentes empresariales suscriben un manifiesto en el que exigen \"transparencia, información actualizada y diálogo continuo\"\nAzcón envía una carta al ministro Puente para pedirle los informes técnicos sobre la línea del AVE Madrid-Barcelona\n El Gobierno de Aragón, el Ayuntamiento de Zaragoza y los principales agentes económicos y empresariales de la comunidad…",
-   "fecha": "2026-11-05T12:14:52+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Vivienda",
-    "Empleo y economía",
-    "Educación"
-   ],
-   "categorias": [
-    "Ferrocarriles",
-    "AVE"
-   ],
-   "puntos": 3.5,
-   "senales": [
-    "informe"
-   ]
-  },
-  {
    "id": "1c88f8e4efb3bbe0",
    "fuente": "eldiario-cv",
    "seccion": "ideas",
@@ -2910,29 +2536,6 @@
     "crece",
     "estadística",
     "récord"
-   ]
-  },
-  {
-   "id": "ff39bbeac37deddb",
-   "fuente": "eldiario-asturias",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "El Principado y la Fiscalía ponen el foco en los perfiles anónimos en redes sociales que ridiculizan a alumnado y profesorado",
-   "enlace": "https://www.eldiario.es/asturias/principado-fiscalia-ponen-foco-perfiles-anonimos-redes-sociales-ridiculizan-alumnado-profesorado_1_13640568.html",
-   "resumen": "Educación remitirá a la Fiscalía los perfiles que incluyan contenidos alusivos al profesorado o al alumnado y que puedan ser constitutivos de delito, una medida que no excluye la adopción de actuaciones por parte de los propios centros\n La Consejería de Educación y la Fiscalía del Principado de Asturias analizarán conjuntamente la proliferación de perfiles anónimos en redes sociales que ridiculizan a alumnos y…",
-   "fecha": "2026-11-05T11:38:42+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Educación"
-   ],
-   "categorias": [
-    "Asturias",
-    "Educación"
-   ],
-   "puntos": 2.5,
-   "senales": [
-    "perfil"
    ]
   },
   {
@@ -3033,66 +2636,6 @@
     "porcentajes",
     "datos"
    ]
-  },
-  {
-   "id": "a510462e754c15bc",
-   "fuente": "eldiario-aragon",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Una voz inaudita",
-   "enlace": "https://www.eldiario.es/aragon/el-prismatico/voz-inaudita_132_13639486.html",
-   "resumen": "Atónita leía mensajes cargados de humanidad, de responsabilidad social, de verdadera defensa del estado del bienestar emitidos por personas que en su día a día carecen de toda sensibilidad por el prójimo y por lo público\n Tras producirse el accidente de Urda, y después de que bajase la intensidad de lo verdaderamente noticioso, mi cerebro solo podía procesar un fuerte zumbido. La realidad pasó a un segundo término.…",
-   "fecha": "2026-11-05T05:00:43+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Empleo y economía",
-    "Comercio y barrio"
-   ],
-   "categorias": [],
-   "puntos": 2.0,
-   "senales": []
-  },
-  {
-   "id": "5566df7a402a9bc4",
-   "fuente": "eldiario-cv",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "🎙️La ciutat no és per a tu",
-   "enlace": "https://www.eldiario.es/comunitat-valenciana/animals-politics/ciutat-no-per_132_13638659.html",
-   "resumen": "En aquest episodi el nostre animal polític és Vicent Molins, amb qui conversarem sobre la deriva de les ciutats i què podem fer per a convertir-les en espais pensats per a qui les habita\n Als més majors dels nostres oients, el títol d’este episodi potser els recorde la pel·lícula dels anys 60, “La ciudad no es para mi”. En clau d’humor costumbrista (hui diríem també “caspós”), relatava les dificultats d’un home…",
-   "fecha": "2026-11-04T22:06:16+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Cultura y patrimonio",
-    "Mundo rural y despoblación"
-   ],
-   "categorias": [],
-   "puntos": 4.5,
-   "senales": [
-    "récord"
-   ]
-  },
-  {
-   "id": "23d8655725932e4b",
-   "fuente": "eldiario-aragon",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Contrataciones, facturas y despidos: denuncian un rosario de irregularidades en el Instituto Aragonés de Fomento",
-   "enlace": "https://www.eldiario.es/aragon/politica/contrataciones-facturas-despidos-denuncian-rosario-irregularidades-instituto-aragones-fomento_1_13632748.html",
-   "resumen": "Indemnizaciones de más de 100.000 euros para funcionarios, procesos selectivos en los que participa el propio director gerente, Daniel Rey, o pagos a empresas familiares son algunas de las polémicas decisiones que ha adoptado el organismo\nCuatro horas para un pelotazo millonario: así se cerró el plan para construir más de 200 pisos de lujo junto a La Romareda\n El Instituto Aragonés de Fomento (IAF) pagó 102.393,45…",
-   "fecha": "2026-11-04T22:03:22+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Consumo y bolsillo",
-    "Vivienda",
-    "Empleo y economía"
-   ],
-   "categorias": [],
-   "puntos": 3.0,
-   "senales": []
   },
   {
    "id": "f32f9db235f225df",
@@ -3247,56 +2790,6 @@
    ]
   },
   {
-   "id": "914569af61d13ac3",
-   "fuente": "eldiario-asturias",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "El Principado declarará espacio de memoria cuatro puertos, la antigua cárcel de Oviedo y el campo de concentración de Arnao",
-   "enlace": "https://www.eldiario.es/asturias/principado-declarara-espacio-memoria-cuatro-puertos-antigua-carcel-oviedo-campo-concentracion-arnao_1_13639183.html",
-   "resumen": "El Principado prevé que todas las víctimas asturianas del nazismo cuenten con una piedra de la memoria antes de finalizar la legislatura, tras realizar dos homenajes en Coaña y Vegadeo\n El Comité Técnico de Memoria Democrática ha acordado la incoación de tres nuevos expedientes para declarar lugares de memoria los puertos de evacuación, la antigua cárcel de Oviedo y el campo de concentración de Arnao, una propuesta…",
-   "fecha": "2026-11-04T18:43:17+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Mundo rural y despoblación",
-    "Cultura y patrimonio"
-   ],
-   "categorias": [
-    "Asturias",
-    "Memoria Histórica"
-   ],
-   "puntos": 3.0,
-   "senales": []
-  },
-  {
-   "id": "b0fa504d03f7e69f",
-   "fuente": "eldiario-euskadi",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "La reincidencia de los expresos en Euskadi es del 19%, pero baja al 12% si antes han disfrutado de semilibertad",
-   "enlace": "https://www.eldiario.es/euskadi/reincidencia-expresos-euskadi-19-baja-12-si-han-disfrutado-semilibertad_1_13638909.html",
-   "resumen": "La consejera San José expone en el Parlamento que las Prisiones vascas tienen que elevar del 35% al 40% la población reclusa en tercer grado\nLa Ertzaintza reutilizará las pistolas de los agentes jubilados para ahorrar en gastos de compra de armamento\n La consejera de Justicia y Derechos Humanos, la socialista María Jesús San José, ha defendido que “está empíricamente demostrado” que la apuesta por la reinserción de…",
-   "fecha": "2026-11-04T17:45:02+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Mayores y cuidados",
-    "Igualdad"
-   ],
-   "categorias": [
-    "Euskadi",
-    "María Jesús San José",
-    "Presupuestos",
-    "Parlamento Vasco"
-   ],
-   "puntos": 2.5,
-   "senales": [
-    "porcentajes",
-    "datos",
-    "récord"
-   ]
-  },
-  {
    "id": "fa72326bac85049d",
    "fuente": "eldiario-aragon",
    "seccion": "ideas",
@@ -3347,44 +2840,30 @@
    ]
   },
   {
-   "id": "bf4e569b5f8c84dd",
-   "fuente": "eldiario-aragon",
+   "id": "90a97264de21ee9b",
+   "fuente": "eldiario-euskadi",
    "seccion": "ideas",
    "tipo": "noticia",
-   "titulo": "Aragón: el profesorado peor pagado",
-   "enlace": "https://www.eldiario.es/aragon/el-prismatico/aragon-profesorado-peor-pagado_132_13638650.html",
-   "resumen": "Ya nos gustaría cobrar aquí como en Andalucía, Valencia, Castilla y León o Galicia. Comunidades autónomas todas ellas gobernadas por el PP y menos ricas que Aragón, pero que pagan mucho mejor a sus docentes\n Empecemos por el principio. Desde CCOO llevamos años denunciando las condiciones del profesorado aragonés. De hecho, el pasado 12 de marzo presentamos un informe con el título 'Aragón: seguimos siendo el…",
-   "fecha": "2026-11-04T16:30:33+00:00",
+   "titulo": "Álava sugiere que no venderle al Baskonia el pabellón Fernando Buesa Arena abriría un riesgo de que se fuera de Vitoria",
+   "enlace": "https://www.eldiario.es/euskadi/alava-sugiere-no-venderle-baskonia-pabellon-fernando-buesa-arena-abriria-riesgo-fuera-vitoria_1_13638221.html",
+   "resumen": "El diputado general, Ramiro González, afirma que el club es una \"franquicia\" y que disponer de un pabellón le \"anclaría definitivamente\" al territorio\nTerremoto en Vitoria: crecen las dudas sobre la continuidad en el Baskonia del eterno presidente Querejeta\n Como si el Baskonia fueran los históricos SuperSonics de la NBA, que acabaron triunfando a 3.000 kilómetros de Seattle, en Oklahoma City, el diputado general de…",
+   "fecha": "2026-11-04T15:13:19+00:00",
    "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
+   "alava": true,
    "temas": [
-    "Educación"
+    "Movilidad",
+    "Educación",
+    "Comercio y barrio"
    ],
-   "categorias": [],
-   "puntos": 2.0,
-   "senales": [
-    "porcentajes",
-    "informe"
-   ]
-  },
-  {
-   "id": "bf0732b0b9249313",
-   "fuente": "eldiario-cv",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Jerónimo Cornelles recurre a Oscar Wilde para exigir responsabilidades políticas por la DANA",
-   "enlace": "https://www.eldiario.es/comunitat-valenciana/cultura/jeronimo-cornelles-recurre-oscar-wilde-exigir-responsabilidades-politicas-dana_1_13638533.html",
-   "resumen": "‘Salomé, una tragèdia contemporània’ se representa este viernes en el Museu de la Rajoleria de Paiporta\n Entre la vergüenza pública y la vanidad privada se mueve ‘Salomé, una tragèdia contemporània’, la última creación del dramaturgo valenciano Jerónimo Cornelles, quien recurre a Oscar Wilde para recordar, dos años después, que las heridas de la DANA siguen abiertas. La lectura dramatizada de este texto, a cargo de…",
-   "fecha": "2026-11-04T15:57:28+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Cultura y patrimonio"
+   "categorias": [
+    "Euskadi",
+    "Álava",
+    "Vitoria",
+    "Ramiro González"
    ],
-   "categorias": [],
-   "puntos": 2.5,
+   "puntos": -3.5,
    "senales": [
-    "récord"
+    "crece"
    ]
   },
   {
@@ -3442,7 +2921,7 @@
    "resumen": "El área de Turismo, Comercio y Consumo manejará la partida más baja de todo el Gobierno, pero la nueva consejera recuerda que dan empleo al 25% de los trabajadores en Euskadi\nEuskadi anuncia mejoras en la seguridad de sus infraestructuras de tren y tranvía en los presupuestos de 2027\n La nueva consejera de Turismo, Comercio y Consumo del Gobierno vasco, Cristina González, que es también la presidenta del PSE-EE, ha…",
    "fecha": "2026-11-04T13:58:57+00:00",
    "visto": "2026-11-06T18:43:08+00:00",
-   "alava": true,
+   "alava": false,
    "temas": [
     "Movilidad",
     "Empleo y economía",
@@ -3454,7 +2933,7 @@
     "Parlamento Vasco",
     "Gobierno vasco"
    ],
-   "puntos": 4.0,
+   "puntos": 7.0,
    "senales": [
     "porcentajes",
     "récord"
@@ -3478,25 +2957,6 @@
    ],
    "categorias": [],
    "puntos": 5.0,
-   "senales": []
-  },
-  {
-   "id": "fb1619aaae3e1bd0",
-   "fuente": "eldiario-cantabria",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Cultura lanza la segunda pieza audiovisual del circuito 'Origen' con la fusión musical de Casapalma",
-   "enlace": "https://www.eldiario.es/cantabria/cultura-lanza-segunda-pieza-audiovisual-circuito-origen-fusion-musical-casapalma_1_13637476.html",
-   "resumen": "Estas piezas tienen como objetivo compartir conocimientos sobre el folclore de Cantabria, acercar sus tradiciones al público general y contribuir a su conservación y transmisión\n La Consejería de Cultura ha lanzado la segunda pieza audiovisual del circuito 'Origen' en la que destaca la fusión contemporánea entre el folclore y la canción montañesa con la música electrónica de la mano del grupo Casapalma como…",
-   "fecha": "2026-11-04T12:50:49+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Cultura y patrimonio",
-    "Empleo y economía"
-   ],
-   "categorias": [],
-   "puntos": 4.0,
    "senales": []
   },
   {
@@ -3574,25 +3034,6 @@
    ]
   },
   {
-   "id": "381d9eaed05644d7",
-   "fuente": "eldiario-cyl",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Estos son los domingos y festivos de 2027 en los que abrirán las tiendas en Castilla y León",
-   "enlace": "https://www.eldiario.es/castilla-y-leon/sociedad/son-domingos-festivos-2027-abriran-tiendas-castilla-leon_1_13637054.html",
-   "resumen": "El Boletín Oficial recoge como festivos dos días en enero, uno en marzo, uno en junio, uno en julio, uno en agosto y cuatro días en diciembre\nEl BOE publica el calendario laboral de 2027, con nueve festivos comunes y cuatro puentes en toda España\n El boletín oficial de Castilla y León (Bocyl) publica este miércoles el calendario de los diez festivos en los que podrá abrir el comercio en el 2027, que principalmente…",
-   "fecha": "2026-11-04T11:12:33+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Comercio y barrio",
-    "Consumo y bolsillo"
-   ],
-   "categorias": [],
-   "puntos": 3.0,
-   "senales": []
-  },
-  {
    "id": "e7faf8bdf3f88d06",
    "fuente": "eldiario-euskadi",
    "seccion": "ideas",
@@ -3647,28 +3088,6 @@
    "senales": []
   },
   {
-   "id": "5aafbf74f6ba4521",
-   "fuente": "eldiario-asturias",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "El Hospital de Cabueñes pone en marcha una Unidad de Pie Diabético",
-   "enlace": "https://www.eldiario.es/asturias/hospital-cabuenes-pone-marcha-unidad-pie-diabetico_1_13636862.html",
-   "resumen": "Este nuevo recurso de hospital gijónes favorecerá el diagnóstico precoz, el seguimiento de casos y el ajuste de los tratamiento a 600 pacientes al año\n El Hospital Universitario de Cabueñes de Gijón ha puesto en marcha este miércoles la Unidad de Pie Diabético y Heridas Crónicas, un nuevo recurso destinado a mejorar la valoración, el tratamiento y el seguimiento de pacientes con heridas de difícil cicatrización y,…",
-   "fecha": "2026-11-04T10:25:02+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Salud"
-   ],
-   "categorias": [
-    "Asturias",
-    "Gijón",
-    "Sanidad pública"
-   ],
-   "puntos": 3.0,
-   "senales": []
-  },
-  {
    "id": "f11504fc7ad98146",
    "fuente": "eldiario-euskadi",
    "seccion": "ideas",
@@ -3720,26 +3139,6 @@
     "aumento",
     "datos"
    ]
-  },
-  {
-   "id": "11220d3b5aa02413",
-   "fuente": "eldiario-cantabria",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "El circuito cultural Escena llega a 14 municipios de Cantabria desde este miércoles hasta el domingo",
-   "enlace": "https://www.eldiario.es/cantabria/circuito-cultural-escena-llega-14-municipios-cantabria-miercoles-domingo_1_13636161.html",
-   "resumen": "Teatro familiar, magia, danza contemporánea, circo y grandes clásicos reunirán a 12 compañías y artistas de referencia\n La programación del circuito Escena, organizado por la Consejería de Cultura, ofrecerá durante la semana del 4 al 8 de noviembre una intensa agenda cultural que llegará a catorce municipios. \n Teatro familiar, magia, danza contemporánea, circo y grandes clásicos compartirán cartel en una semana que…",
-   "fecha": "2026-11-04T09:40:50+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Cultura y patrimonio"
-   ],
-   "categorias": [
-    "Cantabria"
-   ],
-   "puntos": 4.0,
-   "senales": []
   },
   {
    "id": "39c413436fb093c3",
@@ -3841,49 +3240,6 @@
     "Movilidad"
    ],
    "categorias": []
-  },
-  {
-   "id": "e3972ef830893c8c",
-   "fuente": "eldiario-cv",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Roger BG, el joven artista de La Safor que se rebela contra la crisis existencial: \"Hay que abrazar las complicaciones\"",
-   "enlace": "https://www.eldiario.es/comunitat-valenciana/cultura/roger-bg-joven-artista-safor-rebela-crisis-existencial-hay-abrazar-complicaciones_1_13629257.html",
-   "resumen": "El cantante presenta su álbum “Esta vida se CoMpLiCa” este viernes, 6 de noviembre, en la sala Mucho de Russafa, en València\n Roger Bellido (Roger BG) sobre los escenarios, es un joven de La Safor con una trayectoria prometedora. Con 24 años acumula más de 2,4 millones de reproducciones en plataformas y acaba de lanzar su primer álbum completo, “Esta vida se CoMpLiCa”, una decena de temas con banda que abordan la…",
-   "fecha": "2026-11-03T21:31:10+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Cultura y patrimonio",
-    "Juventud"
-   ],
-   "categorias": [
-    "Cultura",
-    "Valencia",
-    "Música",
-    "Conciertos"
-   ],
-   "puntos": 3.0,
-   "senales": []
-  },
-  {
-   "id": "2abe203c931c979a",
-   "fuente": "eldiario-cv",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Un año y un día de Mazón como diputado: asesor personal, cero intervenciones, mañanas en la playa y dietas por kilometraje",
-   "enlace": "https://www.eldiario.es/comunitat-valenciana/politica/ano-dia-mazon-diputado-asesor-personal-cero-intervenciones-mananas-playa-dietas-kilometraje_129_13633434.html",
-   "resumen": "El expresidente de la Generalitat solo ha intervenido en la comisión de investigación de la dana desde que anunciara su dimisión, cobra un extra como portavoz en una comisión que no se reúne y no ha registrado iniciativas parlamentarias en las Corts desde que ocupa el escaño 98\nEl PSPV reclama a Mazón que devuelva 1.900 euros en dietas de kilometraje para asistir a las Corts\n Cero iniciativas. Ni preguntas, ni…",
-   "fecha": "2026-11-03T21:31:08+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Tecnología y ciencia",
-    "Empleo y economía"
-   ],
-   "categorias": [],
-   "puntos": 2.0,
-   "senales": []
   },
   {
    "id": "4feb8d21f8e55813",
@@ -3993,97 +3349,6 @@
    ]
   },
   {
-   "id": "b4f38c2c103e60ec",
-   "fuente": "eldiario-aragon",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "El MNAC propone el 17 de noviembre para iniciar el traslado de las pinturas profanas de Sijena",
-   "enlace": "https://www.eldiario.es/aragon/cultura/mnac-propone-17-noviembre-iniciar-traslado-pinturas-profanas-sijena_1_13635270.html",
-   "resumen": "El dispositivo contempla la consolidación de las obras, la fabricación de embalajes específicos y su traslado en un camión de 30 metros cúbicos\nLas pinturas murales de Sijena: cronología de un conflicto artístico, político y judicial\n El regreso de las pinturas profanas del Monasterio de Santa María de Sijena tendrá que esperar, al menos, hasta mediados de noviembre. El Museu Nacional d'Art de Catalunya (MNAC) ha…",
-   "fecha": "2026-11-03T17:32:00+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Cultura y patrimonio",
-    "Empleo y economía"
-   ],
-   "categorias": [],
-   "puntos": 4.0,
-   "senales": []
-  },
-  {
-   "id": "37a9a13e549bf3bb",
-   "fuente": "eldiario-galicia",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Las protestas por la vivienda se mantienen en otros territorios tras el desalojo de la acampada de Madrid",
-   "enlace": "https://www.eldiario.es/galicia/protestas-vivienda-mantienen-territorios-desalojo-acampada-madrid_1_13634001.html",
-   "resumen": "En Barcelona, Vigo, Santiago, Palma y Sevilla las tiendas siguen en los espacios públicos, aunque en estas últimas dos ciudades lo hacen entre amenazas de expulsión\nEl Ayuntamiento sospecha que una de cada diez viviendas de Santiago está vacía: consumos mínimos y nadie censado \n La Policía desalojó la pasada madrugada la acampada por la vivienda de la Puerta del Sol. Pero, lejos de Madrid, las protestas por las…",
-   "fecha": "2026-11-03T17:01:58+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Vivienda",
-    "Comercio y barrio"
-   ],
-   "categorias": [
-    "Vivienda",
-    "Protestas",
-    "Santiago de Compostela",
-    "Vigo"
-   ],
-   "puntos": 4.5,
-   "senales": [
-    "una de cada"
-   ]
-  },
-  {
-   "id": "ac35bf39080fc80d",
-   "fuente": "eldiario-asturias",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "El Festival de Cine de Gijón rendirá homenaje al fallecido José Luis Cienfuegos, su director durante 16 años",
-   "enlace": "https://www.eldiario.es/asturias/festival-cine-gijon-rendira-homenaje-fallecido-jose-luis-cienfuegos-director-durante-16-anos_1_13634960.html",
-   "resumen": "La programación complementaria incluye 4 exposiciones, incluirá proyecciones especiales, coloquios y debates sobre arqueología, igualdad, educación audiovisual y representación de las mujeres en el cine\nJosé Luis Cienfuegos, el cinéfilo que revolucionaba cada festival que tocaba\n El Festival Internacional de Cine de Gijón (FICX), que celebrará su 64 edición del 13 al 21 de noviembre, desarrollará una actividad…",
-   "fecha": "2026-11-03T16:39:55+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Cultura y patrimonio",
-    "Igualdad"
-   ],
-   "categorias": [
-    "Asturias",
-    "Gijón",
-    "Festivales de cine"
-   ],
-   "puntos": 2.0,
-   "senales": []
-  },
-  {
-   "id": "86f7f1ae60203cfb",
-   "fuente": "eldiario-euskadi",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Los Gobiernos central y vasco anuncian la creación una subcomisión para \"coordinar\" políticas migratorias",
-   "enlace": "https://www.eldiario.es/euskadi/gobiernos-central-vasco-anuncian-creacion-subcomision-coordinar-politicas-migratorias_1_13635056.html",
-   "resumen": "Se trata de un acuerdo sobre la bocina de la legislatura estatal y se suma a otro menor relacionado con la terminal de contenedores del puerto de Bilbao\nEjercicio de matemáticas con los presupuestos de Vivienda: 504 millones para 2027 a la espera de ampliaciones\n Casi sobre la bocina del final de la legislatura, los Gobiernos central y vasco han cerrado un par de acuerdos postreros sobre cuestiones migratorias y…",
-   "fecha": "2026-11-03T16:38:44+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Vivienda",
-    "Empleo y economía"
-   ],
-   "categorias": [
-    "Euskadi",
-    "María Ubarretxena",
-    "Ángel Víctor Torres"
-   ],
-   "puntos": 2.0,
-   "senales": []
-  },
-  {
    "id": "e2dab6114c42c813",
    "fuente": "eldiario-galicia",
    "seccion": "ideas",
@@ -4112,32 +3377,6 @@
    ]
   },
   {
-   "id": "82e7fac1f1c02f52",
-   "fuente": "eldiario-euskadi",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Ejercicio de matemáticas con los presupuestos de Vivienda: 504 millones para 2027 a la espera de ampliaciones",
-   "enlace": "https://www.eldiario.es/euskadi/ejercicio-matematicas-presupuestos-vivienda-504-millones-2027-espera-ampliaciones_1_13634538.html",
-   "resumen": "\"El compromiso financiero va más allá de la cifra inicial. ¿Creen que no va a pasar lo mismo en 2027?\", ironiza el consejero Itxaso en relación a los 100 millones adicionales que se han ido logrando este año\nLos presupuestos vascos de 2027 congelarán por cuarto año en 300 euros las prestaciones de vivienda\n El área de Vivienda, la principal preocupación ciudadana, mejora su presupuesto en 2027. Denis Itxaso, de la…",
-   "fecha": "2026-11-03T15:35:27+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Vivienda",
-    "Consumo y bolsillo"
-   ],
-   "categorias": [
-    "Euskadi",
-    "Presupuestos",
-    "Vivienda",
-    "Denis Itxaso"
-   ],
-   "puntos": 4.5,
-   "senales": [
-    "porcentajes"
-   ]
-  },
-  {
    "id": "3e36650aef7ccbcb",
    "fuente": "ayto-convocatorias",
    "seccion": "agenda",
@@ -4155,24 +3394,6 @@
    "categorias": [
     "Convocatorias"
    ]
-  },
-  {
-   "id": "829123ea0d1505e8",
-   "fuente": "eldiario-aragon",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Cuidar va más allá de lo físico: la importancia del acompañamiento emocional en el día a día",
-   "enlace": "https://www.eldiario.es/aragon/contenido-patrocinado/cuidar-fisico-importancia-acompanamiento-emocional-dia-dia_1_13624338.html",
-   "resumen": "Con motivo del Día del Cuidador, Fundación Rey Ardid pone el foco en la atención emocional y en el acompañamiento personalizado que ofrece desde su Centro de Atención Integral\n Cuidar a una persona no consiste únicamente en ayudarla con las tareas cotidianas. Detrás de gestos como acompañarla al médico, preparar su comida o ayudarla a vestirse, hay otras necesidades que no siempre resultan evidentes. Escuchar cómo…",
-   "fecha": "2026-11-03T13:54:15+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Mayores y cuidados"
-   ],
-   "categorias": [],
-   "puntos": 2.0,
-   "senales": []
   },
   {
    "id": "55c9cf8b86ce32ff",
@@ -4203,44 +3424,27 @@
    ]
   },
   {
-   "id": "d742bffe553326e6",
-   "fuente": "eldiario-cv",
+   "id": "b799bc98786e5518",
+   "fuente": "eldiario-euskadi",
    "seccion": "ideas",
    "tipo": "noticia",
-   "titulo": "Acude al debate 'El derecho a la salud en El Salvador: medicamentos, agua y mujeres', organizado en València por Farmamundi y elDiario.es",
-   "enlace": "https://www.eldiario.es/comunitat-valenciana/eventos/acude-debate-derecho-salud-salvador-medicamentos-agua-mujeres-organizado-valencia-farmamundi-eldiario_1_13633302.html",
-   "resumen": "La mesa redonda con expertas y expertos sobre el terreno se celebra en la sede de elDiario.es en València y se debatirá sobre cómo se construye la sanidad pública y comunitaria en Centroamérica\n ¿Qué hace falta para que la salud sea un derecho real y no dependa del lugar en el que se nace? Esta es la pregunta de partida que reunirá el próximo 17 de noviembre, a las 19:00 horas, a tres expertos y profesionales…",
-   "fecha": "2026-11-03T12:34:48+00:00",
+   "titulo": "La Ertzaintza modifica su estructura para tener 'hackers' y una nueva unidad contra la violencia hacia las mujeres",
+   "enlace": "https://www.eldiario.es/euskadi/ertzaintza-modifica-estructura-hackers-nueva-unidad-violencia-mujeres_1_13632869.html",
+   "resumen": "Estrena la figura de los \"facultativos y técnicos\", expertos para unidades que ya no serán policías, y hace desaparecer la unidad de elite de Tráfico llamada Eten\nLa Ertzaintza incluyó entre los identificados en un desahucio en Vitoria al matrimonio que perdió su casa\n El consejero de Seguridad, Bingen Zupiria, ha publicado este martes en el Boletín Oficial del País Vasco (BOPV) un importante cambio en la estructura…",
+   "fecha": "2026-11-03T09:20:02+00:00",
    "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
+   "alava": true,
    "temas": [
-    "Salud",
-    "Igualdad"
-   ],
-   "categorias": [],
-   "puntos": 4.0,
-   "senales": []
-  },
-  {
-   "id": "7b2f68d67c6abf2e",
-   "fuente": "eldiario-asturias",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Oviedo aprueba que los animales de compañía de hasta 10 kilos puedan acceder al autobús urbano con transportín",
-   "enlace": "https://www.eldiario.es/asturias/oviedo-aprueba-animales-compania-10-kilos-puedan-acceder-autobus-urbano-transportin_1_13633588.html",
-   "resumen": "El nuevo reglamento no permite un acceso generalizado de animales, sino un acceso limitado y sujeto a condiciones estrictas como transportín homologado, cerrado, con fondo impermeable e inoloro, y bajo la vigilancia constante de la persona propietaria\n El pleno del Ayuntamiento de Oviedo ha aprobado este martes de forma definitiva la modificación del reglamento del servicio público de transporte urbano de viajeros…",
-   "fecha": "2026-11-03T11:21:24+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Movilidad"
+    "Igualdad",
+    "Tecnología y ciencia",
+    "Vivienda"
    ],
    "categorias": [
-    "Asturias",
-    "Oviedo",
-    "Transporte público"
+    "Euskadi",
+    "Ertzaintza",
+    "Bingen Zupiria"
    ],
-   "puntos": 3.0,
+   "puntos": -2.0,
    "senales": []
   },
   {
@@ -4260,50 +3464,6 @@
    "categorias": []
   },
   {
-   "id": "69f9f24ed012e1ec",
-   "fuente": "eldiario-andalucia",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Un fantasma recorre Europa",
-   "enlace": "https://www.eldiario.es/andalucia/desdeelsur/fantasma-recorre-europa_132_13632442.html",
-   "resumen": "El 11 de noviembre, en unos días, hay convocada una huelga general en este país, por la crisis habitacional y por mejores salarios, dicen. Pero será mucho más: un grito de auxilio ante lo que despavoridamente estamos perdiendo, la ingenua –quizá—certidumbre en que la política pueda tener, por sí misma, un final feliz\nOpinión - La izquierda, en llamas\n De un tiempo a esta parte, vivimos en una extraña noche de los…",
-   "fecha": "2026-11-02T22:59:34+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Vivienda",
-    "Empleo y economía",
-    "Juventud"
-   ],
-   "categorias": [
-    "Europa",
-    "Elecciones",
-    "Capitalismo"
-   ],
-   "puntos": 4.0,
-   "senales": []
-  },
-  {
-   "id": "bb6c6b4a82869b19",
-   "fuente": "eldiario-andalucia",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Sobre la condición humana en las tragedias",
-   "enlace": "https://www.eldiario.es/andalucia/en-abierto/condicion-humana-tragedias_132_13631168.html",
-   "resumen": "Analicemos todo con calma, sin la prisa que pretenden algunos interesados para sacar tajada politica, incluida cierta izquierda desnortada\n Salgo al jardín, recolecto unas granadas rojas del árbol. El cielo azul y blanco me relaja. Entro en la casa, enciendo la tele y hay ruido en el plató, bronca y enfrentamiento entre dos bandos; sintonizo la radio y los tertulianos se enfrentan con la razón de la fuerza, no con…",
-   "fecha": "2026-11-02T22:59:30+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Medio ambiente"
-   ],
-   "categorias": [
-    "Accidente tren Urda"
-   ],
-   "puntos": 2.0,
-   "senales": []
-  },
-  {
    "id": "055bcebeff01a276",
    "fuente": "eldiario-aragon",
    "seccion": "ideas",
@@ -4321,73 +3481,6 @@
    ],
    "categorias": [],
    "puntos": 5.0,
-   "senales": []
-  },
-  {
-   "id": "0582b72c4b533137",
-   "fuente": "eldiario-euskadi",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "La trampa de la alta velocidad",
-   "enlace": "https://www.eldiario.es/euskadi/blogs/viento-del-norte/trampa-alta-velocidad_132_13631098.html",
-   "resumen": "\"Presuponer la negligencia individual ignora el contexto estructural en el que se produce. Si hay un error humano, es obligatorio analizar bajo qué condiciones operaba ese trabajador\"\n La opinión pública se encuentra conmocionada. Un nuevo accidente en la línea de alta velocidad ha vuelto a encender las alarmas. A diferencia de las tragedias aéreas, los siniestros ferroviarios despiertan una empatía colectiva…",
-   "fecha": "2026-11-02T20:45:17+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Movilidad"
-   ],
-   "categorias": [
-    "Trenes",
-    "Accidente tren Urda"
-   ],
-   "puntos": 3.5,
-   "senales": [
-    "aumento"
-   ]
-  },
-  {
-   "id": "5fca7ae0cc706b8c",
-   "fuente": "eldiario-euskadi",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Oscuro",
-   "enlace": "https://www.eldiario.es/euskadi/blogs/viento-del-norte/oscuro_132_13631100.html",
-   "resumen": "\"Dependemos del clima para manifestar nuestro humor, nuestra melancolía, nuestro entusiasmo y también nuestra disposición para la actividad productiva o para cultivar la pereza\"\n Los días cortos. Los días fríos. Los días que, ya viniéndose, nos anuncian que nos vamos acercando poco a poco al día de menos luz solar del año, que es, según el calendario astronómico, el 21 de diciembre. Los días cortos son los que…",
-   "fecha": "2026-11-02T20:45:16+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Medio ambiente",
-    "Consumo y bolsillo"
-   ],
-   "categorias": [
-    "Otoño"
-   ],
-   "puntos": 3.0,
-   "senales": []
-  },
-  {
-   "id": "3a0b3ef3ccbfd03c",
-   "fuente": "eldiario-euskadi",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Un boquete en el sistema democrático",
-   "enlace": "https://www.eldiario.es/euskadi/blogs/viento-del-norte/boquete-sistema-democratico_132_13631328.html",
-   "resumen": "\"De algunos incendiarios podría decirse que son seguramente adeptos a una ideología totalitaria, sí. Pero otros se sirvieron del caos para desvalijar comercios. Y de bastantes diría, simplemente, que se divirtieron\"\n Las manifestaciones del pasado veintiséis de octubre, protagonizadas por jóvenes y adolescentes para protestar por la llegada inminente a Bilbao de un provocador profesional de extrema derecha, se…",
-   "fecha": "2026-11-02T20:45:15+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Juventud"
-   ],
-   "categorias": [
-    "Bizkaia",
-    "Bilbao",
-    "Violencia",
-    "Extrema derecha"
-   ],
-   "puntos": 2.0,
    "senales": []
   },
   {
@@ -4472,6 +3565,31 @@
    ]
   },
   {
+   "id": "1a17418bb3b7b055",
+   "fuente": "eldiario-euskadi",
+   "seccion": "ideas",
+   "tipo": "noticia",
+   "titulo": "Año de aniversarios en el presupuesto de Cultura: 90 de Gernika, 75 del Zinemaldia, 30 del Guggenheim y 25 de Artium",
+   "enlace": "https://www.eldiario.es/euskadi/ano-aniversarios-presupuesto-cultura-90-gernika-75-zinemaldia-30-guggenheim-25-artium_1_13632083.html",
+   "resumen": "Las últimas cuentas de la vicelehendakari Bengoetxea ascienden a 442,8 millones de euros, un 7% más que en 2026\nArtium, 25 años del museo de arte contemporáneo de Vitoria con el otro 'Guernica' como nuevo gancho\n La vicelehendakari primera y consejera de Cultura y Política Lingüística, Ibone Bengoetxea, que previsiblemente abandonará el cargo próximamente al ser elegida candidata del PNV en Bizkaia, ha presentado en…",
+   "fecha": "2026-11-02T15:01:00+00:00",
+   "visto": "2026-11-06T18:43:08+00:00",
+   "alava": true,
+   "temas": [
+    "Cultura y patrimonio"
+   ],
+   "categorias": [
+    "Euskadi",
+    "Presupuestos",
+    "Ibone Bengoetxea",
+    "Parlamento Vasco"
+   ],
+   "puntos": -3.5,
+   "senales": [
+    "porcentajes"
+   ]
+  },
+  {
    "id": "80c88c3cbc021e8c",
    "fuente": "ayto-convocatorias",
    "seccion": "agenda",
@@ -4488,26 +3606,6 @@
    "categorias": [
     "Convocatorias"
    ]
-  },
-  {
-   "id": "c5b4d8aad9c45ac4",
-   "fuente": "eldiario-andalucia",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "La Junta de Andalucía celebra un centenar de actividades en las ocho provincias en torno al Día del Flamenco",
-   "enlace": "https://www.eldiario.es/andalucia/lacajanegra/cajon_flamenco/junta-andalucia-celebra-centenar-actividades-ocho-provincias-torno-dia-flamenco_1_13631286.html",
-   "resumen": "La efeméride del 16 de noviembre combina grandes espectáculos, propuestas innovadoras, actividades formativas y acciones de difusión del patrimonio jondo, contando con la participación de más de 280 artistas y profesionales\n La Consejería de Cultura, Patrimonio Histórico y Deporte celebra el próximo 16 de noviembre el Día del Flamenco de Andalucía para el que ha organizado más de un centenar de actividades…",
-   "fecha": "2026-11-02T10:25:25+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Cultura y patrimonio"
-   ],
-   "categorias": [
-    "Sevilla"
-   ],
-   "puntos": 3.0,
-   "senales": []
   },
   {
    "id": "3839b3b5675c6328",
@@ -4529,59 +3627,6 @@
    ],
    "puntos": 6.0,
    "senales": []
-  },
-  {
-   "id": "55fcde3c451dd617",
-   "fuente": "eldiario-galicia",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Amancio Ortega ingresará 3.234 millones en dividendos de Inditex este año tras cobrar 1.617 millones este lunes",
-   "enlace": "https://www.eldiario.es/galicia/amancio-ortega-ingresara-3-234-millones-dividendos-inditex-cobrar-1-617-millones-lunes_1_13631296.html",
-   "resumen": "La compañía retribuirá este año a sus accionistas con más de 5.454 millones de euros, tras elevar un 4,1% el dividendo, hasta 1,75 euros por acción\nProyectos industriales descartados, con retrasos y fuerte rechazo social: los planes que la Xunta declara estratégicos encallan \n El fundador y primer accionista de Inditex, Amancio Ortega, ingresará este año un total de 3.234 millones de euros en concepto de dividendos…",
-   "fecha": "2026-11-02T09:58:15+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Empleo y economía"
-   ],
-   "categorias": [
-    "Galicia",
-    "Economía",
-    "Inditex",
-    "Amancio Ortega"
-   ],
-   "puntos": 4.0,
-   "senales": [
-    "porcentajes",
-    "récord"
-   ]
-  },
-  {
-   "id": "5ee0a032f804afae",
-   "fuente": "eldiario-andalucia",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "En busca de Pastora Imperio en el retiro malagueño donde se pule la inspiración flamenca: “Aquí el trabajo cristaliza”",
-   "enlace": "https://www.eldiario.es/andalucia/lacajanegra/cajon_flamenco/busca-pastora-imperio-retiro-malagueno-pule-inspiracion-flamenca-trabajo-cristaliza_1_13627833.html",
-   "resumen": "La bailaora Paula Comitre da forma a su espectáculo, que se estrena en Matadero el próximo viernes, en la residencia artística de Miguel Marín, por donde en los últimos años han pasado Manuel Liñán, Olga Pericet, Rocío Molina o Rocío Márquez y Bronquio\nLa obra de Manuel de Falla que Pastora Imperio bailó y María Lejárraga escribió\n En un cortijo en las estribaciones de la Sierra Almijara con vistas al azul…",
-   "fecha": "2026-11-01T23:39:24+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Empleo y economía",
-    "Migración y convivencia",
-    "Medio ambiente"
-   ],
-   "categorias": [
-    "Flamenco",
-    "Málaga",
-    "Andalucía",
-    "Cultura"
-   ],
-   "puntos": 4.5,
-   "senales": [
-    "en los últimos años"
-   ]
   },
   {
    "id": "74620d2ec930c744",
@@ -4614,206 +3659,56 @@
    ]
   },
   {
-   "id": "8e6aca4d0b2aef62",
-   "fuente": "eldiario-navarra",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "El Gobierno de Navarra liquida el contrato de las obras de Belate que adjudicó a Acciona, Osés y Servinabar",
-   "enlace": "https://www.eldiario.es/navarra/gobierno-navarra-liquida-contrato-obras-belate-adjudico-acciona-oses-servinabar_1_13627362.html",
-   "resumen": "El Ejecutivo foral también insta a Túnel de Belate UTE a que finalice los trabajos de cierre, tal y como figura en el 'Plan de cierre temporal para la obra de duplicación del túnel de Belate'\nEl abono del sobrecoste de Belate abre una nueva vía de agua entre los socios del Gobierno de Chivite en Navarra\n La Dirección General de Obras Públicas e Infraestructuras del Gobierno de Navarra ha liquidado ya el contrato de…",
-   "fecha": "2026-11-01T20:46:22+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Empleo y economía"
-   ],
-   "categorias": [
-    "Navarra",
-    "María Chivite",
-    "Obras públicas",
-    "Audiencia Nacional"
-   ],
-   "puntos": 2.5,
-   "senales": [
-    "porcentajes"
-   ]
-  },
-  {
-   "id": "a4c8077702790c2e",
+   "id": "823ed3c96123a83c",
    "fuente": "eldiario-euskadi",
    "seccion": "ideas",
    "tipo": "noticia",
-   "titulo": "Un desafío literario: 'Dudak dakarrena', una novela sólo con palabras con 'd' de Itziar Aranburu y Jon Ander García",
-   "enlace": "https://www.eldiario.es/euskadi/desafio-literario-dudak-dakarrena-novela-palabras-d-itziar-aranburu-jon-ander-garcia_1_13626329.html",
-   "resumen": "Desde Donostia, dos diseñadores demuestran dónde desemboca desarrollar dramaturgia\nPradales cuestiona los “valores” que dan las “familias” y “algunas aulas” a los jóvenes tras los disturbios de Bilbao\n ¿Hasta dónde puede llevarte una letra? Itziar Aranburu y Jon Ander García llevan años jugando con las posibilidades del lenguaje, pero esta vez decidieron llevar el experimento un poco más lejos. Lo que comenzó como…",
-   "fecha": "2026-11-01T20:45:18+00:00",
+   "titulo": "Artium, 25 años del museo de arte contemporáneo de Vitoria con el otro 'Guernica' como nuevo gancho",
+   "enlace": "https://www.eldiario.es/euskadi/artium-25-anos-museo-arte-contemporaneo-vitoria-guernica-nuevo-gancho_1_13625186.html",
+   "resumen": "El germen de la galería se remonta hasta las décadas de 1960 y 1970, cuando empezó a gestarse una colección que incluía ya obras de artistas como Dalí y Picasso\nÁlava repara el pasado esclavista de su museo de Bellas Artes: \"Que la memoria de quienes sufrieron no se borre\"\n El 26 de abril de 2027, el museo Artium de Vitoria, referente del arte contemporáneo en Euskadi, soplará veinticinco velas. De cara a ese…",
+   "fecha": "2026-10-31T20:46:25+00:00",
    "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
+   "alava": true,
    "temas": [
-    "Cultura y patrimonio",
-    "Juventud",
+    "Cultura y patrimonio"
+   ],
+   "categorias": [
+    "Álava",
+    "Vitoria",
+    "Ayuntamiento de Vitoria",
+    "Pablo Picasso"
+   ],
+   "puntos": 1.5,
+   "senales": [
+    "reportaje"
+   ]
+  },
+  {
+   "id": "bc720bf97de9c862",
+   "fuente": "eldiario-euskadi",
+   "seccion": "ideas",
+   "tipo": "noticia",
+   "titulo": "La Ertzaintza incluyó entre los identificados en un desahucio en Vitoria al matrimonio que perdió su casa",
+   "enlace": "https://www.eldiario.es/euskadi/ertzaintza-incluyo-identificados-desahucio-vitoria-matrimonio-perdio-casa_1_13627973.html",
+   "resumen": "El desalojo se produjo, en medio de protestas y un fuerte dispositivo policial, en las horas posteriores al de Maricarmen Abascal en Madrid\nDesahucian a una familia con dos hijos, de 8 y 10 años, en Vitoria en medio de protestas y presencia policial\n A las pocas horas del desahucio de Maricarmen Abascal en Madrid, el desalojo en el Casco Viejo de Vitoria de un matrimonio con dos hijos menores, de ocho y diez años,…",
+   "fecha": "2026-10-31T20:46:24+00:00",
+   "visto": "2026-11-06T18:43:08+00:00",
+   "alava": true,
+   "temas": [
+    "Vivienda",
     "Educación"
    ],
    "categorias": [
     "Euskadi",
-    "Literatura",
-    "Euskera",
-    "Libros"
+    "Ertzaintza",
+    "Vitoria",
+    "Álava"
    ],
-   "puntos": 3.0,
-   "senales": []
-  },
-  {
-   "id": "065b85a72bd37d52",
-   "fuente": "eldiario-cv",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Los enemigos del pueblo",
-   "enlace": "https://www.eldiario.es/comunitat-valenciana/en-legitima-defensa/enemigos-pueblo_132_13630536.html",
-   "resumen": "Es difícil resignificar la expresión «enemigo del pueblo». A la izquierda escrupulosa le repugna porque la utilizó Robespierre para justificar el uso indiscriminado de la guillotina y también Stalin para llevar a cabo sus purgas más demenciales. Nació con una perspectiva revolucionaria y acabó siendo rápidamente instrumentalizada por el poder para señalar a sus adversarios, a sus víctimas. Lo escenifica muy bien…",
-   "fecha": "2026-11-01T12:25:49+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Mundo rural y despoblación",
-    "Cultura y patrimonio"
-   ],
-   "categorias": [],
-   "puntos": 3.0,
-   "senales": []
-  },
-  {
-   "id": "af039e43df106b58",
-   "fuente": "eldiario-galicia",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "A poxa dos Franco",
-   "enlace": "https://www.eldiario.es/galicia/blog/opinion/poxa-franco_132_13628224.html",
-   "resumen": "Despois de que a xustiza ditaminase que o Pazo de Meirás nunca fora da súa propiedade, senón do Estado, supoño que á familia Franco lle suporán un gran consolo os 524.925 euros que veñen de conseguir por venderen nunha poxa os obxectos do seu interior; despois de todo, as penas con medio millón de euros son menos penas\n A filla dun xoieiro dos das Praterías contoume un día que, cando os Franco viñan de visita…",
-   "fecha": "2026-11-01T05:01:34+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Tecnología y ciencia",
-    "Cultura y patrimonio"
-   ],
-   "categorias": [
-    "Familia Franco",
-    "Pazo de Meirás"
-   ],
-   "puntos": 2.0,
-   "senales": []
-  },
-  {
-   "id": "628eca754a9687cd",
-   "fuente": "eldiario-cv",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Irene Ballester i Lola Llopis: “La història ha de ser explicada des del punt de vista femení i inclusiu, igualitari”",
-   "enlace": "https://www.eldiario.es/comunitat-valenciana/val/irene-ballester-i-lola-llopis-historia-explicada-des-punt-vista-femeni-i-inclusiu-igualitari_128_13629100.html",
-   "resumen": "Aviat es compliran 800 anys de la conquesta de València (1238) per Jaume I. Un rei que fou conqueridor de terres, però també de dones, si bé les dones que el van acompanyar i sostindre, no van jugar mai un paper secundari ni decoratiu. Tot el contrari, foren “sàvies, fortes i valentes”, i van tenir veu i vot en l’esfera familiar, política i pública. “Més enllà de ser les seues amants, dones i filles, totes tingueren…",
-   "fecha": "2026-10-31T22:06:25+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Cultura y patrimonio"
-   ],
-   "categorias": [],
-   "puntos": 2.0,
-   "senales": []
-  },
-  {
-   "id": "5e4edf1ef482dddc",
-   "fuente": "eldiario-cv",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Javier López Alós, autor de 'Homo postacademicus': \"Hoy el eje de la vida universitaria es la supervivencia\"",
-   "enlace": "https://www.eldiario.es/comunitat-valenciana/javier-lopez-alos-autor-homo-postacademicus-hoy-eje-vida-universitaria-supervivencia_128_13621489.html",
-   "resumen": "El filósofo y escritor analiza en su nuevo ensayo cómo el modelo neoliberal ha reducido la universidad a una máquina de supervivencia\n Acaba de llegar a las librerías Homo postacademicus. De la reproducción a la supervivencia (Editorial Universidad de Granada), la última obra del filósofo y escritor Javier López Alós. Estrechamente vinculado a Dénia —ciudad donde ha residido durante años y en la que conduce desde…",
-   "fecha": "2026-10-31T22:06:24+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Empleo y economía",
-    "Cultura y patrimonio",
-    "Tecnología y ciencia"
-   ],
-   "categorias": [],
-   "puntos": 4.0,
-   "senales": []
-  },
-  {
-   "id": "170d5b1aa9e913fb",
-   "fuente": "eldiario-navarra",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Navarra ultima la aprobación de una nueva ley de Salud con la que se busca reducir las listas de espera",
-   "enlace": "https://www.eldiario.es/navarra/navarra-ultima-aprobacion-nueva-ley-salud-busca-reducir-listas-espera_1_13628268.html",
-   "resumen": "El Gobierno foral ha aprobado ya el anteproyecto de ley y ahora llegará al Parlamento para su tramitación definitiva\n El Gobierno de Navarra aprobó esta semana el texto del proyecto de Ley Foral de Salud que será remitido al Parlamento de Navarra para su debate y votación. Tal y como ha explicado el consejero del Departamento de Salud, Fernando Domínguez, “el principal objetivo de esta norma es priorizar a la…",
-   "fecha": "2026-10-31T20:46:20+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Salud",
-    "Empleo y economía"
-   ],
-   "categorias": [
-    "Salud",
-    "Navarra",
-    "Listas de espera",
-    "Leyes"
-   ],
-   "puntos": 3.5,
+   "puntos": -5.0,
    "senales": [
+    "datos",
     "informe"
    ]
-  },
-  {
-   "id": "479ffda396098140",
-   "fuente": "eldiario-aragon",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "Un bar emblemático de Zaragoza baja la persiana \"con mucho pesar\" tras más de ocho años de música en directo",
-   "enlace": "https://www.eldiario.es/aragon/cultura/bar-emblematico-zaragoza-baja-persona-pesar-ocho-anos-musica-directo_1_13628714.html",
-   "resumen": "La sala Moliner 7 cierra este sábado después de que sus responsables intentaran sin éxito comprar el local. Se trasladan al quiosco del parque Castillo Palomar, en Delicias\nZaragoza y sus salas de música en directo: “La oferta de grupos que piden tocar es mayor de la que podemos absorber”\n Moliner 7, el bar y sala de conciertos que ocupa desde 2018 el local donde nació La Lata de Bombillas –ahora en el Casco Viejo–,…",
-   "fecha": "2026-10-31T00:05:51+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Comercio y barrio",
-    "Vivienda",
-    "Cultura y patrimonio"
-   ],
-   "categorias": [
-    "Música"
-   ],
-   "puntos": 2.0,
-   "senales": []
-  },
-  {
-   "id": "96e7500ec0b9d914",
-   "fuente": "eldiario-galicia",
-   "seccion": "ideas",
-   "tipo": "noticia",
-   "titulo": "La Iglesia compostelana, gran tenedora: los activistas reclaman para viviendas sociales sus cientos de inmuebles sin uso",
-   "enlace": "https://www.eldiario.es/galicia/iglesia-compostelana-gran-tenedora-activistas-reclaman-viviendas-sociales-cientos-inmuebles_1_13623917.html",
-   "resumen": "El Arzobispado de Santiago, Cáritas y el colegio de arquitectos firmaron un convenio para estudiar cómo convertir unas 800 casas rectorales en alojamientos de emergencia, pero el Sindicato da Vivenda rechaza el \"parche\" por \"asistencialista\" y pide ir mucho más allá \nHemeroteca - La Iglesia compostelana posee 1.677 bienes urbanos de uso no religioso, una cuarta parte de su patrimonio total\n “La propia Iglesia se…",
-   "fecha": "2026-10-30T21:17:20+00:00",
-   "visto": "2026-11-06T18:43:08+00:00",
-   "alava": false,
-   "temas": [
-    "Vivienda",
-    "Empleo y economía",
-    "Educación"
-   ],
-   "categorias": [
-    "Vivienda",
-    "Rehabilitación",
-    "Iglesia",
-    "Arquitectos"
-   ],
-   "puntos": 3.0,
-   "senales": []
   },
   {
    "id": "7a2261b650dc593b",
