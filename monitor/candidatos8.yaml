@@ -1,0 +1,20 @@
+# Octava vuelta: datos vivos y dinero público
+candidatos:
+  - {nombre: "Parlamento Vasco", web: "https://www.legebiltzarra.eus/", categoria: w}
+  - {nombre: "Congreso open data", web: "https://www.congreso.es/es/opendata/iniciativas", categoria: w}
+muestras:
+  - {id: aemet-avisos, url: "https://www.aemet.es/documentos_d/eltiempo/prediccion/avisos/rss/CAP_AFAE_wah_RSS.xml"}
+  - {id: meteoalarm, url: "https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-spain"}
+  - {id: trafikoa, url: "https://www.trafikoa.eus/servicios/IncidenciasTDT/IncidenciasTrafikoTDTGeo"}
+  - {id: traffic-api, url: "https://api.euskadi.eus/traffic/v1.0/incidences?_page=1"}
+  - {id: iagua-ullibarri, url: "https://www.iagua.es/data/infraestructuras/embalses/ullibarri-gamboa"}
+  - {id: iagua-urrunaga, url: "https://www.iagua.es/data/infraestructuras/embalses/urrunaga"}
+  - {id: embalses-ebro, url: "https://www.embalses.net/cuenca-4-ebro.html"}
+  - {id: air-api, url: "https://api.euskadi.eus/air-quality/stations?_elements=5"}
+  - {id: air-api2, url: "https://api.euskadi.eus/air-quality/measurements/hourly/stations"}
+  - {id: odeus-contratos, url: "https://opendata.euskadi.eus/catalogo/-/contrataciones-administrativas-de-2026/"}
+  - {id: placsp, url: "https://contrataciondelsectorpublico.gob.es/sindicacion/sindicacion_643/licitacionesPerfilesContratanteCompleto3.atom"}
+  - {id: bdns-conc, url: "https://www.infosubvenciones.es/bdnstrans/api/concesiones/busqueda?page=0&pageSize=5&order=fechaConcesion&direccion=desc"}
+  - {id: bdns-conv, url: "https://www.infosubvenciones.es/bdnstrans/api/convocatorias/busqueda?page=0&pageSize=5&order=fechaRecepcion&direccion=desc"}
+  - {id: bdns-docs, url: "https://www.infosubvenciones.es/bdnstrans/v3/api-docs"}
+  - {id: congreso-od, url: "https://www.congreso.es/es/opendata/iniciativas"}
