@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-06T19:00:38+00:00",
+ "actualizado": "2026-11-06T19:07:30+00:00",
  "fuentes": [
   {
    "id": "ayto-notas",
@@ -10,7 +10,7 @@
    "ok": true,
    "leidos": 10,
    "nuevos": 3,
-   "segundos": 1.8
+   "segundos": 1.5
   },
   {
    "id": "ayto-movilidad",
@@ -21,7 +21,7 @@
    "ok": true,
    "leidos": 15,
    "nuevos": 0,
-   "segundos": 0.9
+   "segundos": 0.7
   },
   {
    "id": "diputacion",
@@ -32,7 +32,7 @@
    "ok": true,
    "leidos": 4,
    "nuevos": 0,
-   "segundos": 4.7
+   "segundos": 4.1
   },
   {
    "id": "irekia",
@@ -43,7 +43,7 @@
    "ok": true,
    "leidos": 15,
    "nuevos": 0,
-   "segundos": 1.2
+   "segundos": 1.0
   },
   {
    "id": "bopv",
@@ -54,7 +54,7 @@
    "ok": true,
    "leidos": 26,
    "nuevos": 0,
-   "segundos": 0.6
+   "segundos": 0.5
   },
   {
    "id": "ayto-convocatorias",
@@ -65,7 +65,7 @@
    "ok": true,
    "leidos": 10,
    "nuevos": 0,
-   "segundos": 1.3
+   "segundos": 1.1
   },
   {
    "id": "ayto-agenda",
@@ -76,7 +76,7 @@
    "ok": true,
    "leidos": 51,
    "nuevos": 0,
-   "segundos": 1.1
+   "segundos": 0.9
   },
   {
    "id": "eldiario-euskadi",
@@ -87,7 +87,7 @@
    "ok": true,
    "leidos": 65,
    "nuevos": 0,
-   "segundos": 1.1
+   "segundos": 0.7
   },
   {
    "id": "eldiario-navarra",
@@ -98,7 +98,7 @@
    "ok": true,
    "leidos": 23,
    "nuevos": 0,
-   "segundos": 0.3
+   "segundos": 0.4
   },
   {
    "id": "eldiario-cyl",
@@ -109,7 +109,7 @@
    "ok": true,
    "leidos": 30,
    "nuevos": 0,
-   "segundos": 1.0
+   "segundos": 0.2
   },
   {
    "id": "eldiario-aragon",
@@ -120,7 +120,7 @@
    "ok": true,
    "leidos": 43,
    "nuevos": 0,
-   "segundos": 0.5
+   "segundos": 0.3
   },
   {
    "id": "eldiario-cantabria",
@@ -130,8 +130,8 @@
    "local": false,
    "ok": true,
    "leidos": 42,
-   "nuevos": 0,
-   "segundos": 1.4
+   "nuevos": 1,
+   "segundos": 0.3
   },
   {
    "id": "eldiario-galicia",
@@ -142,7 +142,7 @@
    "ok": true,
    "leidos": 28,
    "nuevos": 0,
-   "segundos": 0.3
+   "segundos": 0.8
   },
   {
    "id": "eldiario-asturias",
@@ -152,7 +152,7 @@
    "local": false,
    "ok": true,
    "leidos": 61,
-   "nuevos": 3,
+   "nuevos": 0,
    "segundos": 1.3
   },
   {
@@ -164,7 +164,7 @@
    "ok": true,
    "leidos": 71,
    "nuevos": 0,
-   "segundos": 0.6
+   "segundos": 0.5
   },
   {
    "id": "eldiario-andalucia",
@@ -175,7 +175,7 @@
    "ok": true,
    "leidos": 56,
    "nuevos": 0,
-   "segundos": 0.9
+   "segundos": 0.4
   }
  ],
  "manuales": [
@@ -1040,6 +1040,28 @@
     "Igualdad"
    ],
    "categorias": []
+  },
+  {
+   "id": "df2719b077540555",
+   "fuente": "eldiario-cantabria",
+   "seccion": "ideas",
+   "tipo": "noticia",
+   "titulo": "El festival de Fanzines y Autoedición 'Caricias' regresa a Santander con 77 artistas",
+   "enlace": "https://www.eldiario.es/cantabria/ultimas-noticias/festival-fanzines-autoedicion-caricias-regresa-santander-77-artistas_1_13642833.html",
+   "resumen": "La cita permitirá al público conocer de primera mano proyectos de ilustración, cómic, publicaciones independientes y otras propuestas vinculadas a la creación gráfica y editorial\n Santander acogerá hasta el domingo 8 de noviembre la II edición de 'Caricias', el Festival de Fanzines y Autoedición, que regresa a La Fábrica de Creación con una propuesta que reunirá a 77 artistas y una amplia programación de talleres,…",
+   "fecha": "2026-11-06T18:54:45+00:00",
+   "visto": "2026-11-06T19:07:30+00:00",
+   "alava": false,
+   "temas": [
+    "Cultura y patrimonio",
+    "Mayores y cuidados"
+   ],
+   "categorias": [
+    "Santander",
+    "Cultura"
+   ],
+   "puntos": 6.0,
+   "senales": []
   },
   {
    "id": "6eafc5bf6ec19f38",

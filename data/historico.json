@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-06T19:00:38+00:00",
+ "actualizado": "2026-11-06T19:07:30+00:00",
  "items": {
   "75a1ce1971ba455f": {
    "id": "75a1ce1971ba455f",
@@ -11878,6 +11878,28 @@
     "Junta General del Principado de Asturias"
    ],
    "puntos": -6.0,
+   "senales": []
+  },
+  "df2719b077540555": {
+   "id": "df2719b077540555",
+   "fuente": "eldiario-cantabria",
+   "seccion": "ideas",
+   "tipo": "noticia",
+   "titulo": "El festival de Fanzines y Autoedición 'Caricias' regresa a Santander con 77 artistas",
+   "enlace": "https://www.eldiario.es/cantabria/ultimas-noticias/festival-fanzines-autoedicion-caricias-regresa-santander-77-artistas_1_13642833.html",
+   "resumen": "La cita permitirá al público conocer de primera mano proyectos de ilustración, cómic, publicaciones independientes y otras propuestas vinculadas a la creación gráfica y editorial\n Santander acogerá hasta el domingo 8 de noviembre la II edición de 'Caricias', el Festival de Fanzines y Autoedición, que regresa a La Fábrica de Creación con una propuesta que reunirá a 77 artistas y una amplia programación de talleres,…",
+   "fecha": "2026-11-06T18:54:45+00:00",
+   "visto": "2026-11-06T19:07:30+00:00",
+   "alava": false,
+   "temas": [
+    "Cultura y patrimonio",
+    "Mayores y cuidados"
+   ],
+   "categorias": [
+    "Santander",
+    "Cultura"
+   ],
+   "puntos": 6.0,
    "senales": []
   }
  }
