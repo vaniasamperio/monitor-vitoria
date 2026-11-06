@@ -144,11 +144,11 @@ RX_NOTICIA = patron(["presupuesto", "subvencion", "ayudas", "ordenanza", "impues
                      "fiestas", "festival", "jornadas", "presenta", "denuncia", "alerta"])
 RX_SUCESO = patron(["detenido", "detenida", "detenidos", "detencion", "arrestad", "robo", "robos", "hurto", "atraco",
                     "agresion", "agredid", "apunal", "herido", "herida", "heridos", "fallecid", "muere", "muerto",
-                    "accidente", "atropell", "colision", "choque", "incendio", "fuego", "rescate", "rescatad",
-                    "desaparecid", "policia local", "ertzaintza", "guardia civil", "estafa", "violencia machista",
-                    "violencia de genero", "droga", "incautad", "juicio", "condena", "condenad", "sentencia",
-                    "tribunal", "audiencia provincial", "juzgado", "fiscalia", "denuncia", "investigad", "bomberos",
-                    "sanitario", "emergencias", "sos deiak", "ocupacion ilegal", "pelea", "reyerta"])
+                    "atropell", "colision", "choque", "incendio", "rescate", "rescatad", "desaparecid",
+                    "policia local", "ertzaintza", "guardia civil", "estafa", "droga", "incautad", "bomberos",
+                    "sos deiak", "pelea", "reyerta", "accidente de trafico", "salida de via", "vuelco"])
+RX_JUDICIAL = patron(["juicio", "condena", "condenad", "sentencia", "audiencia provincial", "juzgado", "fiscalia",
+                      "absuelto", "absuelta", "procesad", "acusad"])
 RX_RUTINA = patron(["notificacion", "notificaciones", "citacion", "emplazamiento", "edicto", "cedula",
                     "embargo", "padron", "nombramiento", "nombra ", "delegacion de funciones",
                     "correccion de errores", "cuenta general", "cese ", "jubilacion", "comision de servicios",
@@ -767,6 +767,18 @@ class Clasificador:
         return {n: {"pistas": p, "preguntas": self.preguntas.get(n, [])} for n, _, p in self.temas}
 
 
+def es_suceso(it: dict, fuente: dict) -> bool:
+    """Partes policiales, emergencias y tribunales de Álava (para la pestaña Sucesos)."""
+    if fuente.get("seccion") == "sucesos":
+        return True
+    if fuente.get("seccion") not in ("instituciones", "pueblos", "teletipos") or not it.get("alava") or fuente.get("tipo") == "botha":
+        return False
+    t = normaliza(it.get("titulo", ""))
+    if "tribunal calificador" in t:
+        return False
+    return bool(coincidencias(RX_SUCESO, t) or (fuente["seccion"] != "pueblos" and coincidencias(RX_JUDICIAL, t)))
+
+
 def tipo_item(it: dict, fuente: dict) -> str:
     if fuente.get("fecha_es_evento"):
         return "agenda"
@@ -886,10 +898,6 @@ def main() -> int:
                     "cuadrilla": it["cuadrilla"], "relevancia": it["relevancia"], "rutina": it["rutina"],
                     "cal": bool(previo and previo.get("cal")),
                 }
-                if fuente["seccion"] == "sucesos" or (
-                        fuente["seccion"] in ("instituciones", "pueblos", "teletipos") and it["alava"]
-                        and coincidencias(RX_SUCESO, normaliza(it["titulo"]))):
-                    reg["suceso"] = True
                 for extra in ("organismo", "boletin", "bloque"):
                     if it.get(extra):
                         reg[extra] = it[extra]
@@ -969,6 +977,11 @@ def main() -> int:
     buzon = resumen_buzon(quejas, ahora)
     publicados, ideas_pub = [], []
     solo_cal = {f["id"] for f in cfg.get("fuentes", []) if f.get("solo_calendario")}
+    cfg_f = {f["id"]: f for f in cfg.get("fuentes", [])}
+    for it in items_hist.values():
+        it.pop("suceso", None)
+        if es_suceso(it, cfg_f.get(it["fuente"], {})):
+            it["suceso"] = True
     for it in items_hist.values():
         if it["seccion"] == "buzon" or it["fuente"] in solo_cal:
             continue
