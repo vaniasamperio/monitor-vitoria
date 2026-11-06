@@ -86,6 +86,10 @@ ul.lista{list-style:none;margin:0;padding:0}
 #teletipos{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media (max-width:860px){#teletipos{grid-template-columns:1fr}}
 .btn-reunion{display:inline-block;margin-left:14px;padding:5px 11px;border:1px solid var(--linea, #d9d3c5);border-radius:7px;font-size:13px;text-decoration:none;color:inherit;vertical-align:middle;background:#fff}.btn-reunion:hover{background:#f6f1e6}
+.chip.sigo{background:#efe2fb;color:#4b2a6b}.chip.sigo button{border:0;background:none;cursor:pointer;color:inherit;font-weight:700;padding:0 0 0 3px}
+.temas-form{display:flex;gap:6px;padding:10px 16px 6px}.temas-form input{flex:1;min-width:0;padding:6px 9px;border:1px solid #d9d3c5;border-radius:7px;font:inherit;font-size:14px}.temas-form button{padding:6px 12px;border:0;border-radius:7px;background:#1d3a3a;color:#fff;font:inherit;font-size:13px;cursor:pointer}
+.temas-chips{display:flex;flex-wrap:wrap;gap:5px;padding:4px 16px 10px}
+.btn-archivo{padding:0 12px;border:1px solid #d9d3c5;border-radius:8px;background:#fff;font:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
 .chip.etqf{background:#dfe7ec;color:#24485a}
 .chip.nuevo{background:var(--ambar);color:#3b2604;font-weight:700;letter-spacing:.03em}
 .chip.senal{background:#efe3f4;color:#5a2d6e}
@@ -241,6 +245,7 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input id="q" type="search" placeholder="Buscar en todo: vivienda, Laguardia, Zabalgana, ordenanza…" autocomplete="off">
     </label>
+    <button class="btn-archivo" id="btnArchivo" hidden title="Buscar también en los meses anteriores">Buscar en el archivo</button>
     <div class="seg" role="group" aria-label="Periodo" id="periodo">
       <button data-dias="1" aria-pressed="false">24 h</button>
       <button data-dias="3" aria-pressed="true">3 días</button>
@@ -258,6 +263,7 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
       <div class="grupo"><h3>Agenda <small id="agendaHoyN"></small></h3><div id="agendaHoy"><div class="cargando">Cargando…</div></div></div>
       <div class="grupo"><h3>Lo más relevante <small>últimas horas</small></h3><ul class="lista" id="relevante"></ul></div>
       <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="grupo" id="temasHoyG"><h3>Temas que sigo <small>solo en tu navegador</small></h3><div id="temasHoy"></div></div>
         <div class="grupo"><h3>Próximos 7 días <small>pulsa un día</small></h3><div class="semana" id="semana"></div></div>
         <div class="grupo"><h3>Para seguir <small>plazos, obras, previstos</small></h3><div id="seguir"></div></div>
         <div class="grupo"><h3>Sucesos y tribunales <small>parte del día</small></h3><div id="sucesosHoy"></div></div>
@@ -327,6 +333,11 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
     <div class="rejilla" id="ideas"></div>
   </section>
 
+  <section class="panel" id="p-archivo" hidden>
+    <p class="intro">Resultados en el archivo: todo lo que ha recogido el monitor, mes a mes (salvo teletipos e ideas). <a href="#hoy">Volver</a></p>
+    <div class="grupo"><h2 id="archivoTit">Archivo</h2><ul class="lista" id="archivoRes"></ul></div>
+  </section>
+
   <section class="panel" id="p-fuentes" hidden>
     <div class="dos">
       <div class="grupo"><h2>Estado de la última lectura <small id="horaLectura"></small></h2><div id="tablaFuentes"></div></div>
@@ -381,7 +392,7 @@ const st = {
   pestana: (location.hash || "#hoy").slice(1), tema: null, cuadrilla: null,
   guardados: mem.get("guardados", {}), abiertos: new Set(), expandidos: new Set(),
   mes: null, diaSel: null, cats: mem.get("cats", {institucional: true, pueblos: true, asociaciones: true, cultura: true, efemerides: true, otros: true}),
-  soloSeguir: false
+  soloSeguir: false, temas: mem.get("temas", [])
 };
 
 // ---------- fechas
@@ -437,6 +448,7 @@ function estrella(o) {
 function chips(it, {fuente = false, muni = true} = {}) {
   const c = [];
   if (esNuevo(it)) c.push(`<span class="chip nuevo">NUEVO</span>`);
+  const tm = temaDe(it); if (tm) c.push(`<span class="chip sigo" title="Es uno de tus temas">◆ ${esc(tm)}</span>`);
   if (fuente) c.push(`<span>${esc(nombreF(it.fuente))}</span>`);
   c.push(`<span>${esc(cuando(it.fecha || it.visto))}</span>`);
   if (muni && (it.municipios || []).length && !(it.municipios.length === 1 && it.municipios[0] === "Vitoria-Gasteiz" && esLocal(it.fuente)))
@@ -520,6 +532,30 @@ function eventoHTML(e, k) {
 }
 
 // ---------- HOY
+// ---------- temas que sigo (cada periodista los suyos, guardados en su navegador)
+function temaDe(it) {
+  if (!st.temas.length) return null;
+  const t = textoBusca(it);
+  return st.temas.find(w => norm(w).split(/\s+/).every(p => t.includes(p))) || null;
+}
+function pintaTemas() {
+  const d = st.d, lim = new Date(new Date(d.actualizado).getTime() - 7 * 864e5);
+  const hits = st.temas.length ? d.items.filter(i => ref(i) >= lim && temaDe(i)).sort((a, b) => ref(b) - ref(a)) : [];
+  $("#temasHoy").innerHTML = `<form class="temas-form" id="formTema"><input id="nuevoTema" placeholder="Añade un tema: tranvía Salburua, Michelin, BEI…" maxlength="60"><button>Seguir</button></form>
+    <div class="temas-chips">${st.temas.map(w => `<span class="chip sigo">${esc(w)} <button data-quitatema="${esc(w)}" title="Dejar de seguir">×</button></span>`).join("") || `<span class="vacio" style="padding:0">Apunta palabras y te marcaremos todo lo que aparezca sobre ellas, en cualquier fuente.</span>`}</div>
+    ${hits.length ? `<ul class="lista">${hits.slice(0, 6).map(i => elemento(i, {fuente: true, sinResumen: true})).join("")}</ul>` : (st.temas.length ? `<div class="vacio">Nada sobre tus temas en los últimos 7 días.</div>` : "")}`;
+}
+document.addEventListener("submit", ev => {
+  if (ev.target.id !== "formTema") return;
+  ev.preventDefault();
+  const w = $("#nuevoTema").value.trim();
+  if (w && !st.temas.some(x => norm(x) === norm(w))) { st.temas.push(w); mem.set("temas", st.temas); pinta(); }
+});
+document.addEventListener("click", ev => {
+  const b = ev.target.closest("[data-quitatema]"); if (!b) return;
+  st.temas = st.temas.filter(x => x !== b.dataset.quitatema); mem.set("temas", st.temas); pinta();
+});
+
 function pintaHoy() {
   const d = st.d, k = hoyK(), kM = masDias(k, 1), evs = d.calendario.filter(casaQ);
   $("#hoyFecha").textContent = cap(fDia.format(new Date()));
@@ -796,7 +832,7 @@ function pinta() {
   const n = {instituciones: pintaInstituciones(), pueblos: pintaPueblos(), boletines: pintaBoletines(),
              asociaciones: pintaAsociaciones(), sucesos: pintaSucesos(), teletipos: pintaTeletipos(), ideas: pintaIdeas()};
   Object.entries(n).forEach(([k, v]) => { const e = $("#n-" + k); if (e) e.textContent = v; });
-  pintaHoy(); pintaBuzon(); pintaCalendario(); pintaFuentes(); pintaEstado(); pintaGuardados();
+  pintaHoy(); pintaTemas(); pintaBuzon(); pintaCalendario(); pintaFuentes(); pintaEstado(); pintaGuardados();
 }
 
 // ---------- navegación
@@ -812,7 +848,29 @@ $("#pestanas").addEventListener("click", e => { const b = e.target.closest("butt
 window.addEventListener("hashchange", () => muestra(location.hash.slice(1)));
 
 let tq;
-$("#q").addEventListener("input", e => { clearTimeout(tq); tq = setTimeout(() => { st.q = e.target.value.trim(); pinta(); }, 160); });
+$("#q").addEventListener("input", e => { clearTimeout(tq); tq = setTimeout(() => { st.q = e.target.value.trim(); $("#btnArchivo").hidden = st.q.length < 3; pinta(); if (st.pestana === "archivo") buscaArchivo(); }, 160); });
+// ---------- archivo de meses
+const archivoCache = {};
+async function buscaArchivo() {
+  const q = norm(st.q).split(/\s+/).filter(Boolean);
+  $("#archivoTit").textContent = `Buscando «${st.q}» en el archivo…`; $("#archivoRes").innerHTML = "";
+  try {
+    if (!archivoCache.indice) archivoCache.indice = await (await fetch("archivo/indice.json?t=" + Date.now(), {cache: "no-store"})).json();
+    const res = [];
+    for (const mes of archivoCache.indice.meses || []) {
+      if (!archivoCache[mes]) archivoCache[mes] = (await (await fetch(`archivo/${mes}.json`)).json()).items || [];
+      for (const x of archivoCache[mes]) {
+        const t = norm([x.t, (x.m || []).join(" "), nombreF(x.fu)].join(" "));
+        if (q.every(p => t.includes(p))) res.push(x);
+      }
+      if (res.length > 300) break;
+    }
+    $("#archivoTit").innerHTML = `${res.length > 300 ? "Más de 300" : res.length} resultados para «${esc(st.q)}» <small>en el archivo</small>`;
+    $("#archivoRes").innerHTML = res.slice(0, 300).map(x => `<li class="el"><a class="tit" href="${esc(x.e)}" target="_blank" rel="noopener">${esc(x.t)}</a>
+      <div class="meta"><span>${esc(fF.format(new Date(x.f + "T12:00:00Z")))}</span><span>${esc(nombreF(x.fu))}</span>${(x.m || []).map(m => `<span class="chip muni">${esc(m)}</span>`).join("")}</div></li>`).join("") || `<li class="vacio">Nada en el archivo.</li>`;
+  } catch (e) { $("#archivoTit").textContent = "El archivo aún no está disponible."; }
+}
+$("#btnArchivo").addEventListener("click", () => { location.hash = "archivo"; muestra("archivo"); buscaArchivo(); });
 $$("#periodo button").forEach(b => {
   b.setAttribute("aria-pressed", +b.dataset.dias === st.dias);
   b.addEventListener("click", () => { st.dias = +b.dataset.dias; mem.set("dias", st.dias); $$("#periodo button").forEach(x => x.setAttribute("aria-pressed", x === b)); pinta(); });

@@ -954,6 +954,32 @@ def guarda_json(ruta: Path, datos) -> None:
 
 
 # ---------------------------------------------------------------- principal
+ARCHIVO = RAIZ / "docs" / "archivo"
+
+
+def archiva(items_hist: dict, cfg_f: dict) -> None:
+    """Archivo mensual (docs/archivo/AAAA-MM.json) para buscar más allá de las tres semanas del histórico.
+    Guarda lo justo para encontrar algo: título, enlace, fecha, sección, fuente y municipios."""
+    por_mes: dict[str, dict] = {}
+    for it in items_hist.values():
+        if it["seccion"] in ("buzon", "ideas", "teletipos") or cfg_f.get(it["fuente"], {}).get("solo_calendario"):
+            continue
+        f, v = (it.get("fecha") or "")[:10], (it.get("visto") or "")[:10]
+        if not f or (v and (f > v or f < (date.fromisoformat(v) - timedelta(days=60)).isoformat())):
+            f = v                                     # fechas viejas (documentos antiguos): cuenta cuando apareció
+        if len(f) < 7:
+            continue
+        mes = f[:7]
+        if mes not in por_mes:
+            por_mes[mes] = {x["id"]: x for x in carga_json(ARCHIVO / f"{mes}.json", {"items": []}).get("items", [])}
+        por_mes[mes][it["id"]] = {"id": it["id"], "t": it.get("titulo_claro") or it["titulo"], "e": it["enlace"], "f": f,
+                                 "s": it["seccion"], "fu": it["fuente"], "m": it.get("municipios", [])[:3]}
+    for mes, d in por_mes.items():
+        guarda_json(ARCHIVO / f"{mes}.json", {"mes": mes, "items": sorted(d.values(), key=lambda x: x["f"], reverse=True)})
+    meses = sorted({p.stem for p in ARCHIVO.glob("*.json") if re.match(r"\d{4}-\d{2}$", p.stem)}, reverse=True)
+    guarda_json(ARCHIVO / "indice.json", {"meses": meses})
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--fixtures", type=Path)
@@ -1224,6 +1250,7 @@ def main() -> int:
         "buzon": buzon,
         "calendario": cal,
     })
+    archiva(items_hist, cfg_f)
     fallos = sum(1 for s in estado if not s["ok"])
     print(f"\n{len(publicados)} elementos · {len(cal)} fechas en calendario · {len(estado) - fallos} fuentes OK · {fallos} con fallo")
     return 1 if estado and fallos == len(estado) else 0
