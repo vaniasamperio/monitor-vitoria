@@ -7,148 +7,195 @@
 <title>Monitor de fuentes · Hoy por Hoy Vitoria</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%231f3a3d'/><circle cx='16' cy='16' r='5' fill='%23e8a33d'/></svg>">
 <style>
-  :root{
-    --papel:#f6f3ec; --tarjeta:#fffdf8; --tinta:#1d2424; --suave:#5e6766; --linea:#e2ddd1;
-    --verde:#1f3a3d; --verde2:#2f5b5f; --ambar:#e8a33d; --ambar-f:#fbefd9; --rojo:#b5442e; --ok:#2e7d4f;
-    --serif: "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-    --sans: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  }
-  *{box-sizing:border-box}
-  html{scroll-padding-top:120px}
-  body{margin:0;background:var(--papel);color:var(--tinta);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
-  a{color:inherit}
-  button{font:inherit;cursor:pointer}
+:root{
+  --papel:#f6f3ec; --tarjeta:#fffdf8; --tinta:#1d2424; --suave:#5e6766; --linea:#e2ddd1; --linea2:#efeadf;
+  --verde:#1f3a3d; --verde2:#2f5b5f; --ambar:#e8a33d; --ambar-f:#fbefd9; --rojo:#b5442e; --ok:#2e7d4f;
+  --c-inst:#2f5b5f; --c-pue:#557a26; --c-aso:#6b4a8a; --c-cul:#b0506f; --c-efe:#c27f0e; --c-conv:#2c5aa0; --c-otros:#7a7f7e;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--papel);color:var(--tinta);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit} button{font:inherit;cursor:pointer}
+.marco{max-width:1240px;margin:0 auto;padding:0 20px}
 
-  /* --- cabecera --- */
-  header.cab{background:var(--verde);color:#f4efe4;padding:18px 0 0}
-  .marco{max-width:1180px;margin:0 auto;padding:0 20px}
-  .cab .fila{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .cab h1{font:600 30px/1.1 var(--serif);margin:0;letter-spacing:-.01em}
-  .cab h1 span{color:var(--ambar)}
-  .cab .sub{font-size:13px;opacity:.8;margin-top:4px;letter-spacing:.02em}
-  .cab .estado{font-size:13px;text-align:right;opacity:.92}
-  .cab .estado b{color:var(--ambar);font-weight:600}
-  .cab .aviso{color:#ffd7cc}
-  nav.pestanas{display:flex;gap:2px;margin-top:16px;overflow-x:auto;scrollbar-width:none}
-  nav.pestanas button{background:transparent;border:0;color:#d9d3c5;padding:10px 16px;border-radius:8px 8px 0 0;white-space:nowrap;font-weight:500}
-  nav.pestanas button:hover{color:#fff;background:rgba(255,255,255,.06)}
-  nav.pestanas button[aria-selected="true"]{background:var(--papel);color:var(--tinta)}
-  nav.pestanas .n{display:inline-block;min-width:20px;padding:0 6px;margin-left:6px;border-radius:10px;background:rgba(255,255,255,.14);font-size:12px;line-height:18px}
-  nav.pestanas button[aria-selected="true"] .n{background:var(--ambar-f);color:#7a4c06}
+/* cabecera */
+header.cab{background:var(--verde);color:#f4efe4;padding:16px 0 0}
+.cab .fila{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.cab h1{font:600 26px/1.1 var(--serif);margin:0}
+.cab h1 span{color:var(--ambar)}
+.cab .sub{font-size:13px;opacity:.78;margin-top:3px}
+.cab .estado{font-size:13px;text-align:right;opacity:.92}
+.cab .estado b{color:var(--ambar)}
+.cab .aviso{color:#ffd7cc}
+nav.pestanas{display:flex;gap:2px;margin-top:14px;overflow-x:auto;scrollbar-width:none}
+nav.pestanas::-webkit-scrollbar{display:none}
+nav.pestanas button{background:transparent;border:0;color:#d9d3c5;padding:9px 14px;border-radius:8px 8px 0 0;white-space:nowrap;font-weight:500}
+nav.pestanas button:hover{color:#fff;background:rgba(255,255,255,.06)}
+nav.pestanas button[aria-selected="true"]{background:var(--papel);color:var(--tinta)}
+nav.pestanas .n{display:inline-block;min-width:20px;padding:0 6px;margin-left:6px;border-radius:10px;background:rgba(255,255,255,.14);font-size:12px;line-height:18px;text-align:center}
+nav.pestanas button[aria-selected="true"] .n{background:var(--ambar-f);color:#7a4c06}
 
-  /* --- barra de filtros --- */
-  .barra{position:sticky;top:0;z-index:5;background:var(--papel);border-bottom:1px solid var(--linea)}
-  .barra .marco{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
-  .buscar{flex:1 1 240px;position:relative}
-  .buscar input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--linea);border-radius:8px;background:var(--tarjeta);font:inherit}
-  .buscar input:focus{outline:2px solid var(--verde2);outline-offset:-1px}
-  .buscar svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.5}
-  .seg{display:inline-flex;border:1px solid var(--linea);border-radius:8px;overflow:hidden;background:var(--tarjeta)}
-  .seg button{border:0;background:transparent;padding:8px 12px;color:var(--suave)}
-  .seg button[aria-pressed="true"]{background:var(--verde);color:#fff}
-  .interruptor{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--suave);user-select:none;cursor:pointer}
-  .interruptor input{accent-color:var(--verde)}
-  .btn{border:1px solid var(--linea);background:var(--tarjeta);padding:8px 12px;border-radius:8px;color:var(--tinta)}
-  .btn:hover{border-color:var(--verde2)}
-  .btn.prim{background:var(--verde);border-color:var(--verde);color:#fff}
-  .btn .n{font-weight:700;color:#7a4c06}
-  .btn.prim .n{color:var(--ambar)}
+/* barra */
+.barra{position:sticky;top:0;z-index:5;background:var(--papel);border-bottom:1px solid var(--linea)}
+.barra .marco{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:9px;padding-bottom:9px}
+.buscar{flex:1 1 240px;position:relative}
+.buscar input{width:100%;padding:8px 12px 8px 34px;border:1px solid var(--linea);border-radius:8px;background:var(--tarjeta);font:inherit}
+.buscar input:focus{outline:2px solid var(--verde2);outline-offset:-1px}
+.buscar svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.5}
+.seg{display:inline-flex;border:1px solid var(--linea);border-radius:8px;overflow:hidden;background:var(--tarjeta)}
+.seg button{border:0;background:transparent;padding:7px 11px;color:var(--suave)}
+.seg button[aria-pressed="true"]{background:var(--verde);color:#fff}
+.interruptor{display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--suave);user-select:none;cursor:pointer}
+.interruptor input{accent-color:var(--verde)}
+.btn{border:1px solid var(--linea);background:var(--tarjeta);padding:7px 12px;border-radius:8px;color:var(--tinta)}
+.btn:hover{border-color:var(--verde2)}
+.btn.prim{background:var(--verde);border-color:var(--verde);color:#fff}
+.btn .n{font-weight:700;color:#7a4c06}
+.btn.prim .n{color:var(--ambar)}
 
-  main{padding:22px 0 60px}
-  .panel[hidden]{display:none}
-  .intro{color:var(--suave);margin:0 0 18px;max-width:760px}
+main{padding:20px 0 60px}
+.panel[hidden]{display:none}
+.intro{color:var(--suave);margin:0 0 16px;max-width:780px}
 
-  /* --- grupos y elementos --- */
-  .rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:18px;align-items:start}
-  .grupo{background:var(--tarjeta);border:1px solid var(--linea);border-radius:12px;overflow:hidden}
-  .grupo>h2{font:600 17px/1.2 var(--serif);margin:0;padding:14px 16px 12px;border-bottom:1px solid var(--linea);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-  .grupo>h2 small{font:500 12px var(--sans);color:var(--suave);white-space:nowrap}
-  .grupo .vacio{padding:16px;color:var(--suave);font-size:14px}
-  .grupo .mas{display:block;width:100%;border:0;border-top:1px solid var(--linea);background:transparent;padding:10px;color:var(--verde2);font-weight:500}
-  ul.lista{list-style:none;margin:0;padding:0}
-  .el{padding:12px 16px;border-bottom:1px solid var(--linea);display:grid;grid-template-columns:1fr auto;gap:4px 10px}
-  .el:last-child{border-bottom:0}
-  .el .tit{font-weight:600;line-height:1.35;text-decoration:none}
-  .el .tit:hover{text-decoration:underline;text-decoration-color:var(--ambar);text-underline-offset:3px}
-  .el .meta{grid-column:1/-1;font-size:12.5px;color:var(--suave);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-  .el .res{grid-column:1/-1;font-size:13.5px;color:#3d4544;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .el.abierto .res{-webkit-line-clamp:unset}
-  .el .res:empty{display:none}
-  .chip{display:inline-block;padding:1px 8px;border-radius:10px;background:#ebe7dc;color:#4b5352;font-size:11.5px;font-weight:500}
-  .chip.alava{background:#dbe8e5;color:var(--verde)}
-  .chip.nuevo{background:var(--ambar);color:#3b2604;font-weight:700;letter-spacing:.03em}
-  .chip.senal{background:#efe3f4;color:#5a2d6e}
-  .estrella{border:0;background:transparent;font-size:18px;line-height:1;color:#b9b2a2;padding:2px 2px 0;align-self:start}
-  .estrella:hover{color:var(--ambar)}
-  .estrella[aria-pressed="true"]{color:var(--ambar)}
-  .el.lejos{opacity:.72}
+/* tarjetas y listas */
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;align-items:start}
+.grupo{background:var(--tarjeta);border:1px solid var(--linea);border-radius:12px;overflow:hidden}
+.grupo>h2,.grupo>h3{font:600 16px/1.25 var(--serif);margin:0;padding:12px 16px 10px;border-bottom:1px solid var(--linea);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.grupo>h2 small,.grupo>h3 small{font:500 12px var(--sans);color:var(--suave);white-space:nowrap}
+.vacio{padding:14px 16px;color:var(--suave);font-size:14px}
+.mas{display:block;width:100%;border:0;border-top:1px solid var(--linea);background:transparent;padding:9px;color:var(--verde2);font-weight:500}
+ul.lista{list-style:none;margin:0;padding:0}
+.el{padding:10px 16px;border-bottom:1px solid var(--linea2);display:grid;grid-template-columns:1fr auto;gap:3px 10px}
+.el:last-child{border-bottom:0}
+.el .tit{font-weight:600;line-height:1.35;text-decoration:none}
+.el .tit:hover{text-decoration:underline;text-decoration-color:var(--ambar);text-underline-offset:3px}
+.el .meta{grid-column:1/-1;font-size:12.5px;color:var(--suave);display:flex;flex-wrap:wrap;gap:5px 7px;align-items:center}
+.el .res{grid-column:1/-1;font-size:13.5px;color:#3d4544;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+.el.abierto .res{-webkit-line-clamp:unset}
+.el .res:empty{display:none}
+.el.rutina .tit{font-weight:500;color:#4b5352}
+.chip{display:inline-block;padding:1px 8px;border-radius:10px;background:#ebe7dc;color:#4b5352;font-size:11.5px;font-weight:500;line-height:18px}
+.chip.alava{background:#dbe8e5;color:var(--verde)}
+.chip.muni{background:#e4ecd6;color:#3c5a18}
+.chip.nuevo{background:var(--ambar);color:#3b2604;font-weight:700;letter-spacing:.03em}
+.chip.senal{background:#efe3f4;color:#5a2d6e}
+.chip.tram{background:#eee;color:#777}
+.chip.seg{background:#f7e0d9;color:var(--rojo)}
+.estrella{border:0;background:transparent;font-size:18px;line-height:1;color:#b9b2a2;padding:2px 2px 0;align-self:start}
+.estrella:hover,.estrella[aria-pressed="true"]{color:var(--ambar)}
+.subt{padding:7px 16px;background:#f3efe5;font:600 12px var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--verde2);border-bottom:1px solid var(--linea2)}
 
-  /* --- agenda --- */
-  .dos{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px;align-items:start}
-  .conv{padding:14px 16px;border-bottom:1px solid var(--linea)}
-  .conv:last-child{border-bottom:0}
-  .conv h3{font:600 15px var(--sans);margin:0 0 6px;display:flex;justify-content:space-between;gap:8px}
-  .conv pre{white-space:pre-wrap;font:13.5px/1.55 var(--sans);margin:0;color:#3d4544}
-  .dia{padding:8px 16px;background:#f1ede3;font:600 13px var(--sans);color:var(--verde);border-bottom:1px solid var(--linea)}
-  .cita{display:grid;grid-template-columns:54px 1fr auto;gap:10px;padding:10px 16px;border-bottom:1px solid var(--linea);align-items:start}
-  .cita .hora{font:600 14px var(--sans);color:var(--verde2);font-variant-numeric:tabular-nums}
-  .cita a{text-decoration:none;font-weight:500}
-  .cita a:hover{text-decoration:underline}
+/* HOY */
+.hoy-cab{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0 0 14px}
+.hoy-cab h2{font:600 28px/1.1 var(--serif);margin:0}
+.efes{display:flex;gap:6px;flex-wrap:wrap}
+.efe{background:var(--ambar-f);color:#6b4204;border-radius:16px;padding:3px 12px;font-size:13px}
+.efe.redondo{background:var(--ambar);color:#2c1c02;font-weight:600}
+.tres{display:grid;grid-template-columns:1.05fr 1.25fr .95fr;gap:16px;align-items:start}
+.cita{display:grid;grid-template-columns:52px 1fr auto;gap:8px;padding:9px 16px;border-bottom:1px solid var(--linea2);align-items:start}
+.cita:last-child{border-bottom:0}
+.cita .hora{font:600 13.5px var(--sans);color:var(--verde2);font-variant-numeric:tabular-nums;padding-top:1px}
+.cita .hora.sin{color:#aaa;font-weight:500}
+.cita a{text-decoration:none;font-weight:600;line-height:1.35}
+.cita a:hover{text-decoration:underline}
+.cita .det{font-size:12.5px;color:var(--suave);margin-top:2px}
+.punto{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.semana{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:12px 14px}
+.semana button{border:1px solid var(--linea);background:#fff;border-radius:8px;padding:6px 2px;text-align:center;font-size:12px;color:var(--suave);line-height:1.25}
+.semana button b{display:block;font-size:16px;color:var(--tinta)}
+.semana button .barras{display:flex;justify-content:center;gap:2px;margin-top:4px;min-height:6px}
+.semana button .barras i{width:6px;height:6px;border-radius:50%}
+.semana button.hoy{border-color:var(--ambar);box-shadow:inset 0 0 0 1px var(--ambar)}
+.contadores{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.contador{flex:1 1 150px;background:var(--tarjeta);border:1px solid var(--linea);border-radius:10px;padding:10px 14px;text-align:left}
+.contador b{display:block;font:600 22px var(--serif)}
+.contador span{font-size:13px;color:var(--suave)}
+.contador:hover{border-color:var(--verde2)}
 
-  /* --- ideas --- */
-  .filtros{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
-  .filtros button{border:1px solid var(--linea);background:var(--tarjeta);border-radius:16px;padding:4px 12px;font-size:13px;color:var(--suave)}
-  .filtros button[aria-pressed="true"]{background:var(--verde);border-color:var(--verde);color:#fff}
-  .idea{background:var(--tarjeta);border:1px solid var(--linea);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
-  .idea .cabeza{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-  .idea .tit{font:600 17px/1.3 var(--serif);text-decoration:none}
-  .idea .tit:hover{text-decoration:underline;text-decoration-color:var(--ambar)}
-  .idea .meta{font-size:12.5px;color:var(--suave);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-  .idea .res{font-size:13.5px;color:#3d4544;margin:0}
-  .vitoria{background:var(--ambar-f);border-radius:8px;padding:10px 12px;font-size:13.5px}
-  .vitoria b{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#7a4c06;margin-bottom:4px}
-  .vitoria ul{margin:4px 0 0;padding-left:18px}
-  .puntos{font:700 12px var(--sans);color:var(--verde);background:#dbe8e5;border-radius:6px;padding:2px 7px;white-space:nowrap}
+/* CALENDARIO */
+.cal-cab{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.cal-cab h2{font:600 24px var(--serif);margin:0 8px 0 0;min-width:200px}
+.leyenda{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+.leyenda button{border:1px solid var(--linea);background:var(--tarjeta);border-radius:16px;padding:3px 11px 3px 8px;font-size:12.5px;color:var(--suave)}
+.leyenda button[aria-pressed="false"]{opacity:.45;text-decoration:line-through}
+.cal-cuerpo{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start}
+.mes{background:var(--tarjeta);border:1px solid var(--linea);border-radius:12px;overflow:hidden}
+.mes .dsem{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));background:#f1ede3;border-bottom:1px solid var(--linea)}
+.mes .dsem div{padding:6px 8px;font-size:12px;font-weight:600;color:var(--suave);text-transform:uppercase;letter-spacing:.04em}
+.mes .dias{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.dia{min-width:0;min-height:112px;border-right:1px solid var(--linea2);border-bottom:1px solid var(--linea2);padding:5px 6px 6px;cursor:pointer;display:flex;flex-direction:column;gap:2px;background:#fff;text-align:left;border-top:0;border-left:0;font:inherit;color:inherit}
+.dia:nth-child(7n){border-right:0}
+.dia.fuera{background:#faf8f3;color:#b3ada2}
+.dia.finde{background:#fcfaf5}
+.dia:hover{background:#fbf6ea}
+.dia.sel{box-shadow:inset 0 0 0 2px var(--verde2)}
+.dia .num{font-weight:700;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+.dia.hoy .num span{background:var(--ambar);color:#2c1c02;border-radius:10px;padding:0 7px}
+.dia .ln{font-size:11.5px;line-height:1.25;padding:1px 4px 1px 6px;border-left:3px solid;border-radius:2px;background:#f7f5ef;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dia .ln.seg{background:#fbece7}
+.dia .ln.red{background:var(--ambar-f);font-weight:600}
+.dia .plus{font-size:11px;color:var(--suave);padding-left:4px}
+.detalle{position:sticky;top:66px;max-height:calc(100vh - 86px);overflow:auto}
+.detalle .evento{padding:10px 16px;border-bottom:1px solid var(--linea2)}
+.detalle .evento:last-child{border-bottom:0}
+.detalle .evento .t{display:flex;justify-content:space-between;gap:8px}
+.detalle .evento a{font-weight:600;text-decoration:none;line-height:1.35}
+.detalle .evento a:hover{text-decoration:underline}
+.detalle .evento .fr{font-size:13px;color:#3d4544;margin-top:3px}
+.detalle .evento .meta{font-size:12px;color:var(--suave);margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.etq{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 
-  /* --- fuentes --- */
-  table{width:100%;border-collapse:collapse;font-size:14px}
-  th,td{text-align:left;padding:9px 16px;border-bottom:1px solid var(--linea);vertical-align:top}
-  th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--suave);font-weight:600}
-  .ok{color:var(--ok);font-weight:600}.mal{color:var(--rojo);font-weight:600}
-  .err{font-size:12px;color:var(--suave);word-break:break-word}
-  .ayuda{background:var(--tarjeta);border:1px solid var(--linea);border-radius:12px;padding:16px 18px}
-  .ayuda h3{font:600 16px var(--serif);margin:0 0 8px}
-  .ayuda ol{margin:0;padding-left:20px}
-  .ayuda li{margin:4px 0}
-  code{background:#ece8dd;padding:1px 5px;border-radius:4px;font-size:13px}
+/* ideas */
+.filtros{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.filtros button{border:1px solid var(--linea);background:var(--tarjeta);border-radius:16px;padding:4px 12px;font-size:13px;color:var(--suave)}
+.filtros button[aria-pressed="true"]{background:var(--verde);border-color:var(--verde);color:#fff}
+.idea{background:var(--tarjeta);border:1px solid var(--linea);border-radius:12px;padding:15px 16px;display:flex;flex-direction:column;gap:8px}
+.idea .cabeza{display:flex;justify-content:space-between;gap:10px}
+.idea .tit{font:600 17px/1.3 var(--serif);text-decoration:none}
+.idea .tit:hover{text-decoration:underline;text-decoration-color:var(--ambar)}
+.idea .meta{font-size:12.5px;color:var(--suave);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.idea .res{font-size:13.5px;color:#3d4544;margin:0}
+.vitoria{background:var(--ambar-f);border-radius:8px;padding:10px 12px;font-size:13.5px}
+.vitoria b{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#7a4c06;margin-bottom:4px}
+.vitoria ul{margin:4px 0 0;padding-left:18px}
 
-  /* --- cajón de guardados --- */
-  .cajon{position:fixed;inset:0 0 0 auto;width:min(440px,100%);background:var(--tarjeta);box-shadow:-10px 0 40px rgba(0,0,0,.18);transform:translateX(105%);transition:transform .22s ease;z-index:20;display:flex;flex-direction:column}
-  .cajon.abierto{transform:none}
-  .cajon header{padding:16px 18px;border-bottom:1px solid var(--linea);display:flex;justify-content:space-between;align-items:center}
-  .cajon h2{font:600 19px var(--serif);margin:0}
-  .cajon .cuerpo{flex:1;overflow:auto}
-  .cajon footer{padding:12px 18px;border-top:1px solid var(--linea);display:flex;gap:8px;flex-wrap:wrap}
-  .velo{position:fixed;inset:0;background:rgba(20,30,30,.25);z-index:15;display:none}
-  .velo.abierto{display:block}
-  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:10px 16px;border-radius:8px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:30}
-  .toast.si{opacity:1}
+/* fuentes */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:8px 14px;border-bottom:1px solid var(--linea2);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--suave);font-weight:600}
+.ok{color:var(--ok);font-weight:600}.mal{color:var(--rojo);font-weight:600}
+.err{font-size:12px;color:var(--suave);word-break:break-word}
+.ayuda{background:var(--tarjeta);border:1px solid var(--linea);border-radius:12px;padding:15px 18px}
+.ayuda h3{font:600 16px var(--serif);margin:0 0 8px}
+.ayuda ol{margin:0;padding-left:20px}.ayuda li{margin:4px 0}
+.dos{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;align-items:start}
 
-  .cargando{padding:40px;text-align:center;color:var(--suave)}
-  footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 30px}
+/* cajón */
+.cajon{position:fixed;inset:0 0 0 auto;width:min(440px,100%);background:var(--tarjeta);box-shadow:-10px 0 40px rgba(0,0,0,.18);transform:translateX(105%);transition:transform .22s ease;z-index:20;display:flex;flex-direction:column}
+.cajon.abierto{transform:none}
+.cajon header{padding:16px 18px;border-bottom:1px solid var(--linea);display:flex;justify-content:space-between;align-items:center}
+.cajon h2{font:600 19px var(--serif);margin:0}
+.cajon .cuerpo{flex:1;overflow:auto}
+.cajon footer{padding:12px 18px;border-top:1px solid var(--linea);display:flex;gap:8px;flex-wrap:wrap}
+.velo{position:fixed;inset:0;background:rgba(20,30,30,.25);z-index:15;display:none}
+.velo.abierto{display:block}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:10px 16px;border-radius:8px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:30}
+.toast.si{opacity:1}
+.cargando{padding:40px;text-align:center;color:var(--suave)}
+footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 30px}
 
-  @media (max-width:820px){
-    .dos{grid-template-columns:1fr}
-    .rejilla{grid-template-columns:1fr}
-    .cab h1{font-size:24px}
-    .cab .estado{text-align:left}
-  }
-  @media print{
-    .barra,nav.pestanas,.estrella,.mas,.cajon,.velo{display:none!important}
-    header.cab{background:none;color:#000}
-    .panel[hidden]{display:block!important}
-    .grupo,.idea{break-inside:avoid}
-  }
+@media (max-width:1060px){ .tres{grid-template-columns:1fr 1fr} .tres>:last-child{grid-column:1/-1} .cal-cuerpo{grid-template-columns:1fr} .detalle{position:static;max-height:none} }
+@media (max-width:760px){
+  .tres,.dos,.rejilla{grid-template-columns:1fr} .tres>:last-child{grid-column:auto}
+  .cab h1{font-size:22px} .cab .estado{text-align:left} .hoy-cab h2{font-size:23px}
+  .dia{min-height:58px;padding:4px} .dia .ln{display:none} .dia .plus{display:none}
+  .dia .puntos{display:flex!important;gap:2px;flex-wrap:wrap}
+  .leyenda{margin-left:0}
+}
+.dia .puntos{display:none}
+.dia .puntos i{width:6px;height:6px;border-radius:50%}
+@media print{ .barra,nav.pestanas,.estrella,.mas,.cajon,.velo{display:none!important} header.cab{background:none;color:#000} }
 </style>
 </head>
 <body>
@@ -157,14 +204,18 @@
   <div class="marco">
     <div class="fila">
       <div>
-        <h1>Monitor de fuentes <span>·</span> Vitoria-Gasteiz</h1>
-        <div class="sub">Para la redacción de Hoy por Hoy Vitoria · instituciones, agenda e ideas de temas</div>
+        <h1>Monitor de fuentes <span>·</span> Vitoria y Álava</h1>
+        <div class="sub">Redacción de Hoy por Hoy Vitoria · instituciones, pueblos, boletines, asociaciones, agenda e ideas</div>
       </div>
       <div class="estado" id="estado">Cargando…</div>
     </div>
     <nav class="pestanas" role="tablist" id="pestanas">
-      <button role="tab" data-p="instituciones" aria-selected="true">Instituciones<span class="n" id="n-instituciones"></span></button>
-      <button role="tab" data-p="agenda" aria-selected="false">Agenda y convocatorias<span class="n" id="n-agenda"></span></button>
+      <button role="tab" data-p="hoy" aria-selected="true">Hoy</button>
+      <button role="tab" data-p="calendario" aria-selected="false">Calendario</button>
+      <button role="tab" data-p="instituciones" aria-selected="false">Instituciones<span class="n" id="n-instituciones"></span></button>
+      <button role="tab" data-p="pueblos" aria-selected="false">Pueblos de Álava<span class="n" id="n-pueblos"></span></button>
+      <button role="tab" data-p="boletines" aria-selected="false">Boletines<span class="n" id="n-boletines"></span></button>
+      <button role="tab" data-p="asociaciones" aria-selected="false">Asociaciones<span class="n" id="n-asociaciones"></span></button>
       <button role="tab" data-p="ideas" aria-selected="false">Ideas de temas<span class="n" id="n-ideas"></span></button>
       <button role="tab" data-p="medios" aria-selected="false">Ya publicado<span class="n" id="n-medios"></span></button>
       <button role="tab" data-p="fuentes" aria-selected="false">Fuentes</button>
@@ -176,57 +227,103 @@
   <div class="marco">
     <label class="buscar">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="Buscar: vivienda, Zabalgana, Etxebarria…" autocomplete="off">
+      <input id="q" type="search" placeholder="Buscar en todo: vivienda, Laguardia, Zabalgana, ordenanza…" autocomplete="off">
     </label>
-    <div class="seg" role="group" aria-label="Periodo">
+    <div class="seg" role="group" aria-label="Periodo" id="periodo">
       <button data-dias="1" aria-pressed="false">24 h</button>
       <button data-dias="3" aria-pressed="true">3 días</button>
       <button data-dias="7" aria-pressed="false">7 días</button>
     </div>
-    <label class="interruptor" title="Del Gobierno Vasco y el BOPV, muestra solo lo que menciona Álava">
-      <input type="checkbox" id="soloAlava" checked> Solo lo que toca Álava
+    <label class="interruptor" title="Del Gobierno Vasco, el BOPV y otras fuentes generales, muestra solo lo que menciona Álava">
+      <input type="checkbox" id="soloAlava" checked> Solo Álava
+    </label>
+    <label class="interruptor" title="Notificaciones, nombramientos, correcciones de errores y otros trámites">
+      <input type="checkbox" id="verTramites"> Ver trámites
     </label>
     <button class="btn" id="abrirGuardados">★ Guardados <span class="n" id="nGuardados">0</span></button>
   </div>
 </div>
 
 <main class="marco">
-  <section class="panel" id="p-instituciones">
-    <p class="intro">Lo último que han publicado las instituciones. En <b>ámbar</b>, lo que ha entrado en las últimas 24 horas. Pulsa ★ para guardar un elemento para la reunión.</p>
-    <div class="rejilla" id="instituciones"><div class="cargando">Cargando…</div></div>
+  <!-- HOY -->
+  <section class="panel" id="p-hoy">
+    <div class="hoy-cab"><h2 id="hoyFecha">Hoy</h2><div class="efes" id="hoyEfes"></div></div>
+    <div class="tres">
+      <div class="grupo"><h3>Agenda <small id="agendaHoyN"></small></h3><div id="agendaHoy"><div class="cargando">Cargando…</div></div></div>
+      <div class="grupo"><h3>Lo más relevante <small>últimas horas</small></h3><ul class="lista" id="relevante"></ul></div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="grupo"><h3>Próximos 7 días <small>pulsa un día</small></h3><div class="semana" id="semana"></div></div>
+        <div class="grupo"><h3>Para seguir <small>plazos, obras, previstos</small></h3><div id="seguir"></div></div>
+      </div>
+    </div>
+    <div class="contadores" id="contadores"></div>
   </section>
 
-  <section class="panel" id="p-agenda" hidden>
-    <p class="intro">Convocatorias de prensa del Ayuntamiento (suelen publicarse la tarde anterior) y sesiones de plenos y comisiones de los próximos días.</p>
-    <div class="dos">
-      <div class="grupo"><h2>Convocatorias de prensa <small id="nConv"></small></h2><div id="convocatorias"></div></div>
-      <div class="grupo"><h2>Agenda institucional <small>Ayuntamiento</small></h2><div id="agenda"></div></div>
+  <!-- CALENDARIO -->
+  <section class="panel" id="p-calendario" hidden>
+    <div class="cal-cab">
+      <h2 id="mesTitulo"></h2>
+      <button class="btn" id="mesAnt" aria-label="Mes anterior">←</button>
+      <button class="btn" id="mesHoy">Hoy</button>
+      <button class="btn" id="mesSig" aria-label="Mes siguiente">→</button>
+      <label class="interruptor" style="margin-left:6px"><input type="checkbox" id="soloSeguir"> Solo seguimiento</label>
+      <div class="leyenda" id="leyenda"></div>
     </div>
+    <div class="cal-cuerpo">
+      <div class="mes">
+        <div class="dsem"><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div><div>Dom</div></div>
+        <div class="dias" id="dias"></div>
+      </div>
+      <div class="grupo detalle"><h3 id="detTitulo">Día</h3><div id="detalle"></div></div>
+    </div>
+    <p class="intro" style="margin-top:14px;font-size:13px">Las fechas se sacan automáticamente de las noticias, convocatorias y agendas, por eso cada entrada muestra la frase de la que sale: conviene confirmarla. Las marcadas como <span class="chip seg">seguimiento</span> son plazos, fines de obra o inicios previstos, para preguntar si se han cumplido.</p>
+  </section>
+
+  <section class="panel" id="p-instituciones" hidden>
+    <p class="intro">Ayuntamiento de Vitoria, Diputación, Juntas Generales, Gobierno Vasco y otras instituciones. En <b>ámbar</b>, lo de las últimas 24 horas.</p>
+    <div class="rejilla" id="instituciones"></div>
+  </section>
+
+  <section class="panel" id="p-pueblos" hidden>
+    <p class="intro">Todo lo que se mueve en los municipios de Álava, por cuadrillas: webs municipales, cuadrillas, lo que publican en el BOTHA y lo que otras instituciones dicen de cada pueblo.</p>
+    <div class="filtros" id="filtroCuadrilla"></div>
+    <div class="rejilla" id="pueblos"></div>
+  </section>
+
+  <section class="panel" id="p-boletines" hidden>
+    <p class="intro">BOTHA del día completo, y del BOPV y el BOE lo que afecta a Álava. Los trámites rutinarios (notificaciones, nombramientos, correcciones…) están ocultos: actívalos con “Ver trámites”.</p>
+    <div class="rejilla" id="boletines"></div>
+  </section>
+
+  <section class="panel" id="p-asociaciones" hidden>
+    <p class="intro">Asociaciones vecinales, colectivos y entidades sociales y culturales. Sus actividades con fecha también van al calendario.</p>
+    <div class="rejilla" id="asociaciones"></div>
   </section>
 
   <section class="panel" id="p-ideas" hidden>
-    <p class="intro">Temas de fondo que están contando medios de otros territorios y que se pueden <b>bajar a Vitoria o Álava</b>. Se descartan el fútbol, los sucesos y la política de partidos. Debajo de cada idea, dónde buscar el ángulo local.</p>
+    <p class="intro">Temas de fondo que cuentan medios de otros territorios y que se pueden <b>bajar a Vitoria o Álava</b>. Se descartan el fútbol, los sucesos y la política de partidos.</p>
     <div class="filtros" id="filtrosTemas"></div>
     <div class="rejilla" id="ideas"></div>
   </section>
 
   <section class="panel" id="p-medios" hidden>
-    <p class="intro">Lo que otros medios ya han publicado sobre Vitoria y Álava, para no repetir o para buscar otro ángulo.</p>
+    <p class="intro">Lo que otros medios ya han publicado sobre Vitoria y Álava, para no repetir o buscar otro ángulo.</p>
     <div class="rejilla" id="medios"></div>
   </section>
 
   <section class="panel" id="p-fuentes" hidden>
     <div class="dos">
       <div class="grupo"><h2>Estado de la última lectura <small id="horaLectura"></small></h2><div id="tablaFuentes"></div></div>
-      <div style="display:flex;flex-direction:column;gap:18px">
-        <div class="grupo"><h2>Consulta manual diaria</h2><ul class="lista" id="manuales"></ul></div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="grupo"><h2>Mirar a mano</h2><ul class="lista" id="manuales"></ul></div>
         <div class="ayuda">
-          <h3>Mantenimiento (sin saber programar)</h3>
+          <h3>Mantenimiento (sin programar)</h3>
           <ol>
-            <li><b>Actualizar ahora:</b> <a id="lnkActions" href="#" target="_blank" rel="noopener">abre esta página de GitHub</a> → botón <i>Run workflow</i>. En 2-3 minutos se refresca.</li>
-            <li><b>Añadir o quitar una fuente:</b> <a id="lnkFuentes" href="#" target="_blank" rel="noopener">edita fuentes.yaml</a>, copia un bloque y cambia nombre y dirección del RSS.</li>
-            <li><b>Ajustar las ideas de temas:</b> <a id="lnkTemas" href="#" target="_blank" rel="noopener">edita temas.yaml</a> (palabras clave y pistas locales).</li>
-            <li>Si una fuente sale en <span class="mal">rojo</span> varios días, probablemente ha cambiado su dirección: búscala de nuevo y cámbiala en fuentes.yaml.</li>
+            <li><b>Actualizar ahora:</b> <a id="lnkActions" href="#" target="_blank" rel="noopener">abre GitHub</a> → <i>Run workflow</i>. En 2-3 minutos se refresca.</li>
+            <li><b>Añadir o quitar una fuente:</b> <a id="lnkFuentes" href="#" target="_blank" rel="noopener">edita fuentes.yaml</a>.</li>
+            <li><b>Efemérides y fechas fijas:</b> <a id="lnkEfem" href="#" target="_blank" rel="noopener">edita efemerides.yaml</a>.</li>
+            <li><b>Ideas de temas:</b> <a id="lnkTemas" href="#" target="_blank" rel="noopener">edita temas.yaml</a>.</li>
+            <li>Si una fuente sale en <span class="mal">rojo</span> varios días, probablemente ha cambiado de dirección.</li>
           </ol>
         </div>
       </div>
@@ -234,336 +331,446 @@
   </section>
 </main>
 
-<footer class="pie">Se actualiza solo cada mañana. Los textos y enlaces son de cada fuente original. <span id="pieRepo"></span></footer>
+<footer class="pie">Se actualiza solo cada mañana (y dos veces más los laborables). Los textos y enlaces son de cada fuente original. <span id="pieRepo"></span></footer>
 
 <div class="velo" id="velo"></div>
 <aside class="cajon" id="cajon" aria-label="Guardados">
   <header><h2>Guardados para la reunión</h2><button class="btn" id="cerrarGuardados">Cerrar</button></header>
   <div class="cuerpo"><ul class="lista" id="listaGuardados"></ul></div>
-  <footer>
-    <button class="btn prim" id="copiar">Copiar lista</button>
-    <button class="btn" id="vaciar">Vaciar</button>
-  </footer>
+  <footer><button class="btn prim" id="copiar">Copiar lista</button><button class="btn" id="vaciar">Vaciar</button></footer>
 </aside>
 <div class="toast" id="toast"></div>
 
 <script>
 (() => {
-  "use strict";
-  const TZ = "Europe/Madrid";
-  const $ = (s, r = document) => r.querySelector(s);
-  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const norm = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+"use strict";
+const TZ = "Europe/Madrid";
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+const mem = {
+  get(k, d) { try { const v = localStorage.getItem("mhv:" + k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem("mhv:" + k, JSON.stringify(v)); } catch {} }
+};
+const CATS = {
+  institucional: {n: "Institucional", c: "var(--c-inst)"}, pueblos: {n: "Pueblos", c: "var(--c-pue)"},
+  asociaciones: {n: "Asociaciones", c: "var(--c-aso)"}, cultura: {n: "Cultura y ocio", c: "var(--c-cul)"},
+  efemerides: {n: "Efemérides y días", c: "var(--c-efe)"}, otros: {n: "Otros", c: "var(--c-otros)"}
+};
+const colorEv = e => e.tipo === "convocatoria" ? "var(--c-conv)" : (CATS[e.categoria] || CATS.otros).c;
 
-  // Almacenamiento local (solo para guardados y preferencias de este navegador)
-  const mem = {
-    get(k, d) { try { const v = localStorage.getItem("mhv:" + k); return v ? JSON.parse(v) : d; } catch { return d; } },
-    set(k, v) { try { localStorage.setItem("mhv:" + k, JSON.stringify(v)); } catch {} }
-  };
+const st = {
+  d: null, q: "", dias: mem.get("dias", 3), soloAlava: mem.get("soloAlava", true), tramites: false,
+  pestana: (location.hash || "#hoy").slice(1), tema: null, cuadrilla: null,
+  guardados: mem.get("guardados", {}), abiertos: new Set(), expandidos: new Set(),
+  mes: null, diaSel: null, cats: mem.get("cats", {institucional: true, pueblos: true, asociaciones: true, cultura: true, efemerides: true, otros: true}),
+  soloSeguir: false
+};
 
-  const estado = {
-    datos: null, q: "", dias: mem.get("dias", 3), soloAlava: mem.get("soloAlava", true),
-    pestana: (location.hash || "#instituciones").slice(1), tema: null,
-    guardados: mem.get("guardados", {}), abiertos: new Set()
-  };
+// ---------- fechas
+const fF = new Intl.DateTimeFormat("es-ES", {timeZone: TZ, weekday: "short", day: "numeric", month: "short"});
+const fH = new Intl.DateTimeFormat("es-ES", {timeZone: TZ, hour: "2-digit", minute: "2-digit"});
+const fDia = new Intl.DateTimeFormat("es-ES", {timeZone: TZ, weekday: "long", day: "numeric", month: "long"});
+const fMes = new Intl.DateTimeFormat("es-ES", {month: "long", year: "numeric", timeZone: "UTC"});
+const fDiaC = new Intl.DateTimeFormat("es-ES", {weekday: "long", day: "numeric", month: "long", timeZone: "UTC"});
+const clave = d => new Intl.DateTimeFormat("sv-SE", {timeZone: TZ}).format(d);
+const hoyK = () => clave(new Date());
+const masDias = (k, n) => { const d = new Date(k + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+function cuando(iso) {
+  if (!iso) return "";
+  const d = new Date(iso), h = fH.format(d), sin = h === "00:00";
+  if (clave(d) === hoyK()) return sin ? "hoy" : "hoy " + h;
+  if (clave(d) === masDias(hoyK(), -1)) return sin ? "ayer" : "ayer " + h;
+  return fF.format(d);
+}
+const ref = it => new Date(it.fecha || it.visto);
+const diaLargo = k => cap(fDiaC.format(new Date(k + "T12:00:00Z")));
 
-  // --------- fechas
-  const fFecha = new Intl.DateTimeFormat("es-ES", {timeZone: TZ, weekday: "short", day: "numeric", month: "short"});
-  const fHora = new Intl.DateTimeFormat("es-ES", {timeZone: TZ, hour: "2-digit", minute: "2-digit"});
-  const fDia = new Intl.DateTimeFormat("es-ES", {timeZone: TZ, weekday: "long", day: "numeric", month: "long"});
-  const claveDia = d => new Intl.DateTimeFormat("sv-SE", {timeZone: TZ}).format(d);
-  function cuando(iso) {
-    if (!iso) return "";
-    const d = new Date(iso), hoy = new Date();
-    const ayer = new Date(hoy.getTime() - 864e5);
-    const hora = fHora.format(d), sinHora = hora === "00:00";   // fuentes que solo dan el día
-    if (claveDia(d) === claveDia(hoy)) return sinHora ? "hoy" : "hoy " + hora;
-    if (claveDia(d) === claveDia(ayer)) return sinHora ? "ayer" : "ayer " + hora;
-    return fFecha.format(d);
+// ---------- filtros
+let fuentes = {};
+const nombreF = id => (fuentes[id] || {}).nombre || (id === "efemerides" ? "Efemérides" : id);
+const esLocal = id => (fuentes[id] || {}).local;
+function textoBusca(it) { return norm([it.titulo, it.resumen, it.frase, (it.temas || []).join(" "), (it.municipios || []).join(" "), it.organismo, nombreF(it.fuente)].join(" ")); }
+function casaQ(it) { return !st.q || norm(st.q).split(/\s+/).every(t => textoBusca(it).includes(t)); }
+function pasa(it, {periodo = true, alava = true, tramites = true} = {}) {
+  if (periodo) {
+    const lim = new Date(new Date(st.d.actualizado).getTime() - st.dias * 864e5);
+    if (ref(it) < lim) return false;
   }
-  const ref = it => new Date(it.fecha || it.visto);
+  if (alava && st.soloAlava && !it.alava) return false;
+  if (tramites && !st.tramites && it.rutina) return false;
+  return casaQ(it);
+}
+const esNuevo = it => new Date(it.visto) >= new Date(new Date(st.d.actualizado).getTime() - 24 * 3600e3);
 
-  // --------- filtros comunes
-  function pasa(it, {usarPeriodo = true, usarAlava = true} = {}) {
-    const d = estado.datos;
-    if (usarPeriodo) {
-      const limite = new Date(new Date(d.actualizado).getTime() - estado.dias * 864e5);
-      if (ref(it) < limite) return false;
-    }
-    if (usarAlava && estado.soloAlava && !it.alava) return false;
-    if (estado.q) {
-      const h = norm(it.titulo + " " + (it.resumen || "") + " " + (it.temas || []).join(" ") + " " + nombreFuente(it.fuente));
-      if (!norm(estado.q).split(/\s+/).every(t => h.includes(t))) return false;
-    }
-    return true;
-  }
-  const esNuevo = it => {
-    const d = estado.datos;
-    return new Date(it.visto) >= new Date(new Date(d.actualizado).getTime() - 24 * 3600e3);
-  };
-  let mapaFuentes = {};
-  const nombreFuente = id => mapaFuentes[id] || id;
+// ---------- piezas
+function estrella(o) {
+  const on = !!st.guardados[o.id];
+  return `<button class="estrella" data-guardar="${esc(o.id)}" aria-pressed="${on}" title="${on ? "Quitar" : "Guardar para la reunión"}">${on ? "★" : "☆"}</button>`;
+}
+function chips(it, {fuente = false, muni = true} = {}) {
+  const c = [];
+  if (esNuevo(it)) c.push(`<span class="chip nuevo">NUEVO</span>`);
+  if (fuente) c.push(`<span>${esc(nombreF(it.fuente))}</span>`);
+  c.push(`<span>${esc(cuando(it.fecha || it.visto))}</span>`);
+  if (muni && (it.municipios || []).length && !(it.municipios.length === 1 && it.municipios[0] === "Vitoria-Gasteiz" && esLocal(it.fuente)))
+    it.municipios.slice(0, 2).forEach(m => c.push(`<span class="chip muni">${esc(m)}</span>`));
+  else if (it.alava && !esLocal(it.fuente)) c.push(`<span class="chip alava">Álava</span>`);
+  if (it.rutina) c.push(`<span class="chip tram">trámite</span>`);
+  (it.temas || []).slice(0, 2).forEach(t => c.push(`<span class="chip">${esc(t)}</span>`));
+  return c.join("");
+}
+function elemento(it, op = {}) {
+  return `<li class="el${st.abiertos.has(it.id) ? " abierto" : ""}${it.rutina ? " rutina" : ""}">
+    <a class="tit" href="${esc(it.enlace)}" target="_blank" rel="noopener">${esc(it.titulo)}</a>${estrella(it)}
+    <div class="meta">${chips(it, op)}</div>
+    <div class="res" data-abrir="${esc(it.id)}">${esc(op.sinResumen ? "" : (it.resumen || ""))}</div></li>`;
+}
+const LIM = 6;
+function grupo(id, titulo, lista, {orden = "fecha", op = {}, sub = "", vacio = "Nada en este periodo."} = {}) {
+  if (orden === "rel") lista.sort((a, b) => (b.relevancia || 0) - (a.relevancia || 0) || ref(b) - ref(a));
+  else lista.sort((a, b) => ref(b) - ref(a));
+  const nuevos = lista.filter(esNuevo).length;
+  const ver = st.expandidos.has(id) ? lista : lista.slice(0, LIM);
+  const pie = lista.length > LIM ? `<button class="mas" data-expandir="${esc(id)}">${st.expandidos.has(id) ? "Ver menos" : `Ver ${lista.length - LIM} más`}</button>` : "";
+  return `<div class="grupo"><h2>${esc(titulo)}<small>${sub || lista.length}${nuevos ? ` · <b style="color:#7a4c06">${nuevos} ${nuevos === 1 ? "nuevo" : "nuevos"}</b>` : ""}</small></h2>
+    ${lista.length ? `<ul class="lista">${ver.map(i => elemento(i, op)).join("")}</ul>${pie}` : `<div class="vacio">${vacio}</div>`}</div>`;
+}
+function porFuente(seccion, opPasa = {}) {
+  const d = st.d, orden = d.fuentes.filter(f => f.seccion === seccion);
+  const items = d.items.filter(i => i.seccion === seccion && pasa(i, opPasa));
+  const html = orden.map(f => {
+    const l = items.filter(i => i.fuente === f.id);
+    if (!f.ok && !l.length) return "";
+    if (!l.length && st.q) return "";
+    return grupo(f.id, f.nombre, l, {vacio: f.ok ? "Nada en este periodo." : '<span class="mal">No se pudo leer en la última actualización.</span>'});
+  }).join("");
+  return {html: html || `<div class="grupo"><div class="vacio">Nada con estos filtros.</div></div>`, n: items.length};
+}
 
-  // --------- piezas
-  function estrella(it) {
-    const on = !!estado.guardados[it.id];
-    return `<button class="estrella" data-guardar="${esc(it.id)}" aria-pressed="${on}" title="${on ? "Quitar de guardados" : "Guardar para la reunión"}">${on ? "★" : "☆"}</button>`;
-  }
-  function chips(it, conFuente) {
-    const c = [];
-    if (esNuevo(it)) c.push(`<span class="chip nuevo">NUEVO</span>`);
-    if (conFuente) c.push(`<span>${esc(nombreFuente(it.fuente))}</span>`);
-    c.push(`<span>${esc(cuando(it.fecha || it.visto))}</span>`);
-    if (it.alava && !esLocal(it.fuente)) c.push(`<span class="chip alava">Álava</span>`);
-    (it.temas || []).slice(0, 2).forEach(t => c.push(`<span class="chip">${esc(t)}</span>`));
-    return c.join("");
-  }
-  const LOCALES = new Set();
-  const esLocal = id => LOCALES.has(id);
-
-  function elemento(it, conFuente = false) {
-    const abierto = estado.abiertos.has(it.id);
-    return `<li class="el${abierto ? " abierto" : ""}" data-id="${esc(it.id)}">
-      <a class="tit" href="${esc(it.enlace)}" target="_blank" rel="noopener">${esc(it.titulo)}</a>${estrella(it)}
-      <div class="meta">${chips(it, conFuente)}</div>
-      <div class="res" data-abrir="${esc(it.id)}" title="Pulsa para ver más">${esc(it.resumen || "")}</div>
-    </li>`;
-  }
-
-  // --------- paneles
-  const LIM = 6;
-  const expandidos = new Set();
-  function pintaGrupos(cont, items, ordenFuentes) {
-    const grupos = {};
-    items.forEach(it => (grupos[it.fuente] ||= []).push(it));
-    const ids = ordenFuentes.filter(id => grupos[id] || estado.datos.fuentes.some(f => f.id === id));
-    if (!ids.length) { cont.innerHTML = `<div class="grupo"><div class="vacio">Nada en este periodo con estos filtros.</div></div>`; return; }
-    cont.innerHTML = ids.map(id => {
-      const lista = (grupos[id] || []).sort((a, b) => ref(b) - ref(a));
-      const info = estado.datos.fuentes.find(f => f.id === id);
-      const nuevos = lista.filter(esNuevo).length;
-      const ver = expandidos.has(id) ? lista : lista.slice(0, LIM);
-      const pie = lista.length > LIM ? `<button class="mas" data-expandir="${esc(id)}">${expandidos.has(id) ? "Ver menos" : `Ver ${lista.length - LIM} más`}</button>` : "";
-      const caida = info && !info.ok ? `<div class="vacio"><span class="mal">No se pudo leer esta fuente en la última actualización.</span></div>` : "";
-      return `<div class="grupo"><h2>${esc(nombreFuente(id))}<small>${lista.length}${nuevos ? ` · <b style="color:#7a4c06">${nuevos} ${nuevos === 1 ? "nuevo" : "nuevos"}</b>` : ""}</small></h2>
-        ${caida}${lista.length ? `<ul class="lista">${ver.map(i => elemento(i)).join("")}</ul>` : (caida ? "" : `<div class="vacio">Nada en este periodo.</div>`)}${pie}</div>`;
-    }).join("");
-  }
-
-  function pintaInstituciones() {
-    const d = estado.datos;
-    const orden = d.fuentes.filter(f => f.seccion === "instituciones").map(f => f.id);
-    const items = d.items.filter(i => i.seccion === "instituciones" && pasa(i));
-    pintaGrupos($("#instituciones"), items, orden);
-    return items.length;
-  }
-
-  function pintaAgenda() {
-    const d = estado.datos;
-    // Convocatorias: las de los últimos días, más recientes arriba
-    const conv = d.items.filter(i => i.tipo === "convocatoria" && pasa(i, {usarAlava: false}))
-      .sort((a, b) => ref(b) - ref(a));
-    $("#nConv").textContent = conv.length ? conv.length + "" : "";
-    $("#convocatorias").innerHTML = conv.length ? conv.map(c => `
-      <div class="conv"><h3><a href="${esc(c.enlace)}" target="_blank" rel="noopener">${esc(c.titulo)}</a>${estrella(c)}</h3>
-      <div class="meta" style="font-size:12.5px;color:var(--suave);margin-bottom:6px">${esNuevo(c) ? '<span class="chip nuevo">NUEVO</span> ' : ""}publicado ${esc(cuando(c.fecha || c.visto))}</div>
-      <pre>${esc(c.resumen)}</pre></div>`).join("") : `<div class="vacio">No hay convocatorias en este periodo.</div>`;
-
-    // Agenda: desde hoy en adelante, agrupada por día
-    const hoy = claveDia(new Date());
-    const ag = d.items.filter(i => i.tipo === "agenda" && i.fecha && claveDia(new Date(i.fecha)) >= hoy && pasa(i, {usarPeriodo: false, usarAlava: false}))
-      .sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-    let html = "", dia = "";
-    ag.forEach(a => {
-      const f = new Date(a.fecha), k = claveDia(f);
-      if (k !== dia) { dia = k; const txt = fDia.format(f); html += `<div class="dia">${k === hoy ? "Hoy · " : ""}${esc(txt.charAt(0).toUpperCase() + txt.slice(1))}</div>`; }
-      html += `<div class="cita"><span class="hora">${esc(fHora.format(f))}</span><a href="${esc(a.enlace)}" target="_blank" rel="noopener">${esc(a.titulo)}</a>${estrella(a)}</div>`;
-    });
-    $("#agenda").innerHTML = html || `<div class="vacio">No hay sesiones convocadas a la vista.</div>`;
-    return conv.length + ag.length;
-  }
-
-  function pintaIdeas() {
-    const d = estado.datos;
-    let ideas = d.items.filter(i => i.seccion === "ideas" && !i.alava && pasa(i, {usarAlava: false}));
-    // filtros por tema
-    const cuenta = {};
-    ideas.forEach(i => (i.temas || []).forEach(t => cuenta[t] = (cuenta[t] || 0) + 1));
-    const temas = Object.keys(cuenta).sort((a, b) => cuenta[b] - cuenta[a]);
-    if (estado.tema && !cuenta[estado.tema]) estado.tema = null;
-    $("#filtrosTemas").innerHTML = `<button data-tema="" aria-pressed="${!estado.tema}">Todos</button>` +
-      temas.map(t => `<button data-tema="${esc(t)}" aria-pressed="${estado.tema === t}">${esc(t)} <span style="opacity:.6">${cuenta[t]}</span></button>`).join("");
-    if (estado.tema) ideas = ideas.filter(i => (i.temas || []).includes(estado.tema));
-    ideas.sort((a, b) => (b.puntos || 0) - (a.puntos || 0) || ref(b) - ref(a));
-
-    $("#ideas").innerHTML = ideas.length ? ideas.map(i => {
-      const pistas = [...new Set((i.temas || []).flatMap(t => (d.pistas[t] || [])))].slice(0, 5);
-      const senales = (i.senales || []).filter(s => s.length > 2).slice(0, 3).map(s => `<span class="chip senal">${esc(s)}</span>`).join("");
-      return `<article class="idea">
-        <div class="cabeza"><a class="tit" href="${esc(i.enlace)}" target="_blank" rel="noopener">${esc(i.titulo)}</a>${estrella(i)}</div>
-        <div class="meta">${esNuevo(i) ? '<span class="chip nuevo">NUEVO</span>' : ""}<span>${esc(nombreFuente(i.fuente))}</span><span>${esc(cuando(i.fecha || i.visto))}</span>
-          ${(i.temas || []).map(t => `<span class="chip">${esc(t)}</span>`).join("")}${senales}</div>
-        ${i.resumen ? `<p class="res">${esc(i.resumen)}</p>` : ""}
-        <div class="vitoria"><b>¿Y en Vitoria?</b>¿Pasa lo mismo aquí? ¿Hay datos de Álava? ¿Quién lo vive en un barrio o un pueblo concreto?
-          ${pistas.length ? `<ul>${pistas.map(p => `<li>${esc(p)}</li>`).join("")}</ul>` : ""}</div>
-      </article>`;
-    }).join("") : `<div class="grupo"><div class="vacio">No hay ideas en este periodo con estos filtros. Prueba con “7 días”.</div></div>`;
-    return ideas.length;
-  }
-
-  function pintaMedios() {
-    const d = estado.datos;
-    // Medios locales + lo que la prensa regional ya ha publicado sobre Álava
-    const conAlava = new Set(d.items.filter(i => i.seccion === "ideas" && i.alava).map(i => i.fuente));
-    const orden = d.fuentes.filter(f => f.seccion === "medios" || conAlava.has(f.id)).map(f => f.id);
-    const items = d.items.filter(i => (i.seccion === "medios" || (i.seccion === "ideas" && i.alava)) && pasa(i, {usarAlava: false}));
-    pintaGrupos($("#medios"), items, orden);
-    return items.length;
-  }
-
-  function pintaFuentes() {
-    const d = estado.datos;
-    $("#horaLectura").textContent = cuando(d.actualizado);
-    $("#tablaFuentes").innerHTML = `<table><thead><tr><th>Fuente</th><th>Estado</th></tr></thead><tbody>` +
-      d.fuentes.map(f => `<tr><td><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.nombre)}</a></td>
-        <td>${f.ok ? `<span class="ok">OK</span> · ${f.leidos} leídos, ${f.nuevos} nuevos` : `<span class="mal">Fallo</span><div class="err">${esc(f.error || "")}</div>`}</td></tr>`).join("") +
-      `</tbody></table>`;
-    $("#manuales").innerHTML = (d.manuales || []).map(m => `<li class="el" style="grid-template-columns:1fr">
-      <a class="tit" href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.nombre)}</a>
-      <div class="res" style="-webkit-line-clamp:unset">${esc(m.nota || "")}</div></li>`).join("");
-  }
-
-  function pintaEstado() {
-    const d = estado.datos;
-    const act = new Date(d.actualizado);
-    const fallos = d.fuentes.filter(f => !f.ok).length;
-    const nuevos = d.items.filter(i => esNuevo(i) && i.seccion !== "ideas").length;
-    const horas = (Date.now() - act) / 3600e3;
-    $("#estado").innerHTML = `Actualizado <b>${esc(cuando(d.actualizado))}</b>` +
-      (horas > 30 ? `<div class="aviso">⚠ Hace más de un día que no se actualiza. Revisa la pestaña Fuentes.</div>` : `<div>${nuevos} novedades en instituciones y agenda</div>`) +
-      (fallos ? `<div class="aviso">${fallos} fuente${fallos > 1 ? "s" : ""} sin leer · ver Fuentes</div>` : "");
-  }
-
-  function pinta() {
-    if (!estado.datos) return;
-    const n = {
-      instituciones: pintaInstituciones(), agenda: pintaAgenda(), ideas: pintaIdeas(), medios: pintaMedios()
-    };
-    Object.entries(n).forEach(([k, v]) => $("#n-" + k).textContent = v);
-    pintaFuentes();
-    pintaEstado();
-    pintaGuardados();
-  }
-
-  // --------- pestañas
-  function muestra(p) {
-    if (!$("#p-" + p)) p = "instituciones";
-    estado.pestana = p;
-    $$("#pestanas button").forEach(b => b.setAttribute("aria-selected", b.dataset.p === p));
-    $$(".panel").forEach(s => s.hidden = s.id !== "p-" + p);
-    history.replaceState(null, "", "#" + p);
-  }
-  $("#pestanas").addEventListener("click", e => { const b = e.target.closest("button[data-p]"); if (b) muestra(b.dataset.p); });
-  window.addEventListener("hashchange", () => muestra(location.hash.slice(1)));
-
-  // --------- controles
-  let t;
-  $("#q").addEventListener("input", e => { clearTimeout(t); t = setTimeout(() => { estado.q = e.target.value.trim(); pinta(); }, 150); });
-  $$(".seg button").forEach(b => {
-    b.setAttribute("aria-pressed", +b.dataset.dias === estado.dias);
-    b.addEventListener("click", () => {
-      estado.dias = +b.dataset.dias; mem.set("dias", estado.dias);
-      $$(".seg button").forEach(x => x.setAttribute("aria-pressed", x === b)); pinta();
-    });
+// ---------- calendario: utilidades
+function eventos() {
+  return st.d.calendario.filter(e => st.cats[e.categoria || "otros"] !== false && (!st.soloSeguir || e.seguimiento) && casaQ(e));
+}
+function eventosDia(k, lista) {
+  const vistos = new Set();
+  return lista.filter(e => {
+    if (e.fecha !== k && e.hasta !== k) return false;
+    const c = norm(e.titulo).slice(0, 60);          // misma cita en dos fuentes: una vez
+    if (vistos.has(c)) return false;
+    vistos.add(c); return true;
   });
-  $("#soloAlava").checked = estado.soloAlava;
-  $("#soloAlava").addEventListener("change", e => { estado.soloAlava = e.target.checked; mem.set("soloAlava", estado.soloAlava); pinta(); });
+}
+const PESO = {efemeride: 0, dia: 1, convocatoria: 2, obras: 3, plazo: 3, previsto: 3, movilizacion: 3, evento: 4, agenda: 5, fecha: 6};
+function ordenaEv(a, b) {
+  return (b.redondo ? 1 : 0) - (a.redondo ? 1 : 0) || (a.hora || "99").localeCompare(b.hora || "99") || (PESO[a.tipo] ?? 9) - (PESO[b.tipo] ?? 9);
+}
+function etiqueta(e) {
+  const t = st.d.tipos_calendario[e.tipo] || e.tipo;
+  if (e.hasta && e.fecha !== e.hasta) return t + (e._fin ? " · último día" : ` · hasta ${fF.format(new Date(e.hasta + "T12:00:00Z"))}`);
+  return t;
+}
+function eventoHTML(e, k) {
+  const fin = e.hasta && k === e.hasta && e.fecha !== k;
+  const pasada = e.seguimiento && (e.hasta || e.fecha) < hoyK();
+  return `<div class="evento"><div class="t"><a href="${esc(e.enlace || "#")}" target="_blank" rel="noopener">${e.hora ? `<b>${esc(e.hora)}</b> · ` : ""}${esc(e.titulo)}</a>${e.origen || e.enlace ? estrella({id: "cal:" + e.id}) : ""}</div>
+    ${e.frase ? `<div class="fr">${esc(e.frase)}</div>` : ""}
+    <div class="meta"><span class="etq" style="color:${colorEv(e)}">${esc(fin ? (st.d.tipos_calendario[e.tipo] || e.tipo) + " · último día" : etiqueta(e))}</span>
+      ${e.seguimiento ? `<span class="chip seg">${pasada ? "¿se ha cumplido?" : "seguimiento"}</span>` : ""}
+      ${(e.municipios || []).filter(m => m !== "Vitoria-Gasteiz").slice(0, 2).map(m => `<span class="chip muni">${esc(m)}</span>`).join("")}
+      ${e.fuente !== "efemerides" ? `<span>${esc(nombreF(e.fuente))}</span>` : ""}</div></div>`;
+}
 
-  document.addEventListener("click", e => {
-    const g = e.target.closest("[data-guardar]");
-    if (g) {
-      const id = g.dataset.guardar, it = estado.datos.items.find(i => i.id === id);
-      if (estado.guardados[id]) delete estado.guardados[id];
-      else if (it) estado.guardados[id] = {id, titulo: it.titulo, enlace: it.enlace, fuente: nombreFuente(it.fuente), fecha: it.fecha || it.visto};
-      mem.set("guardados", estado.guardados); pinta(); return;
-    }
-    const x = e.target.closest("[data-expandir]");
-    if (x) { const id = x.dataset.expandir; expandidos.has(id) ? expandidos.delete(id) : expandidos.add(id); pinta(); return; }
-    const a = e.target.closest("[data-abrir]");
-    if (a) { const id = a.dataset.abrir; estado.abiertos.has(id) ? estado.abiertos.delete(id) : estado.abiertos.add(id); a.closest(".el").classList.toggle("abierto"); return; }
-    const tm = e.target.closest("[data-tema]");
-    if (tm) { estado.tema = tm.dataset.tema || null; pinta(); return; }
-    const q = e.target.closest("[data-quitar]");
-    if (q) { delete estado.guardados[q.dataset.quitar]; mem.set("guardados", estado.guardados); pinta(); }
-  });
+// ---------- HOY
+function pintaHoy() {
+  const d = st.d, k = hoyK(), kM = masDias(k, 1), evs = d.calendario.filter(casaQ);
+  $("#hoyFecha").textContent = cap(fDia.format(new Date()));
+  const efes = eventosDia(k, evs).filter(e => e.tipo === "dia" || e.tipo === "efemeride");
+  $("#hoyEfes").innerHTML = efes.map(e => `<span class="efe${e.redondo ? " redondo" : ""}">${esc(e.titulo)}</span>`).join("");
 
-  // --------- guardados
-  function pintaGuardados() {
-    const g = Object.values(estado.guardados).sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-    $("#nGuardados").textContent = g.length;
-    $("#listaGuardados").innerHTML = g.length ? g.map(x => `<li class="el">
-      <a class="tit" href="${esc(x.enlace)}" target="_blank" rel="noopener">${esc(x.titulo)}</a>
-      <button class="estrella" data-quitar="${esc(x.id)}" aria-pressed="true" title="Quitar">★</button>
-      <div class="meta">${esc(x.fuente)} · ${esc(cuando(x.fecha))}</div></li>`).join("")
-      : `<li class="vacio" style="padding:18px">Pulsa ☆ junto a cualquier noticia, convocatoria o idea para guardarla aquí. Luego “Copiar lista” y la pegas en el correo o el WhatsApp de la reunión.</li>`;
-  }
-  const cajon = $("#cajon"), velo = $("#velo");
-  const abreCajon = v => { cajon.classList.toggle("abierto", v); velo.classList.toggle("abierto", v); };
-  $("#abrirGuardados").onclick = () => abreCajon(true);
-  $("#cerrarGuardados").onclick = velo.onclick = () => abreCajon(false);
-  document.addEventListener("keydown", e => { if (e.key === "Escape") abreCajon(false); });
-  $("#vaciar").onclick = () => { if (confirmaVaciar()) { estado.guardados = {}; mem.set("guardados", {}); pinta(); } };
-  let armado = false;
-  function confirmaVaciar() {   // doble pulsación en vez de diálogo
-    if (armado) { armado = false; $("#vaciar").textContent = "Vaciar"; return true; }
-    armado = true; $("#vaciar").textContent = "Pulsa otra vez para vaciar";
-    setTimeout(() => { armado = false; $("#vaciar").textContent = "Vaciar"; }, 3000); return false;
-  }
-  $("#copiar").onclick = async () => {
-    const g = Object.values(estado.guardados);
-    if (!g.length) return aviso("No hay nada guardado");
-    const txt = "Propuestas para la reunión · " + fDia.format(new Date()) + "\n\n" +
-      g.map(x => `• ${x.titulo} (${x.fuente})\n  ${x.enlace}`).join("\n");
-    try { await navigator.clipboard.writeText(txt); aviso("Lista copiada"); }
-    catch { const ta = document.createElement("textarea"); ta.value = txt; document.body.append(ta); ta.select(); document.execCommand("copy"); ta.remove(); aviso("Lista copiada"); }
+  // agenda hoy y mañana
+  const bloque = (kk, titulo) => {
+    const l = eventosDia(kk, evs).filter(e => !["dia", "efemeride"].includes(e.tipo)).sort(ordenaEv);
+    const cultura = l.filter(e => e.categoria === "cultura" && e.tipo === "agenda");
+    const resto = l.filter(e => !(e.categoria === "cultura" && e.tipo === "agenda"));
+    const filas = resto.map(e => `<div class="cita"><span class="hora${e.hora ? "" : " sin"}">${esc(e.hora || "—")}</span>
+      <div><a href="${esc(e.enlace || "#")}" target="_blank" rel="noopener"><span class="punto" style="background:${colorEv(e)}"></span>${esc(e.titulo)}</a>
+      <div class="det">${esc(e.lugar || e.frase || "")}${e.lugar || e.frase ? " · " : ""}${esc(st.d.tipos_calendario[e.tipo] || "")}${e.seguimiento ? " · seguimiento" : ""}</div></div>${estrella({id: "cal:" + e.id})}</div>`).join("");
+    const cult = cultura.length ? `<div class="cita"><span class="hora sin">+${cultura.length}</span><div><a href="#calendario" data-irdia="${kk}"><span class="punto" style="background:var(--c-cul)"></span>${cultura.length} actividades de la agenda cultural</a><div class="det">Exposiciones, talleres, espectáculos… ver en el calendario</div></div><span></span></div>` : "";
+    return {html: `<div class="subt">${titulo}</div>` + (filas + cult || `<div class="vacio">Sin citas registradas.</div>`), n: l.length};
   };
-  function aviso(m) { const t = $("#toast"); t.textContent = m; t.classList.add("si"); setTimeout(() => t.classList.remove("si"), 1800); }
+  const h = bloque(k, "Hoy"), m = bloque(kM, "Mañana · " + fF.format(new Date(kM + "T12:00:00Z")));
+  $("#agendaHoy").innerHTML = h.html + m.html;
+  $("#agendaHoyN").textContent = `${h.n} hoy · ${m.n} mañana`;
 
-  // --------- enlaces al repositorio (si está en GitHub Pages)
-  function enlacesRepo() {
-    const m = location.hostname.match(/^([^.]+)\.github\.io$/);
-    const repo = location.pathname.split("/").filter(Boolean)[0];
-    if (!m || !repo) { $$("#lnkActions,#lnkFuentes,#lnkTemas").forEach(a => a.removeAttribute("href")); return; }
-    const base = `https://github.com/${m[1]}/${repo}`;
-    $("#lnkActions").href = `${base}/actions/workflows/actualizar.yml`;
-    $("#lnkFuentes").href = `${base}/edit/main/fuentes.yaml`;
-    $("#lnkTemas").href = `${base}/edit/main/temas.yaml`;
-    $("#pieRepo").innerHTML = `<a href="${base}" target="_blank" rel="noopener">Código y configuración</a>`;
-  }
+  // lo más relevante (últimas 30 h, máx. 2 por fuente)
+  const lim = new Date(new Date(d.actualizado).getTime() - 30 * 3600e3);
+  const cand = d.items.filter(i => ["instituciones", "pueblos", "boletines", "asociaciones"].includes(i.seccion) && !i.rutina && i.alava && ref(i) >= lim && casaQ(i))
+    .sort((a, b) => (b.relevancia || 0) - (a.relevancia || 0) || ref(b) - ref(a));
+  const porF = {}, top = [];
+  for (const i of cand) { if ((porF[i.fuente] = (porF[i.fuente] || 0) + 1) <= 2) top.push(i); if (top.length >= 10) break; }
+  $("#relevante").innerHTML = top.length ? top.map(i => elemento(i, {fuente: true})).join("") : `<li class="vacio">Todavía no hay novedades hoy.</li>`;
 
-  // --------- carga
-  async function carga() {
-    try {
-      const r = await fetch("datos.json?t=" + Date.now(), {cache: "no-store"});
-      if (!r.ok) throw new Error(r.status);
-      const d = await r.json();
-      estado.datos = d;
-      mapaFuentes = Object.fromEntries(d.fuentes.map(f => [f.id, f.nombre]));
-      // fuentes "locales": todo lo que publican es de Álava
-      LOCALES.clear();
-      d.fuentes.forEach(f => { if (f.local) LOCALES.add(f.id); });
-      pinta();
-    } catch (e) {
-      $("#estado").innerHTML = `<span class="aviso">No se han podido cargar los datos (${esc(e.message)}).</span>`;
-      $("#instituciones").innerHTML = `<div class="grupo"><div class="vacio">Todavía no hay datos. Si acabas de instalarlo, espera a la primera actualización.</div></div>`;
-    }
+  // próximos 7 días
+  const sem = [];
+  for (let i = 0; i < 7; i++) {
+    const kk = masDias(k, i), l = eventosDia(kk, evs);
+    const cats = [...new Set(l.map(e => e.tipo === "convocatoria" ? "conv" : (e.categoria || "otros")))];
+    const dd = new Date(kk + "T12:00:00Z");
+    sem.push(`<button data-irdia="${kk}" class="${i === 0 ? "hoy" : ""}" title="${l.length} entradas">${esc(new Intl.DateTimeFormat("es-ES", {weekday: "short", timeZone: "UTC"}).format(dd))}<b>${dd.getUTCDate()}</b>${l.length}<div class="barras">${cats.slice(0, 5).map(c => `<i style="background:${c === "conv" ? "var(--c-conv)" : (CATS[c] || CATS.otros).c}"></i>`).join("")}</div></button>`);
   }
-  enlacesRepo();
-  muestra(estado.pestana);
-  carga();
-  // Si la pestaña se queda abierta toda la mañana, se refresca sola cada 30 min
-  setInterval(carga, 30 * 60e3);
+  $("#semana").innerHTML = sem.join("");
+
+  // para seguir: vencen/terminan en los próximos 14 días o hace poco
+  const seg = evs.filter(e => e.seguimiento && (e.hasta || e.fecha) >= masDias(k, -5) && e.fecha <= masDias(k, 14))
+    .sort((a, b) => (a.hasta || a.fecha).localeCompare(b.hasta || b.fecha)).slice(0, 8);
+  $("#seguir").innerHTML = seg.length ? seg.map(e => {
+    const f = e.hasta || e.fecha, pas = f < k;
+    return `<div class="cita"><span class="hora" style="font-size:12px;line-height:1.2">${esc(fF.format(new Date(f + "T12:00:00Z")))}</span>
+      <div><a href="${esc(e.enlace)}" target="_blank" rel="noopener">${esc(e.titulo)}</a><div class="det">${esc(st.d.tipos_calendario[e.tipo] || "")}${pas ? " · <b style='color:var(--rojo)'>¿se ha cumplido?</b>" : ""} · ${esc((e.frase || "").slice(0, 110))}</div></div>${estrella({id: "cal:" + e.id})}</div>`;
+  }).join("") : `<div class="vacio">Nada pendiente estos días.</div>`;
+
+  // contadores
+  const cuenta = s => d.items.filter(i => i.seccion === s && esNuevo(i) && (s === "ideas" || i.alava) && !i.rutina).length;
+  const cs = [["instituciones", "Instituciones"], ["pueblos", "Pueblos de Álava"], ["boletines", "Boletines"], ["asociaciones", "Asociaciones"], ["ideas", "Ideas de temas"]];
+  $("#contadores").innerHTML = cs.map(([s, n]) => `<button class="contador" data-ir="${s}"><b>${s === "pueblos" ? d.items.filter(i => esNuevo(i) && !i.rutina && (i.municipios || []).some(m => m !== "Vitoria-Gasteiz")).length : cuenta(s)}</b><span>${n} · nuevas →</span></button>`).join("");
+}
+
+// ---------- CALENDARIO
+function pintaCalendario() {
+  const d = st.d;
+  if (!st.mes) st.mes = hoyK().slice(0, 7);
+  if (!st.diaSel) st.diaSel = hoyK();
+  const [y, m] = st.mes.split("-").map(Number);
+  $("#mesTitulo").textContent = cap(fMes.format(new Date(Date.UTC(y, m - 1, 15))));
+  $("#leyenda").innerHTML = Object.entries(CATS).filter(([c]) => d.calendario.some(e => (e.categoria || "otros") === c)).map(([c, v]) =>
+    `<button data-cat="${c}" aria-pressed="${st.cats[c] !== false}"><span class="punto" style="background:${v.c}"></span>${v.n}</button>`).join("") +
+    `<button disabled style="cursor:default"><span class="punto" style="background:var(--c-conv)"></span>Convocatorias</button>`;
+  const evs = eventos();
+  const primero = new Date(Date.UTC(y, m - 1, 1));
+  const desplaz = (primero.getUTCDay() + 6) % 7;
+  const inicio = masDias(primero.toISOString().slice(0, 10), -desplaz);
+  const celdas = [];
+  for (let i = 0; i < 42; i++) {
+    const k = masDias(inicio, i);
+    if (i >= 35 && k.slice(0, 7) !== st.mes) break;
+    const l = eventosDia(k, evs).sort(ordenaEv);
+    const cult = l.filter(e => e.categoria === "cultura" && e.tipo === "agenda");
+    const otros = l.filter(e => !(e.categoria === "cultura" && e.tipo === "agenda"));
+    const visibles = otros.slice(0, 3);
+    const resto = otros.length - visibles.length;
+    const dow = (new Date(k + "T12:00:00Z").getUTCDay() + 6) % 7;
+    celdas.push(`<button class="dia${k.slice(0, 7) !== st.mes ? " fuera" : ""}${dow > 4 ? " finde" : ""}${k === hoyK() ? " hoy" : ""}${k === st.diaSel ? " sel" : ""}" data-dia="${k}">
+      <div class="num"><span>${Number(k.slice(8))}</span>${cult.length ? `<small style="color:var(--c-cul);font-weight:600" title="Agenda cultural">♪${cult.length}</small>` : ""}</div>
+      ${visibles.map(e => `<div class="ln${e.seguimiento ? " seg" : ""}${e.redondo ? " red" : ""}" style="border-color:${colorEv(e)}" title="${esc(e.titulo)}">${e.hora ? esc(e.hora) + " " : ""}${esc(e.titulo)}</div>`).join("")}
+      ${resto > 0 ? `<div class="plus">+${resto} más</div>` : ""}
+      <div class="puntos">${l.slice(0, 8).map(e => `<i style="background:${colorEv(e)}"></i>`).join("")}</div></button>`);
+  }
+  $("#dias").innerHTML = celdas.join("");
+  const ld = eventosDia(st.diaSel, evs).sort(ordenaEv);
+  $("#detTitulo").innerHTML = `${esc(diaLargo(st.diaSel))}<small>${ld.length} entradas</small>`;
+  const grupos = [["Efemérides y días señalados", e => ["dia", "efemeride"].includes(e.tipo)],
+                  ["Convocatorias de prensa", e => e.tipo === "convocatoria"],
+                  ["Para seguir", e => e.seguimiento],
+                  ["Actos y citas", e => !["dia", "efemeride", "convocatoria"].includes(e.tipo) && !e.seguimiento && e.categoria !== "cultura"],
+                  ["Agenda cultural", e => e.categoria === "cultura" && !e.seguimiento]];
+  $("#detalle").innerHTML = ld.length ? grupos.map(([t, f]) => {
+    const g = ld.filter(f); return g.length ? `<div class="subt">${t} · ${g.length}</div>` + g.map(e => eventoHTML(e, st.diaSel)).join("") : "";
+  }).join("") : `<div class="vacio">Nada registrado este día.</div>`;
+}
+
+// ---------- secciones
+function pintaInstituciones() {
+  const r = porFuente("instituciones"); $("#instituciones").innerHTML = r.html; return r.n;
+}
+function pintaPueblos() {
+  const d = st.d;
+  const items = d.items.filter(i => i.seccion !== "ideas" && i.seccion !== "medios" && i.seccion !== "agenda" &&
+    ((i.municipios || []).some(m => m !== "Vitoria-Gasteiz") || (i.seccion === "pueblos")) && pasa(i, {alava: false}));
+  const cuads = d.cuadrillas.filter(c => c !== "Vitoria-Gasteiz");
+  const cuenta = c => items.filter(i => i.cuadrilla === c).length;
+  $("#filtroCuadrilla").innerHTML = `<button data-cuad="" aria-pressed="${!st.cuadrilla}">Todas</button>` +
+    cuads.map(c => `<button data-cuad="${esc(c)}" aria-pressed="${st.cuadrilla === c}">${esc(c)} <span style="opacity:.6">${cuenta(c)}</span></button>`).join("");
+  const mostrar = st.cuadrilla ? [st.cuadrilla] : cuads;
+  $("#pueblos").innerHTML = mostrar.map(c => grupo("cuad:" + c, "Cuadrilla de " + c, items.filter(i => i.cuadrilla === c),
+    {orden: "rel", op: {fuente: true}, vacio: "Nada en este periodo."})).join("");
+  return items.length;
+}
+function pintaBoletines() {
+  const d = st.d;
+  const items = d.items.filter(i => i.seccion === "boletines" && pasa(i, {tramites: false}));
+  const tram = items.filter(i => i.rutina && !st.tramites).length;
+  const vis = items.filter(i => st.tramites || !i.rutina);
+  const botha = vis.filter(i => i.fuente === "botha");
+  const secc = [["Diputación y Juntas Generales", i => !/administraci[oó]n local|otras administraciones/i.test(i.bloque || "")],
+                ["Ayuntamientos, cuadrillas y concejos", i => /administraci[oó]n local/i.test(i.bloque || "")],
+                ["Otras administraciones", i => /otras administraciones/i.test(i.bloque || "")]];
+  let html = secc.map(([t, f]) => grupo("botha:" + t, "BOTHA · " + t, botha.filter(f), {orden: "rel", op: {sinResumen: false}})).join("");
+  html += grupo("bopv", "BOPV · lo que afecta a Álava", vis.filter(i => i.fuente === "bopv" && (i.alava || !st.soloAlava)), {orden: "rel"});
+  html += grupo("boe", "BOE · lo que afecta a Álava", vis.filter(i => i.fuente === "boe"), {orden: "rel"});
+  if (tram) html += `<div class="grupo"><div class="vacio">${tram} trámites rutinarios ocultos. <button class="btn" id="verTram2">Mostrarlos</button></div></div>`;
+  const f = d.fuentes.find(x => x.id === "botha");
+  if (f && !f.ok) html = `<div class="grupo"><div class="vacio"><span class="mal">El BOTHA no se pudo leer en la última actualización.</span></div></div>` + html;
+  $("#boletines").innerHTML = html;
+  return vis.length;
+}
+function pintaAsociaciones() { const r = porFuente("asociaciones", {alava: false}); $("#asociaciones").innerHTML = r.html; return r.n; }
+function pintaIdeas() {
+  const d = st.d;
+  let ideas = d.items.filter(i => i.seccion === "ideas" && !i.alava && pasa(i, {alava: false}));
+  const cuenta = {};
+  ideas.forEach(i => (i.temas || []).forEach(t => cuenta[t] = (cuenta[t] || 0) + 1));
+  const temas = Object.keys(cuenta).sort((a, b) => cuenta[b] - cuenta[a]);
+  if (st.tema && !cuenta[st.tema]) st.tema = null;
+  $("#filtrosTemas").innerHTML = `<button data-tema="" aria-pressed="${!st.tema}">Todos</button>` + temas.map(t => `<button data-tema="${esc(t)}" aria-pressed="${st.tema === t}">${esc(t)} <span style="opacity:.6">${cuenta[t]}</span></button>`).join("");
+  if (st.tema) ideas = ideas.filter(i => (i.temas || []).includes(st.tema));
+  ideas.sort((a, b) => (b.puntos || 0) - (a.puntos || 0) || ref(b) - ref(a));
+  $("#ideas").innerHTML = ideas.length ? ideas.map(i => {
+    const pistas = [...new Set((i.temas || []).flatMap(t => d.pistas[t] || []))].slice(0, 5);
+    return `<article class="idea"><div class="cabeza"><a class="tit" href="${esc(i.enlace)}" target="_blank" rel="noopener">${esc(i.titulo)}</a>${estrella(i)}</div>
+      <div class="meta">${esNuevo(i) ? '<span class="chip nuevo">NUEVO</span>' : ""}<span>${esc(nombreF(i.fuente))}</span><span>${esc(cuando(i.fecha || i.visto))}</span>
+      ${(i.temas || []).map(t => `<span class="chip">${esc(t)}</span>`).join("")}${(i.senales || []).filter(s => s.length > 2).slice(0, 3).map(s => `<span class="chip senal">${esc(s)}</span>`).join("")}</div>
+      ${i.resumen ? `<p class="res">${esc(i.resumen)}</p>` : ""}
+      <div class="vitoria"><b>¿Y en Vitoria?</b>¿Pasa aquí? ¿Hay datos de Álava? ¿Quién lo vive en un barrio o un pueblo concreto?${pistas.length ? `<ul>${pistas.map(p => `<li>${esc(p)}</li>`).join("")}</ul>` : ""}</div></article>`;
+  }).join("") : `<div class="grupo"><div class="vacio">No hay ideas con estos filtros. Prueba con “7 días”.</div></div>`;
+  return ideas.length;
+}
+function pintaMedios() {
+  const d = st.d;
+  const fuentesM = d.fuentes.filter(f => f.seccion === "medios" || (f.seccion === "ideas" && d.items.some(i => i.fuente === f.id && i.alava)));
+  const items = d.items.filter(i => (i.seccion === "medios" || (i.seccion === "ideas" && i.alava)) && pasa(i, {alava: false}));
+  $("#medios").innerHTML = fuentesM.map(f => grupo("med:" + f.id, f.nombre, items.filter(i => i.fuente === f.id))).join("");
+  return items.length;
+}
+function pintaFuentes() {
+  const d = st.d;
+  $("#horaLectura").textContent = cuando(d.actualizado);
+  const orden = ["instituciones", "boletines", "pueblos", "asociaciones", "agenda", "medios", "ideas"];
+  const nombres = {instituciones: "Instituciones", boletines: "Boletines", pueblos: "Pueblos de Álava", asociaciones: "Asociaciones", agenda: "Agendas (calendario)", medios: "Medios", ideas: "Ideas de temas"};
+  $("#tablaFuentes").innerHTML = `<table><tbody>` + orden.map(s => {
+    const fs = d.fuentes.filter(f => f.seccion === s); if (!fs.length) return "";
+    return `<tr><th colspan="2">${nombres[s]} · ${fs.filter(f => f.ok).length}/${fs.length}</th></tr>` + fs.map(f => `<tr><td><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.nombre)}</a></td>
+      <td>${f.ok ? `<span class="ok">OK</span> · ${f.leidos} leídos, ${f.nuevos} nuevos` : `<span class="mal">Fallo</span><div class="err">${esc(f.error || "")}</div>`}</td></tr>`).join("");
+  }).join("") + `</tbody></table>`;
+  $("#manuales").innerHTML = (d.manuales || []).map(m => `<li class="el" style="grid-template-columns:1fr"><a class="tit" href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.nombre)}</a><div class="res" style="-webkit-line-clamp:unset">${esc(m.nota || "")}</div></li>`).join("");
+}
+function pintaEstado() {
+  const d = st.d, horas = (Date.now() - new Date(d.actualizado)) / 3600e3, fallos = d.fuentes.filter(f => !f.ok).length;
+  $("#estado").innerHTML = `Actualizado <b>${esc(cuando(d.actualizado))}</b> · ${d.fuentes.length - fallos}/${d.fuentes.length} fuentes` +
+    (horas > 30 ? `<div class="aviso">⚠ Hace más de un día que no se actualiza.</div>` : "") +
+    (fallos ? `<div class="aviso">${fallos} sin leer · <a href="#fuentes" style="color:inherit">ver Fuentes</a></div>` : "");
+}
+function pinta() {
+  if (!st.d) return;
+  const n = {instituciones: pintaInstituciones(), pueblos: pintaPueblos(), boletines: pintaBoletines(),
+             asociaciones: pintaAsociaciones(), ideas: pintaIdeas(), medios: pintaMedios()};
+  Object.entries(n).forEach(([k, v]) => { const e = $("#n-" + k); if (e) e.textContent = v; });
+  pintaHoy(); pintaCalendario(); pintaFuentes(); pintaEstado(); pintaGuardados();
+}
+
+// ---------- navegación
+function muestra(p) {
+  if (!$("#p-" + p)) p = "hoy";
+  st.pestana = p;
+  $$("#pestanas button").forEach(b => b.setAttribute("aria-selected", b.dataset.p === p));
+  $$(".panel").forEach(s => s.hidden = s.id !== "p-" + p);
+  $(".barra #periodo").style.visibility = ["hoy", "calendario"].includes(p) ? "hidden" : "visible";
+  history.replaceState(null, "", "#" + p);
+}
+$("#pestanas").addEventListener("click", e => { const b = e.target.closest("button[data-p]"); if (b) muestra(b.dataset.p); });
+window.addEventListener("hashchange", () => muestra(location.hash.slice(1)));
+
+let tq;
+$("#q").addEventListener("input", e => { clearTimeout(tq); tq = setTimeout(() => { st.q = e.target.value.trim(); pinta(); }, 160); });
+$$("#periodo button").forEach(b => {
+  b.setAttribute("aria-pressed", +b.dataset.dias === st.dias);
+  b.addEventListener("click", () => { st.dias = +b.dataset.dias; mem.set("dias", st.dias); $$("#periodo button").forEach(x => x.setAttribute("aria-pressed", x === b)); pinta(); });
+});
+$("#soloAlava").checked = st.soloAlava;
+$("#soloAlava").addEventListener("change", e => { st.soloAlava = e.target.checked; mem.set("soloAlava", st.soloAlava); pinta(); });
+$("#verTramites").addEventListener("change", e => { st.tramites = e.target.checked; pinta(); });
+$("#soloSeguir").addEventListener("change", e => { st.soloSeguir = e.target.checked; pintaCalendario(); });
+$("#mesAnt").onclick = () => { const [y, m] = st.mes.split("-").map(Number); const d = new Date(Date.UTC(y, m - 2, 1)); st.mes = d.toISOString().slice(0, 7); pintaCalendario(); };
+$("#mesSig").onclick = () => { const [y, m] = st.mes.split("-").map(Number); const d = new Date(Date.UTC(y, m, 1)); st.mes = d.toISOString().slice(0, 7); pintaCalendario(); };
+$("#mesHoy").onclick = () => { st.mes = hoyK().slice(0, 7); st.diaSel = hoyK(); pintaCalendario(); };
+
+function buscaGuardable(id) {
+  if (id.startsWith("cal:")) {
+    const e = st.d.calendario.find(x => "cal:" + x.id === id);
+    return e && {id, titulo: (e.hora ? e.hora + " · " : "") + e.titulo + " (" + fF.format(new Date(e.fecha + "T12:00:00Z")) + ")", enlace: e.enlace, fuente: nombreF(e.fuente), fecha: e.fecha};
+  }
+  const it = st.d.items.find(i => i.id === id);
+  return it && {id, titulo: it.titulo, enlace: it.enlace, fuente: nombreF(it.fuente), fecha: it.fecha || it.visto};
+}
+document.addEventListener("click", e => {
+  const g = e.target.closest("[data-guardar]");
+  if (g) { const id = g.dataset.guardar; if (st.guardados[id]) delete st.guardados[id]; else { const o = buscaGuardable(id); if (o) st.guardados[id] = o; } mem.set("guardados", st.guardados); pinta(); return; }
+  const x = e.target.closest("[data-expandir]");
+  if (x) { const id = x.dataset.expandir; st.expandidos.has(id) ? st.expandidos.delete(id) : st.expandidos.add(id); pinta(); return; }
+  const a = e.target.closest("[data-abrir]");
+  if (a) { const id = a.dataset.abrir; st.abiertos.has(id) ? st.abiertos.delete(id) : st.abiertos.add(id); a.closest(".el").classList.toggle("abierto"); return; }
+  const tm = e.target.closest("[data-tema]"); if (tm) { st.tema = tm.dataset.tema || null; pinta(); return; }
+  const cu = e.target.closest("[data-cuad]"); if (cu) { st.cuadrilla = cu.dataset.cuad || null; pinta(); return; }
+  const dia = e.target.closest("[data-dia]"); if (dia) { st.diaSel = dia.dataset.dia; pintaCalendario(); if (innerWidth < 1060) $("#detalle").scrollIntoView({behavior: "smooth"}); return; }
+  const ir = e.target.closest("[data-irdia]");
+  if (ir) { e.preventDefault(); st.diaSel = ir.dataset.irdia; st.mes = st.diaSel.slice(0, 7); muestra("calendario"); pintaCalendario(); return; }
+  const irp = e.target.closest("[data-ir]"); if (irp) { muestra(irp.dataset.ir); scrollTo(0, 0); return; }
+  const cat = e.target.closest("[data-cat]"); if (cat) { const c = cat.dataset.cat; st.cats[c] = st.cats[c] === false; mem.set("cats", st.cats); pintaCalendario(); return; }
+  if (e.target.id === "verTram2") { st.tramites = true; $("#verTramites").checked = true; pinta(); return; }
+  const q = e.target.closest("[data-quitar]"); if (q) { delete st.guardados[q.dataset.quitar]; mem.set("guardados", st.guardados); pinta(); }
+});
+
+// ---------- guardados
+function pintaGuardados() {
+  const g = Object.values(st.guardados);
+  $("#nGuardados").textContent = g.length;
+  $("#listaGuardados").innerHTML = g.length ? g.map(x => `<li class="el"><a class="tit" href="${esc(x.enlace)}" target="_blank" rel="noopener">${esc(x.titulo)}</a>
+    <button class="estrella" data-quitar="${esc(x.id)}" aria-pressed="true" title="Quitar">★</button><div class="meta">${esc(x.fuente)}</div></li>`).join("")
+    : `<li class="vacio" style="padding:18px">Pulsa ☆ junto a cualquier noticia, cita o fecha del calendario para guardarla. Luego “Copiar lista” y la pegas en el correo o el WhatsApp de la reunión.</li>`;
+}
+const cajon = $("#cajon"), velo = $("#velo");
+const abre = v => { cajon.classList.toggle("abierto", v); velo.classList.toggle("abierto", v); };
+$("#abrirGuardados").onclick = () => abre(true);
+$("#cerrarGuardados").onclick = velo.onclick = () => abre(false);
+document.addEventListener("keydown", e => { if (e.key === "Escape") abre(false); });
+let armado = false;
+$("#vaciar").onclick = () => {
+  if (!armado) { armado = true; $("#vaciar").textContent = "Pulsa otra vez para vaciar"; setTimeout(() => { armado = false; $("#vaciar").textContent = "Vaciar"; }, 3000); return; }
+  armado = false; $("#vaciar").textContent = "Vaciar"; st.guardados = {}; mem.set("guardados", {}); pinta();
+};
+$("#copiar").onclick = async () => {
+  const g = Object.values(st.guardados);
+  if (!g.length) return aviso("No hay nada guardado");
+  const txt = "Propuestas para la reunión · " + fDia.format(new Date()) + "\n\n" + g.map(x => `• ${x.titulo} (${x.fuente})\n  ${x.enlace}`).join("\n");
+  try { await navigator.clipboard.writeText(txt); } catch { const t = document.createElement("textarea"); t.value = txt; document.body.append(t); t.select(); document.execCommand("copy"); t.remove(); }
+  aviso("Lista copiada");
+};
+function aviso(m) { const t = $("#toast"); t.textContent = m; t.classList.add("si"); setTimeout(() => t.classList.remove("si"), 1800); }
+
+function enlacesRepo() {
+  const m = location.hostname.match(/^([^.]+)\.github\.io$/), repo = location.pathname.split("/").filter(Boolean)[0];
+  if (!m || !repo) return;
+  const base = `https://github.com/${m[1]}/${repo}`;
+  $("#lnkActions").href = `${base}/actions/workflows/actualizar.yml`;
+  $("#lnkFuentes").href = `${base}/edit/main/fuentes.yaml`;
+  $("#lnkEfem").href = `${base}/edit/main/efemerides.yaml`;
+  $("#lnkTemas").href = `${base}/edit/main/temas.yaml`;
+  $("#pieRepo").innerHTML = `<a href="${base}" target="_blank" rel="noopener">Código y configuración</a>`;
+}
+async function carga() {
+  try {
+    const r = await fetch("datos.json?t=" + Date.now(), {cache: "no-store"});
+    if (!r.ok) throw new Error(r.status);
+    st.d = await r.json();
+    fuentes = Object.fromEntries(st.d.fuentes.map(f => [f.id, f]));
+    pinta();
+  } catch (e) {
+    $("#estado").innerHTML = `<span class="aviso">No se han podido cargar los datos (${esc(e.message)}).</span>`;
+  }
+}
+enlacesRepo(); muestra(st.pestana); carga(); setInterval(carga, 30 * 60e3);
 })();
 </script>
 </body>

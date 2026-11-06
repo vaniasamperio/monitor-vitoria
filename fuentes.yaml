@@ -1,178 +1,107 @@
 # ============================================================
 #  FUENTES DEL MONITOR  ·  Hoy por Hoy Vitoria
 # ============================================================
-#  Este archivo se puede editar desde la web de GitHub (icono del lápiz).
-#  Para añadir una fuente, copia un bloque de los de abajo, cámbiale
-#  el "id" (una palabra única, sin espacios), el "nombre" y la "url",
-#  y guarda ("Commit changes"). En la siguiente actualización aparecerá.
+#  Se edita desde la web de GitHub (icono del lápiz ✏️).
+#  Para añadir una fuente: copia un bloque, cambia "id" (único, sin
+#  espacios), "nombre" y "url", y guarda ("Commit changes").
 #
 #  Campos:
-#    id        identificador único, sin espacios ni tildes
-#    nombre    cómo se verá en la página
-#    url       dirección del feed RSS (o de la página, si tipo: html)
-#    tipo      rss  -> un feed RSS/Atom (lo normal)
-#              html -> una página sin RSS; hay que indicar "patron_enlace"
-#    seccion   instituciones | agenda | medios | ideas
-#    local     true  -> todo lo que publica es de Vitoria/Álava
-#              false -> publica de todo Euskadi o de fuera; el programa
-#                       marca solo lo que menciona Álava
-#    activa    false para desactivarla sin borrarla
+#    tipo       rss (lo normal) | html (web sin RSS: pon "patron_enlace")
+#               | liferay (webs municipales de la plataforma foral)
+#               | botha | boe | diputacion (lectores especiales)
+#    seccion    instituciones | pueblos | boletines | asociaciones
+#               | agenda | medios | ideas
+#    local      true  -> todo lo que publica es de Vitoria/Álava
+#    municipio  para webs municipales (nombre como en monitor/run.py)
+#    prioridad  alta | media | baja  (ordena lo más relevante)
+#    fecha_es_evento  true en agendas: la fecha es la del acto
+#    activa     false para desactivarla sin borrarla
+#
+#  El programa respeta el robots.txt de cada web: si una web pide no
+#  ser leída automáticamente, sale en rojo en "Fuentes" y no se lee.
 # ============================================================
 
 fuentes:
 
-  # ---------- INSTITUCIONES ----------
-  - id: ayto-notas
-    nombre: "Ayuntamiento · Notas de prensa"
-    url: "https://blogs.vitoria-gasteiz.org/medios/feed/"
-    tipo: rss
-    seccion: instituciones
-    local: true
+  # =================== INSTITUCIONES ===================
+  - {id: ayto-notas, nombre: "Ayuntamiento de Vitoria · Notas de prensa", url: "https://blogs.vitoria-gasteiz.org/medios/feed/", tipo: rss, seccion: instituciones, local: true, municipio: Vitoria-Gasteiz, prioridad: alta}
+  - {id: ayto-movilidad, nombre: "Ayuntamiento de Vitoria · Avisos de movilidad", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=contenedorCuadroMando&claveTema=&claveArea=1", tipo: rss, seccion: instituciones, local: true, municipio: Vitoria-Gasteiz, prioridad: baja, clave_por_titulo: true}
+  - {id: diputacion, nombre: "Diputación Foral de Álava · Sala de prensa", url: "https://prentsa.araba.eus/es/inicio", tipo: diputacion, seccion: instituciones, local: true, prioridad: alta}
+  - {id: jjgg, nombre: "Juntas Generales de Álava", url: "https://www.jjggalava.eus/es/", tipo: liferay, patron_enlace: "/-/", seccion: instituciones, local: true, prioridad: alta}
+  - {id: irekia, nombre: "Gobierno Vasco · Irekia", url: "https://www.irekia.euskadi.eus/es/news.rss", tipo: rss, seccion: instituciones, local: false}
+  - {id: ararteko, nombre: "Ararteko", url: "https://ararteko.eus/es/rss.xml", tipo: rss, seccion: instituciones, local: false}
+  - {id: euskotren, nombre: "Euskotren (tranvía)", url: "https://www.euskotren.eus/eu/rss.xml", tipo: rss, seccion: instituciones, local: false, prioridad: baja}
 
-  - id: ayto-movilidad
-    nombre: "Ayuntamiento · Avisos de movilidad (TUVISA, obras)"
-    url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=contenedorCuadroMando&claveTema=&claveArea=1"
-    tipo: rss
-    seccion: instituciones
-    local: true
-    clave_por_titulo: true  # este feed repite el mismo aviso varias veces
+  # =================== BOLETINES ===================
+  - {id: botha, nombre: "BOTHA · Boletín Oficial de Álava", url: "https://www.araba.eus/botha/inicio/SGBO5001.aspx", tipo: botha, seccion: boletines, local: true, prioridad: media}
+  - {id: bopv, nombre: "BOPV · Boletín Oficial del País Vasco", url: "https://www.euskadi.eus/bopv2/datos/Ultimo.xml", tipo: rss, seccion: boletines, local: false, max: 120}
+  - {id: boe, nombre: "BOE · lo que afecta a Álava", url: "https://www.boe.es/datosabiertos/api/boe/sumario/{HOY}", tipo: boe, accept: "application/json", seccion: boletines, local: false}
 
-  - id: diputacion
-    nombre: "Diputación Foral de Álava · Sala de prensa"
-    url: "https://prentsa.araba.eus/es/inicio"
-    tipo: html
-    patron_enlace: "/web/arabapress/-/"
-    base: "https://prentsa.araba.eus"
-    seccion: instituciones
-    local: true
+  # =================== PUEBLOS DE ÁLAVA ===================
+  # (además, todo lo que publican los ayuntamientos en el BOTHA aparece
+  #  en la pestaña "Pueblos", agrupado por cuadrilla)
+  - {id: cuadrilla-anana, nombre: "Cuadrilla de Añana", url: "https://www.cuadrilladeanana.eus/feed/", tipo: rss, seccion: pueblos, local: true, cuadrilla: "Añana"}
+  - {id: cuadrilla-llanada, nombre: "Cuadrilla de la Llanada Alavesa", url: "https://www.cuadrillasalvatierra.org/feed.xml", tipo: rss, seccion: pueblos, local: true, cuadrilla: "Llanada Alavesa"}
+  - {id: m-aramaio, nombre: "Ayto. de Aramaio", url: "https://aramaio.eus/feed/", tipo: rss, seccion: pueblos, local: true, municipio: Aramaio}
+  - {id: m-barrundia, nombre: "Ayto. de Barrundia", url: "http://www.barrundia.eus/eu/feed/", tipo: rss, seccion: pueblos, local: true, municipio: Barrundia}
+  - {id: m-bernedo, nombre: "Ayto. de Bernedo", url: "https://www.bernedo.org/feed/", tipo: rss, seccion: pueblos, local: true, municipio: Bernedo}
+  - {id: m-elciego, nombre: "Ayto. de Elciego", url: "https://www.elciego.es/es/rss.xml", tipo: rss, seccion: pueblos, local: true, municipio: Elciego}
+  - {id: m-iruna, nombre: "Ayto. de Iruña de Oca", url: "https://www.irunadeoca.com/feed/", tipo: rss, seccion: pueblos, local: true, municipio: "Iruña de Oca"}
+  - {id: m-lantaron, nombre: "Ayto. de Lantarón", url: "https://aytolantaron.com/feed/", tipo: rss, seccion: pueblos, local: true, municipio: Lantarón}
+  - {id: m-ribera-baja, nombre: "Ayto. de Ribera Baja", url: "https://www.riberabaja.eus/feed/", tipo: rss, seccion: pueblos, local: true, municipio: "Ribera Baja"}
+  - {id: m-valle-arana, nombre: "Ayto. del Valle de Arana", url: "http://www.valledearana.net/feed/", tipo: rss, seccion: pueblos, local: true, municipio: "Valle de Arana"}
+  - {id: m-san-millan, nombre: "Ayto. de San Millán", url: "https://donemiliaga.eus/feed/", tipo: rss, seccion: pueblos, local: true, municipio: "San Millán"}
+  - {id: m-valdegovia, nombre: "Ayto. de Valdegovía", url: "https://www.valdegovia.eus/es/noticias?format=feed&type=rss", tipo: rss, seccion: pueblos, local: true, municipio: Valdegovía}
+  - {id: m-agurain, nombre: "Ayto. de Agurain/Salvatierra", url: "https://agurain.eus/es/", alternativa: "https://agurain.eus/eu/", tipo: liferay, seccion: pueblos, local: true, municipio: "Agurain/Salvatierra"}
+  - {id: m-arratzua, nombre: "Ayto. de Arratzua-Ubarrundia", url: "https://arratzua-ubarrundia.eus/es/", alternativa: "https://arratzua-ubarrundia.eus/eu/", tipo: liferay, seccion: pueblos, local: true, municipio: "Arratzua-Ubarrundia"}
+  - {id: m-iruraiz, nombre: "Ayto. de Iruraiz-Gauna", url: "https://iruraiz-gauna.eus/es/", alternativa: "https://iruraiz-gauna.eus/eu/", tipo: liferay, seccion: pueblos, local: true, municipio: "Iruraiz-Gauna"}
+  - {id: m-lagran, nombre: "Ayto. de Lagrán", url: "https://lagran.eus/es/", alternativa: "https://lagran.eus/eu/", tipo: liferay, seccion: pueblos, local: true, municipio: Lagrán}
+  - {id: m-zambrana, nombre: "Ayto. de Zambrana", url: "https://zambrana.eus/es/", alternativa: "https://zambrana.eus/eu/", tipo: liferay, seccion: pueblos, local: true, municipio: Zambrana}
+  - {id: m-arminon, nombre: "Ayto. de Armiñón", url: "https://arminon.eus/es/", alternativa: "https://arminon.eus/eu/", tipo: liferay, seccion: pueblos, local: true, municipio: Armiñón}
 
-  - id: irekia
-    nombre: "Gobierno Vasco · Irekia"
-    url: "https://www.irekia.euskadi.eus/es/news.rss"
-    tipo: rss
-    seccion: instituciones
-    local: false
+  # =================== ASOCIACIONES Y ENTIDADES ===================
+  - {id: judimendikoak, nombre: "Judimendikoak (AV de Judimendi)", url: "https://judimendikoak.com/feed/", tipo: rss, seccion: asociaciones, local: true, municipio: Vitoria-Gasteiz, prioridad: alta}
+  - {id: bizikleteroak, nombre: "Gasteizko Bizikleteroak", url: "https://bizikleteroak.org/feed/", tipo: rss, seccion: asociaciones, local: true, municipio: Vitoria-Gasteiz}
+  - {id: caritas, nombre: "Cáritas Vitoria", url: "https://www.caritasvitoria.org/feed/", tipo: rss, seccion: asociaciones, local: true}
+  - {id: uaga, nombre: "UAGA (sindicato agrario de Álava)", url: "https://www.uaga.eus/feed/", tipo: rss, seccion: asociaciones, local: true}
+  - {id: diocesis, nombre: "Diócesis de Vitoria", url: "https://diocesisvitoria.org/feed/", tipo: rss, seccion: asociaciones, local: true, prioridad: baja}
+  - {id: fundacion-vital, nombre: "Fundación Vital", url: "https://www.fundacionvital.eus/rss.xml", tipo: rss, seccion: asociaciones, local: true}
+  - {id: gasteiz-kultura, nombre: "Gasteiz Kultura (blog municipal de cultura)", url: "https://gasteizkultura.org/feed/", tipo: rss, seccion: asociaciones, local: true, municipio: Vitoria-Gasteiz, prioridad: baja}
 
-  - id: bopv
-    nombre: "BOPV · Boletín del día"
-    url: "https://www.euskadi.eus/bopv2/datos/Ultimo.xml"
-    tipo: rss
-    seccion: instituciones
-    local: false
+  # =================== AGENDA (van al calendario) ===================
+  - {id: ayto-convocatorias, nombre: "Ayuntamiento · Convocatorias de prensa", url: "https://blogs.vitoria-gasteiz.org/medios/category/convocatorias/feed/", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz}
+  - {id: ayto-agenda, nombre: "Ayuntamiento · Plenos y comisiones", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?accion=calendario&idCalendario=246&idioma=es&claveArea=", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: institucional}
+  - {id: agenda-cultura, nombre: "Ayuntamiento · Agenda de cultura y ocio", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=actividadesCuadroMando&claveTema=&claveArea=38", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: cultura, max: 150}
+  - {id: elkarteak-agenda, nombre: "Elkarteak.org · Agenda de asociaciones", url: "https://elkarteak.org/rss_agenda.php?h=es", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: asociaciones}
 
-  # ---------- AGENDA ----------
-  - id: ayto-convocatorias
-    nombre: "Ayuntamiento · Convocatorias de prensa"
-    url: "https://blogs.vitoria-gasteiz.org/medios/category/convocatorias/feed/"
-    tipo: rss
-    seccion: agenda
-    local: true
+  # =================== YA PUBLICADO (medios de Álava) ===================
+  - {id: gasteizberri, nombre: "Gasteiz Berri", url: "https://gasteizberri.com/feed/", tipo: rss, seccion: medios, local: true}
+  - {id: halabedi, nombre: "Hala Bedi", url: "https://halabedi.eus/feed", tipo: rss, seccion: medios, local: true}
+  # Gasteiz Hoy bloquea las lecturas desde GitHub (error 403).
+  - {id: gasteizhoy, nombre: "Gasteiz Hoy", url: "https://www.gasteizhoy.com/feed/", tipo: rss, seccion: medios, local: true, activa: false}
 
-  - id: ayto-agenda
-    nombre: "Ayuntamiento · Agenda institucional (plenos, comisiones)"
-    url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?accion=calendario&idCalendario=246&idioma=es&claveArea="
-    tipo: rss
-    seccion: agenda
-    local: true
-    fecha_es_evento: true   # la fecha del RSS es el día de la reunión
-
-  # ---------- YA PUBLICADO EN VITORIA ----------
-  # Gasteiz Hoy bloquea las lecturas desde los servidores de GitHub (error 403).
-  # Se deja desactivada; si algún día lo permite, cambia "activa" a true.
-  - id: gasteizhoy
-    nombre: "Gasteiz Hoy"
-    url: "https://www.gasteizhoy.com/feed/"
-    tipo: rss
-    seccion: medios
-    local: true
-    activa: false
-
-  # ---------- IDEAS DE TEMAS (prensa de otros territorios) ----------
-  #  Aquí entra lo que otros medios regionales están contando y que
-  #  se podría "bajar" a Vitoria/Álava. Puedes añadir más periódicos.
-  - id: eldiario-euskadi
-    nombre: "elDiario.es · Euskadi"
-    url: "https://www.eldiario.es/rss/euskadi/"
-    tipo: rss
-    seccion: ideas
-    local: false
-
-  - id: eldiario-navarra
-    nombre: "elDiario.es · Navarra"
-    url: "https://www.eldiario.es/rss/navarra/"
-    tipo: rss
-    seccion: ideas
-    local: false
-
-  - id: eldiario-cyl
-    nombre: "elDiario.es · Castilla y León"
-    url: "https://www.eldiario.es/rss/castilla-y-leon/"
-    tipo: rss
-    seccion: ideas
-    local: false
-
-  - id: eldiario-aragon
-    nombre: "elDiario.es · Aragón"
-    url: "https://www.eldiario.es/rss/aragon/"
-    tipo: rss
-    seccion: ideas
-    local: false
-
-  - id: eldiario-cantabria
-    nombre: "elDiario.es · Cantabria"
-    url: "https://www.eldiario.es/rss/cantabria/"
-    tipo: rss
-    seccion: ideas
-    local: false
-
-  - id: eldiario-galicia
-    nombre: "elDiario.es · Galicia"
-    url: "https://www.eldiario.es/rss/galicia/"
-    tipo: rss
-    seccion: ideas
-    local: false
-
-  - id: eldiario-asturias
-    nombre: "elDiario.es · Asturias"
-    url: "https://www.eldiario.es/rss/asturias/"
-    tipo: rss
-    seccion: ideas
-    local: false
-
-  - id: eldiario-cv
-    nombre: "elDiario.es · Comunitat Valenciana"
-    url: "https://www.eldiario.es/rss/comunitat-valenciana/"
-    tipo: rss
-    seccion: ideas
-    local: false
-
-  - id: eldiario-andalucia
-    nombre: "elDiario.es · Andalucía"
-    url: "https://www.eldiario.es/rss/andalucia/"
-    tipo: rss
-    seccion: ideas
-    local: false
+  # =================== IDEAS DE TEMAS (prensa de otros territorios) ===================
+  - {id: eldiario-euskadi, nombre: "elDiario.es · Euskadi", url: "https://www.eldiario.es/rss/euskadi/", tipo: rss, seccion: ideas}
+  - {id: eldiario-navarra, nombre: "elDiario.es · Navarra", url: "https://www.eldiario.es/rss/navarra/", tipo: rss, seccion: ideas}
+  - {id: eldiario-cyl, nombre: "elDiario.es · Castilla y León", url: "https://www.eldiario.es/rss/castilla-y-leon/", tipo: rss, seccion: ideas}
+  - {id: eldiario-aragon, nombre: "elDiario.es · Aragón", url: "https://www.eldiario.es/rss/aragon/", tipo: rss, seccion: ideas}
+  - {id: eldiario-cantabria, nombre: "elDiario.es · Cantabria", url: "https://www.eldiario.es/rss/cantabria/", tipo: rss, seccion: ideas}
+  - {id: eldiario-galicia, nombre: "elDiario.es · Galicia", url: "https://www.eldiario.es/rss/galicia/", tipo: rss, seccion: ideas}
+  - {id: eldiario-asturias, nombre: "elDiario.es · Asturias", url: "https://www.eldiario.es/rss/asturias/", tipo: rss, seccion: ideas}
+  - {id: eldiario-cv, nombre: "elDiario.es · Comunitat Valenciana", url: "https://www.eldiario.es/rss/comunitat-valenciana/", tipo: rss, seccion: ideas}
+  - {id: eldiario-andalucia, nombre: "elDiario.es · Andalucía", url: "https://www.eldiario.es/rss/andalucia/", tipo: rss, seccion: ideas}
 
 # ------------------------------------------------------------
-#  Enlaces de consulta manual (webs que no se pueden leer
-#  automáticamente). Aparecen en la pestaña "Fuentes".
+#  Webs que hay que mirar a mano (no se pueden leer solas).
 # ------------------------------------------------------------
 enlaces_manuales:
-  - nombre: "BOTHA · Boletín Oficial de Álava"
-    url: "https://www.araba.eus/botha/"
-    nota: "Su web no permite la lectura automática. Mirar a diario: subvenciones, ordenanzas, oposiciones."
-  - nombre: "Juntas Generales de Álava"
-    url: "https://www.jjggalava.eus/"
-    nota: "Orden del día de plenos y comisiones."
-  - nombre: "Parlamento Vasco"
-    url: "https://www.legebiltzarra.eus/"
-    nota: "Preguntas e iniciativas que mencionan Álava."
-  - nombre: "Eustat · Novedades"
-    url: "https://www.eustat.eus/"
-    nota: "Estadísticas nuevas: siempre hay dato por territorio."
-  - nombre: "CENDOJ · Sentencias TSJPV"
-    url: "https://www.poderjudicial.es/search/indexAN.jsp"
-    nota: "Buscar por 'Vitoria' o 'Álava'."
-  - nombre: "Ayuntamiento · Web municipal (Buzón ciudadano, avisos)"
-    url: "https://www.vitoria-gasteiz.org/"
-    nota: "Las quejas vecinales del Buzón ciudadano son buena cantera de temas de barrio."
+  - {nombre: "Laudio/Llodio · noticias municipales", url: "https://www.laudio.eus/", nota: "Su web pide no ser leída automáticamente."}
+  - {nombre: "Amurrio · noticias municipales", url: "https://www.amurrio.eus/", nota: "Sin RSS. Segundo municipio de Álava."}
+  - {nombre: "Laguardia · noticias municipales", url: "https://www.laguardia.eus/es/", nota: "Sin RSS."}
+  - {nombre: "Eustat · novedades", url: "https://www.eustat.eus/", nota: "Su web pide no ser leída automáticamente. Siempre hay dato por territorio."}
+  - {nombre: "Parlamento Vasco", url: "https://www.legebiltzarra.eus/", nota: "Preguntas e iniciativas sobre Álava."}
+  - {nombre: "UPV/EHU · Campus de Álava", url: "https://www.ehu.eus/es/web/araba", nota: "Sin RSS."}
+  - {nombre: "Artium", url: "https://www.artium.eus/", nota: "Sin RSS. Exposiciones y actividades."}
+  - {nombre: "CENDOJ · Sentencias TSJPV", url: "https://www.poderjudicial.es/search/indexAN.jsp", nota: "Buscar por 'Vitoria' o 'Álava'."}
+  - {nombre: "Ayuntamiento · Buzón ciudadano", url: "https://www.vitoria-gasteiz.org/", nota: "Quejas vecinales: cantera de temas de barrio."}
+  - {nombre: "Asociaciones vecinales sin web", url: "https://judimendikoak.com/beste-auzo-elkarteak/", nota: "Listado de contactos de otras asociaciones de Vitoria (muchas solo usan redes sociales)."}

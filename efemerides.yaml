@@ -1,0 +1,67 @@
+# ============================================================
+#  EFEMÉRIDES Y FECHAS FIJAS  ·  aparecen en el calendario
+# ============================================================
+#  Se pueden añadir más desde GitHub (icono del lápiz).
+#  - "fijas": se repiten cada año (fiestas, días internacionales).
+#  - "aniversarios": hechos con año; el calendario calcula cuántos
+#    años se cumplen y destaca los redondos (25, 50, 75, 100, 125...).
+#  Formato de fecha: MM-DD (mes-día).
+# ============================================================
+
+fijas:
+  # --- Vitoria y Álava ---
+  - {fecha: "04-27", texto: "Víspera de San Prudencio: tamborrada en Vitoria"}
+  - {fecha: "04-28", texto: "San Prudencio, patrón de Álava"}
+  - {fecha: "07-25", texto: "Santiago: feria del ajo en Vitoria"}
+  - {fecha: "08-04", texto: "Bajada de Celedón: empiezan las fiestas de La Blanca (4-9 de agosto)"}
+  - {fecha: "08-07", texto: "Celedón Txiki"}
+  - {fecha: "12-03", texto: "Euskararen Eguna, Día Internacional del Euskera"}
+  # --- días internacionales con mucho juego local ---
+  - {fecha: "01-27", texto: "Día Internacional en Memoria de las Víctimas del Holocausto"}
+  - {fecha: "02-04", texto: "Día Mundial contra el Cáncer"}
+  - {fecha: "02-11", texto: "Día Internacional de la Mujer y la Niña en la Ciencia"}
+  - {fecha: "03-08", texto: "Día Internacional de la Mujer"}
+  - {fecha: "03-21", texto: "Día Mundial del Síndrome de Down · Día contra la Discriminación Racial · Día de la Poesía"}
+  - {fecha: "03-22", texto: "Día Mundial del Agua"}
+  - {fecha: "04-02", texto: "Día Mundial de Concienciación sobre el Autismo"}
+  - {fecha: "04-07", texto: "Día Mundial de la Salud"}
+  - {fecha: "04-23", texto: "Día del Libro"}
+  - {fecha: "05-01", texto: "Día Internacional del Trabajo"}
+  - {fecha: "05-03", texto: "Día Mundial de la Libertad de Prensa"}
+  - {fecha: "05-17", texto: "Día Internacional contra la LGTBIfobia"}
+  - {fecha: "05-31", texto: "Día Mundial sin Tabaco"}
+  - {fecha: "06-05", texto: "Día Mundial del Medio Ambiente"}
+  - {fecha: "06-14", texto: "Día Mundial del Donante de Sangre"}
+  - {fecha: "06-20", texto: "Día Mundial de las Personas Refugiadas"}
+  - {fecha: "06-28", texto: "Día del Orgullo LGTBI"}
+  - {fecha: "08-12", texto: "Día Internacional de la Juventud"}
+  - {fecha: "09-21", texto: "Día Mundial del Alzheimer"}
+  - {fecha: "09-27", texto: "Día Mundial del Turismo"}
+  - {fecha: "10-01", texto: "Día Internacional de las Personas Mayores"}
+  - {fecha: "10-10", texto: "Día Mundial de la Salud Mental"}
+  - {fecha: "10-16", texto: "Día Mundial de la Alimentación"}
+  - {fecha: "10-17", texto: "Día Internacional para la Erradicación de la Pobreza"}
+  - {fecha: "10-19", texto: "Día Mundial contra el Cáncer de Mama"}
+  - {fecha: "11-14", texto: "Día Mundial de la Diabetes"}
+  - {fecha: "11-20", texto: "Día Universal de la Infancia"}
+  - {fecha: "11-25", texto: "Día Internacional contra la Violencia hacia las Mujeres (25N)"}
+  - {fecha: "12-01", texto: "Día Mundial del Sida"}
+  - {fecha: "12-03", texto: "Día Internacional de las Personas con Discapacidad"}
+  - {fecha: "12-10", texto: "Día de los Derechos Humanos"}
+
+aniversarios:
+  - {fecha: "01-23", año: 1921, texto: "Fundación del Deportivo Alavés"}
+  - {fecha: "02-22", año: 2000, texto: "Asesinato de Fernando Buesa y su escolta Jorge Díez Elorza en Vitoria"}
+  - {fecha: "02-28", año: 1878, texto: "Real Decreto que establece el primer Concierto Económico"}
+  - {fecha: "03-03", año: 1976, texto: "Sucesos del 3 de marzo en Vitoria: cinco trabajadores muertos por la policía en Zaramaga"}
+  - {fecha: "03-09", año: 1980, texto: "Primeras elecciones al Parlamento Vasco"}
+  - {fecha: "04-26", año: 2002, texto: "Inauguración del Artium"}
+  - {fecha: "06-21", año: 1813, texto: "Batalla de Vitoria"}
+  - {fecha: "07-24", año: 1925, texto: "Nace en Vitoria el escritor Ignacio Aldecoa"}
+  - {fecha: "08-04", año: 1957, texto: "Primera bajada de Celedón"}
+  - {fecha: "10-01", año: 1903, texto: "Inauguración de la segunda Cruz del Gorbea"}
+  - {fecha: "10-25", año: 1979, texto: "Referéndum del Estatuto de Gernika"}
+  - {fecha: "11-12", año: 1901, texto: "Inauguración de la primera Cruz del Gorbea (se derrumbó un mes después)"}
+  - {fecha: "11-25", año: 1983, texto: "Ley de Territorios Históricos"}
+  - {fecha: "12-18", año: 1979, texto: "Ley Orgánica del Estatuto de Autonomía del País Vasco"}
+  - {fecha: "12-23", año: 2008, texto: "Primer viaje del tranvía de Vitoria"}

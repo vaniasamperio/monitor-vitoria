@@ -1,14 +1,17 @@
 # Monitor de fuentes · Hoy por Hoy Vitoria
 
-Una página web que se actualiza sola cada mañana con:
+Una página web que se actualiza sola y reúne lo que pasa en Vitoria y en Álava, para que la redacción no tenga que entrar cada día en decenas de webs:
 
-- **Instituciones**: notas de prensa del Ayuntamiento de Vitoria-Gasteiz, avisos de movilidad, sala de prensa de la Diputación Foral de Álava, Irekia (Gobierno Vasco) y BOPV. Del Gobierno Vasco y el BOPV se queda solo con lo que menciona Álava, aunque se puede ver todo.
-- **Agenda y convocatorias**: las convocatorias de prensa del Ayuntamiento (con hora y lugar) y los plenos y comisiones de los próximos días.
-- **Ideas de temas**: temas de fondo que cuentan medios de otros territorios y que se pueden bajar a Vitoria o Álava, con pistas de fuentes locales para el ángulo. Se descartan el fútbol, los sucesos y la política de partidos.
-- **Ya publicado**: lo que ha sacado la prensa local, para no repetir.
-- **Guardados**: cada persona marca con ☆ lo que le interesa y copia la lista para la reunión de contenidos.
+- **Hoy**: la portada para ver el día en dos vistazos. Agenda de hoy y de mañana (convocatorias de prensa con hora y lugar, plenos y comisiones, actos de pueblos y asociaciones), lo más relevante de las últimas horas, los próximos 7 días y lo que hay que seguir (plazos, fines de obra, inicios previstos).
+- **Calendario**: un calendario mensual que se rellena solo con las fechas que aparecen en las noticias ("las obras terminarán el 30 de mayo", "del 13 de noviembre al 22 de diciembre"…), las convocatorias, las agendas municipales y las efemérides de `efemerides.yaml`.
+- **Instituciones**: Ayuntamiento de Vitoria, Diputación, Juntas Generales, Gobierno Vasco (solo lo que toca Álava), Ararteko, Euskotren.
+- **Pueblos de Álava**: por cuadrillas. Webs municipales que se pueden leer, cuadrillas y **todo lo que cada ayuntamiento y concejo publica en el BOTHA**, además de lo que otras instituciones dicen de cada pueblo.
+- **Boletines**: BOTHA del día completo; del BOPV y del BOE, lo que afecta a Álava. Los trámites rutinarios se ocultan.
+- **Asociaciones**: vecinales, colectivos y entidades, con la agenda de Elkarteak.org.
+- **Ideas de temas** y **Ya publicado**, para buscar ángulos y no repetir.
+- **Guardados**: cada persona marca con ☆ y copia la lista para la reunión.
 
-Es gratis y no necesita cuenta de Claude ni de nada: solo el enlace. Funciona en el móvil.
+Es gratis y no necesita cuenta de Claude: solo el enlace. Funciona en el móvil.
 
 ---
 
@@ -63,6 +66,8 @@ Todo se hace desde la web de GitHub, con el icono del lápiz ✏️:
 | Añadir una fuente con RSS | Editar `fuentes.yaml`, copiar un bloque y cambiar `id`, `nombre` y `url` |
 | Quitar una fuente | En `fuentes.yaml`, añadirle `activa: false` |
 | Afinar las ideas de temas | Editar `temas.yaml`: palabras clave, pistas locales, palabras que descartan |
+| Añadir una efeméride o fecha fija | Editar `efemerides.yaml` |
+| Buscar RSS de webs nuevas | Actions → **Explorar fuentes** → Run workflow (el informe queda en la rama `diagnostico`) |
 | Saber si algo falla | Pestaña **Fuentes** de la página: cada fuente sale en verde o rojo |
 
 Si una fuente sale en rojo varios días seguidos, casi siempre es que esa web ha cambiado la dirección de su RSS. Busca la nueva y cámbiala en `fuentes.yaml`.
@@ -71,13 +76,17 @@ Si GitHub envía un correo diciendo que ha desactivado el workflow por inactivid
 
 ## Fuentes que no se leen automáticamente
 
-El **BOTHA**, la sala de prensa completa de la Diputación y otras webs no permiten la lectura automática. Por eso aparecen como enlaces de consulta manual en la pestaña *Fuentes*. La Diputación se lee solo desde su portada, que muestra las últimas notas.
+El programa respeta el `robots.txt` de cada web: si una web pide no ser leída por programas (Laudio, Eustat, Kanpezu…), no se lee y aparece en "Mirar a mano".
+
+Muchas asociaciones vecinales solo publican en redes sociales, que no se pueden leer gratis de forma automática; sus contactos están en "Mirar a mano". Las fechas del calendario se sacan con reglas, sin IA: cada una muestra la frase de la que sale para comprobarla.
 
 ---
 
 ## Para quien sepa algo de programación
 
-- `monitor/run.py`: lee las fuentes, clasifica y genera `docs/datos.json`. Guarda el histórico (21 días) en `data/historico.json`.
+- `monitor/run.py`: lee las fuentes, detecta municipios y cuadrillas, puntúa la relevancia y genera `docs/datos.json`. Histórico de 21 días en `data/historico.json`.
+- `monitor/calendario.py`: extracción de fechas, convocatorias y efemérides.
+- `monitor/descubrir.py`: explorador de RSS (workflow *Explorar fuentes*).
 - `docs/index.html`: la página (HTML + JS sin dependencias). Lee `datos.json`.
 - `.github/workflows/actualizar.yml`: ejecución programada y publicación en GitHub Pages.
 - Pruebas sin internet: `python tests/crea_fixtures.py && python monitor/run.py --fixtures tests/fixtures` y después `python -m http.server -d docs`.
