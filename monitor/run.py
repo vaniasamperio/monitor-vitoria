@@ -1025,11 +1025,14 @@ def main() -> int:
             else:
                 try:
                     crudo = descarga(url, args.fixtures, fuente["id"], fuente.get("accept"))
-                except Exception:
-                    if not fuente.get("alternativa"):
+                except Exception as e_d:
+                    if fuente.get("tipo") == "boe" and "404" in str(e_d):
+                        crudo = b'{"data": {}}'               # aún no hay BOE de hoy (sale de madrugada / no sale en festivo)
+                    elif not fuente.get("alternativa"):
                         raise
-                    url = fuente["alternativa"]
-                    crudo = descarga(url, args.fixtures, fuente["id"], fuente.get("accept"))
+                    else:
+                        url = fuente["alternativa"]
+                        crudo = descarga(url, args.fixtures, fuente["id"], fuente.get("accept"))
             nuevos = LECTORES[fuente.get("tipo", "rss")](crudo, fuente, hoy)
             n_nuevos = 0
             for it in nuevos:
