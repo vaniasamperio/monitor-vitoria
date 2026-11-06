@@ -774,6 +774,28 @@ RX_ENLACE_CUENTA = re.compile(r"activat|activar|password|contrase|login|registro
 RX_ASUNTO_RUIDO = re.compile(r"^\s*((re|rv|fw|fwd|reenv)\s*:\s*)+|\s*\[(nota de prensa|prentsa oharra)\]\s*", re.I)
 
 
+ROJ_TIPO = {"S": "Sentencia", "A": "Auto"}
+ROJ_ORGANO = [("TSJ PV", "del TSJ del País Vasco"), ("AP VI", "de la Audiencia Provincial de Álava"),
+              ("JP VI", "del Juzgado de lo Penal de Vitoria"), ("JSO VI", "del Juzgado de lo Social de Vitoria"),
+              ("JCA VI", "del Juzgado de lo Contencioso de Vitoria"), ("JM VI", "del Juzgado de lo Mercantil de Vitoria"),
+              ("JPI VI", "de un Juzgado de Primera Instancia de Vitoria"), ("JI VI", "de un Juzgado de Instrucción de Vitoria"),
+              ("JVM VI", "del Juzgado de Violencia sobre la Mujer de Vitoria"), ("JMN VI", "del Juzgado de Menores de Vitoria"),
+              ("JVP VI", "del Juzgado de Vigilancia Penitenciaria de Vitoria"), ("TS", "del Tribunal Supremo"), ("AN", "de la Audiencia Nacional")]
+MESES_ES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+
+
+def titulo_roj(texto: str, enlace: str) -> str:
+    """'ROJ: SAP VI 1506/2026 - ECLI…' -> 'Sentencia de la Audiencia Provincial de Álava 1506/2026 (4 de noviembre)'."""
+    m = re.search(r"ROJ:\s*([SA])([A-Z]+(?:\s[A-Z]{2})?)\s+(\d+/\d{4})", texto)
+    if not m:
+        return texto
+    tipo, codigo, num = ROJ_TIPO.get(m.group(1), "Resolución"), m.group(2).strip(), m.group(3)
+    organo = next((o for c, o in ROJ_ORGANO if codigo == c.replace(" ", " ")), f"({codigo})")
+    f = re.search(r"/(20\d\d)(\d\d)(\d\d)(?:$|[/?])", enlace)
+    fecha = f" ({int(f.group(3))} de {MESES_ES[int(f.group(2)) - 1]})" if f else ""
+    return f"{tipo} {organo} {num}{fecha}"
+
+
 def lee_correo(contenido: bytes, fuente: dict) -> list[dict]:
     out = []
     for c in json.loads(contenido):
@@ -786,11 +808,18 @@ def lee_correo(contenido: bytes, fuente: dict) -> list[dict]:
         if fuente.get("modo") == "alertas":
             # alertas del CENDOJ: una entrada por resolución enlazada
             vistos = set()
-            for txt, href in enlaces:
+            anclas = cuerpo_html.find_all("a", href=True) if cuerpo_html else []
+            for a in anclas:
+                href, txt = a["href"], a.get_text(" ", strip=True)
                 if "poderjudicial.es" not in href or "openDocument" not in href or href in vistos:
                     continue
                 vistos.add(href)
-                out.append({"titulo": txt or c["asunto"], "enlace": href, "texto": "", "texto_largo": "",
+                # lo que acompaña al enlace en la alerta (órgano, sección, materia…), si lo hay
+                bloque = a.find_parent(["tr", "li", "p"]) or a.parent
+                contexto = " ".join(bloque.get_text(" ").split()).replace(txt, "").strip(" -·|") if bloque else ""
+                contexto = re.sub(r"ECLI:\S+", "", contexto).strip(" -·|")
+                out.append({"titulo": titulo_roj(txt, href) if txt else c["asunto"], "enlace": href,
+                            "texto": (txt + (". " + contexto if contexto else ""))[:500], "texto_largo": "",
                             "fecha": fecha, "categorias": ["CENDOJ"]})
             continue                                  # sin resoluciones (avisos de cuenta, etc.): no se publica
         titulo = RX_ASUNTO_RUIDO.sub("", c["asunto"]).strip() or c["asunto"]
