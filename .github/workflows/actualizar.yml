@@ -6,9 +6,7 @@ on:
   schedule:
     # Horas en UTC (en invierno, Vitoria = UTC+1; en verano, UTC+2).
     # GitHub puede retrasar la ejecución unos minutos en horas punta.
-    - cron: "17 5 * * *"      # todos los días ~06:17 (invierno) / 07:17 (verano)
-    - cron: "47 9 * * 1-5"    # laborables ~10:47 / 11:47
-    - cron: "37 15 * * 1-5"   # laborables ~16:37 / 17:37 (convocatorias del día siguiente)
+    - cron: "17 5-22 * * *"   # cada hora, de ~06:17 a ~23:17 (invierno; en verano una hora más tarde)
   workflow_dispatch: {}       # botón "Run workflow"
   push:
     branches: [main]

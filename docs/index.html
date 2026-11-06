@@ -27,6 +27,9 @@ header.cab{background:var(--verde);color:#f4efe4;padding:16px 0 0}
 .cab .sub{font-size:13px;opacity:.78;margin-top:3px}
 .cab .estado{font-size:13px;text-align:right;opacity:.92}
 .cab .estado b{color:var(--ambar)}
+.cab .refrescar{float:right;margin:0 0 4px 12px;background:var(--ambar);color:#1d2b2b;border:0;border-radius:7px;padding:6px 12px;font:600 13px/1.2 inherit;cursor:pointer}
+.cab .refrescar:hover{filter:brightness(1.08)} .cab .refrescar:disabled{opacity:.6;cursor:wait}
+.cab .refmsg{color:var(--ambar);font-size:12px;margin-top:2px}
 .cab .aviso{color:#ffd7cc}
 nav.pestanas{display:flex;gap:2px;margin-top:14px;overflow-x:auto;scrollbar-width:none}
 nav.pestanas::-webkit-scrollbar{display:none}
@@ -341,7 +344,7 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
   </section>
 </main>
 
-<footer class="pie">Se actualiza solo cada mañana (y dos veces más los laborables). Los textos y enlaces son de cada fuente original. <span id="pieRepo"></span></footer>
+<footer class="pie">Se actualiza sola cada hora, de 6:00 a 23:00. Los textos y enlaces son de cada fuente original. <span id="pieRepo"></span></footer>
 
 <div class="velo" id="velo"></div>
 <aside class="cajon" id="cajon" aria-label="Guardados">
@@ -778,7 +781,9 @@ function pintaFuentes() {
 }
 function pintaEstado() {
   const d = st.d, horas = (Date.now() - new Date(d.actualizado)) / 3600e3, fallos = d.fuentes.filter(f => !f.ok).length;
-  $("#estado").innerHTML = `Actualizado <b>${esc(cuando(d.actualizado))}</b> · ${d.fuentes.length - fallos}/${d.fuentes.length} fuentes` +
+  $("#estado").innerHTML = `<button class="refrescar" id="btnRefrescar" title="Traer lo último sin recargar la página">↻ Actualizar</button>` +
+    `Actualizado <b>${esc(cuando(d.actualizado))}</b> · ${d.fuentes.length - fallos}/${d.fuentes.length} fuentes` +
+    (st.msgRefresco ? `<div class="refmsg">${esc(st.msgRefresco)}</div>` : "") +
     (horas > 30 ? `<div class="aviso">⚠ Hace más de un día que no se actualiza.</div>` : "") +
     (fallos ? `<div class="aviso">${fallos} sin leer · <a href="#fuentes" style="color:inherit">ver Fuentes</a></div>` : "") +
     (st.ia.actualizado ? `<div style="opacity:.8">Titulares y enfoques revisados ${esc(cuando(st.ia.actualizado))}</div>` : "");
@@ -878,19 +883,40 @@ function enlacesRepo() {
   $("#lnkTemas").href = `${base}/edit/main/temas.yaml`;
   $("#pieRepo").innerHTML = `<a href="${base}" target="_blank" rel="noopener">Código y configuración</a>`;
 }
-async function carga() {
+// La página se lee sola cada hora (de 6:00 a 23:00). El botón trae lo último publicado sin recargar.
+function proximaLectura() {
+  const a = new Date(), h = a.getHours();
+  if (h >= 23) return "mañana hacia las 6:20";
+  if (h < 6) return "hacia las 6:20";
+  return `hacia las ${a.getMinutes() < 20 ? h : h + 1}:20`;
+}
+async function carga(manual = false, silenciosa = false) {
+  const antes = st.d && st.d.actualizado, antesIa = st.ia && st.ia.actualizado;
+  if (manual) { const b = $("#btnRefrescar"); if (b) { b.disabled = true; b.textContent = "↻ Comprobando…"; } }
   try {
     const r = await fetch("datos.json?t=" + Date.now(), {cache: "no-store"});
     if (!r.ok) throw new Error(r.status);
-    st.d = await r.json();
-    try { const ri = await fetch("ia.json?t=" + Date.now(), {cache: "no-store"}); if (ri.ok) st.ia = await ri.json(); } catch {}
+    const nuevo = await r.json();
+    let ia = st.ia;
+    try { const ri = await fetch("ia.json?t=" + Date.now(), {cache: "no-store"}); if (ri.ok) ia = await ri.json(); } catch {}
+    const cambio = nuevo.actualizado !== antes || (ia && ia.actualizado) !== antesIa;
+    if (silenciosa && !cambio) return;               // nada nuevo: no se toca la pantalla
+    if (manual) {
+      const nov = cambio && st.d ? nuevo.items.filter(i => !st.d.items.some(j => j.id === i.id)).length : 0;
+      st.msgRefresco = cambio ? (nov ? `${nov} novedades traídas.` : "Datos al día.") :
+        `Ya tienes lo último. Próxima lectura de las fuentes ${proximaLectura()}.`;
+      clearTimeout(st.tMsg); st.tMsg = setTimeout(() => { st.msgRefresco = ""; pintaEstado(); }, 20000);
+    }
+    st.d = nuevo; st.ia = ia;
     fuentes = Object.fromEntries(st.d.fuentes.map(f => [f.id, f]));
-    pinta();
+    const y = window.scrollY; pinta(); if (silenciosa) window.scrollTo(0, y);
   } catch (e) {
     $("#estado").innerHTML = `<span class="aviso">No se han podido cargar los datos (${esc(e.message)}).</span>`;
   }
 }
-enlacesRepo(); muestra(st.pestana); carga(); setInterval(carga, 30 * 60e3);
+document.addEventListener("click", ev => { if (ev.target.closest("#btnRefrescar")) carga(true); });
+document.addEventListener("visibilitychange", () => { if (!document.hidden) carga(false, true); });
+enlacesRepo(); muestra(st.pestana); carga(); setInterval(() => carga(false, true), 10 * 60e3);
 })();
 </script>
 </body>

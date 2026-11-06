@@ -954,6 +954,8 @@ def main() -> int:
     items_hist: dict = hist.get("items", {})
     cal_hist: dict = hist.get("calendario", {})
     estado = []
+    lecturas: dict = hist.get("lecturas", {})                # última lectura de cada fuente (para las que van más despacio)
+    estado_previo = {f["id"]: f for f in carga_json(SALIDA, {}).get("fuentes", [])}
 
     def grupo_de(f):
         return {k: f[k] for k in ("grupo", "etiqueta", "extra") if f.get(k)}
@@ -962,6 +964,13 @@ def main() -> int:
         if fuente.get("activa", True) is False:
             continue
         fuente.setdefault("seccion", "instituciones")
+        # algunas fuentes no hace falta leerlas cada hora (agenda, ideas, buzón…): campo "cada" en horas
+        ultima = de_iso(lecturas.get(fuente["id"]))
+        if (fuente.get("cada") and ultima and not args.fixtures and fuente["id"] in estado_previo
+                and ahora - ultima < timedelta(hours=fuente["cada"]) - timedelta(minutes=10)):
+            estado.append({**estado_previo[fuente["id"]], "nuevos": 0})
+            continue
+        lecturas[fuente["id"]] = iso(ahora)
         inicio = time.time()
         url = fuente["url"].replace("{HOY}", hoy.strftime("%Y%m%d"))
         if fuente.get("tipo") == "buzon":
@@ -1182,7 +1191,7 @@ def main() -> int:
     cal = list(cal_hist.values()) + calendario.efemerides(efem_cfg or {}, desde, hasta)
     cal.sort(key=lambda e: (e["fecha"], e.get("hora") or "99"))
 
-    guarda_json(HISTORICO, {"actualizado": iso(ahora), "items": items_hist, "calendario": cal_hist})
+    guarda_json(HISTORICO, {"actualizado": iso(ahora), "items": items_hist, "calendario": cal_hist, "lecturas": lecturas})
     guarda_json(SALIDA, {
         "actualizado": iso(ahora),
         "fuentes": estado,

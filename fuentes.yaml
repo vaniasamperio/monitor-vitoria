@@ -37,6 +37,7 @@ fuentes:
   # =================== BUZÓN CIUDADANO DE VITORIA ===================
   # Se leen las últimas quejas públicas de cada área y se cuenta lo que se repite.
   - id: buzon
+    cada: 2
     nombre: "Buzón ciudadano de Vitoria"
     url: "https://www.vitoria-gasteiz.org/wb021/was/areaAction.do?idioma=es&accion=areas&claveArea={AREA}"
     tipo: buzon
@@ -114,15 +115,14 @@ fuentes:
 
   # =================== AGENDA (van al calendario) ===================
   - {id: ayto-convocatorias, nombre: "Ayuntamiento · Convocatorias de prensa", url: "https://blogs.vitoria-gasteiz.org/medios/category/convocatorias/feed/", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz}
-  - {id: ayto-agenda, nombre: "Ayuntamiento · Plenos y comisiones", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?accion=calendario&idCalendario=246&idioma=es&claveArea=", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: institucional}
-  - {id: agenda-cultura, nombre: "Ayuntamiento · Agenda de cultura y ocio", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=actividadesCuadroMando&claveTema=&claveArea=38", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: cultura, max: 150}
-  - {id: elkarteak-agenda, nombre: "Elkarteak.org · Agenda de asociaciones", url: "https://elkarteak.org/rss_agenda.php?h=es", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: asociaciones}
-  - {id: kulturklik, nombre: "Kulturklik · Agenda cultural de Álava", url: "https://api.euskadi.eus/culture/events/v1.0/events/upcoming?_elements=50&_page={PAGINA}&provinceNoraCode=1", tipo: kulturklik, seccion: agenda, local: true, accept: "application/json", paginas: 15, dias: 60, categoria_cal: cultura, solo_calendario: true}
+  - {id: ayto-agenda, cada: 3, nombre: "Ayuntamiento · Plenos y comisiones", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?accion=calendario&idCalendario=246&idioma=es&claveArea=", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: institucional}
+  - {id: agenda-cultura, cada: 3, nombre: "Ayuntamiento · Agenda de cultura y ocio", url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=actividadesCuadroMando&claveTema=&claveArea=38", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: cultura, max: 150}
+  - {id: elkarteak-agenda, cada: 3, nombre: "Elkarteak.org · Agenda de asociaciones", url: "https://elkarteak.org/rss_agenda.php?h=es", tipo: rss, seccion: agenda, local: true, municipio: Vitoria-Gasteiz, fecha_es_evento: true, categoria_cal: asociaciones}
+  - {id: kulturklik, cada: 6, nombre: "Kulturklik · Agenda cultural de Álava", url: "https://api.euskadi.eus/culture/events/v1.0/events/upcoming?_elements=50&_page={PAGINA}&provinceNoraCode=1", tipo: kulturklik, seccion: agenda, local: true, accept: "application/json", paginas: 15, dias: 60, categoria_cal: cultura, solo_calendario: true}
 
   # =================== CORREO DE LA REDACCIÓN (Gmail propio) ===================
   # Se leen solo estos remitentes (por dominio). Ver README: "Correo de la redacción".
   - {id: correo-ayto, nombre: "Ayuntamiento de Vitoria · por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, municipio: Vitoria-Gasteiz, grupo: "Ayuntamiento de Vitoria", etiqueta: "Por correo", remitentes: [vitoria-gasteiz.org]}
-  - {id: correo-diputacion, nombre: "Diputación Foral de Álava · por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, grupo: "Diputación Foral de Álava", etiqueta: "Por correo", remitentes: [araba.eus, alava.eus]}   # incluye komunikazioa@araba.eus
   - {id: correo-jjgg, nombre: "Juntas Generales · por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, grupo: "Juntas Generales de Álava", etiqueta: "Por correo", remitentes: [jjggarabaktbb.eus, jjggalava.eus]}
   - {id: correo-gv, nombre: "Gobierno Vasco · por correo", tipo: correo, url: "correo", seccion: instituciones, grupo: "Gobierno Vasco · Irekia", etiqueta: "Por correo", remitentes: [euskadi.eus, irekia.eus]}
   - {id: correo-cendoj, nombre: "CENDOJ · alertas de resoluciones de Álava", tipo: correo, modo: alertas, url: "correo", seccion: sucesos, local: true, remitentes: [poderjudicial.es, cgpj.es]}
@@ -133,84 +133,84 @@ fuentes:
   - {id: efe-pv, nombre: "EFE · País Vasco", url: "https://efe.com/pais-vasco/", tipo: html, patron_enlace: "efe.com/pais-vasco/20", seccion: teletipos}
 
   # =================== MEDIOS ALAVESES (solo para el calendario) ===================
-  - {id: halabedi, nombre: "Hala Bedi irratia", url: "https://halabedi.eus/feed", tipo: rss, seccion: medios, local: true, municipio: Vitoria-Gasteiz, solo_calendario: true}
+  - {id: halabedi, cada: 3, nombre: "Hala Bedi irratia", url: "https://halabedi.eus/feed", tipo: rss, seccion: medios, local: true, municipio: Vitoria-Gasteiz, solo_calendario: true}
 
   # =================== IDEAS DE TEMAS (medios de toda España) ===================
   # Diario de Navarra, Heraldo y los diarios de Vocento no se incluyen: no permiten este uso.
   # Prensa Ibérica, Promecal, Grupo Noticias, Público, EFE y RTVE no ofrecen un RSS que se pueda leer.
-  - {id: eldiario-euskadi, nombre: "elDiario.es · Euskadi", url: "https://www.eldiario.es/rss/euskadi/", tipo: rss, seccion: ideas}
-  - {id: eldiario-navarra, nombre: "elDiario.es · Navarra", url: "https://www.eldiario.es/rss/navarra/", tipo: rss, seccion: ideas}
-  - {id: eldiario-cyl, nombre: "elDiario.es · Castilla y León", url: "https://www.eldiario.es/rss/castilla-y-leon/", tipo: rss, seccion: ideas}
-  - {id: eldiario-aragon, nombre: "elDiario.es · Aragón", url: "https://www.eldiario.es/rss/aragon/", tipo: rss, seccion: ideas}
-  - {id: eldiario-cantabria, nombre: "elDiario.es · Cantabria", url: "https://www.eldiario.es/rss/cantabria/", tipo: rss, seccion: ideas}
-  - {id: eldiario-galicia, nombre: "elDiario.es · Galicia", url: "https://www.eldiario.es/rss/galicia/", tipo: rss, seccion: ideas}
-  - {id: eldiario-asturias, nombre: "elDiario.es · Asturias", url: "https://www.eldiario.es/rss/asturias/", tipo: rss, seccion: ideas}
-  - {id: eldiario-cv, nombre: "elDiario.es · Comunitat Valenciana", url: "https://www.eldiario.es/rss/comunitat-valenciana/", tipo: rss, seccion: ideas}
-  - {id: eldiario-andalucia, nombre: "elDiario.es · Andalucía", url: "https://www.eldiario.es/rss/andalucia/", tipo: rss, seccion: ideas}
+  - {id: eldiario-euskadi, cada: 3, nombre: "elDiario.es · Euskadi", url: "https://www.eldiario.es/rss/euskadi/", tipo: rss, seccion: ideas}
+  - {id: eldiario-navarra, cada: 3, nombre: "elDiario.es · Navarra", url: "https://www.eldiario.es/rss/navarra/", tipo: rss, seccion: ideas}
+  - {id: eldiario-cyl, cada: 3, nombre: "elDiario.es · Castilla y León", url: "https://www.eldiario.es/rss/castilla-y-leon/", tipo: rss, seccion: ideas}
+  - {id: eldiario-aragon, cada: 3, nombre: "elDiario.es · Aragón", url: "https://www.eldiario.es/rss/aragon/", tipo: rss, seccion: ideas}
+  - {id: eldiario-cantabria, cada: 3, nombre: "elDiario.es · Cantabria", url: "https://www.eldiario.es/rss/cantabria/", tipo: rss, seccion: ideas}
+  - {id: eldiario-galicia, cada: 3, nombre: "elDiario.es · Galicia", url: "https://www.eldiario.es/rss/galicia/", tipo: rss, seccion: ideas}
+  - {id: eldiario-asturias, cada: 3, nombre: "elDiario.es · Asturias", url: "https://www.eldiario.es/rss/asturias/", tipo: rss, seccion: ideas}
+  - {id: eldiario-cv, cada: 3, nombre: "elDiario.es · Comunitat Valenciana", url: "https://www.eldiario.es/rss/comunitat-valenciana/", tipo: rss, seccion: ideas}
+  - {id: eldiario-andalucia, cada: 3, nombre: "elDiario.es · Andalucía", url: "https://www.eldiario.es/rss/andalucia/", tipo: rss, seccion: ideas}
 
-  - {id: 20minutos, nombre: "20minutos", url: "https://www.20minutos.es/rss", tipo: rss, seccion: ideas, max: 60}
-  - {id: europapress, nombre: "Europa Press", url: "https://www.europapress.es/rss/rss.aspx?ch=94", tipo: rss, seccion: ideas, max: 60}
-  - {id: infolibre, nombre: "infoLibre", url: "https://www.infolibre.es/rss/", tipo: rss, seccion: ideas, max: 60}
-  - {id: elsalto, nombre: "El Salto", url: "https://www.elsaltodiario.com/actualidad/feed/", tipo: rss, seccion: ideas, max: 60}
-  - {id: elpais, nombre: "El País", url: "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada", tipo: rss, seccion: ideas, max: 60}
-  - {id: elmundo, nombre: "El Mundo", url: "https://www.elmundo.es/rss/googlenews/portada.xml", tipo: rss, seccion: ideas, max: 60}
-  - {id: lavanguardia, nombre: "La Vanguardia", url: "https://www.lavanguardia.com/rss/home.xml", tipo: rss, seccion: ideas, max: 60}
-  - {id: elespanol, nombre: "El Español", url: "https://www.elespanol.com/rss/", tipo: rss, seccion: ideas, max: 60}
-  - {id: newtral, nombre: "Newtral", url: "https://www.newtral.es/feed/", tipo: rss, seccion: ideas, max: 60}
-  - {id: lamarea, nombre: "La Marea", url: "https://www.lamarea.com/feed/", tipo: rss, seccion: ideas, max: 60}
-  - {id: diariodeleon, nombre: "Diario de León", url: "https://www.diariodeleon.es/rss/home.xml", tipo: rss, seccion: ideas, max: 60}
-  - {id: diariodesevilla, nombre: "Diario de Sevilla", url: "https://www.diariodesevilla.es/rss/", tipo: rss, seccion: ideas, max: 60}
-  - {id: diariodecadiz, nombre: "Diario de Cádiz", url: "https://www.diariodecadiz.es/rss/", tipo: rss, seccion: ideas, max: 60}
-  - {id: eldiario-catalunya, nombre: "elDiario.es · Catalunya", url: "https://www.eldiario.es/rss/catalunya/", tipo: rss, seccion: ideas, max: 60}
-  - {id: eldiario-madrid, nombre: "elDiario.es · Madrid", url: "https://www.eldiario.es/rss/madrid/", tipo: rss, seccion: ideas, max: 60}
-  - {id: eldiario-canariasahora, nombre: "elDiario.es · Canarias Ahora", url: "https://www.eldiario.es/rss/canariasahora/", tipo: rss, seccion: ideas, max: 60}
-  - {id: eldiario-castilla-la-mancha, nombre: "elDiario.es · Castilla-La Mancha", url: "https://www.eldiario.es/rss/castilla-la-mancha/", tipo: rss, seccion: ideas, max: 60}
-  - {id: eldiario-extremadura, nombre: "elDiario.es · Extremadura", url: "https://www.eldiario.es/rss/extremadura/", tipo: rss, seccion: ideas, max: 60}
-  - {id: eldiario-murcia, nombre: "elDiario.es · Murcia", url: "https://www.eldiario.es/rss/murcia/", tipo: rss, seccion: ideas, max: 60}
-  - {id: eldiario-illes-balears, nombre: "elDiario.es · Illes Balears", url: "https://www.eldiario.es/rss/illes-balears/", tipo: rss, seccion: ideas, max: 60}
-  - {id: eldiario-la-rioja, nombre: "elDiario.es · La Rioja", url: "https://www.eldiario.es/rss/la-rioja/", tipo: rss, seccion: ideas, max: 60}
-  - {id: eldiario-sociedad, nombre: "elDiario.es · Sociedad", url: "https://www.eldiario.es/rss/sociedad/", tipo: rss, seccion: ideas, max: 60}
-  - {id: eldiario-economia, nombre: "elDiario.es · Economía", url: "https://www.eldiario.es/rss/economia/", tipo: rss, seccion: ideas, max: 60}
-  - {id: cadena-ser, nombre: "Cadena SER", url: "https://cadenaser.com/arc/outboundfeeds/rss/?outputType=xml", tipo: rss, seccion: ideas, max: 40}
-  - {id: lavozdegalicia, nombre: "La Voz de Galicia", url: "https://www.lavozdegalicia.es/index.xml", tipo: rss, seccion: ideas, max: 40}
-  - {id: elconfidencial-espana, nombre: "El Confidencial · España", url: "https://rss.elconfidencial.com/espana/", tipo: rss, seccion: ideas, max: 40}
-  - {id: elconfidencial-sociedad, nombre: "El Confidencial · Sociedad", url: "https://rss.elconfidencial.com/sociedad/", tipo: rss, seccion: ideas, max: 40}
-  - {id: elconfidencial-economia, nombre: "El Confidencial · Economía", url: "https://rss.elconfidencial.com/economia/", tipo: rss, seccion: ideas, max: 40}
-  - {id: larazon, nombre: "La Razón", url: "https://www.larazon.es/?outputType=xml", tipo: rss, seccion: ideas, max: 40}
-  - {id: eldebate, nombre: "El Debate", url: "https://www.eldebate.com/rss/home.xml", tipo: rss, seccion: ideas, max: 40}
-  - {id: theobjective, nombre: "The Objective", url: "https://theobjective.com/feed/", tipo: rss, seccion: ideas, max: 40}
-  - {id: elindependiente, nombre: "El Independiente", url: "https://www.elindependiente.com/feed/", tipo: rss, seccion: ideas, max: 40}
-  - {id: elplural, nombre: "El Plural", url: "https://www.elplural.com/uploads/feeds/feed_elplural_es.xml", tipo: rss, seccion: ideas, max: 40}
-  - {id: huffpost, nombre: "HuffPost España", url: "https://www.huffingtonpost.es/feeds/index.xml", tipo: rss, seccion: ideas, max: 40}
-  - {id: lasexta, nombre: "laSexta", url: "https://www.lasexta.com/rss/351410.xml", tipo: rss, seccion: ideas, max: 40}
-  - {id: ondacero, nombre: "Onda Cero", url: "https://www.ondacero.es/rss/8145.xml", tipo: rss, seccion: ideas, max: 40}
-  - {id: cope, nombre: "COPE", url: "https://www.cope.es/rss/home.xml", tipo: rss, seccion: ideas, max: 40}
-  - {id: civio, nombre: "Civio", url: "https://civio.es/feed.xml", tipo: rss, seccion: ideas, max: 40}
-  - {id: maldita, nombre: "Maldita", url: "https://maldita.es/feed", tipo: rss, seccion: ideas, max: 40}
-  - {id: redaccionmedica, nombre: "Redacción Médica", url: "https://www.redaccionmedica.com/rss/", tipo: rss, seccion: ideas, max: 40}
-  - {id: magisterio, nombre: "Magisterio", url: "https://www.magisnet.com/feed/", tipo: rss, seccion: ideas, max: 40}
-  - {id: agroinformacion, nombre: "Agroinformación", url: "https://agroinformacion.com/feed/", tipo: rss, seccion: ideas, max: 40}
-  - {id: xataka, nombre: "Xataka", url: "https://www.xataka.com/feedburner.xml", tipo: rss, seccion: ideas, max: 40}
-  - {id: granadahoy, nombre: "Granada Hoy", url: "https://www.granadahoy.com/rss/", tipo: rss, seccion: ideas, max: 40}
-  - {id: malagahoy, nombre: "Málaga Hoy", url: "https://www.malagahoy.es/rss/", tipo: rss, seccion: ideas, max: 40}
-  - {id: diariodejerez, nombre: "Diario de Jerez", url: "https://www.diariodejerez.es/rss/", tipo: rss, seccion: ideas, max: 40}
-  - {id: huelvainformacion, nombre: "Huelva Información", url: "https://www.huelvainformacion.es/rss/", tipo: rss, seccion: ideas, max: 40}
-  - {id: eldiadecordoba, nombre: "El Día de Córdoba", url: "https://www.eldiadecordoba.es/rss/", tipo: rss, seccion: ideas, max: 40}
-  - {id: diariodealmeria, nombre: "Diario de Almería", url: "https://www.diariodealmeria.es/rss/", tipo: rss, seccion: ideas, max: 40}
-  - {id: europasur, nombre: "Europa Sur", url: "https://www.europasur.es/rss/", tipo: rss, seccion: ideas, max: 40}
-  - {id: praza, nombre: "Praza (Galicia)", url: "https://praza.gal/rss/novas", tipo: rss, seccion: ideas, max: 40}
-  - {id: nosdiario, nombre: "Nós Diario (Galicia)", url: "https://www.nosdiario.gal/rss/", tipo: rss, seccion: ideas, max: 40}
-  - {id: nortes, nombre: "Nortes (Asturias)", url: "https://www.nortes.me/feed/", tipo: rss, seccion: ideas, max: 40}
-  - {id: ultimahora, nombre: "Última Hora (Baleares)", url: "https://www.ultimahora.es/feed.rss", tipo: rss, seccion: ideas, max: 40}
-  - {id: diariodeavisos, nombre: "Diario de Avisos (Canarias)", url: "https://diariodeavisos.elespanol.com/feed/", tipo: rss, seccion: ideas, max: 40}
-  - {id: nuevecuatrouno, nombre: "NueveCuatroUno (La Rioja)", url: "https://nuevecuatrouno.com/feed/", tipo: rss, seccion: ideas, max: 40}
-  - {id: rioja2, nombre: "Rioja2", url: "https://www.rioja2.com/rss/", tipo: rss, seccion: ideas, max: 40}
-  - {id: encastillalamancha, nombre: "encastillalamancha.es", url: "https://www.encastillalamancha.es/feed/", tipo: rss, seccion: ideas, max: 40}
-  - {id: lanza, nombre: "Lanza (Ciudad Real)", url: "https://www.lanzadigital.com/feed/", tipo: rss, seccion: ideas, max: 40}
-  - {id: aragondigital, nombre: "Aragón Digital", url: "https://www.aragondigital.es/rss/", tipo: rss, seccion: ideas, max: 40}
-  - {id: diariodelaltoaragon, nombre: "Diario del AltoAragón", url: "https://www.diariodelaltoaragon.es/rss/", tipo: rss, seccion: ideas, max: 40}
-  - {id: eladelantado, nombre: "El Adelantado de Segovia", url: "https://eladelantado.com/feed/", tipo: rss, seccion: ideas, max: 40}
-  - {id: elfarodeceuta, nombre: "El Faro de Ceuta", url: "https://elfarodeceuta.es/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: 20minutos, cada: 3, nombre: "20minutos", url: "https://www.20minutos.es/rss", tipo: rss, seccion: ideas, max: 60}
+  - {id: europapress, cada: 3, nombre: "Europa Press", url: "https://www.europapress.es/rss/rss.aspx?ch=94", tipo: rss, seccion: ideas, max: 60}
+  - {id: infolibre, cada: 3, nombre: "infoLibre", url: "https://www.infolibre.es/rss/", tipo: rss, seccion: ideas, max: 60}
+  - {id: elsalto, cada: 3, nombre: "El Salto", url: "https://www.elsaltodiario.com/actualidad/feed/", tipo: rss, seccion: ideas, max: 60}
+  - {id: elpais, cada: 3, nombre: "El País", url: "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada", tipo: rss, seccion: ideas, max: 60}
+  - {id: elmundo, cada: 3, nombre: "El Mundo", url: "https://www.elmundo.es/rss/googlenews/portada.xml", tipo: rss, seccion: ideas, max: 60}
+  - {id: lavanguardia, cada: 3, nombre: "La Vanguardia", url: "https://www.lavanguardia.com/rss/home.xml", tipo: rss, seccion: ideas, max: 60}
+  - {id: elespanol, cada: 3, nombre: "El Español", url: "https://www.elespanol.com/rss/", tipo: rss, seccion: ideas, max: 60}
+  - {id: newtral, cada: 3, nombre: "Newtral", url: "https://www.newtral.es/feed/", tipo: rss, seccion: ideas, max: 60}
+  - {id: lamarea, cada: 3, nombre: "La Marea", url: "https://www.lamarea.com/feed/", tipo: rss, seccion: ideas, max: 60}
+  - {id: diariodeleon, cada: 3, nombre: "Diario de León", url: "https://www.diariodeleon.es/rss/home.xml", tipo: rss, seccion: ideas, max: 60}
+  - {id: diariodesevilla, cada: 3, nombre: "Diario de Sevilla", url: "https://www.diariodesevilla.es/rss/", tipo: rss, seccion: ideas, max: 60}
+  - {id: diariodecadiz, cada: 3, nombre: "Diario de Cádiz", url: "https://www.diariodecadiz.es/rss/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-catalunya, cada: 3, nombre: "elDiario.es · Catalunya", url: "https://www.eldiario.es/rss/catalunya/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-madrid, cada: 3, nombre: "elDiario.es · Madrid", url: "https://www.eldiario.es/rss/madrid/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-canariasahora, cada: 3, nombre: "elDiario.es · Canarias Ahora", url: "https://www.eldiario.es/rss/canariasahora/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-castilla-la-mancha, cada: 3, nombre: "elDiario.es · Castilla-La Mancha", url: "https://www.eldiario.es/rss/castilla-la-mancha/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-extremadura, cada: 3, nombre: "elDiario.es · Extremadura", url: "https://www.eldiario.es/rss/extremadura/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-murcia, cada: 3, nombre: "elDiario.es · Murcia", url: "https://www.eldiario.es/rss/murcia/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-illes-balears, cada: 3, nombre: "elDiario.es · Illes Balears", url: "https://www.eldiario.es/rss/illes-balears/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-la-rioja, cada: 3, nombre: "elDiario.es · La Rioja", url: "https://www.eldiario.es/rss/la-rioja/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-sociedad, cada: 3, nombre: "elDiario.es · Sociedad", url: "https://www.eldiario.es/rss/sociedad/", tipo: rss, seccion: ideas, max: 60}
+  - {id: eldiario-economia, cada: 3, nombre: "elDiario.es · Economía", url: "https://www.eldiario.es/rss/economia/", tipo: rss, seccion: ideas, max: 60}
+  - {id: cadena-ser, cada: 3, nombre: "Cadena SER", url: "https://cadenaser.com/arc/outboundfeeds/rss/?outputType=xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: lavozdegalicia, cada: 3, nombre: "La Voz de Galicia", url: "https://www.lavozdegalicia.es/index.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: elconfidencial-espana, cada: 3, nombre: "El Confidencial · España", url: "https://rss.elconfidencial.com/espana/", tipo: rss, seccion: ideas, max: 40}
+  - {id: elconfidencial-sociedad, cada: 3, nombre: "El Confidencial · Sociedad", url: "https://rss.elconfidencial.com/sociedad/", tipo: rss, seccion: ideas, max: 40}
+  - {id: elconfidencial-economia, cada: 3, nombre: "El Confidencial · Economía", url: "https://rss.elconfidencial.com/economia/", tipo: rss, seccion: ideas, max: 40}
+  - {id: larazon, cada: 3, nombre: "La Razón", url: "https://www.larazon.es/?outputType=xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: eldebate, cada: 3, nombre: "El Debate", url: "https://www.eldebate.com/rss/home.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: theobjective, cada: 3, nombre: "The Objective", url: "https://theobjective.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: elindependiente, cada: 3, nombre: "El Independiente", url: "https://www.elindependiente.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: elplural, cada: 3, nombre: "El Plural", url: "https://www.elplural.com/uploads/feeds/feed_elplural_es.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: huffpost, cada: 3, nombre: "HuffPost España", url: "https://www.huffingtonpost.es/feeds/index.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: lasexta, cada: 3, nombre: "laSexta", url: "https://www.lasexta.com/rss/351410.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: ondacero, cada: 3, nombre: "Onda Cero", url: "https://www.ondacero.es/rss/8145.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: cope, cada: 3, nombre: "COPE", url: "https://www.cope.es/rss/home.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: civio, cada: 3, nombre: "Civio", url: "https://civio.es/feed.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: maldita, cada: 3, nombre: "Maldita", url: "https://maldita.es/feed", tipo: rss, seccion: ideas, max: 40}
+  - {id: redaccionmedica, cada: 3, nombre: "Redacción Médica", url: "https://www.redaccionmedica.com/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: magisterio, cada: 3, nombre: "Magisterio", url: "https://www.magisnet.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: agroinformacion, cada: 3, nombre: "Agroinformación", url: "https://agroinformacion.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: xataka, cada: 3, nombre: "Xataka", url: "https://www.xataka.com/feedburner.xml", tipo: rss, seccion: ideas, max: 40}
+  - {id: granadahoy, cada: 3, nombre: "Granada Hoy", url: "https://www.granadahoy.com/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: malagahoy, cada: 3, nombre: "Málaga Hoy", url: "https://www.malagahoy.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: diariodejerez, cada: 3, nombre: "Diario de Jerez", url: "https://www.diariodejerez.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: huelvainformacion, cada: 3, nombre: "Huelva Información", url: "https://www.huelvainformacion.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: eldiadecordoba, cada: 3, nombre: "El Día de Córdoba", url: "https://www.eldiadecordoba.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: diariodealmeria, cada: 3, nombre: "Diario de Almería", url: "https://www.diariodealmeria.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: europasur, cada: 3, nombre: "Europa Sur", url: "https://www.europasur.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: praza, cada: 3, nombre: "Praza (Galicia)", url: "https://praza.gal/rss/novas", tipo: rss, seccion: ideas, max: 40}
+  - {id: nosdiario, cada: 3, nombre: "Nós Diario (Galicia)", url: "https://www.nosdiario.gal/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: nortes, cada: 3, nombre: "Nortes (Asturias)", url: "https://www.nortes.me/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: ultimahora, cada: 3, nombre: "Última Hora (Baleares)", url: "https://www.ultimahora.es/feed.rss", tipo: rss, seccion: ideas, max: 40}
+  - {id: diariodeavisos, cada: 3, nombre: "Diario de Avisos (Canarias)", url: "https://diariodeavisos.elespanol.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: nuevecuatrouno, cada: 3, nombre: "NueveCuatroUno (La Rioja)", url: "https://nuevecuatrouno.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: rioja2, cada: 3, nombre: "Rioja2", url: "https://www.rioja2.com/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: encastillalamancha, cada: 3, nombre: "encastillalamancha.es", url: "https://www.encastillalamancha.es/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: lanza, cada: 3, nombre: "Lanza (Ciudad Real)", url: "https://www.lanzadigital.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: aragondigital, cada: 3, nombre: "Aragón Digital", url: "https://www.aragondigital.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: diariodelaltoaragon, cada: 3, nombre: "Diario del AltoAragón", url: "https://www.diariodelaltoaragon.es/rss/", tipo: rss, seccion: ideas, max: 40}
+  - {id: eladelantado, cada: 3, nombre: "El Adelantado de Segovia", url: "https://eladelantado.com/feed/", tipo: rss, seccion: ideas, max: 40}
+  - {id: elfarodeceuta, cada: 3, nombre: "El Faro de Ceuta", url: "https://elfarodeceuta.es/feed/", tipo: rss, seccion: ideas, max: 40}
 
 # ------------------------------------------------------------
 #  Webs que hay que mirar a mano (no se pueden leer solas).
