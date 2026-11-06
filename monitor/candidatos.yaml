@@ -1,0 +1,68 @@
+# Webs candidatas que el explorador (monitor/descubrir.py) comprueba.
+# Los 51 ayuntamientos se sacan automáticamente de Wikidata.
+# categoria: institucion | cuadrilla | asociacion | colectivo | cultura | medio
+candidatos:
+  # --- instituciones ---
+  - {nombre: "Juntas Generales de Álava", web: "https://www.jjggalava.eus/", categoria: institucion}
+  - {nombre: "Parlamento Vasco", web: "https://www.legebiltzarra.eus/", categoria: institucion}
+  - {nombre: "Eustat", web: "https://www.eustat.eus/", categoria: institucion}
+  - {nombre: "UPV/EHU", web: "https://www.ehu.eus/es/", categoria: institucion}
+  - {nombre: "Ararteko", web: "https://www.ararteko.eus/", categoria: institucion}
+  - {nombre: "Araba Irekia (Diputación)", web: "https://irekia.araba.eus/", categoria: institucion}
+  - {nombre: "Diputación · web foral", web: "https://web.araba.eus/", categoria: institucion}
+  - {nombre: "Blogs del Ayuntamiento", web: "https://blogs.vitoria-gasteiz.org/", categoria: institucion}
+  - {nombre: "Gasteiz Kultura", web: "https://gasteizkultura.org/", categoria: cultura}
+  - {nombre: "Fundación Vital", web: "https://www.fundacionvital.eus/", categoria: cultura}
+  - {nombre: "Artium", web: "https://www.artium.eus/", categoria: cultura}
+  - {nombre: "Euskotren (tranvía)", web: "https://www.euskotren.eus/", categoria: institucion}
+  - {nombre: "Agencia Vasca del Agua", web: "https://www.uragentzia.euskadi.eus/", categoria: institucion}
+  - {nombre: "Cámara de Comercio de Álava", web: "https://www.camaradealava.com/", categoria: institucion}
+  - {nombre: "SEA Empresas Alavesas", web: "https://www.sea.es/", categoria: institucion}
+  - {nombre: "Diócesis de Vitoria", web: "https://www.diocesisvitoria.org/", categoria: institucion}
+  # --- cuadrillas ---
+  - {nombre: "Cuadrilla de Añana", web: "https://www.cuadrilladeanana.eus/", categoria: cuadrilla}
+  - {nombre: "Cuadrilla de Ayala / Aiaraldea", web: "https://www.aiaraldea.eus/", categoria: cuadrilla}
+  - {nombre: "Cuadrilla de Campezo-Montaña Alavesa", web: "https://www.montanaalavesa.com/", categoria: cuadrilla}
+  - {nombre: "Cuadrilla de Laguardia-Rioja Alavesa", web: "https://www.cuadrillariojaalavesa.eus/", categoria: cuadrilla}
+  - {nombre: "Cuadrilla de la Llanada Alavesa", web: "https://www.cuadrillasalvatierra.org/", categoria: cuadrilla}
+  - {nombre: "Cuadrilla de Zuia / Gorbeialdea", web: "https://www.gorbeialdea.eus/", categoria: cuadrilla}
+  - {nombre: "Ruta del Vino de Rioja Alavesa", web: "https://www.rutadelvinoderiojaalavesa.com/", categoria: cuadrilla}
+  # --- asociaciones vecinales (Vitoria) ---
+  - {nombre: "Judimendikoak (Judimendi)", web: "https://judimendikoak.com/", categoria: asociacion}
+  - {nombre: "Zabalgana Batuz", web: "https://www.zabalganabatuz.org/", categoria: asociacion}
+  - {nombre: "Salburua Bizirik", web: "https://www.salburuabizirik.org/", categoria: asociacion}
+  - {nombre: "Gure Auzune (El Pilar)", web: "https://www.elpilar-gureauzune.org/", categoria: asociacion}
+  - {nombre: "Gasteiz Txiki (Casco Viejo)", web: "https://gasteiztxiki.blogspot.com/", categoria: asociacion}
+  - {nombre: "Elkarteak.org (asociaciones de Vitoria)", web: "https://elkarteak.org/", categoria: asociacion}
+  - {nombre: "Ipar Arriaga", web: "https://www.ipararriaga.org/", categoria: asociacion}
+  - {nombre: "Aranako (Arana)", web: "https://www.aranako.org/", categoria: asociacion}
+  - {nombre: "Ibailakua", web: "https://www.ibailakua.org/", categoria: asociacion}
+  - {nombre: "Adurtzakoak", web: "https://www.adurtzakoak.org/", categoria: asociacion}
+  - {nombre: "Bizigarri Zaramaga", web: "https://www.bizigarri.org/", categoria: asociacion}
+  - {nombre: "Salburua Burdinbide", web: "https://www.burdinbide.org/", categoria: asociacion}
+  - {nombre: "Zazpigarren Alaba", web: "https://www.zazpigarrenalaba.org/", categoria: asociacion}
+  - {nombre: "Kaleartean (Sansomendi)", web: "https://www.kaleartean.org/", categoria: asociacion}
+  - {nombre: "Guztion Goikolarra", web: "https://www.goikolarra.org/", categoria: asociacion}
+  - {nombre: "Goian (Casco Viejo)", web: "https://blog.goian.org/", categoria: asociacion}
+  # --- colectivos ---
+  - {nombre: "Gasteizko Bizikleteroak", web: "https://www.bizikleteroak.org/", categoria: colectivo}
+  - {nombre: "Ekologistak Martxan", web: "https://www.ekologistakmartxan.org/", categoria: colectivo}
+  - {nombre: "Cáritas Vitoria", web: "https://www.caritasvitoria.org/", categoria: colectivo}
+  - {nombre: "SOS Racismo Araba", web: "https://www.sosracismo.eus/", categoria: colectivo}
+  - {nombre: "UAGA (sindicato agrario)", web: "https://www.uaga.eus/", categoria: colectivo}
+  - {nombre: "Banco de Alimentos de Álava", web: "https://www.bancodealimentosdealava.org/", categoria: colectivo}
+  # --- medios locales (para "Ya publicado") ---
+  - {nombre: "Noticias de Álava", web: "https://www.noticiasdealava.eus/", categoria: medio}
+  - {nombre: "Gasteiz Berri", web: "https://gasteizberri.com/", categoria: medio}
+  - {nombre: "Hala Bedi", web: "https://halabedi.eus/", categoria: medio}
+  - {nombre: "Aiaraldea (medio)", web: "https://aiaraldea.eus/", categoria: medio}
+  - {nombre: "Naiz", web: "https://www.naiz.eus/", categoria: medio}
+  - {nombre: "EITB", web: "https://www.eitb.eus/es/", categoria: medio}
+
+# Páginas de las que se guarda una muestra para programar su lector
+muestras:
+  - {id: botha, url: "https://www.araba.eus/botha/inicio/SGBO5001.aspx"}
+  - {id: diputacion, url: "https://prentsa.araba.eus/es/inicio"}
+  - {id: boe-sumario, url: "https://www.boe.es/datosabiertos/api/boe/sumario/{HOY}", accept: "application/json"}
+  - {id: agenda-cultura, url: "https://www.vitoria-gasteiz.org/we001/was/rssAction.do?idioma=es&accion=actividadesCuadroMando&claveTema=&claveArea=38"}
+  - {id: ayto-notas, url: "https://blogs.vitoria-gasteiz.org/medios/feed/"}
