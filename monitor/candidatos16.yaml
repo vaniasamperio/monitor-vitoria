@@ -1,0 +1,28 @@
+candidatos:
+  - {nombre: "Laudio", web: "https://www.laudio.eus/"}
+  - {nombre: "Laudio es", web: "https://www.laudio.eus/es/"}
+  - {nombre: "Amurrio", web: "https://www.amurrio.eus/"}
+  - {nombre: "Amurrio noticias", web: "https://www.amurrio.eus/es/noticias"}
+  - {nombre: "Laguardia", web: "https://www.laguardia.eus/es/"}
+  - {nombre: "Laguardia noticias", web: "https://www.laguardia.eus/es/noticias"}
+  - {nombre: "Parlamento Vasco", web: "https://www.legebiltzarra.eus/"}
+  - {nombre: "Parlamento Vasco portal", web: "https://www.legebiltzarra.eus/portal/es/"}
+  - {nombre: "EHU Araba", web: "https://www.ehu.eus/es/web/araba"}
+  - {nombre: "EHU Campusa", web: "https://www.ehu.eus/es/web/campusa-magazine"}
+  - {nombre: "EHU noticias", web: "https://www.ehu.eus/es/web/actualidad"}
+  - {nombre: "Artium", web: "https://www.artium.eus/"}
+  - {nombre: "Artium es", web: "https://www.artium.eus/es/"}
+  - {nombre: "Artium exposiciones", web: "https://www.artium.eus/es/exposiciones"}
+  - {nombre: "Artium actividades", web: "https://www.artium.eus/es/actividades"}
+muestras:
+  - {id: robots-laudio, url: "https://www.laudio.eus/robots.txt"}
+  - {id: robots-amurrio, url: "https://www.amurrio.eus/robots.txt"}
+  - {id: robots-laguardia, url: "https://www.laguardia.eus/robots.txt"}
+  - {id: robots-parlamento, url: "https://www.legebiltzarra.eus/robots.txt"}
+  - {id: robots-ehu, url: "https://www.ehu.eus/robots.txt"}
+  - {id: robots-artium, url: "https://www.artium.eus/robots.txt"}
+  - {id: robots-gnews, url: "https://news.google.com/robots.txt"}
+  - {id: robots-ine, url: "https://servicios.ine.es/robots.txt"}
+  - {id: parl-opendata, url: "https://www.legebiltzarra.eus/portal/es/web/eusko-legebiltzarra/datos-abiertos"}
+  - {id: parl-api, url: "https://www.legebiltzarra.eus/opendata/"}
+  - {id: laudio-web, url: "https://www.laudio.eus/es/"}
