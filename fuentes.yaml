@@ -130,6 +130,70 @@ fuentes:
 
   # =================== DINERO PÚBLICO ===================
   # BDNS: "regiones=14" es Araba/Álava (ES211). Los contratos salen de los boletines (pestaña Dinero los junta).
+  - id: kpe-alava
+    nombre: "Contratos y licitaciones de las instituciones alavesas (Contratación Pública en Euskadi)"
+    url: "https://www.contratacion.euskadi.eus/"
+    tipo: kpe
+    seccion: dinero
+    local: true
+    cada: 3
+    dias: 90
+    dias_anuncios: 14
+    importe_minimo: 3000
+    presupuesto_minimo: 30000
+    calendario_minimo: 100000
+    categoria_cal: institucional
+    calendario: false
+    poderes: &poderes_alava
+      350: "Ayuntamiento de Vitoria-Gasteiz"
+      167: "Diputación Foral de Álava"
+      354: "AMVISA (Aguas Municipales de Vitoria-Gasteiz)"
+      387: "TUVISA (Transportes Urbanos de Vitoria-Gasteiz)"
+      356: "Ensanche 21 Zabalgunea"
+      374: "Centro de Estudios Ambientales (CEA)"
+      177: "Instituto Foral de Bienestar Social (IFBS)"
+      176: "Instituto Foral de la Juventud"
+      619: "Arabat, Vías de Álava"
+      341: "Álava Agencia de Desarrollo"
+      148: "Parque Tecnológico de Álava"
+      604: "Urbide, Consorcio de Aguas de Álava"
+      398: "Fundación Artium"
+      789: "VIA, Promoción del Aeropuerto de Vitoria"
+      25924: "Enargi Araba"
+      24527: "Fundación Kirolaraba"
+      333: "Ayuntamiento de Laudio/Llodio"
+      19: "Ayuntamiento de Amurrio"
+      463: "Ayuntamiento de Agurain/Salvatierra"
+      441: "Ayuntamiento de Laguardia"
+      233: "Ayuntamiento de Iruña de Oca"
+      244: "Ayuntamiento de Oyón-Oion"
+      68: "Ayuntamiento de Ayala/Aiara"
+      67: "Ayuntamiento de Alegría-Dulantzi"
+      145: "Ayuntamiento de Asparrena"
+      293: "Ayuntamiento de Legutio"
+      137: "Ayuntamiento de Zuia"
+      385: "Ayuntamiento de Labastida"
+      245: "Ayuntamiento de Elciego"
+      77: "Ayuntamiento de Artziniega"
+      69: "Ayuntamiento de Okondo"
+      594: "Ayuntamiento de Valdegovía/Gaubea"
+      97: "Ayuntamiento de Campezo/Kanpezu"
+      255: "Ayuntamiento de Zigoitia"
+      361: "Ayuntamiento de Arratzua-Ubarrundia"
+      72: "Cuadrilla de Ayala/Aiaraldea"
+      440: "Cuadrilla de Rioja Alavesa"
+      448: "Cuadrilla de Montaña Alavesa"
+  - id: ted-alava
+    nombre: "Contratos grandes en Álava del Gobierno Vasco, Osakidetza y el Estado (DOUE)"
+    url: "https://api.ted.europa.eu/v3/notices/search"
+    tipo: ted
+    seccion: dinero
+    local: true
+    cada: 6
+    dias: 30
+    calendario: false
+    categoria_cal: institucional
+    poderes: *poderes_alava
   - {id: bdns-convocatorias, nombre: "Ayudas convocadas que afectan a Álava (BDNS)", url: "https://www.infosubvenciones.es/bdnstrans/api/convocatorias/busqueda?page=0&pageSize=50&order=fechaRecepcion&direccion=desc&regiones=14", tipo: bdns, accept: "application/json", seccion: dinero, local: true, cada: 3}
   - {id: bdns-concesiones, nombre: "Subvenciones concedidas a entidades alavesas (BDNS)", url: "https://www.infosubvenciones.es/bdnstrans/api/concesiones/busqueda?page=0&pageSize=200&order=fechaConcesion&direccion=desc&regiones=14", tipo: bdns, modo: concesiones, importe_minimo: 20000, accept: "application/json", seccion: dinero, local: true, cada: 3}
 

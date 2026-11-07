@@ -153,9 +153,29 @@ def construye(datos: dict, ia: dict, ahora: datetime) -> tuple[str, str]:
         bloque("Buzón ciudadano", ul([li(x["titulo"], "", x.get("por_que", "")) for x in bz["destacados"][:3]]))
 
     # 8. dinero público (si hay)
-    din = [i for i in items if i["seccion"] == "dinero" and ref(i) >= lim]
-    din.sort(key=lambda i: (-(i.get("importe") or 0), -ref(i).timestamp()))
-    bloque("Dinero público", ul([li(tit(i), i["enlace"], i.get("resumen", "")[:150]) for i in din[:6]]))
+    def eur(x):
+        return (f"{x / 1e6:.1f}".replace(".", ",") + " M €") if x >= 1e6 else f"{x:,.0f}".replace(",", ".") + " €"
+
+    def visto(i):
+        return datetime.fromisoformat(i["visto"]) if i.get("visto") else ref(i)
+    din = [i for i in items if i["seccion"] == "dinero" and visto(i) >= lim and i.get("fuente") != "bdns-convocatorias"]
+    din.sort(key=lambda i: -(i.get("importe") or 0))
+    filas = []
+    for i in din[:7]:
+        b, imp = i.get("bloque"), i.get("importe") or 0
+        if b == "contrato":
+            t = f"{eur(imp)} · {i.get('adjudicatario', '')} — {i['titulo']}"
+        elif b == "subvencion":
+            t = i["titulo"]
+        elif b == "licitacion":
+            t = f"Licitación de {eur(imp)} · {i['titulo']} (plazo hasta el {(i.get('plazo') or '')[8:10]}/{(i.get('plazo') or '')[5:7]})"
+        elif b == "modificacion":
+            t = f"{i['titulo']} (contrato de {eur(imp)})"
+        else:
+            t = tit(i)
+        extra = " · ".join(x for x in [i.get("organismo"), ", ".join(i.get("banderas") or [])] if x)
+        filas.append(li(t, i["enlace"], extra))
+    bloque("Dinero público", ul(filas))
 
     asunto = f"Radar SER Vitoria · {fecha_larga(hoy)}"
     cuerpo = "".join(secciones) or "<p>Hoy todavía no hay novedades.</p>"

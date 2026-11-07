@@ -43,6 +43,7 @@ MADRID = ZoneInfo("Europe/Madrid")
 
 DIAS_HISTORICO = 21
 DIAS_IDEAS = 7
+DIAS_DINERO = 92            # contratos y subvenciones: 3 meses en el histórico (rankings); 31 días en la página
 MAX_RESUMEN = 420
 UMBRAL_IDEA = 5.0
 USER_AGENT = "MonitorHoyPorHoyVitoria/1.0 (lector RSS para uso periodistico)"
@@ -254,6 +255,81 @@ def descarga(url: str, fixtures: Path | None, fid: str, accept: str | None = Non
             ultimo = e
             time.sleep(3 * (intento + 1))
     raise ultimo
+
+
+def descarga_post(url: str, cuerpo: dict, fixtures: Path | None, fid: str) -> bytes:
+    if fixtures:
+        return descarga(url, fixtures, fid)
+    if not robots_permite(url):
+        raise PermissionError("la web pide no ser leída automáticamente (robots.txt)")
+    ultimo = None
+    for intento in range(3):
+        try:
+            r = ses.post(url, json=cuerpo, timeout=40, headers={"Accept": "application/json"})
+            r.raise_for_status()
+            return r.content
+        except requests.RequestException as e:
+            ultimo = e
+            time.sleep(3 * (intento + 1))
+    raise ultimo
+
+
+KPE_API = "https://api.euskadi.eus/procurements"
+
+
+def descarga_kpe(fuente: dict, hoy: date, fixtures: Path | None) -> dict:
+    """Contratos adjudicados y anuncios de cada poder adjudicador (API paginada de 50 en 50)."""
+    desde_c = (hoy - timedelta(days=fuente.get("dias", 90))).isoformat()
+    desde_n = (hoy - timedelta(days=fuente.get("dias_anuncios", 14))).isoformat()
+    hasta = (hoy + timedelta(days=2)).isoformat()
+    out = {"contratos": [], "anuncios": []}
+    fallos = 0
+    poderes = fuente.get("poderes") or {}
+    for pid, nombre in poderes.items():
+        try:
+            for clave, ruta, maxp in (("contratos", f"/contracts?contracting-authority-id={pid}&award-date.gt={desde_c}"
+                                                    f"&award-date.lt={hasta}&orderBy=awardDate&orderType=DESC", fuente.get("paginas", 5)),
+                                      ("anuncios", f"/contracting-notices?contracting-authority-id={pid}&publication-date.gt={desde_n}"
+                                                   f"&orderBy=lastPublicationDate&orderType=DESC", fuente.get("paginas_anuncios", 4))):
+                for pag in range(1, maxp + 1):
+                    try:
+                        crudo = descarga(f"{KPE_API}{ruta}&itemsOfPage=50&currentPage={pag}", fixtures,
+                                         f"{fuente['id']}-{clave[0]}{pid}" + ("" if pag == 1 else f"-{pag}"), "application/json")
+                    except FileNotFoundError:
+                        break                                  # (pruebas) no hay muestra de este poder
+                    trozo = json.loads(crudo)
+                    for x in trozo.get("items", []):
+                        x["_poder"] = nombre
+                        out[clave].append(x)
+                    if pag >= (trozo.get("totalPages") or 1) or fixtures:
+                        break
+                    time.sleep(0.3)
+                if not fixtures:
+                    time.sleep(0.3)
+        except Exception as e:
+            fallos += 1
+            print(f"  kpe poder {pid}: {type(e).__name__}", file=sys.stderr)
+    if poderes and fallos > len(poderes) // 2:
+        raise RuntimeError(f"no respondieron {fallos} de {len(poderes)} organismos")
+    return out
+
+
+TED_CAMPOS = ["publication-number", "notice-title", "buyer-name", "notice-type", "publication-date", "place-of-performance",
+              "winner-name", "total-value", "estimated-value-proc", "procedure-type", "deadline-receipt-tender-date-lot"]
+
+
+def descarga_ted(url: str, fuente: dict, hoy: date, fixtures: Path | None) -> dict:
+    desde = (hoy - timedelta(days=fuente.get("dias", 30))).strftime("%Y%m%d")
+    todos = []
+    for pag in range(1, fuente.get("paginas", 3) + 1):
+        cuerpo = {"query": f"place-of-performance IN (ES211) AND publication-date>={desde} SORT BY publication-number DESC",
+                  "fields": TED_CAMPOS, "limit": 250, "page": pag}
+        trozo = json.loads(descarga_post(url, cuerpo, fixtures, fuente["id"] + ("" if pag == 1 else f"-{pag}")))
+        todos += trozo.get("notices", [])
+        if len(todos) >= (trozo.get("totalNoticeCount") or 0) or fixtures:
+            break
+        time.sleep(1)
+    return {"notices": todos}
 
 
 # ---------------------------------------------------------------- lectores
@@ -890,21 +966,202 @@ def lee_bdns(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
             titulo = f"{bonito(ben)} recibe {f'{imp:,.0f}'.replace(',', '.')} € de {bonito(organo)}"
             texto = recorta(c.get("convocatoria") or "", 300)
             fecha = c.get("fechaConcesion")
+            extra = {"bloque": "subvencion", "adjudicatario": bonito(ben), "organismo": bonito(organo)}
+            if RX_DIRECTA.search(texto):
+                extra["banderas"] = ["Concesión directa"]
         else:
             desc = " ".join((c.get("descripcion") or "").split())
             titulo = f"{bonito(organo)}: {desc[:1].upper() + desc[1:].lower() if desc.isupper() else desc}"
             texto, imp = "", None
             fecha = c.get("fechaRecepcion")
+            extra = {"bloque": "convocatoria", "organismo": bonito(organo)}
         try:
             f = datetime.combine(date.fromisoformat(fecha[:10]), datetime.min.time(), MADRID)
         except (TypeError, ValueError):
             f = None
         out.append({"titulo": titulo[:300], "enlace": enlace, "texto": texto, "texto_largo": texto, "fecha": f,
-                    "categorias": [], "clave": f"bdns{c.get('id')}", **({"importe": imp} if imp else {})})
+                    "categorias": [], "clave": f"bdns{c.get('id')}", **({"importe": imp} if imp else {}), **extra})
+    return out
+
+
+# ---------------------------------------------------------------- contratos públicos
+RX_DIRECTA = re.compile(r"concesi[oó]n directa|nominativ|directamente|sin concurrencia", re.I)
+
+
+def euros(x) -> str:
+    return f"{x:,.0f}".replace(",", ".") + " €"
+
+
+def _objeto(t: str) -> str:
+    t = " ".join((t or "").split()).strip(" .\"“”'")
+    if t.isupper():
+        t = t.lower()
+    return (t[:1].upper() + t[1:])[:220]
+
+
+def _adjudicatario(nombre: str, cif: str) -> str | None:
+    """Empresa adjudicataria; las personas físicas (NIF enmascarado o DNI) no se nombran."""
+    cif = (cif or "").strip().upper()
+    if not nombre or cif.startswith("XXX") or re.fullmatch(r"\d{8}[A-Z]|[XYZ]\d{7}[A-Z]", cif):
+        return None
+    return bonito(" ".join(nombre.split()))
+
+
+def _fecha_ok(f: str | None, hoy: date) -> datetime | None:
+    try:
+        d = date.fromisoformat((f or "")[:10])
+    except ValueError:
+        return None
+    if d > hoy + timedelta(days=3) or d.year < 2000:     # fechas mal tecleadas en origen (2926, 1926…)
+        return None
+    return datetime.combine(d, datetime.min.time(), MADRID)
+
+
+# Plataforma de Contratación Pública en Euskadi (API de Open Data Euskadi): contratos adjudicados y
+# licitaciones de los poderes adjudicadores alaveses que se listan en fuentes.yaml.
+PROC_BANDERA = {8: "Sin publicidad", 17: "Emergencia", 16: "Encargo a medio propio"}
+
+
+def lee_kpe(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
+    d = json.loads(contenido)
+    out = []
+    minimo = fuente.get("importe_minimo", 0)
+    minimo_lic = fuente.get("presupuesto_minimo", 0)
+    for c in d.get("contratos", []):
+        poder = c.get("_poder") or ""
+        imp = c.get("awardAmountWithoutVAT") or c.get("awardAmount") or 0
+        if imp < minimo:
+            continue
+        proc = (c.get("contractProcedureType") or {})
+        tipo = (c.get("contractType") or {}).get("name") or ""
+        ban = []
+        if c.get("minorContract") or proc.get("id") == 10:
+            ban.append("Contrato menor")
+            tope = 40000 if tipo == "Obras" else 15000
+            if imp >= tope * 0.93:
+                ban.append("Al límite del contrato menor")
+        if proc.get("id") in PROC_BANDERA:
+            ban.append(PROC_BANDERA[proc["id"]])
+        adj = _adjudicatario(c.get("socialReason"), c.get("CIF"))
+        enlace = (c.get("mainEntityOfPage") or "https://www.contratacion.euskadi.eus/") + f"#{c.get('id')}"
+        meses = c.get("monthsContractDuration")
+        texto = " · ".join(x for x in [proc.get("name"), tipo, (f"{meses} meses" if meses != 1 else "1 mes") if meses else "",
+                                       f"{euros(c['awardAmount'])} con IVA" if c.get("awardAmount") else ""] if x)
+        out.append({"titulo": _objeto(c.get("object")), "enlace": enlace, "texto": texto, "texto_largo": texto,
+                    "fecha": _fecha_ok(c.get("awardDate"), hoy), "categorias": [], "clave": f"kpec{c.get('id')}",
+                    "importe": round(imp, 2), "organismo": poder, "bloque": "contrato",
+                    "adjudicatario": adj or "Persona física", "procedimiento": proc.get("name") or "",
+                    **({"banderas": ban} if ban else {})})
+    for n in d.get("anuncios", []):
+        poder = n.get("_poder") or ""
+        est = (n.get("contractProcedureStatus") or {}).get("id")
+        proc = (n.get("contractProcedureType") or {})
+        pres = n.get("budgetWithoutVAT") or 0
+        enlace = n.get("mainEntityOfPage") or "https://www.contratacion.euskadi.eus/"
+        tipo = (n.get("contractType") or {}).get("name") or ""
+        ban = [PROC_BANDERA[proc["id"]]] if proc.get("id") in PROC_BANDERA else []
+        if n.get("numberBidders") == 1:
+            ban.append("Un solo licitador")
+        plazo = (n.get("deadlineDate") or "")[:10]
+        if est == 3 and plazo >= hoy.isoformat() and pres >= minimo_lic:
+            bloque, fecha = "licitacion", _fecha_ok(n.get("firstPublicationDate"), hoy)
+            titulo = _objeto(n.get("object"))
+        elif est == 11:
+            bloque, fecha = "modificacion", _fecha_ok(n.get("lastPublicationDate"), hoy)
+            titulo = "Modificación del contrato: " + _objeto(n.get("object"))
+            ban.append("Modificado")
+        elif proc.get("id") == 17 and pres >= minimo:
+            bloque, fecha = "modificacion", _fecha_ok(n.get("lastPublicationDate"), hoy)
+            titulo = "Contrato de emergencia: " + _objeto(n.get("object"))
+        else:
+            continue
+        texto = " · ".join(x for x in [proc.get("name"), tipo, f"Presupuesto {euros(pres)} sin IVA" if pres else "",
+                                       f"Plazo hasta el {plazo[8:10]}/{plazo[5:7]}" if bloque == "licitacion" and plazo else ""] if x)
+        it = {"titulo": titulo, "enlace": enlace + f"#{bloque}", "texto": texto, "texto_largo": texto, "fecha": fecha,
+              "categorias": [], "clave": f"kpen{n.get('id')}-{bloque}", "importe": round(pres, 2), "organismo": poder,
+              "bloque": bloque, "procedimiento": proc.get("name") or "", **({"banderas": ban} if ban else {})}
+        if bloque == "licitacion":
+            it["plazo"] = plazo
+        if bloque == "licitacion" and pres >= fuente.get("calendario_minimo", 100000):
+            it["cal_ev"] = {"fecha": plazo, "hasta": None, "hora": None, "tipo": "plazo",
+                            "frase": f"Último día para presentar ofertas: {titulo} ({poder}, {euros(pres)} sin IVA)"}
+        out.append(it)
+    return out
+
+
+# TED (Diario Oficial de la UE): contratos grandes que se ejecutan solo en Álava, de compradores que no salen
+# ya en la plataforma vasca (Gobierno Vasco, Osakidetza, EJIE, Estado…).
+def lee_ted(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
+    d = json.loads(contenido)
+    # el mismo organismo se llama igual que en la plataforma vasca (para sumar bien en los rankings)
+    alias = []
+    for nombre in (fuente.get("poderes") or {}).values():
+        m = re.search(r"\(([^)]+)\)", nombre)
+        alias.append((normaliza(m.group(1) if m else nombre).lower(), nombre))
+    out = []
+    for n in d.get("notices", []):
+        lugares = {x for x in (n.get("place-of-performance") or []) if x not in ("ESP", "ES", "ES2", "ES21")}
+        if lugares != {"ES211"}:
+            continue
+        tipo = n.get("notice-type") or ""
+        comprador = ((n.get("buyer-name") or {}).get("spa") or (n.get("buyer-name") or {}).get("eus") or [""])[0]
+        comprador = bonito(comprador.split(" - ")[0].strip())
+        propio = False
+        for core, nombre in alias:
+            if core and core in normaliza(comprador).lower():
+                comprador, propio = nombre, True
+                break
+        if not propio:
+            # Gobierno Vasco, Osakidetza, EJIE… tienen la sede en Vitoria y el DOUE sitúa en Álava contratos que son para
+            # toda Euskadi: solo se quedan si el contrato habla de Álava o de un municipio alavés.
+            tn = normaliza((n.get("notice-title") or {}).get("spa") or "")
+            if not (coincidencias(RX_ALAVA_GENERAL, tn) or any(rx.search(tn) for _, _, rx in RX_MUNI)):
+                continue
+        tit = ((n.get("notice-title") or {}).get("spa") or "").split(" – ", 2)[-1]
+        num = n.get("publication-number")
+        enlace = f"https://ted.europa.eu/es/notice/-/detail/{num}"
+        fecha = _fecha_ok(n.get("publication-date"), hoy)
+        proc = n.get("procedure-type") or ""
+        ban = ["Sin publicidad"] if proc == "neg-wo-call" else []
+        valor = n.get("total-value")
+        est = n.get("estimated-value-proc")
+        try:
+            valor = float(valor) if valor is not None else None
+            est = float(est) if est is not None else None
+        except (TypeError, ValueError):
+            valor = est = None
+        it = {"titulo": _objeto(tit), "enlace": enlace, "fecha": fecha, "categorias": [], "clave": f"ted{num}",
+              "organismo": comprador, "procedimiento": {"open": "Abierto", "neg-wo-call": "Negociado sin publicidad",
+                                                          "restricted": "Restringido"}.get(proc, proc)}
+        if tipo.startswith("cn"):
+            plazos = sorted(x[:10] for x in (n.get("deadline-receipt-tender-date-lot") or []) if x)
+            if not plazos or plazos[0] < hoy.isoformat():
+                continue
+            it.update(bloque="licitacion", importe=est or valor or 0, plazo=plazos[0])
+            it["cal_ev"] = {"fecha": plazos[0], "hasta": None, "hora": None, "tipo": "plazo",
+                            "frase": f"Último día para presentar ofertas: {it['titulo']} ({comprador}" +
+                                     (f", {euros(it['importe'])} sin IVA)" if it["importe"] else ")")}
+        elif tipo == "can-modif":
+            it.update(bloque="modificacion", importe=valor or 0, titulo="Modificación del contrato: " + it["titulo"])
+            ban.append("Modificado")
+        elif tipo.startswith("can"):
+            gan = (n.get("winner-name") or {}).get("spa") or (n.get("winner-name") or {}).get("eus") or []
+            gan = list(dict.fromkeys(bonito(g.strip()) for g in gan if g.strip()))
+            if not gan or not valor:
+                continue
+            it.update(bloque="contrato", importe=valor, adjudicatario=gan[0] if len(gan) == 1 else f"{gan[0]} y {len(gan) - 1} más")
+        else:
+            continue
+        if ban:
+            it["banderas"] = ban
+        it["texto"] = " · ".join(x for x in [it["procedimiento"], f"{euros(it['importe'])} sin IVA" if it.get("importe") else "",
+                                             "Publicado en el DOUE"] if x)
+        it["texto_largo"] = it["texto"]
+        out.append(it)
     return out
 
 LECTORES = {"liferay": lee_liferay, "rss": lee_rss, "html": lee_html, "diputacion": lee_diputacion, "botha": lee_botha, "boe": lee_boe,
-            "kulturklik": lee_kulturklik, "bdns": lee_bdns, "correo": lambda c, f, h: lee_correo(c, f)}
+            "kulturklik": lee_kulturklik, "bdns": lee_bdns, "kpe": lee_kpe, "ted": lee_ted, "correo": lambda c, f, h: lee_correo(c, f)}
 
 
 # ---------------------------------------------------------------- clasificación
@@ -1013,6 +1270,58 @@ def guarda_json(ruta: Path, datos) -> None:
 ARCHIVO = RAIZ / "docs" / "archivo"
 
 
+def _clave_empresa(n: str) -> str:
+    n = re.sub(r"\b(s\.?\s?l\.?\s?u?|s\.?\s?a\.?\s?u?|s\.?\s?coop|sociedad limitada|sociedad anonima|unipersonal)\b\.?", "",
+               normaliza(n or "").lower())
+    return re.sub(r"[^a-z0-9]+", " ", n).strip()
+
+
+def repetidos_dinero(items: list[dict]) -> set:
+    """Un mismo contrato puede llegar por la plataforma vasca y por el DOUE: se queda el de la plataforma vasca."""
+    def k(i):
+        return (i.get("bloque"), _clave_empresa(i.get("adjudicatario") or ""),
+                re.sub(r"[^a-z0-9]+", "", normaliza(i.get("titulo") or "").lower().replace("modificacion del contrato", ""))[:32])
+    vistos = {k(i) for i in items if i.get("fuente") != "ted-alava" and i.get("seccion") == "dinero"}
+    return {i["id"] for i in items if i.get("fuente") == "ted-alava" and k(i) in vistos}
+
+
+def resumen_dinero(items_hist: dict, ahora: datetime) -> dict:
+    """Quién recibe y quién reparte más dinero público en Álava (últimos 3 meses), y contratos menores repetidos."""
+    clave_nombre = _clave_empresa
+    rep = repetidos_dinero(list(items_hist.values()))
+    dinero = [i for i in items_hist.values() if i["seccion"] == "dinero" and i.get("importe")
+              and i.get("bloque") in ("contrato", "subvencion") and i["id"] not in rep]
+    reciben, reparten, menores = {}, {}, {}
+    for i in dinero:
+        org = i.get("organismo") or "?"
+        r = reparten.setdefault(org, {"nombre": org, "total": 0, "n": 0, "contratos": 0, "subvenciones": 0})
+        r["total"] += i["importe"]; r["n"] += 1
+        r["contratos" if i["bloque"] == "contrato" else "subvenciones"] += i["importe"]
+        adj = i.get("adjudicatario")
+        if not adj or adj == "Persona física" or re.search(r" y \d+ más$", adj):
+            continue
+        k = clave_nombre(adj)
+        e = reciben.setdefault(k, {"nombre": adj, "total": 0, "n": 0, "contratos": 0, "subvenciones": 0, "de": {}})
+        e["total"] += i["importe"]; e["n"] += 1
+        e["contratos" if i["bloque"] == "contrato" else "subvenciones"] += i["importe"]
+        e["de"][org] = e["de"].get(org, 0) + i["importe"]
+        if "Contrato menor" in (i.get("banderas") or []):
+            m = menores.setdefault((k, org), {"nombre": adj, "organismo": org, "n": 0, "total": 0, "objetos": []})
+            m["n"] += 1; m["total"] += i["importe"]
+            if len(m["objetos"]) < 4:
+                m["objetos"].append(i["titulo"][:90])
+    for e in reciben.values():
+        e["de"] = [o for o, _ in sorted(e["de"].items(), key=lambda x: -x[1])[:3]]
+    redondea = lambda l: [{**x, "total": round(x["total"]), "contratos": round(x.get("contratos", 0)),
+                           "subvenciones": round(x.get("subvenciones", 0))} if "contratos" in x else {**x, "total": round(x["total"])} for x in l]
+    fechas = [de_iso(i["fecha"]) or de_iso(i["visto"]) for i in dinero]
+    return {"desde": iso(min(fechas)) if fechas else None, "dias": DIAS_DINERO,
+            "reciben": redondea(sorted(reciben.values(), key=lambda x: -x["total"])[:12]),
+            "reparten": redondea(sorted(reparten.values(), key=lambda x: -x["total"])[:10]),
+            "menores_repetidos": redondea(sorted([m for m in menores.values() if m["n"] >= 3],
+                                                 key=lambda x: (-x["n"], -x["total"]))[:8])}
+
+
 def archiva(items_hist: dict, cfg_f: dict) -> None:
     """Archivo mensual (docs/archivo/AAAA-MM.json) para buscar más allá de las tres semanas del histórico.
     Guarda lo justo para encontrar algo: título, enlace, fecha, sección, fuente y municipios."""
@@ -1110,6 +1419,10 @@ def main() -> int:
                     doms = tuple(fuente.get("remitentes", []))
                     crudo = json.dumps([c for c in correos_recientes()
                                         if doms and any(d.endswith(doms) for d in dominios_de(c))]).encode()
+            elif fuente.get("tipo") == "kpe":
+                crudo = json.dumps(descarga_kpe(fuente, hoy, args.fixtures)).encode()
+            elif fuente.get("tipo") == "ted":
+                crudo = json.dumps(descarga_ted(url, fuente, hoy, args.fixtures)).encode()
             elif "{PAGINA}" in url:                     # APIs paginadas (Kulturklik): se juntan las páginas
                 todos = []
                 for pag in range(1, fuente.get("paginas", 5) + 1):
@@ -1150,7 +1463,7 @@ def main() -> int:
                     "cuadrilla": it["cuadrilla"], "relevancia": it["relevancia"], "rutina": it["rutina"],
                     "cal": bool(previo and previo.get("cal")),
                 }
-                for extra in ("organismo", "boletin", "bloque", "importe"):
+                for extra in ("organismo", "boletin", "bloque", "importe", "adjudicatario", "procedimiento", "banderas", "plazo"):
                     if it.get(extra):
                         reg[extra] = it[extra]
                 if "puntos" in it:
@@ -1212,7 +1525,10 @@ def main() -> int:
 
     # poda
     limite = ahora - timedelta(days=DIAS_HISTORICO)
+    limite_dinero = ahora - timedelta(days=DIAS_DINERO)
     def vigente(it):
+        if it["seccion"] == "dinero":                 # el dinero se guarda 3 meses para los rankings
+            return (de_iso(it["fecha"]) or de_iso(it["visto"])) >= limite_dinero and de_iso(it["visto"]) >= limite_dinero
         if it["tipo"] == "agenda":
             f = de_iso(it["fecha"])
             return bool(f and f >= ahora - timedelta(days=2))
@@ -1235,7 +1551,15 @@ def main() -> int:
         if es_suceso(it, cfg_f.get(it["fuente"], {})):
             it["suceso"] = True
     for it in items_hist.values():
-        if it["seccion"] == "buzon" or it["fuente"] in solo_cal:
+        if it["fuente"] == "bdns-concesiones" and not it.get("adjudicatario"):
+            m = re.match(r"(.+?) recibe [\d.]+ € de (.+)$", it["titulo"])
+            if m:
+                it.update(bloque="subvencion", adjudicatario=m.group(1), organismo=m.group(2))
+        elif it["fuente"] == "bdns-convocatorias" and not it.get("bloque"):
+            it["bloque"] = "convocatoria"
+    rep_dinero = repetidos_dinero(list(items_hist.values()))
+    for it in items_hist.values():
+        if it["seccion"] == "buzon" or it["fuente"] in solo_cal or it["id"] in rep_dinero:
             continue
         if it["fuente"].startswith("correo") and RX_ENLACE_CUENTA.search(it.get("enlace") or ""):
             continue                                  # enlaces de activación o de contraseña: nunca a la página
@@ -1245,6 +1569,12 @@ def main() -> int:
             # de los teletipos nacionales, solo lo que toca a Álava o a Euskadi
             if cfg_f.get(it["fuente"], {}).get("filtro") == "euskadi" and not it.get("alava") \
                     and not coincidencias(RX_EUSKADI, normaliza(it["titulo"] + " " + (it.get("resumen") or "")[:300])):
+                continue
+        if it["seccion"] == "dinero":
+            if it.get("bloque") == "licitacion":
+                if (it.get("plazo") or "") < hoy.isoformat():
+                    continue
+            elif (de_iso(it["fecha"]) or de_iso(it["visto"])) < ahora - timedelta(days=31):
                 continue
         if it["seccion"] == "ideas":
             ref = de_iso(it["fecha"]) or de_iso(it["visto"])
@@ -1280,7 +1610,7 @@ def main() -> int:
             continue
         claves = {("e", it.get("enlace") or it["id"]),
                   ("t", it.get("fuente"), it.get("organismo") or "", " ".join(it.get("municipios") or []),
-                   _norm(it.get("titulo"))[:50])}
+                   _norm(it.get("titulo"))[:50], it.get("adjudicatario") or "", it.get("importe") or 0)}
         if claves & vistos_pub:
             continue
         vistos_pub |= claves
@@ -1310,6 +1640,7 @@ def main() -> int:
         "tipos_calendario": calendario.ETIQUETAS,
         "items": sorted(publicados, key=lambda i: i["fecha"] or i["visto"], reverse=True),
         "buzon": buzon,
+        "dinero": resumen_dinero(items_hist, ahora),
         "calendario": cal,
     })
     archiva(items_hist, cfg_f)

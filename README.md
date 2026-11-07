@@ -74,6 +74,16 @@ Si una fuente sale en rojo varios días seguidos, casi siempre es que esa web ha
 
 Si GitHub envía un correo diciendo que ha desactivado el workflow por inactividad, entra en **Actions** y pulsa **Enable workflow**.
 
+## Pestaña Dinero: de dónde salen los datos
+
+- **Contratos y licitaciones** de las instituciones alavesas: API de la Plataforma de Contratación Pública en Euskadi
+  (Open Data Euskadi). La lista de organismos está en `fuentes.yaml` (`kpe-alava` → `poderes`); para añadir uno,
+  busca su número en https://api.euskadi.eus/procurements/contracting-authorities y añádelo con su nombre.
+- **Grandes contratos** del Gobierno Vasco, Osakidetza o el Estado que se ejecutan solo en Álava: API del Diario
+  Oficial de la UE (TED). Solo se quedan si el contrato menciona Álava o un municipio alavés.
+- **Subvenciones**: Base de Datos Nacional de Subvenciones (beneficiarios alaveses, desde 20.000 €).
+- Importes sin IVA. Las personas físicas no se nombran. Los rankings usan los últimos 3 meses.
+
 ## Fuentes que no se leen automáticamente
 
 El programa respeta el `robots.txt` de cada web: si una web pide no ser leída por programas (Laudio, Eustat, Kanpezu…), no se lee y aparece en "Mirar a mano".

@@ -114,6 +114,31 @@ ul.lista{list-style:none;margin:0;padding:0}
 .chip.senal{background:#efe3f4;color:#5a2d6e}
 .chip.tram{background:#eee;color:#777}
 .chip.seg{background:#f7e0d9;color:var(--rojo)}
+/* dinero */
+.din-cifras{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--tarjeta);border:1px solid var(--linea);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.din-cifra{padding:12px 16px;border-left:1px solid var(--linea)}.din-cifra:first-child{border-left:0}
+.din-cifra .et{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#7b7467;font-weight:600}
+.din-cifra .num{font:600 24px/1.15 var(--serif);color:var(--verde);margin:4px 0 2px}
+.din-cifra .sub{font-size:12.5px;color:var(--suave)}
+@media (max-width:760px){.din-cifras{grid-template-columns:1fr 1fr}.din-cifra:nth-child(3){border-left:0}.din-cifra:nth-child(n+3){border-top:1px solid var(--linea)}}
+.din-ojo{margin-bottom:16px}
+.din-ojo ul{margin:0;padding:6px 16px 10px 34px}.din-ojo li{margin:7px 0;line-height:1.4}
+.din-ojo li a{color:inherit;text-decoration-color:var(--ambar);text-underline-offset:3px}
+.din-ojo .nota{font-size:12.5px;color:var(--suave);padding:0 16px 12px}
+.din-dos{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin-bottom:16px;align-items:start}
+.rank{list-style:none;margin:0;padding:4px 0 6px;counter-reset:r}
+.rank li{display:grid;grid-template-columns:22px 1fr auto;gap:2px 8px;padding:6px 16px;counter-increment:r;align-items:baseline}
+.rank li::before{content:counter(r);color:#9a927f;font-size:12px;font-weight:600}
+.rank button{border:0;background:none;padding:0;font:600 14px/1.3 inherit;color:var(--tinta, #1d2b2b);text-align:left;cursor:pointer}
+.rank button:hover{text-decoration:underline;text-decoration-color:var(--ambar);text-underline-offset:3px}
+.rank .tot{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rank .de{grid-column:2/-1;font-size:12px;color:var(--suave)}
+.rank .barra-r{grid-column:2/-1;height:4px;background:#ece6d8;border-radius:2px;overflow:hidden}.rank .barra-r span{display:block;height:100%;background:#3d7a8c}
+.el .din-l{grid-column:1/-1;font-size:14px;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+.el .din-l .imp{font-variant-numeric:tabular-nums;color:var(--verde)}
+.chip.ojo{background:#fbe3c8;color:#7a3b00}
+.chip.plazo{background:#dfe7ec;color:#24485a}
+button.enlace{border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-color:var(--ambar);text-underline-offset:3px}
 .estrella{border:0;background:transparent;font-size:18px;line-height:1;color:#b9b2a2;padding:2px 2px 0;align-self:start}
 .estrella:hover,.estrella[aria-pressed="true"]{color:var(--ambar)}
 .subt{padding:7px 16px;background:#f3efe5;font:600 12px var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--verde2);border-bottom:1px solid var(--linea2)}
@@ -340,7 +365,8 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
   </section>
 
   <section class="panel" id="p-dinero" hidden>
-    <p class="intro">Dónde va el dinero público en Álava: ayudas que se convocan, subvenciones que reciben empresas y entidades alavesas (desde 20.000 €, sin personas físicas) y los contratos que salen en los boletines.</p>
+    <p class="intro">Quién recibe dinero público en Álava y por qué: contratos que adjudican el Ayuntamiento, la Diputación, sus sociedades y los ayuntamientos alaveses; los grandes contratos del Gobierno Vasco, Osakidetza y el Estado en Álava; subvenciones a empresas y entidades alavesas (desde 20.000 €) y lo que se licita ahora. Importes sin IVA. No se nombra a personas físicas. Pulsa un nombre de los rankings para ver todo lo suyo.</p>
+    <div id="dineroCab"></div>
     <div class="rejilla" id="dinero"></div>
   </section>
 
@@ -447,7 +473,7 @@ const diaLargo = k => cap(fDiaC.format(new Date(k + "T12:00:00Z")));
 let fuentes = {};
 const nombreF = id => (fuentes[id] || {}).nombre || (id === "efemerides" ? "Efemérides" : id);
 const esLocal = id => (fuentes[id] || {}).local;
-function textoBusca(it) { return norm([it.titulo, it.titulo_claro, (st.ia.titulos || {})[it.id], it.resumen, it.frase, (it.temas || []).join(" "), (it.municipios || []).join(" "), it.organismo, nombreF(it.fuente)].join(" ")); }
+function textoBusca(it) { return norm([it.titulo, it.titulo_claro, (st.ia.titulos || {})[it.id], it.resumen, it.frase, (it.temas || []).join(" "), (it.municipios || []).join(" "), it.organismo, it.adjudicatario, nombreF(it.fuente)].join(" ")); }
 function casaQ(it) { return !st.q || norm(st.q).split(/\s+/).every(t => textoBusca(it).includes(t)); }
 function pasa(it, {periodo = true, alava = true, tramites = true} = {}) {
   if (periodo) {
@@ -820,18 +846,108 @@ function pintaVivos() {
     <div class="vv-t vv-ancho"><div class="vv-et">Calidad del aire</div>${aire}</div></div>`;
   $("#vivosHora").textContent = "";
 }
+// ---------- dinero público
+const eur = x => x >= 1e6 ? (x / 1e6).toLocaleString("es-ES", {maximumFractionDigits: 1}) + " M €" : Math.round(x).toLocaleString("es-ES") + " €";
+const OJO = new Set(["Sin publicidad", "Emergencia", "Modificado", "Un solo licitador", "Al límite del contrato menor", "Concesión directa", "Encargo a medio propio"]);
+function plazoTxt(p) {
+  if (!p) return "";
+  const dias = Math.round((new Date(p + "T23:59:59") - new Date()) / 864e5);
+  return `plazo hasta el ${fF.format(new Date(p + "T12:00:00Z"))}${dias <= 0 ? " (hoy)" : dias === 1 ? " (mañana)" : ` (${dias} días)`}`;
+}
+function elementoDinero(it) {
+  const b = it.bloque, imp = it.importe || 0;
+  let linea = "";
+  if ((b === "contrato" || b === "subvencion") && it.adjudicatario) linea = `<b class="imp">${eur(imp)}</b><span>→ ${esc(it.adjudicatario)}</span>`;
+  else if (b === "licitacion") linea = `<b class="imp">${eur(imp)}</b><span>en juego · ${esc(plazoTxt(it.plazo))}</span>`;
+  else if (b === "modificacion") linea = imp ? `<span>contrato de <b class="imp">${eur(imp)}</b></span>` : "";
+  else if (imp) linea = `<b class="imp">${eur(imp)}</b>`;
+  const ban = (it.banderas || []).map(x => `<span class="chip${OJO.has(x) ? " ojo" : ""}">${esc(x)}</span>`).join("");
+  const meta = [esNuevo(it) ? `<span class="chip nuevo">NUEVO</span>` : "", it.organismo ? `<span>${esc(it.organismo)}</span>` : "",
+    `<span>${esc(cuando(it.fecha || it.visto))}</span>`, ban].join("");
+  const titulo = b === "subvencion" && it.adjudicatario ? (it.resumen || tituloDe(it)) : tituloDe(it);
+  return `<li class="el din${st.abiertos.has(it.id) ? " abierto" : ""}">
+    <a class="tit" data-leido="${esc(it.id)}" href="${esc(it.enlace)}" target="_blank" rel="noopener">${esc(titulo)}</a>${estrella(it)}
+    ${linea ? `<div class="din-l">${linea}</div>` : ""}<div class="meta">${meta}</div>
+    <div class="res" data-abrir="${esc(it.id)}">${esc(b === "subvencion" && it.adjudicatario ? "" : (it.resumen || ""))}</div></li>`;
+}
+function grupoDinero(id, titulo, lista, {sub = "", vacio = "Nada en este periodo.", lim = 8, pie = ""} = {}) {
+  const ver = st.expandidos.has(id) ? lista : lista.slice(0, lim);
+  const nuevos = lista.filter(esNuevo).length;
+  const mas = lista.length > lim ? `<button class="mas" data-expandir="${esc(id)}">${st.expandidos.has(id) ? "Ver menos" : `Ver ${lista.length - lim} más`}</button>` : "";
+  return `<div class="grupo"><h2>${esc(titulo)}<small>${sub || lista.length}${nuevos ? ` · <b style="color:#7a4c06">${nuevos} ${nuevos === 1 ? "nuevo" : "nuevos"}</b>` : ""}</small></h2>
+    ${lista.length ? `<ul class="lista">${ver.map(elementoDinero).join("")}</ul>${mas}` : `<div class="vacio">${vacio}</div>`}${pie}</div>`;
+}
+function ranking(titulo, sub, filas, tipo) {
+  if (!filas || !filas.length) return "";
+  const max = filas[0].total || 1;
+  return `<div class="grupo"><h2>${esc(titulo)}<small>${esc(sub)}</small></h2><ol class="rank">${filas.slice(0, 8).map(f => {
+    const partes = tipo === "reciben"
+      ? [f.contratos ? `${eur(f.contratos)} en contratos` : "", f.subvenciones ? `${eur(f.subvenciones)} en subvenciones` : "", (f.de || []).length ? "de " + f.de.join(", ") : ""]
+      : [`${f.n} ${f.n === 1 ? "adjudicación" : "adjudicaciones"}`, f.subvenciones ? `${eur(f.subvenciones)} en subvenciones` : ""];
+    return `<li><button data-buscar="${esc(f.nombre)}" title="Ver todo lo de ${esc(f.nombre)}">${esc(f.nombre)}</button><span class="tot">${eur(f.total)}</span>
+      <div class="barra-r"><span style="width:${Math.max(2, Math.round(100 * f.total / max))}%"></span></div>
+      <div class="de">${esc(partes.filter(Boolean).join(" · "))}</div></li>`; }).join("")}</ol></div>`;
+}
 function pintaDinero() {
-  const d = st.d;
-  // la BDNS publica con retraso: aquí se miran 14 días (ayudas) y 30 días (concesiones), con el periodo que sea más largo
+  const d = st.d, R = d.dinero || {};
+  // ventanas propias: la BDNS y los contratos se publican con retraso
   const desde = n => new Date(new Date(d.actualizado).getTime() - Math.max(n, st.dias) * 864e5);
-  const conv = d.items.filter(i => i.fuente === "bdns-convocatorias" && ref(i) >= desde(14) && casaQ(i));
-  const conc = d.items.filter(i => i.fuente === "bdns-concesiones" && ref(i) >= desde(30) && casaQ(i)).sort((a, b) => (b.importe || 0) - (a.importe || 0));
+  const din = d.items.filter(i => i.seccion === "dinero" && casaQ(i));
+  const de = (b, dias) => din.filter(i => i.bloque === b && ref(i) >= desde(dias));
+  const contratos = de("contrato", 30).sort((a, b) => (b.importe || 0) - (a.importe || 0));
+  const subv = din.filter(i => i.fuente === "bdns-concesiones" && ref(i) >= desde(30)).sort((a, b) => (b.importe || 0) - (a.importe || 0));
+  const conv = din.filter(i => i.fuente === "bdns-convocatorias" && ref(i) >= desde(14));
+  const lics = din.filter(i => i.bloque === "licitacion").sort((a, b) => (a.plazo || "").localeCompare(b.plazo || "") || (b.importe || 0) - (a.importe || 0));
+  const raros = din.filter(i => ref(i) >= desde(30) && (i.bloque === "modificacion" || (i.banderas || []).some(x => ["Sin publicidad", "Emergencia"].includes(x))))
+    .sort((a, b) => (b.importe || 0) - (a.importe || 0));
   const RX = /licitaci|adjudica|formaliza|contrat|concesi[oó]n de (obra|servicio)|lizitazio|esleipen/i;
-  const contr = d.items.filter(i => i.seccion === "boletines" && i.alava && RX.test(i.titulo + " " + (i.titulo_claro || "")) && pasa(i));
-  $("#dinero").innerHTML = grupo("din:conc", "Subvenciones concedidas", conc, {orden: "nada", sub: `${conc.length} · últimos 30 días`, vacio: "Ninguna de 20.000 € o más en los últimos 30 días."}) +
+  const bol = d.items.filter(i => i.seccion === "boletines" && i.alava && RX.test(i.titulo + " " + (i.titulo_claro || "")) && pasa(i));
+  const suma = l => l.reduce((s, i) => s + (i.importe || 0), 0);
+
+  // cifras
+  const cifra = (et, num, sub) => `<div class="din-cifra"><div class="et">${et}</div><div class="num">${num}</div><div class="sub">${sub}</div></div>`;
+  let cab = `<div class="din-cifras">
+    ${cifra("Contratos adjudicados", eur(suma(contratos)), `${contratos.length} contratos · 30 días`)}
+    ${cifra("Subvenciones concedidas", eur(suma(subv)), `${subv.length} de 20.000 € o más · 30 días`)}
+    ${cifra("Licitaciones abiertas", eur(suma(lics)), `${lics.length} con plazo para presentar ofertas`)}
+    ${cifra("Para mirar con lupa", raros.length, "modificados, emergencias y sin publicidad")}</div>`;
+
+  // lo que llama la atención (frases hechas con los datos, para tirar del hilo)
+  const enl = (it, txt) => `<a href="${esc(it.enlace)}" target="_blank" rel="noopener" data-leido="${esc(it.id)}">${txt}</a>`;
+  const ojo = [];
+  const c1 = contratos[0];
+  if (c1) ojo.push(`${enl(c1, `<b>${esc(c1.adjudicatario)}</b> se lleva el mayor contrato del mes: ${esc(c1.titulo)}`)} (${eur(c1.importe)}, ${esc(c1.organismo)}).`);
+  const s1 = subv[0];
+  if (s1) ojo.push(`${enl(s1, `<b>${esc(s1.adjudicatario)}</b> recibe la mayor subvención: ${eur(s1.importe)}`)} de ${esc(s1.organismo)}.`);
+  const l1 = [...lics].sort((a, b) => (b.importe || 0) - (a.importe || 0))[0];
+  if (l1) ojo.push(`La mayor licitación abierta: ${enl(l1, esc(l1.titulo))} (${eur(l1.importe)}, ${esc(l1.organismo)}); ${esc(plazoTxt(l1.plazo))}.`);
+  const mods = raros.filter(i => i.bloque === "modificacion");
+  if (mods.length) ojo.push(`${mods.length} ${mods.length === 1 ? "contrato modificado" : "contratos modificados"} en 30 días; el mayor, ${enl(mods[0], esc(mods[0].titulo.replace(/^Modificación del contrato: /, "")))} (${esc(mods[0].organismo)}, contrato de ${eur(mods[0].importe)}).`);
+  const sinp = raros.filter(i => (i.banderas || []).some(x => ["Sin publicidad", "Emergencia"].includes(x)) && i.bloque !== "modificacion");
+  if (sinp.length) ojo.push(`${sinp.length} ${sinp.length === 1 ? "adjudicación" : "adjudicaciones"} sin publicidad o por emergencia; la mayor, ${enl(sinp[0], esc(sinp[0].titulo))} → ${esc(sinp[0].adjudicatario || sinp[0].organismo)} (${eur(sinp[0].importe)}).`);
+  const rep = (R.menores_repetidos || [])[0];
+  if (rep) ojo.push(`<button class="enlace" data-buscar="${esc(rep.nombre)}"><b>${esc(rep.nombre)}</b></button> acumula ${rep.n} contratos menores de ${esc(rep.organismo)} en tres meses (${eur(rep.total)}).`);
+  const lim = contratos.filter(i => (i.banderas || []).includes("Al límite del contrato menor"));
+  if (lim.length >= 2) ojo.push(`${lim.length} contratos menores rozan el tope legal (15.000 € en servicios y suministros, 40.000 € en obras).`);
+  if (ojo.length) cab += `<div class="grupo din-ojo"><h2>Lo que llama la atención<small>últimos 30 días</small></h2><ul>${ojo.map(x => `<li>${x}</li>`).join("")}</ul>
+    <div class="nota">Son pistas para tirar del hilo, no conclusiones: una modificación o un contrato sin publicidad pueden estar justificados. Conviene pedir el expediente.</div></div>`;
+
+  // rankings (3 meses, calculados con todo el histórico)
+  const desdeR = R.desde ? fF.format(new Date(R.desde)) : "";
+  cab += `<div class="din-dos">${ranking("Quién recibe más", desdeR ? `desde el ${desdeR}` : "3 meses", R.reciben, "reciben")}${ranking("Quién reparte más", desdeR ? `desde el ${desdeR}` : "3 meses", R.reparten, "reparten")}</div>`;
+  if ((R.menores_repetidos || []).length) cab += `<div class="grupo" style="margin-bottom:16px"><h2>Contratos menores repetidos<small>misma empresa, mismo organismo, 3 o más en 3 meses</small></h2><ol class="rank">${R.menores_repetidos.map(m =>
+    `<li><button data-buscar="${esc(m.nombre)}">${esc(m.nombre)}</button><span class="tot">${m.n} · ${eur(m.total)}</span><div class="de">${esc(m.organismo)} · ${esc((m.objetos || []).join(" · "))}</div></li>`).join("")}</ol>
+    <div class="nota" style="font-size:12.5px;color:var(--suave);padding:0 16px 12px">La ley limita el contrato menor a 15.000 € (40.000 € en obras) para evitar trocear un mismo trabajo. Que se repitan no es irregular por sí solo, pero merece una pregunta.</div></div>`;
+  if (st.q) cab = `<div class="aviso-q" style="margin-bottom:12px;color:var(--suave)">Mostrando solo lo que coincide con «${esc(st.q)}». <button class="enlace" data-buscar="">Quitar búsqueda</button></div>` + cab;
+  $("#dineroCab").innerHTML = cab;
+
+  $("#dinero").innerHTML = grupoDinero("din:contr", "Contratos adjudicados", contratos, {sub: `${contratos.length} · 30 días · de mayor a menor`, vacio: "Ningún contrato en los últimos 30 días."}) +
+    grupoDinero("din:lic", "Licitaciones abiertas", lics, {sub: `${lics.length} · por fecha de cierre`, vacio: "Ninguna licitación abierta."}) +
+    grupoDinero("din:raros", "Modificados, emergencias y sin publicidad", raros, {sub: `${raros.length} · 30 días`, vacio: "Nada de esto en los últimos 30 días."}) +
+    grupoDinero("din:conc", "Subvenciones concedidas", subv, {sub: `${subv.length} · 30 días`, vacio: "Ninguna de 20.000 € o más en los últimos 30 días."}) +
     grupo("din:conv", "Ayudas convocadas", conv, {sub: `${conv.length} · últimos 14 días`, vacio: "Ninguna convocatoria en los últimos 14 días."}) +
-    grupo("din:contr", "Contratos en los boletines", contr, {op: {fuente: true}, vacio: "Ningún contrato en los boletines en este periodo."});
-  return conv.length + conc.length + contr.length;
+    grupo("din:bol", "Contratos en los boletines", bol, {op: {fuente: true}, vacio: "Ningún contrato en los boletines en este periodo."});
+  return contratos.length + subv.length + lics.length + conv.length;
 }
 function pintaSucesos() {
   const d = st.d, ia = st.ia.sucesos;
@@ -979,6 +1095,8 @@ document.addEventListener("click", e => {
   if (ir) { e.preventDefault(); st.diaSel = ir.dataset.irdia; st.mes = st.diaSel.slice(0, 7); muestra("calendario"); pintaCalendario(); return; }
   const irp = e.target.closest("[data-ir]"); if (irp) { muestra(irp.dataset.ir); scrollTo(0, 0); return; }
   const cat = e.target.closest("[data-cat]"); if (cat) { const c = cat.dataset.cat; st.cats[c] = st.cats[c] === false; mem.set("cats", st.cats); pintaCalendario(); return; }
+  const bq = e.target.closest("[data-buscar]");
+  if (bq) { const v = bq.dataset.buscar; $("#q").value = v; st.q = v; $("#btnArchivo").hidden = v.length < 3; pinta(); if (v) $("#p-dinero").scrollIntoView({behavior: "smooth"}); return; }
   const q = e.target.closest("[data-quitar]"); if (q) { delete st.guardados[q.dataset.quitar]; mem.set("guardados", st.guardados); pinta(); }
 });
 
