@@ -13,6 +13,12 @@ import json
 import re
 from datetime import datetime, timedelta, timezone
 
+try:
+    from zoneinfo import ZoneInfo
+    _MADRID = ZoneInfo("Europe/Madrid")
+except Exception:                                    # pragma: no cover
+    _MADRID = timezone(timedelta(hours=1))
+
 from bs4 import BeautifulSoup
 
 AEMET = "https://www.aemet.es/documentos_d/eltiempo/prediccion/avisos/rss/CAP_AFAE_wah_RSS.xml"
@@ -45,6 +51,15 @@ def _avisos(descarga) -> list[dict]:
     return out[:6]
 
 
+def _registrada(ini: datetime, ahora: datetime) -> str:
+    hoy = (ahora.astimezone(_MADRID) if ahora.tzinfo else ahora).date()
+    if ini.date() == hoy:
+        return f"registrada a las {ini:%H:%M}"
+    if ini.date() == hoy - timedelta(days=1):
+        return f"registrada ayer a las {ini:%H:%M}"
+    return f"registrada el {ini:%d/%m} a las {ini:%H:%M}"
+
+
 def _trafico(descarga, ahora: datetime) -> list[dict]:
     out = []
     for p in (1, 2, 3):
@@ -59,7 +74,8 @@ def _trafico(descarga, ahora: datetime) -> list[dict]:
             if re.search(r"aver[ií]a", causa, re.I) and nivel not in ("Rojo", "Negro"):
                 continue                                           # un coche averiado no es noticia
             try:
-                ini = datetime.fromisoformat(i["startDate"]).replace(tzinfo=timezone(timedelta(hours=1)))
+                ini = datetime.fromisoformat(i["startDate"])
+                ini = ini.replace(tzinfo=_MADRID) if ini.tzinfo is None else ini.astimezone(_MADRID)
             except (KeyError, ValueError):
                 continue
             if tipo.lower().startswith("obras") and ahora - ini > timedelta(days=2):
@@ -70,7 +86,8 @@ def _trafico(descarga, ahora: datetime) -> list[dict]:
             out.append({"titulo": f"{i.get('cause') or tipo} en {via} ({i.get('cityTown') or 'Álava'})",
                         "detalle": " · ".join(x for x in (tipo, f"nivel {nivel.lower()}" if nivel else "",
                                                           f"dirección {i['direction'].title()}" if i.get("direction") else "",
-                                                          f"desde {ini:%H:%M}") if x)})
+                                                          _registrada(ini, ahora)) if x),
+                        "registrada": ini.isoformat()})
     return out[:6]
 
 

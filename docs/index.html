@@ -138,6 +138,7 @@ ul.lista{list-style:none;margin:0;padding:0}
 .el .din-l .imp{font-variant-numeric:tabular-nums;color:var(--verde)}
 .chip.ojo{background:#fbe3c8;color:#7a3b00}
 .chip.plazo{background:#dfe7ec;color:#24485a}
+.vv-hora{display:inline-block;font-size:11.5px;font-weight:600;font-variant-numeric:tabular-nums;color:#7a3b00;background:#fbe3c8;border-radius:4px;padding:0 5px;margin-right:6px}
 button.enlace{border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-color:var(--ambar);text-underline-offset:3px}
 .estrella{border:0;background:transparent;font-size:18px;line-height:1;color:#b9b2a2;padding:2px 2px 0;align-self:start}
 .estrella:hover,.estrella[aria-pressed="true"]{color:var(--ambar)}
@@ -851,7 +852,7 @@ function pintaVivos() {
   // tráfico
   const tr = v.trafico || [];
   const trafico = tr.length
-    ? tr.slice(0, 2).map(t => `<div class="vv-linea" title="${esc(t.detalle)}">${esc(t.titulo)}</div>`).join("") + (tr.length > 2 ? `<span class="vv-mas">y ${tr.length - 2} más</span>` : "")
+    ? tr.slice(0, 2).map(t => `<div class="vv-linea" title="${esc(t.detalle)}">${t.registrada ? `<span class="vv-hora">${esc(horaIncidencia(t.registrada))}</span>` : ""}${esc(t.titulo)}</div>`).join("") + (tr.length > 2 ? `<span class="vv-mas" title="${esc(tr.slice(2).map(t => (t.registrada ? horaIncidencia(t.registrada) + " · " : "") + t.titulo).join("\n"))}">y ${tr.length - 2} más</span>` : "")
     : `<span class="vv-ok">Sin incidencias importantes</span>`;
   // aire
   const m = (v.aire || "").match(/:\s*\d+\s+([a-záéíóú ]+?)(,|\.)/i);
@@ -862,6 +863,15 @@ function pintaVivos() {
     <div class="vv-t vv-ancho"><div class="vv-et">Embalses del Zadorra${fechaEmb ? ` <span>· semana del ${esc(fechaEmb.slice(0, 5).replace("-", "/"))}</span>` : ""}</div>${emb || `<span class="vv-pie">Sin datos</span>`}</div>
     <div class="vv-t vv-ancho"><div class="vv-et">Calidad del aire</div>${aire}</div></div>`;
   $("#vivosHora").textContent = "";
+}
+// hora a la que se registró una incidencia de tráfico: "11:38", "ayer 23:10" o "vie 6 nov 09:15"
+function horaIncidencia(iso) {
+  const d = new Date(iso); if (isNaN(d)) return "";
+  const h = new Intl.DateTimeFormat("es-ES", {timeZone: TZ, hour: "2-digit", minute: "2-digit"}).format(d);
+  const dia = x => new Intl.DateTimeFormat("en-CA", {timeZone: TZ}).format(x);
+  if (dia(d) === dia(new Date())) return h;
+  if (dia(d) === dia(new Date(Date.now() - 864e5))) return "ayer " + h;
+  return fF.format(d) + " " + h;
 }
 // ---------- dinero público
 const eur = x => x >= 1e6 ? (x / 1e6).toLocaleString("es-ES", {maximumFractionDigits: 1}) + " M €" : Math.round(x).toLocaleString("es-ES") + " €";
