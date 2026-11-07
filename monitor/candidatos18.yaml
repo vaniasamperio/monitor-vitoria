@@ -1,0 +1,4 @@
+candidatos: []
+muestras:
+  - {id: robots-eustat, url: "https://www.eustat.eus/robots.txt"}
+  - {id: ine-ops, url: "https://servicios.ine.es/wstempus/js/ES/OPERACIONES_DISPONIBLES"}
