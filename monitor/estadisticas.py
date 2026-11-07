@@ -113,6 +113,10 @@ def sube_baja(x: float | None, en_femenino: bool = False) -> str:
         return ""
     if abs(x) < 0.05:
         return "igual que hace un año"
+    if 97 <= x <= 103:
+        return "el doble que hace un año"
+    if -52 <= x <= -48:
+        return "la mitad que hace un año"
     return f"un {pct(x, signo=False)} {'más' if x > 0 else 'menos'} que hace un año"
 
 
