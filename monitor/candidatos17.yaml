@@ -1,0 +1,16 @@
+candidatos:
+  - {nombre: "Amurrio udala cas", web: "https://udala.amurrio.eus/cas"}
+  - {nombre: "Amurrio udala eus", web: "https://udala.amurrio.eus/eus"}
+  - {nombre: "Laguardia avisos", web: "https://www.laguardiaparticipa.eus/index.php/es/avisos.html"}
+  - {nombre: "Laguardia eventos", web: "https://www.laguardiaparticipa.eus/index.php/es/eventos.html"}
+muestras:
+  - {id: robots-amurrio-udala, url: "https://udala.amurrio.eus/robots.txt"}
+  - {id: robots-lgparticipa, url: "https://www.laguardiaparticipa.eus/robots.txt"}
+  - {id: amurrio-cas, url: "https://udala.amurrio.eus/cas"}
+  - {id: amurrio-agenda, url: "https://udala.amurrio.eus/cas/agenda"}
+  - {id: amurrio-noticias, url: "https://udala.amurrio.eus/cas/noticias"}
+  - {id: amurrio-feed, url: "https://udala.amurrio.eus/cas/noticias?format=feed&type=rss"}
+  - {id: lg-avisos, url: "https://www.laguardiaparticipa.eus/index.php/es/avisos.html"}
+  - {id: lg-avisos-feed, url: "https://www.laguardiaparticipa.eus/index.php/es/avisos.html?format=feed&type=rss"}
+  - {id: lg-eventos-feed, url: "https://www.laguardiaparticipa.eus/index.php/es/eventos.html?format=feed&type=rss"}
+  - {id: ehu-araba-eu, url: "https://www.ehu.eus/eu/web/araba"}
