@@ -1,0 +1,7 @@
+candidatos: []
+muestras:
+  - {id: dg-paro, url: "https://datos.gob.es/apidata/catalog/dataset/ea0041513-paro-registrado-por-municipio.json", accept: "application/json"}
+  - {id: dg-contratos, url: "https://datos.gob.es/apidata/catalog/dataset/ea0041513-contratos-por-municipio.json", accept: "application/json"}
+  - {id: robots-sepe, url: "https://sede.sepe.gob.es/robots.txt"}
+  - {id: robots-segsocial, url: "https://www.seg-social.es/robots.txt"}
+  - {id: ine-serie, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT1787?nult=13"}
