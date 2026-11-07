@@ -181,7 +181,10 @@ def main() -> int:
     for m in cfg.get("muestras", []):
         url = m["url"].replace("{HOY}", date.today().strftime("%Y%m%d"))
         try:
-            r = ses.get(url, timeout=30, headers={"Accept": m.get("accept", "*/*")})
+            if m.get("post") is not None:
+                r = ses.post(url, timeout=30, json=m["post"], headers={"Accept": "application/json"})
+            else:
+                r = ses.get(url, timeout=30, headers={"Accept": m.get("accept", "*/*")})
             ext = "json" if "json" in r.headers.get("content-type", "") else ("xml" if "xml" in r.headers.get("content-type", "") else "html")
             (SALIDA / "muestras" / f"{m['id']}.{ext}").write_bytes(r.content[:2_000_000])
             muestras.append({"id": m["id"], "http": r.status_code, "bytes": len(r.content),

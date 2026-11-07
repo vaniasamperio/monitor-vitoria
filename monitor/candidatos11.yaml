@@ -1,0 +1,12 @@
+candidatos: []
+muestras:
+  - {id: ted-min, url: "https://api.ted.europa.eu/v3/notices/search", post: {query: "place-of-performance IN (ESP) AND buyer-city=Vitoria-Gasteiz SORT BY publication-number DESC", fields: ["publication-number", "notice-title", "buyer-name", "notice-type", "publication-date"], limit: 10, page: 1}}
+  - {id: ted-nuts, url: "https://api.ted.europa.eu/v3/notices/search", post: {query: "place-of-performance IN (ES211) SORT BY publication-number DESC", fields: ["publication-number", "notice-title", "buyer-name", "notice-type", "publication-date", "place-of-performance"], limit: 20, page: 1}}
+  - {id: ted-ricos, url: "https://api.ted.europa.eu/v3/notices/search", post: {query: "place-of-performance IN (ES211) AND notice-type IN (can-standard can-social can-desg can-tran) SORT BY publication-number DESC", fields: ["publication-number", "notice-title", "buyer-name", "notice-type", "publication-date", "winner-name", "tender-value", "result-value-notice", "total-value", "contract-nature", "description-lot", "estimated-value-proc"], limit: 20, page: 1}}
+  - {id: ted-ricos2, url: "https://api.ted.europa.eu/v3/notices/search", post: {query: "place-of-performance IN (ES211) SORT BY publication-number DESC", fields: ["ND", "TI", "PD", "buyer-name", "notice-type", "organisation-name-tenderer", "BT-720-Tender", "BT-161-NoticeResult", "BT-27-Procedure", "BT-24-Procedure", "BT-1501(n)-Contract", "procedure-type"], limit: 20, page: 1}}
+  - {id: robots-ted-api, url: "https://api.ted.europa.eu/robots.txt"}
+  - {id: robots-kpe, url: "https://www.contratacion.euskadi.eus/robots.txt"}
+  - {id: datosgob-registro, url: "https://datos.gob.es/apidata/catalog/dataset/a16003011-registro-de-contratos-de-ayuntamiento-de-vitoria-gasteiz-del-2025.json", accept: "application/json"}
+  - {id: datosgob-buscar, url: "https://datos.gob.es/apidata/catalog/dataset/title/registro%20de%20contratos.json?_pageSize=50", accept: "application/json"}
+  - {id: kpe-inicio, url: "https://www.contratacion.euskadi.eus/inicio/"}
+  - {id: opendata-registro, url: "https://opendata.euskadi.eus/catalogo/-/registro-de-contratos-de-ayuntamiento-de-vitoria-gasteiz-del-2025/"}
