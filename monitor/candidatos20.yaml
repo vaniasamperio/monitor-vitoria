@@ -1,0 +1,13 @@
+candidatos: []
+muestras:
+  - {id: ine-d76143, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/76143?nult=2&tip=A"}
+  - {id: ine-d65349, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/65349?nult=2&tip=A"}
+  - {id: ine-d2074, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/2074?nult=2&tip=A"}
+  - {id: ine-d2066, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/2066?nult=2&tip=A"}
+  - {id: ine-d76317, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/76317?nult=2&tip=A"}
+  - {id: ine-d6150, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/6150?nult=2&tip=A"}
+  - {id: ine-d46682, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/46682?nult=2&tip=A"}
+  - {id: ine-d6295, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/6295?nult=2&tip=A"}
+  - {id: ine-d49259, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/49259?nult=2&tip=A"}
+  - {id: ine-d59058, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/59058?nult=2&tip=A"}
+  - {id: ine-d39364, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/39364?nult=2&tip=A"}
