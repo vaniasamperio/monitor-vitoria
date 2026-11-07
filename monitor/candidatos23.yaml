@@ -1,0 +1,5 @@
+candidatos: []
+muestras:
+  - {id: vte5, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/VTE5?nult=6"}
+  - {id: sm, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/SM24891?nult=14"}
+  - {id: epa, url: "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EPA458948?nult=6"}
