@@ -1,0 +1,11 @@
+candidatos: []
+muestras:
+  - {id: pr-doc, url: "https://opendata.euskadi.eus/api-procurements/?api=procurements"}
+  - {id: pr-notices, url: "https://api.euskadi.eus/procurements/contracting-notices?_elements=5", accept: "application/json"}
+  - {id: pr-contracts, url: "https://api.euskadi.eus/procurements/contracts?_elements=5", accept: "application/json"}
+  - {id: pr-auth, url: "https://api.euskadi.eus/procurements/contracting-authorities?_elements=5", accept: "application/json"}
+  - {id: pr-v1-notices, url: "https://api.euskadi.eus/procurements/v1.0/contracting-notices?_elements=5", accept: "application/json"}
+  - {id: pr-swagger, url: "https://api.euskadi.eus/procurements/swagger.json", accept: "application/json"}
+  - {id: pr-apidocs, url: "https://api.euskadi.eus/procurements/v3/api-docs", accept: "application/json"}
+  - {id: pr-auth18745, url: "https://api.euskadi.eus/procurements/contracting-authorities/18745", accept: "application/json"}
+  - {id: pr-contracts18745, url: "https://api.euskadi.eus/procurements/contracting-authorities/id/18745/contracts?_elements=5", accept: "application/json"}
