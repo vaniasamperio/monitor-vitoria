@@ -1,0 +1,4 @@
+candidatos: []
+muestras:
+  - {id: sepe-paro26, url: "https://sede.sepe.gob.es/es/portaltrabaja/resources/sede/datos_abiertos/datos/Paro_por_municipios_2026_csv.csv"}
+  - {id: sepe-contr26, url: "https://sede.sepe.gob.es/es/portaltrabaja/resources/sede/datos_abiertos/datos/Contratos_por_municipios_2026_csv.csv"}
