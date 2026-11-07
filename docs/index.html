@@ -27,7 +27,9 @@ header.cab{background:var(--verde);color:#f4efe4;padding:16px 0 0}
 .cab .sub{font-size:13px;opacity:.78;margin-top:3px}
 .cab .estado{font-size:13px;text-align:right;opacity:.92}
 .cab .estado b{color:var(--ambar)}
-.cab .refrescar{float:right;margin:0 0 4px 12px;background:var(--ambar);color:#1d2b2b;border:0;border-radius:7px;padding:6px 12px;font:600 13px/1.2 inherit;cursor:pointer}
+.cab .acciones{display:flex;gap:8px;justify-content:flex-end;margin-bottom:7px}
+.cab .refrescar{background:var(--ambar);color:#1d2b2b;border:0;border-radius:7px;padding:6px 12px;font:600 13px/1.2 inherit;cursor:pointer}
+.cab .refrescar.imprimir{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.45);text-decoration:none}
 .cab .refrescar:hover{filter:brightness(1.08)} .cab .refrescar:disabled{opacity:.6;cursor:wait}
 .cab .refmsg{color:var(--ambar);font-size:12px;margin-top:2px}
 .cab .aviso{color:#ffd7cc}
@@ -85,12 +87,28 @@ ul.lista{list-style:none;margin:0;padding:0}
 .parte{padding:14px 18px;margin-bottom:16px;border-left:4px solid #8a2f2f}.parte h2{margin:0 0 6px}.parte p{margin:0 0 8px;line-height:1.5}.parte ul{margin:0;padding-left:18px}.parte li{margin:3px 0}
 #teletipos{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media (max-width:860px){#teletipos{grid-template-columns:1fr}}
-.btn-reunion{display:inline-block;margin-left:14px;padding:5px 11px;border:1px solid var(--linea, #d9d3c5);border-radius:7px;font-size:13px;text-decoration:none;color:inherit;vertical-align:middle;background:#fff}.btn-reunion:hover{background:#f6f1e6}
 .chip.sigo{background:#efe2fb;color:#4b2a6b}.chip.sigo button{border:0;background:none;cursor:pointer;color:inherit;font-weight:700;padding:0 0 0 3px}
 .temas-form{display:flex;gap:6px;padding:10px 16px 6px}.temas-form input{flex:1;min-width:0;padding:6px 9px;border:1px solid #d9d3c5;border-radius:7px;font:inherit;font-size:14px}.temas-form button{padding:6px 12px;border:0;border-radius:7px;background:#1d3a3a;color:#fff;font:inherit;font-size:13px;cursor:pointer}
 .temas-chips{display:flex;flex-wrap:wrap;gap:5px;padding:4px 16px 10px}
 .btn-archivo{padding:0 12px;border:1px solid #d9d3c5;border-radius:8px;background:#fff;font:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
-.viv{display:flex;gap:10px;align-items:flex-start;grid-template-columns:none}.viv .dot{flex:none;width:11px;height:11px;border-radius:50%;margin-top:5px}.viv .ico{flex:none;width:16px;text-align:center}.viv .det{font-size:12.5px;color:#6b6457}.viv a{color:inherit}
+.vv{display:grid;grid-template-columns:1fr 1fr}
+.vv-t{padding:11px 16px 12px;border-top:1px solid var(--linea, #ebe5d8);min-width:0}
+.vv-t:nth-child(-n+2){border-top:0}
+.vv-t:nth-child(1){border-right:1px solid var(--linea, #ebe5d8)}
+.vv-ancho{grid-column:1/-1}
+.vv-et{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#7b7467;font-weight:600;margin-bottom:6px}
+.vv-et span{text-transform:none;letter-spacing:0;font-weight:400}
+.vv-ok{display:inline-block;font-weight:600;color:#2f6b3d}
+.vv-ok::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#3c8d4f;margin-right:7px;vertical-align:1px}
+.vv-aviso{display:block;font-weight:600;color:#5a4300;text-decoration:none;margin-bottom:3px}
+.vv-aviso::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px;background:#d9b100}
+.vv-aviso.naranja{color:#7a3b00}.vv-aviso.naranja::before{background:#e07a1f}.vv-aviso.rojo{color:#8a1c14}.vv-aviso.rojo::before{background:#c62828}
+.vv-linea{font-size:14px;font-weight:600;line-height:1.3;margin-bottom:3px}
+.vv-mas,.vv-pie{font-size:12.5px;color:#7b7467}
+.vv-emb{display:grid;grid-template-columns:130px 1fr 52px 84px;gap:8px;align-items:center;color:inherit;text-decoration:none;font-size:14px;margin:3px 0}
+.vv-emb .vv-bar{height:8px;background:#e8e2d4;border-radius:4px;overflow:hidden}.vv-emb .vv-bar span{display:block;height:100%;background:#3d7a8c;border-radius:4px}
+.vv-emb .dif{font-size:12px;text-align:right}.vv-emb .dif.baja{color:#b3261e}.vv-emb .dif.sube{color:#2f6b3d}
+@media (max-width:620px){.vv{grid-template-columns:1fr}.vv-t:nth-child(1){border-right:0}}
 .chip.etqf{background:#dfe7ec;color:#24485a}
 .chip.nuevo{background:var(--ambar);color:#3b2604;font-weight:700;letter-spacing:.03em}
 .chip.senal{background:#efe3f4;color:#5a2d6e}
@@ -260,7 +278,7 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
 <main class="marco">
   <!-- HOY -->
   <section class="panel" id="p-hoy">
-    <div class="hoy-cab"><h2 id="hoyFecha">Hoy</h2><a class="btn-reunion" href="reunion.html" target="_blank" rel="noopener" title="Una página limpia para la reunión de la mañana, lista para imprimir">🖨 Vista para la reunión</a><div class="efes" id="hoyEfes"></div></div>
+    <div class="hoy-cab"><h2 id="hoyFecha">Hoy</h2><div class="efes" id="hoyEfes"></div></div>
     <div class="tres">
       <div class="grupo"><h3>Agenda <small id="agendaHoyN"></small></h3><div id="agendaHoy"><div class="cargando">Cargando…</div></div></div>
       <div style="display:flex;flex-direction:column;gap:16px">
@@ -770,18 +788,37 @@ function pintaIdeas() {
 }
 function pintaVivos() {
   const v = st.d.vivos || {};
-  const filas = [];
-  for (const a of v.avisos || []) {
-    const col = /rojo/i.test(a.titulo) ? "#b3261e" : /naranja/i.test(a.titulo) ? "#d9731a" : "#c9a400";
-    filas.push(`<li class="viv"><span class="dot" style="background:${col}"></span><div><a href="${esc(a.enlace)}" target="_blank" rel="noopener"><b>${esc(a.titulo)}</b></a><div class="det">${esc(a.detalle)}</div></div></li>`);
-  }
-  if ((v.embalses || []).length) filas.push(`<li class="viv"><span class="ico">💧</span><div><b>Embalses:</b> ${v.embalses.map(e => `<a href="${esc(e.enlace)}" target="_blank" rel="noopener">${esc(e.nombre)} ${esc(String(e.porcentaje).replace(".", ","))}%</a>`).join(" · ")}<div class="det">${esc(v.embalses_nota || "")}</div></div></li>`);
-  for (const t of v.trafico || []) filas.push(`<li class="viv"><span class="ico">🚗</span><div><b>${esc(t.titulo)}</b><div class="det">${esc(t.detalle)}</div></div></li>`);
-  if (v.aire) filas.push(`<li class="viv"><span class="ico">🌫</span><div><b>Calidad del aire.</b> ${esc(v.aire)}</div></li>`);
-  if (!(v.avisos || []).length && v.actualizado) filas.unshift(`<li class="viv"><span class="dot" style="background:#3c8d4f"></span><div>Sin avisos meteorológicos en Álava.</div></li>`);
-  $("#vivosG").hidden = !filas.length;
-  $("#vivos").innerHTML = `<ul class="lista">${filas.join("")}</ul>`;
-  $("#vivosHora").textContent = v.actualizado ? "AEMET · tráfico · embalses · aire" : "";
+  if (!v.actualizado) { $("#vivosG").hidden = true; return; }
+  $("#vivosG").hidden = false;
+  const num = x => String(x).replace(".", ",");
+  // tiempo
+  const av = v.avisos || [];
+  const nivel = t => /rojo/i.test(t) ? "rojo" : /naranja/i.test(t) ? "naranja" : "amarillo";
+  const tiempo = av.length
+    ? av.slice(0, 3).map(a => `<a class="vv-aviso ${nivel(a.titulo)}" href="${esc(a.enlace)}" target="_blank" rel="noopener" title="${esc(a.detalle)}">${esc(a.titulo.replace(/^Nivel /, ""))}</a>`).join("") + (av.length > 3 ? `<span class="vv-mas">y ${av.length - 3} más</span>` : "")
+    : `<span class="vv-ok">Sin avisos</span>`;
+  // embalses
+  const emb = (v.embalses || []).map(e => {
+    const dif = e.hace_un_ano != null ? Math.round(e.porcentaje - e.hace_un_ano) : null;
+    return `<a class="vv-emb" href="${esc(e.enlace)}" target="_blank" rel="noopener"><span class="n">${esc(e.nombre)}</span>
+      <span class="vv-bar"><span style="width:${Math.min(100, e.porcentaje)}%"></span></span><b>${num(e.porcentaje)}%</b>
+      ${dif != null ? `<span class="dif ${dif < 0 ? "baja" : "sube"}" title="Frente a la misma semana de hace un año">${dif > 0 ? "+" : ""}${dif} pts vs ${new Date().getFullYear() - 1}</span>` : ""}</a>`;
+  }).join("");
+  const fechaEmb = (v.embalses || [])[0]?.fecha;
+  // tráfico
+  const tr = v.trafico || [];
+  const trafico = tr.length
+    ? tr.slice(0, 2).map(t => `<div class="vv-linea" title="${esc(t.detalle)}">${esc(t.titulo)}</div>`).join("") + (tr.length > 2 ? `<span class="vv-mas">y ${tr.length - 2} más</span>` : "")
+    : `<span class="vv-ok">Sin incidencias importantes</span>`;
+  // aire
+  const m = (v.aire || "").match(/:\s*\d+\s+([a-záéíóú ]+?)(,|\.)/i);
+  const aire = v.aire ? `<span class="vv-ok">${esc(m ? m[1].trim().replace(/^./, c => c.toUpperCase()) : "Datos")}</span><span class="vv-pie" style="margin-left:8px">${esc(v.aire.replace(/^Ayer en /, "ayer, en "))}</span>` : `<span class="vv-pie">Sin datos</span>`;
+  $("#vivos").innerHTML = `<div class="vv">
+    <div class="vv-t"><div class="vv-et">Tiempo · AEMET</div>${tiempo}</div>
+    <div class="vv-t"><div class="vv-et">Tráfico en Álava</div>${trafico}</div>
+    <div class="vv-t vv-ancho"><div class="vv-et">Embalses del Zadorra${fechaEmb ? ` <span>· semana del ${esc(fechaEmb.slice(0, 5).replace("-", "/"))}</span>` : ""}</div>${emb || `<span class="vv-pie">Sin datos</span>`}</div>
+    <div class="vv-t vv-ancho"><div class="vv-et">Calidad del aire</div>${aire}</div></div>`;
+  $("#vivosHora").textContent = "";
 }
 function pintaDinero() {
   const d = st.d;
@@ -858,7 +895,7 @@ function pintaFuentes() {
 }
 function pintaEstado() {
   const d = st.d, horas = (Date.now() - new Date(d.actualizado)) / 3600e3, fallos = d.fuentes.filter(f => !f.ok).length;
-  $("#estado").innerHTML = `<button class="refrescar" id="btnRefrescar" title="Traer lo último sin recargar la página">↻ Actualizar</button>` +
+  $("#estado").innerHTML = `<div class="acciones"><a class="refrescar imprimir" href="reunion.html" target="_blank" rel="noopener" title="El resumen del día en una página limpia, lista para imprimir">🖨 Imprimir resumen</a><button class="refrescar" id="btnRefrescar" title="Traer lo último sin recargar la página">↻ Actualizar</button></div>` +
     `Actualizado <b>${esc(cuando(d.actualizado))}</b> · ${d.fuentes.length - fallos}/${d.fuentes.length} fuentes` +
     (st.msgRefresco ? `<div class="refmsg">${esc(st.msgRefresco)}</div>` : "") +
     (horas > 30 ? `<div class="aviso">⚠ Hace más de un día que no se actualiza.</div>` : "") +
