@@ -138,6 +138,16 @@ ul.lista{list-style:none;margin:0;padding:0}
 .el .din-l .imp{font-variant-numeric:tabular-nums;color:var(--verde)}
 .chip.ojo{background:#fbe3c8;color:#7a3b00}
 .chip.plazo{background:#dfe7ec;color:#24485a}
+.cifras{list-style:none;margin:0;padding:0}
+.cifras li{padding:10px 16px;border-top:1px solid var(--linea)}.cifras li:first-child{border-top:0}
+.cifras li.nueva{background:#fffaf0}
+.cf-cab{display:flex;gap:6px;align-items:center;margin-bottom:4px}.cf-per{margin-left:auto;font-size:12px;color:var(--suave)}
+.cf-frase{font-weight:600;line-height:1.35}
+.cf-det{font-size:13px;color:var(--suave);margin-top:3px;line-height:1.4}
+.cf-pie{display:flex;justify-content:space-between;align-items:center;margin-top:5px;font-size:12px}
+.cf-pie a{color:var(--suave)}
+.cf-copiar{border:1px solid var(--linea);background:var(--tarjeta);border-radius:6px;padding:2px 8px;font:inherit;font-size:12px;cursor:pointer;color:var(--suave)}
+.cf-copiar:hover{color:var(--tinta, #1d2b2b);border-color:#bdb5a3}
 .vv-hora{display:inline-block;font-size:11.5px;font-weight:600;font-variant-numeric:tabular-nums;color:#7a3b00;background:#fbe3c8;border-radius:4px;padding:0 5px;margin-right:6px}
 button.enlace{border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-color:var(--ambar);text-underline-offset:3px}
 .estrella{border:0;background:transparent;font-size:18px;line-height:1;color:#b9b2a2;padding:2px 2px 0;align-self:start}
@@ -310,6 +320,7 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
       <div style="display:flex;flex-direction:column;gap:16px">
       <div class="grupo" id="vivosG" hidden><h3>Datos del día <small id="vivosHora"></small></h3><div id="vivos"></div></div>
       <div class="grupo"><h3>Lo más relevante <small>últimas horas</small></h3><ul class="lista" id="relevante"></ul></div>
+      <div class="grupo" id="cifrasG" hidden><h3>Cifras de Álava <small id="cifrasSub">INE, SEPE y Eustat</small></h3><div id="cifras"></div></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:16px">
         <div class="grupo" id="temasHoyG"><h3>Temas que sigo <small>solo en tu navegador</small></h3><div id="temasHoy"></div></div>
@@ -317,7 +328,7 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
         <div class="grupo"><h3>Para seguir <small>plazos, obras, previstos</small></h3><div id="seguir"></div></div>
         <div class="grupo"><h3>Sucesos y tribunales <small>parte del día</small></h3><div id="sucesosHoy"></div></div>
         <div class="grupo"><h3>Buzón ciudadano <small>lo que se repite</small></h3><div id="buzonHoy"></div></div>
-        <div class="grupo" id="eustatHoyG" hidden><h3>Eustat <small>datos de Álava</small></h3><div id="eustatHoy"></div></div>
+
       </div>
     </div>
     <div class="contadores" id="contadores"></div>
@@ -731,9 +742,7 @@ function pintaBuzon() {
   $("#buzonCompleto").innerHTML = b.length ? `<div class="grupo" style="grid-column:1/-1"><h2>Buzón ciudadano de Vitoria · quejas de la última semana por área<small>↑ sube respecto a la semana anterior</small></h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr))">${b.map(x => `<div style="border-bottom:1px solid var(--linea2);border-right:1px solid var(--linea2)">${lineaBuzon(x)}
       <ul class="lista" style="padding:0 16px 8px 62px;font-size:13px">${x.ejemplos.slice(0, 3).map(e => `<li style="margin:2px 0"><a href="${esc(e.e)}" target="_blank" rel="noopener" style="text-decoration:none">${esc(e.t)}</a> <span style="color:var(--suave)">· ${esc(cuando(e.f))}</span></li>`).join("")}</ul></div>`).join("")}</div></div>` : "";
-  const eu = st.ia.eustat || [];
-  $("#eustatHoyG").hidden = !eu.length;
-  $("#eustatHoy").innerHTML = eu.slice(0, 4).map(e => `<div class="cita" style="grid-template-columns:1fr"><div><a href="${esc(e.enlace || "#")}" target="_blank" rel="noopener">${esc(e.titulo)}</a><div class="det"><b style="color:var(--tinta)">Álava:</b> ${esc(e.dato_alava)}${e.fecha ? " · " + esc(e.fecha) : ""}</div></div></div>`).join("");
+  pintaCifras();
 }
 
 // ---------- secciones
@@ -829,6 +838,27 @@ function pintaIdeas() {
         ${llamar.length ? `<div class="llamar"><span>A quién llamar:</span> ${llamar.map(esc).join(" · ")}</div>` : ""}</div></article>`;
   }).join("") : `<div class="grupo"><div class="vacio">No hay ideas con estos filtros. Prueba con “7 días”.</div></div>`;
   return ideas.length;
+}
+// cifras oficiales (INE y SEPE, del monitor; Eustat, de la tarea de IA que lo busca en prensa e Irekia)
+function pintaCifras() {
+  const est = (st.d.estadisticas || {}).cifras || [];
+  const eu = (st.ia.eustat || []).map(e => ({id: "eustat:" + e.titulo, tema: "Eustat", frase: e.titulo, detalle: "Álava: " + (e.dato_alava || ""),
+    periodo: e.fecha ? fF.format(new Date(e.fecha + "T12:00:00Z")) : "", fuente: "Eustat (vía prensa)", enlace: e.enlace, visto: e.fecha ? e.fecha + "T08:00:00+01:00" : ""}));
+  const todas = [...est, ...eu];
+  $("#cifrasG").hidden = !todas.length;
+  if (!todas.length) return;
+  const nueva = c => c.visto && (Date.now() - new Date(c.visto)) < 48 * 3600e3;
+  todas.sort((a, b) => nueva(b) - nueva(a));
+  const n = todas.filter(nueva).length;
+  $("#cifrasSub").innerHTML = n ? `<b style="color:#7a4c06">${n} ${n === 1 ? "nueva" : "nuevas"}</b> · INE, SEPE y Eustat` : "INE, SEPE y Eustat";
+  const ver = st.expandidos.has("hoy:cifras") ? todas : todas.slice(0, Math.max(4, n));
+  $("#cifras").innerHTML = `<ul class="cifras">${ver.map(c => `<li${nueva(c) ? ' class="nueva"' : ""}>
+      <div class="cf-cab"><span class="chip etqf">${esc(c.tema)}</span>${nueva(c) ? '<span class="chip nuevo">NUEVO</span>' : ""}<span class="cf-per">${esc(c.periodo || "")}</span></div>
+      <div class="cf-frase">${esc(c.frase)}</div>
+      ${c.detalle ? `<div class="cf-det">${esc(c.detalle)}</div>` : ""}
+      <div class="cf-pie"><a href="${esc(c.enlace || "#")}" target="_blank" rel="noopener">${esc(c.fuente)}</a>
+        <button class="cf-copiar" data-copiar="${esc(c.frase + (c.detalle ? " " + c.detalle : "") + " (Fuente: " + c.fuente + ")")}" title="Copiar para el guion">Copiar</button></div></li>`).join("")}</ul>
+    ${todas.length > ver.length || st.expandidos.has("hoy:cifras") ? `<button class="mas" data-expandir="hoy:cifras">${st.expandidos.has("hoy:cifras") ? "Ver menos" : `Ver las ${todas.length} cifras`}</button>` : ""}`;
 }
 function pintaVivos() {
   const v = st.d.vivos || {};
@@ -1122,6 +1152,8 @@ document.addEventListener("click", e => {
   if (ir) { e.preventDefault(); st.diaSel = ir.dataset.irdia; st.mes = st.diaSel.slice(0, 7); muestra("calendario"); pintaCalendario(); return; }
   const irp = e.target.closest("[data-ir]"); if (irp) { muestra(irp.dataset.ir); scrollTo(0, 0); return; }
   const cat = e.target.closest("[data-cat]"); if (cat) { const c = cat.dataset.cat; st.cats[c] = st.cats[c] === false; mem.set("cats", st.cats); pintaCalendario(); return; }
+  const cp = e.target.closest("[data-copiar]");
+  if (cp) { const t = cp.dataset.copiar; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { cp.textContent = "Copiado ✓"; setTimeout(() => cp.textContent = "Copiar", 1600); }).catch(() => window.prompt("Copia el texto:", t)); return; }
   const bq = e.target.closest("[data-buscar]");
   if (bq) { const v = bq.dataset.buscar; $("#q").value = v; st.q = v; $("#btnArchivo").hidden = v.length < 3; pinta(); if (v) $("#p-dinero").scrollIntoView({behavior: "smooth"}); return; }
   const q = e.target.closest("[data-quitar]"); if (q) { delete st.guardados[q.dataset.quitar]; mem.set("guardados", st.guardados); pinta(); }

@@ -84,6 +84,15 @@ Si GitHub envía un correo diciendo que ha desactivado el workflow por inactivid
 - **Subvenciones**: Base de Datos Nacional de Subvenciones (beneficiarios alaveses, desde 20.000 €).
 - Importes sin IVA. Las personas físicas no se nombran. Los rankings usan los últimos 3 meses.
 
+## Cifras de Álava (portada)
+
+- **INE** (API oficial): IPC, tasa de paro de la EPA, hoteles, compraventa de viviendas, hipotecas, viviendas
+  turísticas, sociedades creadas y nacimientos. La lista de series está al principio de `monitor/estadisticas.py`.
+- **SEPE** (datos abiertos): paro registrado y contratos por municipio (Álava y Vitoria-Gasteiz).
+- **Eustat**: su web pide a los programas que no la lean, así que no se consulta directamente. Sus datos llegan por la
+  tarea de IA (que los busca en prensa e Irekia) y por sus notas de prensa si se reciben en el Gmail de la redacción.
+- Se revisan cada 6 horas; cuando sale un dato nuevo aparece marcado como NUEVO y va al correo de la mañana.
+
 ## Fuentes que no se leen automáticamente
 
 El programa respeta el `robots.txt` de cada web: si una web pide no ser leída por programas (Laudio, Eustat, Kanpezu…), no se lee y aparece en "Mirar a mano".

@@ -35,6 +35,7 @@ from bs4 import BeautifulSoup
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import calendario  # noqa: E402
 import vivos as vivos_mod  # noqa: E402
+import estadisticas as est_mod  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
 HISTORICO = RAIZ / "data" / "historico.json"
@@ -1639,9 +1640,19 @@ def main() -> int:
         vivos_d = previo_vivos or {}
     else:
         vivos_d = vivos_mod.recoge(lambda u: descarga(u, None, "vivos"), ahora, previo_vivos)
+    previo_est = carga_json(SALIDA, {}).get("estadisticas")
+    if args.fixtures:
+        est_d = previo_est or {}
+    else:
+        try:
+            est_d = est_mod.recoge(lambda u: descarga(u, None, "estadisticas"), ahora, previo_est)
+        except Exception as e:
+            print(f"FALLO estadísticas: {type(e).__name__}: {e}")
+            est_d = previo_est or {}
     guarda_json(SALIDA, {
         "actualizado": iso(ahora),
         "vivos": vivos_d,
+        "estadisticas": est_d,
         "fuentes": estado,
         "manuales": cfg.get("enlaces_manuales", []),
         "pistas": clasif.pistas(),

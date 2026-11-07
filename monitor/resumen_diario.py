@@ -88,6 +88,19 @@ def construye(datos: dict, ia: dict, ahora: datetime) -> tuple[str, str]:
         filas.append(li(f"Aire: {vivos['aire']}"))
     bloque("Datos del día", ul(filas))
 
+    # cifras oficiales nuevas (INE, SEPE) en las últimas 30 horas
+    nuevas = []
+    lim_c = datetime.fromisoformat(datos["actualizado"]) - timedelta(hours=30)
+    for c in (datos.get("estadisticas") or {}).get("cifras", []):
+        try:
+            if datetime.fromisoformat(c["visto"]) >= lim_c:
+                nuevas.append(c)
+        except (KeyError, ValueError):
+            pass
+    if nuevas:
+        bloque("Cifras nuevas de Álava", ul([li(c["frase"], c.get("enlace", ""), " · ".join(x for x in [c.get("detalle"), c.get("fuente")] if x))
+                                             for c in nuevas]))
+
     # 2. agenda de hoy
     cal = datos.get("calendario", [])
     hoy_ev = [c for c in cal if (c["fecha"] == k or c.get("hasta") == k) and c.get("tipo") not in ("dia", "efemeride")]
