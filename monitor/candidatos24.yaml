@@ -1,0 +1,10 @@
+candidatos:
+  - {nombre: "Zuin", web: "https://www.zuin.net/?lang=es"}
+  - {nombre: "Parlamento noticias", web: "https://www.legebiltzarra.eus/portal/es/noticias-y-eventos/"}
+muestras:
+  - {id: robots-zuin, url: "https://www.zuin.net/robots.txt"}
+  - {id: zuin-feed, url: "https://www.zuin.net/feed/"}
+  - {id: zuin-feed-es, url: "https://www.zuin.net/?lang=es&feed=rss2"}
+  - {id: zuin-home, url: "https://www.zuin.net/?lang=es"}
+  - {id: robots-parl, url: "https://www.legebiltzarra.eus/robots.txt"}
+  - {id: parl-noticias, url: "https://www.legebiltzarra.eus/portal/es/noticias-y-eventos/"}
