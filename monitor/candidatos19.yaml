@@ -1,0 +1,14 @@
+candidatos: []
+muestras:
+  - {id: ine-tab25, url: "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/25"}
+  - {id: ine-tab7, url: "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/7"}
+  - {id: ine-tab40, url: "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/40"}
+  - {id: ine-tab125, url: "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/125"}
+  - {id: ine-tab293, url: "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/293"}
+  - {id: ine-tab238, url: "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/238"}
+  - {id: ine-tab429, url: "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/429"}
+  - {id: ine-tab39, url: "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/39"}
+  - {id: ine-tab432, url: "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/432"}
+  - {id: ine-tab426, url: "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/426"}
+  - {id: ine-tab424, url: "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/424"}
+  - {id: ine-tab410, url: "https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/410"}
