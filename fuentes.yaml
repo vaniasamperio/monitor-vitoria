@@ -129,7 +129,7 @@ fuentes:
   - {id: correo-jjgg, nombre: "Juntas Generales · por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, grupo: "Juntas Generales de Álava", etiqueta: "Por correo", remitentes: [jjggarabaktbb.eus, jjggalava.eus]}
   - {id: correo-gv, nombre: "Gobierno Vasco · por correo", tipo: correo, url: "correo", seccion: instituciones, grupo: "Gobierno Vasco · Irekia", etiqueta: "Por correo", remitentes: [euskadi.eus, irekia.eus]}
   - {id: correo-cendoj, nombre: "CENDOJ · alertas de resoluciones de Álava", tipo: correo, modo: alertas, url: "correo", seccion: sucesos, local: true, remitentes: [poderjudicial.es, cgpj.es]}
-  - {id: correo-laudio, nombre: "Ayto. de Laudio/Llodio · por correo", tipo: correo, url: "correo", seccion: pueblos, local: true, municipio: "Laudio/Llodio", remitentes: [laudio.eus, llodio.eus]}
+  - {id: correo-laudio, nombre: "Ayto. de Laudio/Llodio · por correo", tipo: correo, url: "correo", seccion: pueblos, local: true, municipio: "Laudio/Llodio", remitentes: [laudio.eus, llodio.eus, zuin.net]}
   - {id: correo-eustat, nombre: "Eustat · notas de prensa por correo", tipo: correo, url: "correo", seccion: instituciones, grupo: "Eustat", etiqueta: "Por correo", remitentes: [eustat.eus]}
   - {id: correo-parlamento, nombre: "Parlamento Vasco · por correo", tipo: correo, url: "correo", seccion: instituciones, grupo: "Parlamento Vasco", etiqueta: "Por correo", remitentes: [legebiltzarra.eus, parlamentovasco.eus]}
   - {id: correo-otros, nombre: "Otras notas de prensa por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, remitentes: [ertzaintza.eus, ararteko.eus, uaga.eus, ehu.eus, fundacionvital.eus, sea.es, cuadrillas.eus, artium.eus, amurrio.eus, laguardia.eus, laguardiaparticipa.eus]}
@@ -291,9 +291,9 @@ fuentes:
 #  Webs que hay que mirar a mano (no se pueden leer solas).
 # ------------------------------------------------------------
 enlaces_manuales:
-  - {nombre: "Laudio/Llodio · noticias municipales", url: "https://www.laudio.eus/es/", nota: "Su web pide no ser leída automáticamente. Sus contratos ya salen en Dinero; sus notas entran si las envían al Gmail de la redacción."}
+  - {nombre: "Laudio/Llodio · noticias municipales", url: "https://www.zuin.net/?lang=es", nota: "Laudio.eus y Zuin.net piden no ser leídas por programas (solo dejan a Google y Bing). Sus contratos salen en Dinero; sus notas entran si las envían al Gmail de la redacción."}
   - {nombre: "Eustat · novedades", url: "https://www.eustat.eus/", nota: "Su web pide no ser leída automáticamente. Sus notas de prensa entran si llegan al Gmail de la redacción (suscripción en su web)."}
-  - {nombre: "Parlamento Vasco", url: "https://www.legebiltzarra.eus/", nota: "Su web no responde a lecturas automáticas. Sus notas entran si llegan al Gmail de la redacción."}
+  - {nombre: "Parlamento Vasco · noticias", url: "https://www.legebiltzarra.eus/portal/es/noticias-y-eventos/", nota: "Su web pide no ser leída por programas y no responde desde los servidores del monitor. En Instituciones se junta lo que cuentan de él teletipos, medios y correo."}
   - {nombre: "Artium · web", url: "https://www.artium.eus/es/", nota: "Su web bloquea las lecturas automáticas. Sus actividades salen en Instituciones y en el Calendario (vía Kulturklik) y sus contratos, en Dinero."}
   - {nombre: "CENDOJ · buscador de sentencias", url: "https://www.poderjudicial.es/search/indexAN.jsp", nota: "Las notas de prensa del TSJPV ya entran en Instituciones; aquí, para buscar sentencias concretas."}
   - {nombre: "Asociaciones vecinales sin web", url: "https://judimendikoak.com/beste-auzo-elkarteak/", nota: "Listado de contactos de otras asociaciones de Vitoria (muchas solo usan redes sociales)."}

@@ -764,7 +764,12 @@ function pintaInstituciones() {
   const r = porFuente("instituciones");
   const artium = vistaAgenda("inst:artium", "Artium · exposiciones y actividades", "vía Kulturklik",
     e => /artium/i.test([e.titulo, e.frase, e.lugar].join(" ")));
-  $("#instituciones").innerHTML = r.html + artium; return r.n;
+  // Parlamento Vasco: su web no deja leerse; se junta lo que cuentan de él los teletipos, los medios y el correo
+  const rxParl = /parlamento vasco|legebiltzarr|eusko legebiltzar|cámara vasca/i;
+  const parl = st.d.items.filter(i => i.seccion !== "ideas" && rxParl.test([i.titulo, i.titulo_claro, i.resumen].join(" ")) && pasa(i, {alava: false}))
+    .sort((a, b) => ref(b) - ref(a));
+  const parlamento = parl.length ? grupo("inst:parl", "Parlamento Vasco · lo que cuentan teletipos, medios y correo", parl, {op: {fuente: true}, sub: `${parl.length}`}) : "";
+  $("#instituciones").innerHTML = r.html + parlamento + artium; return r.n;
 }
 function pintaPueblos() {
   const d = st.d;
