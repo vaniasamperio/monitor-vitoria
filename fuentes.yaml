@@ -82,6 +82,8 @@ fuentes:
   - {id: m-elciego, nombre: "Ayto. de Elciego", url: "https://www.elciego.es/es/rss.xml", tipo: rss, seccion: pueblos, local: true, municipio: Elciego}
   - {id: m-iruna, nombre: "Ayto. de Iruña de Oca", url: "https://www.irunadeoca.com/feed/", tipo: rss, seccion: pueblos, local: true, municipio: "Iruña de Oca"}
   - {id: m-lantaron, nombre: "Ayto. de Lantarón", url: "https://aytolantaron.com/feed/", tipo: rss, seccion: pueblos, local: true, municipio: Lantarón}
+  - {id: m-amurrio, nombre: "Ayto. de Amurrio", url: "https://udala.amurrio.eus/cas/noticias?format=feed&type=rss", tipo: rss, seccion: pueblos, local: true, municipio: Amurrio}
+  - {id: m-laguardia, nombre: "Ayto. de Laguardia · Avisos", url: "https://www.laguardiaparticipa.eus/index.php/es/avisos.feed?type=rss", tipo: rss, seccion: pueblos, local: true, municipio: Laguardia}
   - {id: m-ribera-baja, nombre: "Ayto. de Ribera Baja", url: "https://www.riberabaja.eus/feed/", tipo: rss, seccion: pueblos, local: true, municipio: "Ribera Baja"}
   - {id: m-valle-arana, nombre: "Ayto. del Valle de Arana", url: "http://www.valledearana.net/feed/", tipo: rss, seccion: pueblos, local: true, municipio: "Valle de Arana"}
   - {id: m-san-millan, nombre: "Ayto. de San Millán", url: "https://donemiliaga.eus/feed/", tipo: rss, seccion: pueblos, local: true, municipio: "San Millán"}
@@ -111,6 +113,7 @@ fuentes:
   - {id: ortzadar, nombre: "Ortzadar (folklore)", url: "https://www.ortzadar.eus/feed/", tipo: rss, seccion: asociaciones, local: true, municipio: Vitoria-Gasteiz}
   - {id: itaka, nombre: "Itaka Escolapios", url: "https://www.itakaescolapios.org/es/feed/", tipo: rss, seccion: asociaciones}
   - {id: bidesari, nombre: "Bidesari (pastoral penitenciaria)", url: "https://bidesari.org/es/feed/", tipo: rss, seccion: asociaciones}
+  - {id: ehu-araba, nombre: "UPV/EHU · Campus de Álava", url: "https://www.ehu.eus/es/web/araba", base: "https://www.ehu.eus/es/web/araba", tipo: html, patron_enlace: "/web/campusa/-/", solo_con_fecha: true, seccion: asociaciones, local: true, municipio: Vitoria-Gasteiz, cada: 3}
   - {id: ehu, nombre: "UPV/EHU · Campusa", url: "https://www.ehu.eus/es/web/campusa-magazine/rss/-/asset_publisher/a7TL/rss", alternativa: "https://www.ehu.eus:443/en/web/campusa-magazine/rss/-/asset_publisher/a7TL/rss", tipo: rss, seccion: asociaciones}
 
   # =================== AGENDA (van al calendario) ===================
@@ -126,7 +129,10 @@ fuentes:
   - {id: correo-jjgg, nombre: "Juntas Generales · por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, grupo: "Juntas Generales de Álava", etiqueta: "Por correo", remitentes: [jjggarabaktbb.eus, jjggalava.eus]}
   - {id: correo-gv, nombre: "Gobierno Vasco · por correo", tipo: correo, url: "correo", seccion: instituciones, grupo: "Gobierno Vasco · Irekia", etiqueta: "Por correo", remitentes: [euskadi.eus, irekia.eus]}
   - {id: correo-cendoj, nombre: "CENDOJ · alertas de resoluciones de Álava", tipo: correo, modo: alertas, url: "correo", seccion: sucesos, local: true, remitentes: [poderjudicial.es, cgpj.es]}
-  - {id: correo-otros, nombre: "Otras notas de prensa por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, remitentes: [ertzaintza.eus, ararteko.eus, uaga.eus, ehu.eus, fundacionvital.eus, sea.es, cuadrillas.eus]}
+  - {id: correo-laudio, nombre: "Ayto. de Laudio/Llodio · por correo", tipo: correo, url: "correo", seccion: pueblos, local: true, municipio: "Laudio/Llodio", remitentes: [laudio.eus, llodio.eus]}
+  - {id: correo-eustat, nombre: "Eustat · notas de prensa por correo", tipo: correo, url: "correo", seccion: instituciones, grupo: "Eustat", etiqueta: "Por correo", remitentes: [eustat.eus]}
+  - {id: correo-parlamento, nombre: "Parlamento Vasco · por correo", tipo: correo, url: "correo", seccion: instituciones, grupo: "Parlamento Vasco", etiqueta: "Por correo", remitentes: [legebiltzarra.eus, parlamentovasco.eus]}
+  - {id: correo-otros, nombre: "Otras notas de prensa por correo", tipo: correo, url: "correo", seccion: instituciones, local: true, remitentes: [ertzaintza.eus, ararteko.eus, uaga.eus, ehu.eus, fundacionvital.eus, sea.es, cuadrillas.eus, artium.eus, amurrio.eus, laguardia.eus, laguardiaparticipa.eus]}
 
   # =================== DINERO PÚBLICO ===================
   # BDNS: "regiones=14" es Araba/Álava (ES211). Los contratos salen de los boletines (pestaña Dinero los junta).
@@ -285,12 +291,9 @@ fuentes:
 #  Webs que hay que mirar a mano (no se pueden leer solas).
 # ------------------------------------------------------------
 enlaces_manuales:
-  - {nombre: "Laudio/Llodio · noticias municipales", url: "https://www.laudio.eus/", nota: "Su web pide no ser leída automáticamente."}
-  - {nombre: "Amurrio · noticias municipales", url: "https://www.amurrio.eus/", nota: "Sin RSS. Segundo municipio de Álava."}
-  - {nombre: "Laguardia · noticias municipales", url: "https://www.laguardia.eus/es/", nota: "Sin RSS."}
-  - {nombre: "Eustat · novedades", url: "https://www.eustat.eus/", nota: "Su web pide no ser leída automáticamente. Siempre hay dato por territorio."}
-  - {nombre: "Parlamento Vasco", url: "https://www.legebiltzarra.eus/", nota: "Preguntas e iniciativas sobre Álava."}
-  - {nombre: "UPV/EHU · Campus de Álava", url: "https://www.ehu.eus/es/web/araba", nota: "Sin RSS."}
-  - {nombre: "Artium", url: "https://www.artium.eus/", nota: "Sin RSS. Exposiciones y actividades."}
+  - {nombre: "Laudio/Llodio · noticias municipales", url: "https://www.laudio.eus/es/", nota: "Su web pide no ser leída automáticamente. Sus contratos ya salen en Dinero; sus notas entran si las envían al Gmail de la redacción."}
+  - {nombre: "Eustat · novedades", url: "https://www.eustat.eus/", nota: "Su web pide no ser leída automáticamente. Sus notas de prensa entran si llegan al Gmail de la redacción (suscripción en su web)."}
+  - {nombre: "Parlamento Vasco", url: "https://www.legebiltzarra.eus/", nota: "Su web no responde a lecturas automáticas. Sus notas entran si llegan al Gmail de la redacción."}
+  - {nombre: "Artium · web", url: "https://www.artium.eus/es/", nota: "Su web bloquea las lecturas automáticas. Sus actividades salen en Instituciones y en el Calendario (vía Kulturklik) y sus contratos, en Dinero."}
   - {nombre: "CENDOJ · buscador de sentencias", url: "https://www.poderjudicial.es/search/indexAN.jsp", nota: "Las notas de prensa del TSJPV ya entran en Instituciones; aquí, para buscar sentencias concretas."}
   - {nombre: "Asociaciones vecinales sin web", url: "https://judimendikoak.com/beste-auzo-elkarteak/", nota: "Listado de contactos de otras asociaciones de Vitoria (muchas solo usan redes sociales)."}

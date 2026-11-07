@@ -736,8 +736,25 @@ function pintaBuzon() {
 }
 
 // ---------- secciones
+// tarjeta de próximas actividades sacada del calendario (para webs que no se dejan leer, como Artium)
+function vistaAgenda(id, titulo, sub, cond) {
+  const hoy0 = new Date(hoyK() + "T00:00:00+01:00");
+  const act = st.d.calendario.filter(e => cond(e) && new Date((e.hasta || e.fecha) + "T23:59:00+01:00") >= hoy0 && casaQ(e))
+    .sort((a, b) => a.fecha.localeCompare(b.fecha) || (a.hora || "99").localeCompare(b.hora || "99"));
+  const vistos = new Set(), lista = act.filter(e => { const c = norm(e.titulo); if (vistos.has(c)) return false; vistos.add(c); return true; });
+  if (!lista.length) return "";
+  const ver = st.expandidos.has(id) ? lista : lista.slice(0, 6);
+  const fechaTxt = e => fF.format(new Date(e.fecha + "T12:00:00Z")) + (e.hasta && e.hasta !== e.fecha ? " → " + fF.format(new Date(e.hasta + "T12:00:00Z")) : "") + (e.hora ? " · " + e.hora : "");
+  return `<div class="grupo"><h2>${esc(titulo)}<small>${lista.length} · ${esc(sub)}</small></h2>
+    <ul class="lista">${ver.map(e => `<li class="el"><a class="tit" href="${esc(e.enlace || "#")}" target="_blank" rel="noopener">${esc(e.titulo)}</a>${estrella({id: "cal:" + e.id})}
+      <div class="meta"><span class="chip etqf">${esc(fechaTxt(e))}</span></div></li>`).join("")}</ul>
+    ${lista.length > 6 ? `<button class="mas" data-expandir="${esc(id)}">${st.expandidos.has(id) ? "Ver menos" : `Ver ${lista.length - 6} más`}</button>` : ""}</div>`;
+}
 function pintaInstituciones() {
-  const r = porFuente("instituciones"); $("#instituciones").innerHTML = r.html; return r.n;
+  const r = porFuente("instituciones");
+  const artium = vistaAgenda("inst:artium", "Artium · exposiciones y actividades", "vía Kulturklik",
+    e => /artium/i.test([e.titulo, e.frase, e.lugar].join(" ")));
+  $("#instituciones").innerHTML = r.html + artium; return r.n;
 }
 function pintaPueblos() {
   const d = st.d;

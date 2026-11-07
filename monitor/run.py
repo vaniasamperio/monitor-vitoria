@@ -413,7 +413,12 @@ def lee_html(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
                     it["fecha"] = datetime(g[0], g[1], g[2], *(g[3:5] if len(g) > 3 else (0, 0)), tzinfo=MADRID)
                 except ValueError:
                     pass
+        if not it["fecha"] and fuente.get("solo_con_fecha"):
+            continue
+        it["titulo"] = re.sub(r"\s+\d{1,2}/\d{1,2}/\d{4}[\s,:\d/-]*$", "", it["titulo"])   # fecha pegada al título
         it["texto"] = " ".join(b.replace(it["titulo"], " ").split()).strip(" ·|-")
+        if it["texto"][:30] == it["titulo"][:30]:
+            it["texto"] = ""
         if len(it["texto"]) < 30:                 # restos de maquetación ("marcatime", "Leer más"…)
             it["texto"] = ""
         it["texto_largo"] = it["texto"]
