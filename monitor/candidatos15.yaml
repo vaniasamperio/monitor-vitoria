@@ -1,0 +1,10 @@
+candidatos: []
+muestras:
+  - {id: kpe-c350, url: "https://api.euskadi.eus/procurements/contracts?contracting-authority-id=350&award-date.gt=2026-10-15&award-date.lt=2026-11-09&itemsOfPage=50&orderBy=awardDate&orderType=DESC", accept: "application/json"}
+  - {id: kpe-c167, url: "https://api.euskadi.eus/procurements/contracts?contracting-authority-id=167&award-date.gt=2026-10-15&award-date.lt=2026-11-09&itemsOfPage=50&orderBy=awardDate&orderType=DESC", accept: "application/json"}
+  - {id: kpe-c354, url: "https://api.euskadi.eus/procurements/contracts?contracting-authority-id=354&award-date.gt=2026-10-01&award-date.lt=2026-11-09&itemsOfPage=50&orderBy=awardDate&orderType=DESC", accept: "application/json"}
+  - {id: kpe-n350, url: "https://api.euskadi.eus/procurements/contracting-notices?contracting-authority-id=350&publication-date.gt=2026-10-15&itemsOfPage=50", accept: "application/json"}
+  - {id: kpe-n167, url: "https://api.euskadi.eus/procurements/contracting-notices?contracting-authority-id=167&publication-date.gt=2026-10-15&itemsOfPage=50", accept: "application/json"}
+  - {id: kpe-status, url: "https://api.euskadi.eus/procurements/contracting-notices/procedures-status", accept: "application/json"}
+  - {id: kpe-ptype, url: "https://api.euskadi.eus/procurements/contracting-notices/procedures-type", accept: "application/json"}
+  - {id: ted-ala, url: "https://api.ted.europa.eu/v3/notices/search", post: {query: "place-of-performance IN (ES211) AND publication-date>=20261001 SORT BY publication-number DESC", fields: ["publication-number", "notice-title", "buyer-name", "notice-type", "publication-date", "place-of-performance", "winner-name", "total-value", "estimated-value-proc", "procedure-type", "deadline-receipt-tender-date-lot", "classification-cpv"], limit: 100, page: 1}}
