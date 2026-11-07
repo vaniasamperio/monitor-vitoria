@@ -248,9 +248,14 @@ def descarga(url: str, fixtures: Path | None, fid: str, accept: str | None = Non
     ultimo = None
     for intento in range(3):
         try:
-            r = ses.get(url, timeout=25, headers={"Accept": accept} if accept else None)
+            r = ses.get(url, timeout=(10, 30), headers={"Accept": accept} if accept else None)
             r.raise_for_status()
             return r.content
+        except requests.ConnectTimeout as e:      # web caída: un reintento y a otra cosa (no bloquear toda la lectura)
+            ultimo = e
+            if intento >= 1:
+                break
+            time.sleep(2)
         except requests.RequestException as e:
             ultimo = e
             time.sleep(3 * (intento + 1))
