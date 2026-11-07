@@ -1,0 +1,7 @@
+candidatos: []
+muestras:
+  - {id: js-apicontract, url: "https://opendata.euskadi.eus/scripts/webopd00-apicontract-script.js"}
+  - {id: js-apirest, url: "https://opendata.euskadi.eus/scripts/webopd00-apirest-docs.js"}
+  - {id: pr-ayto-auth, url: "https://api.euskadi.eus/procurements/contracting-authorities?_elements=500", accept: "application/json"}
+  - {id: pr-auth-1, url: "https://api.euskadi.eus/procurements/contracting-authorities/1", accept: "application/json"}
+  - {id: pr-contr-auth1, url: "https://api.euskadi.eus/procurements/contracts/contracting-authorities/1?_elements=5", accept: "application/json"}
