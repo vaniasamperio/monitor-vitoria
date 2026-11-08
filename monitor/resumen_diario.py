@@ -82,7 +82,22 @@ def construye(datos: dict, ia: dict, ahora: datetime) -> tuple[str, str]:
     if vivos.get("embalses"):
         filas.append(li("Embalses: " + " · ".join(f"{x['nombre']} {x['porcentaje']}%" for x in vivos["embalses"]),
                         vivos["embalses"][0].get("enlace", ""), vivos.get("embalses_nota", "")))
-    for t in (vivos.get("trafico") or [])[:4]:
+    # solo las incidencias registradas hoy (las de ayer o antes no van al resumen)
+    try:
+        from zoneinfo import ZoneInfo
+        tz = ZoneInfo("Europe/Madrid")
+    except Exception:                                  # pragma: no cover
+        tz = timezone(timedelta(hours=1))
+    hoy_m = datetime.fromisoformat(datos["actualizado"]).astimezone(tz).date()
+
+    def de_hoy(t):
+        if t.get("registrada"):
+            try:
+                return datetime.fromisoformat(t["registrada"]).astimezone(tz).date() == hoy_m
+            except ValueError:
+                pass
+        return not re.search(r"registrada (ayer|el \d)", t.get("detalle", ""))
+    for t in [t for t in (vivos.get("trafico") or []) if de_hoy(t)][:4]:
         filas.append(li(f"🚗 {t['titulo']}", "", t.get("detalle", "")))
     if vivos.get("aire"):
         filas.append(li(f"Aire: {vivos['aire']}"))
