@@ -138,6 +138,8 @@ ul.lista{list-style:none;margin:0;padding:0}
 .el .din-l .imp{font-variant-numeric:tabular-nums;color:var(--verde)}
 .chip.ojo{background:#fbe3c8;color:#7a3b00}
 .chip.plazo{background:#dfe7ec;color:#24485a}
+.el.de-alava{background:#fbf3e2;box-shadow:inset 4px 0 0 #c98a1b}
+.chip.alava-chip{background:#c98a1b;color:#fff;font-weight:700;letter-spacing:.04em}
 .cifras{list-style:none;margin:0;padding:0}
 .cifras li{padding:10px 16px;border-top:1px solid var(--linea)}.cifras li:first-child{border-top:0}
 .cifras li.nueva{background:#fffaf0}
@@ -527,9 +529,10 @@ function chips(it, {fuente = false, muni = true} = {}) {
 function elemento(it, op = {}) {
   const t = tituloDe(it), cambiado = t !== it.titulo;
   const trib = (st.ia.tribunales || {})[it.id];
-  return `<li class="el${st.abiertos.has(it.id) ? " abierto" : ""}${it.rutina ? " rutina" : ""}">
+  const marca = op.marcaAlava && it.alava;
+  return `<li class="el${st.abiertos.has(it.id) ? " abierto" : ""}${it.rutina ? " rutina" : ""}${marca ? " de-alava" : ""}">
     <a class="tit" data-leido="${esc(it.id)}" href="${esc(it.enlace)}" target="_blank" rel="noopener"${cambiado ? ` title="Título original: ${esc(it.titulo)}"` : ""}>${esc(t)}</a>${estrella(it)}
-    <div class="meta">${op.etq && op.etq[it.fuente] ? `<span class="chip etqf">${esc(op.etq[it.fuente])}</span>` : ""}${chips(it, op)}</div>
+    <div class="meta">${marca ? `<span class="chip alava-chip">ÁLAVA</span>` : ""}${op.etq && op.etq[it.fuente] ? `<span class="chip etqf">${esc(op.etq[it.fuente])}</span>` : ""}${chips(it, op)}</div>
     <div class="res" data-abrir="${esc(it.id)}">${esc(trib || (op.sinResumen ? "" : (it.resumen || "")))}</div></li>`;
 }
 const LIM = 6;
@@ -781,7 +784,8 @@ function pintaPueblos() {
 }
 function pintaBoletines() {
   const d = st.d;
-  const items = d.items.filter(i => i.seccion === "boletines" && pasa(i, {tramites: false}));
+  // el BOPV se muestra entero (aunque esté activado "solo Álava"); lo de Álava va arriba y marcado
+  const items = d.items.filter(i => i.seccion === "boletines" && pasa(i, {tramites: false, alava: i.fuente !== "bopv"}));
   const tram = items.filter(i => i.rutina && !st.tramites).length;
   const vis = items.filter(i => st.tramites || !i.rutina);
   const botha = vis.filter(i => i.fuente === "botha");
@@ -789,7 +793,11 @@ function pintaBoletines() {
                 ["Ayuntamientos, cuadrillas y concejos", i => /administraci[oó]n local/i.test(i.bloque || "")],
                 ["Otras administraciones", i => /otras administraciones/i.test(i.bloque || "")]];
   let html = secc.map(([t, f]) => grupo("botha:" + t, "BOTHA · " + t, botha.filter(f), {orden: "rel", op: {sinResumen: false}})).join("");
-  html += grupo("bopv", "BOPV · lo que afecta a Álava", vis.filter(i => i.fuente === "bopv" && (i.alava || !st.soloAlava)), {orden: "rel"});
+  const bopv = vis.filter(i => i.fuente === "bopv")
+    .sort((a, b) => (b.alava ? 1 : 0) - (a.alava ? 1 : 0) || (b.relevancia || 0) - (a.relevancia || 0) || ref(b) - ref(a));
+  const nA = bopv.filter(i => i.alava).length;
+  html += grupo("bopv", "BOPV · Boletín Oficial del País Vasco", bopv, {orden: "nada", lim: 12, op: {marcaAlava: true},
+    sub: `${bopv.length}${nA ? ` · <span class="chip alava-chip">${nA} de Álava</span>` : " · nada de Álava"}`});
   html += grupo("boe", "BOE · lo que afecta a Álava", vis.filter(i => i.fuente === "boe"), {orden: "rel"});
   const f = d.fuentes.find(x => x.id === "botha");
   if (f && !f.ok) html = `<div class="grupo"><div class="vacio"><span class="mal">El BOTHA no se pudo leer en la última actualización.</span></div></div>` + html;
