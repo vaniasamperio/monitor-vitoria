@@ -60,7 +60,7 @@ nav.pestanas button[aria-selected="true"] .n{background:var(--ambar-f);color:#7a
 .btn.prim .n{color:var(--ambar)}
 
 main{padding:20px 0 60px}
-.panel[hidden]{display:none}
+.panel[hidden],[hidden]{display:none !important}
 .intro{color:var(--suave);margin:0 0 16px;max-width:780px}
 
 /* tarjetas y listas */
@@ -138,6 +138,12 @@ ul.lista{list-style:none;margin:0;padding:0}
 .el .din-l .imp{font-variant-numeric:tabular-nums;color:var(--verde)}
 .chip.ojo{background:#fbe3c8;color:#7a3b00}
 .chip.plazo{background:#dfe7ec;color:#24485a}
+#busquedaHoy .bq-cab{background:var(--tarjeta);border:1px solid var(--linea);border-radius:12px;padding:14px 18px;margin-bottom:16px}
+#busquedaHoy .bq-cab h2{margin:0 0 10px;font:600 21px/1.2 var(--serif)}#busquedaHoy .bq-cab h2 small{font:400 13px var(--sans, inherit);color:var(--suave);margin-left:6px}
+.bq-chips{display:flex;flex-wrap:wrap;gap:6px}
+.bq-chip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--linea);border-radius:999px;padding:4px 11px;font-size:13px;color:inherit;text-decoration:none;background:#fff}
+a.bq-chip:hover{border-color:#bdb5a3}.bq-chip b{color:var(--verde)}
+.bq-acc{display:flex;gap:14px;align-items:center;margin-top:12px;font-size:13px}
 .el.de-alava{background:#fbf3e2;box-shadow:inset 4px 0 0 #c98a1b}
 .chip.alava-chip{background:#c98a1b;color:#fff;font-weight:700;letter-spacing:.04em}
 .cifras{list-style:none;margin:0;padding:0}
@@ -317,7 +323,8 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
   <!-- HOY -->
   <section class="panel" id="p-hoy">
     <div class="hoy-cab"><h2 id="hoyFecha">Hoy</h2><div class="efes" id="hoyEfes"></div></div>
-    <div class="tres">
+    <div id="busquedaHoy" hidden></div>
+    <div class="tres" id="hoyTres">
       <div class="grupo"><h3>Agenda <small id="agendaHoyN"></small></h3><div id="agendaHoy"><div class="cargando">Cargando…</div></div></div>
       <div style="display:flex;flex-direction:column;gap:16px">
       <div class="grupo" id="vivosG" hidden><h3>Datos del día <small id="vivosHora"></small></h3><div id="vivos"></div></div>
@@ -490,6 +497,7 @@ const esLocal = id => (fuentes[id] || {}).local;
 function textoBusca(it) { return norm([it.titulo, it.titulo_claro, (st.ia.titulos || {})[it.id], it.resumen, it.frase, (it.temas || []).join(" "), (it.municipios || []).join(" "), it.organismo, it.adjudicatario, nombreF(it.fuente)].join(" ")); }
 function casaQ(it) { return !st.q || norm(st.q).split(/\s+/).every(t => textoBusca(it).includes(t)); }
 function pasa(it, {periodo = true, alava = true, tramites = true} = {}) {
+  if (st.q && st.q.length >= 2) return casaQ(it);         // buscando: todo lo publicado, sin filtros
   if (periodo) {
     const lim = new Date(new Date(st.d.actualizado).getTime() - st.dias * 864e5);
     if (ref(it) < lim) return false;
@@ -625,9 +633,55 @@ document.addEventListener("click", ev => {
   st.temas = st.temas.filter(x => x !== b.dataset.quitatema); mem.set("temas", st.temas); pinta();
 });
 
+// ---------- buscador general (en la portada: resultados de todas las pestañas, el calendario y las cifras)
+const SECC_BUSCA = [["instituciones", "Instituciones"], ["pueblos", "Pueblos"], ["boletines", "Boletines"], ["asociaciones", "Asociaciones"],
+  ["dinero", "Dinero"], ["sucesos", "Sucesos"], ["teletipos", "Teletipos"], ["ideas", "Ideas"]];
+function pintaBusqueda() {
+  const q = st.q || "", activa = q.length >= 2;
+  $("#busquedaHoy").hidden = !activa;
+  $("#hoyTres").hidden = activa;
+  $("#contadores").hidden = activa;
+  if (!activa) { $("#busquedaHoy").innerHTML = ""; return; }
+  const d = st.d;
+  const items = d.items.filter(casaQ).sort((a, b) => ref(b) - ref(a));
+  const porSec = SECC_BUSCA.map(([k, n]) => [k, n, items.filter(i => i.seccion === k)]).filter(x => x[2].length);
+  const hoyK0 = hoyK();
+  const vistosEv = new Set();
+  const evs = d.calendario.filter(casaQ).filter(e => { const c = e.fecha + norm(e.titulo); if (vistosEv.has(c)) return false; vistosEv.add(c); return true; });
+  const prox = evs.filter(e => (e.hasta || e.fecha) >= hoyK0).sort((a, b) => a.fecha.localeCompare(b.fecha));
+  const pasados = evs.filter(e => (e.hasta || e.fecha) < hoyK0).sort((a, b) => b.fecha.localeCompare(a.fecha));
+  const cifras = ((d.estadisticas || {}).cifras || []).filter(c => norm([c.frase, c.detalle, c.nombre, c.tema].join(" ")).includes(norm(q)) ||
+    norm(q).split(/\s+/).every(t => norm([c.frase, c.detalle, c.nombre, c.tema].join(" ")).includes(t)));
+  const total = items.length + evs.length + cifras.length;
+  const fechaEv = e => fF.format(new Date(e.fecha + "T12:00:00Z")) + (e.hora ? " · " + e.hora : "");
+  const filaEv = e => `<div class="cita"><span class="hora sin" style="width:auto;min-width:96px">${esc(fechaEv(e))}</span>
+      <div><a href="${esc(e.enlace || "#")}" target="_blank" rel="noopener"><span class="punto" style="background:${colorEv(e)}"></span>${esc(e.titulo)}</a>
+      <div class="det">${esc(e.lugar || e.frase || "")}</div></div>${estrella({id: "cal:" + e.id})}</div>`;
+  const chipsSec = [...porSec.map(([k, n, l]) => `<a href="#${k}" class="bq-chip" data-ir="${k}">${esc(n)} <b>${l.length}</b></a>`),
+    evs.length ? `<a href="#calendario" class="bq-chip" data-ir="calendario">Calendario <b>${evs.length}</b></a>` : "",
+    cifras.length ? `<span class="bq-chip">Cifras <b>${cifras.length}</b></span>` : ""].join("");
+  let html = `<div class="bq-cab"><h2>${total ? `${total} resultados` : "Sin resultados"} para «${esc(q)}» <small>en todo el monitor (últimas semanas)</small></h2>
+    <div class="bq-chips">${chipsSec}</div>
+    <div class="bq-acc"><button class="btn-archivo" data-archivo="1">Buscar también en el archivo de meses anteriores</button>
+    <button class="enlace" data-buscar="">Borrar búsqueda</button></div></div>`;
+  html += `<div class="rejilla">`;
+  if (cifras.length) html += `<div class="grupo"><h2>Cifras de Álava<small>${cifras.length}</small></h2><ul class="cifras">${cifras.map(c => `<li><div class="cf-cab"><span class="chip etqf">${esc(c.tema)}</span><span class="cf-per">${esc(c.periodo || "")}</span></div><div class="cf-frase">${esc(c.frase)}</div>${c.detalle ? `<div class="cf-det">${esc(c.detalle)}</div>` : ""}</li>`).join("")}</ul></div>`;
+  if (prox.length || pasados.length) html += `<div class="grupo"><h2>Calendario<small>${prox.length} próximas${pasados.length ? ` · ${pasados.length} pasadas` : ""}</small></h2>
+    ${prox.slice(0, 6).map(filaEv).join("")}${!prox.length ? pasados.slice(0, 4).map(filaEv).join("") : ""}
+    ${evs.length > 6 ? `<button class="mas" data-ir="calendario">Ver en el calendario</button>` : ""}</div>`;
+  for (const [k, n, l] of porSec) {
+    const ver = st.expandidos.has("bq:" + k) ? l : l.slice(0, 5);
+    html += `<div class="grupo"><h2>${esc(n)}<small>${l.length}</small></h2><ul class="lista">${ver.map(i => k === "dinero" ? elementoDinero(i) : elemento(i, {fuente: true})).join("")}</ul>
+      ${l.length > 5 ? `<button class="mas" data-expandir="bq:${k}">${st.expandidos.has("bq:" + k) ? "Ver menos" : `Ver los ${l.length}`}</button>` : ""}</div>`;
+  }
+  html += `</div>`;
+  if (!total) html += `<div class="grupo"><div class="vacio">No hay nada con «${esc(q)}» en lo publicado estas semanas. Prueba con otra palabra o busca en el archivo de meses anteriores.</div></div>`;
+  $("#busquedaHoy").innerHTML = html;
+}
 function pintaHoy() {
   const d = st.d, k = hoyK(), kM = masDias(k, 1), evs = d.calendario.filter(casaQ);
   $("#hoyFecha").textContent = cap(fDia.format(new Date()));
+  pintaBusqueda();
   const efes = eventosDia(k, evs).filter(e => e.tipo === "dia" || e.tipo === "efemeride");
   $("#hoyEfes").innerHTML = efes.map(e => `<span class="efe${e.redondo ? " redondo" : ""}">${esc(e.titulo)}</span>`).join("");
 
@@ -1104,6 +1158,7 @@ $("#pestanas").addEventListener("click", e => { const b = e.target.closest("butt
 window.addEventListener("hashchange", () => muestra(location.hash.slice(1)));
 
 let tq;
+$("#q").addEventListener("keydown", e => { if (e.key === "Enter" && e.target.value.trim().length >= 2) { st.q = e.target.value.trim(); location.hash = "hoy"; muestra("hoy"); pinta(); scrollTo(0, 0); } });
 $("#q").addEventListener("input", e => { clearTimeout(tq); tq = setTimeout(() => { st.q = e.target.value.trim(); $("#btnArchivo").hidden = st.q.length < 3; pinta(); if (st.pestana === "archivo") buscaArchivo(); }, 160); });
 // ---------- archivo de meses
 const archivoCache = {};
@@ -1160,10 +1215,11 @@ document.addEventListener("click", e => {
   if (ir) { e.preventDefault(); st.diaSel = ir.dataset.irdia; st.mes = st.diaSel.slice(0, 7); muestra("calendario"); pintaCalendario(); return; }
   const irp = e.target.closest("[data-ir]"); if (irp) { muestra(irp.dataset.ir); scrollTo(0, 0); return; }
   const cat = e.target.closest("[data-cat]"); if (cat) { const c = cat.dataset.cat; st.cats[c] = st.cats[c] === false; mem.set("cats", st.cats); pintaCalendario(); return; }
+  if (e.target.closest("[data-archivo]")) { location.hash = "archivo"; muestra("archivo"); buscaArchivo(); return; }
   const cp = e.target.closest("[data-copiar]");
   if (cp) { const t = cp.dataset.copiar; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { cp.textContent = "Copiado ✓"; setTimeout(() => cp.textContent = "Copiar", 1600); }).catch(() => window.prompt("Copia el texto:", t)); return; }
   const bq = e.target.closest("[data-buscar]");
-  if (bq) { const v = bq.dataset.buscar; $("#q").value = v; st.q = v; $("#btnArchivo").hidden = v.length < 3; pinta(); if (v) $("#p-dinero").scrollIntoView({behavior: "smooth"}); return; }
+  if (bq) { const v = bq.dataset.buscar; $("#q").value = v; st.q = v; $("#btnArchivo").hidden = v.length < 3; pinta(); if (v && st.pestana === "dinero") $("#p-dinero").scrollIntoView({behavior: "smooth"}); return; }
   const q = e.target.closest("[data-quitar]"); if (q) { delete st.guardados[q.dataset.quitar]; mem.set("guardados", st.guardados); pinta(); }
 });
 
