@@ -1457,6 +1457,10 @@ def main() -> int:
                         url = fuente["alternativa"]
                         crudo = descarga(url, args.fixtures, fuente["id"], fuente.get("accept"))
             nuevos = LECTORES[fuente.get("tipo", "rss")](crudo, fuente, hoy)
+            if fuente.get("incluye"):                  # fuentes generales de las que solo interesa un tema
+                rx_inc = re.compile(fuente["incluye"], re.I)
+                nuevos = [it for it in nuevos if rx_inc.search(" ".join([it.get("titulo") or "", it.get("texto") or "",
+                                                                          " ".join(it.get("categorias") or [])]))]
             n_nuevos = 0
             for it in nuevos:
                 clasif.clasifica(it, fuente)
