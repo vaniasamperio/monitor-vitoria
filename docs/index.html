@@ -846,12 +846,13 @@ function pintaBoletines() {
   const secc = [["Diputación y Juntas Generales", i => !/administraci[oó]n local|otras administraciones/i.test(i.bloque || "")],
                 ["Ayuntamientos, cuadrillas y concejos", i => /administraci[oó]n local/i.test(i.bloque || "")],
                 ["Otras administraciones", i => /otras administraciones/i.test(i.bloque || "")]];
-  let html = secc.map(([t, f]) => grupo("botha:" + t, "BOTHA · " + t, botha.filter(f), {orden: "rel", op: {sinResumen: false}})).join("");
+  let html = "";
   const bopv = vis.filter(i => i.fuente === "bopv")
     .sort((a, b) => (b.alava ? 1 : 0) - (a.alava ? 1 : 0) || (b.relevancia || 0) - (a.relevancia || 0) || ref(b) - ref(a));
   const nA = bopv.filter(i => i.alava).length;
   html += grupo("bopv", "BOPV · Boletín Oficial del País Vasco", bopv, {orden: "nada", lim: 12, op: {marcaAlava: true},
     sub: `${bopv.length}${nA ? ` · <span class="chip alava-chip">${nA} de Álava</span>` : " · nada de Álava"}`});
+  html += secc.map(([t, f]) => grupo("botha:" + t, "BOTHA · " + t, botha.filter(f), {orden: "rel", op: {sinResumen: false}})).join("");
   html += grupo("boe", "BOE · lo que afecta a Álava", vis.filter(i => i.fuente === "boe"), {orden: "rel"});
   const f = d.fuentes.find(x => x.id === "botha");
   if (f && !f.ok) html = `<div class="grupo"><div class="vacio"><span class="mal">El BOTHA no se pudo leer en la última actualización.</span></div></div>` + html;
