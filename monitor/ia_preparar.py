@@ -36,8 +36,9 @@ for i in datos["items"]:
         continue
     titulos.append({"id": i["id"], "fuente": nombres.get(i["fuente"], i["fuente"]), "titulo": i["titulo"],
                     "texto": (i.get("resumen") or "")[:350], "organismo": i.get("organismo", ""),
-                    "municipios": i.get("municipios", []), "relevancia": i.get("relevancia", 0)})
-titulos.sort(key=lambda x: -x["relevancia"])
+                    "municipios": i.get("municipios", []), "relevancia": i.get("relevancia", 0),
+                    "boletin": i["seccion"] == "boletines"})
+titulos.sort(key=lambda x: (not x["boletin"], -x["relevancia"]))     # los boletines, siempre con titular
 titulos = titulos[:220]
 
 ideas = [i for i in datos["items"] if i["seccion"] == "ideas" and not i.get("alava") and i["id"] not in hechos_e]

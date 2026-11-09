@@ -615,6 +615,12 @@ def _verbo(t: str) -> str:
 def actor(it: dict, fuente: dict) -> str:
     org = normaliza(it.get("organismo", "") + " " + it.get("texto", ""))
     if fuente.get("tipo") == "botha":
+        if "gobierno vasco" in org or "eusko jaurlaritza" in org:
+            return "Gobierno Vasco"
+        if "consejo regulador" in org:
+            return "Consejo Regulador " + ("de la DOCa Rioja" if "rioja" in org else "")
+        if "administracion del estado" in org or "ministerio" in org or "confederacion hidrografica" in org:
+            return it.get("organismo", "").split("·")[-1].strip() or "Administración del Estado"
         if "juntas generales" in org:
             return "Juntas Generales"
         if "diputacion" in org or "departamento" in org or "consejo de gobierno" in org or "foral" in org:
@@ -628,6 +634,29 @@ def actor(it: dict, fuente: dict) -> str:
     return ""
 
 
+RX_JERGA = [
+    (re.compile(r"^[^.]{0,140}?,\s*por\s+(?:la|el)\s+que\s+(?:se\s+)?(?=\w)", re.I), ""),   # "...de Álava, por la que se..."
+    (re.compile(r"^oficio circular\s*[\d/]*\.?\s*asunto:\s*", re.I), ""),
+    (re.compile(r"^asunto:\s*", re.I), ""),
+    (re.compile(r"(?:las?\s+)?solicitud(?:es)?\s+de\s+autorizaci[oó]n(?:es)?\s+administrativas?\s+previas?"
+                r"(?:\s*,?\s*(?:y\s+)?(?:de\s+)?(?:autorizaci[oó]n\s+administrativa\s+de\s+construcci[oó]n|"
+                r"declaraci[oó]n\s+de\s+impacto\s+ambiental|construcci[oó]n|declaraci[oó]n\s+de\s+utilidad\s+p[uú]blica))*", re.I),
+     "los permisos"),
+    (re.compile(r"autorizaci[oó]n\s+administrativa\s+previa(?:\s+y\s+de\s+construcci[oó]n)?", re.I), "autorización"),
+    (re.compile(r"\s*en\s+el\s+t[eé]rmino\s+municipal\s+de\s+", re.I), " en "),
+    (re.compile(r"\s*\((?:[ÁA]lava|Araba)\)", re.I), ""),
+    (re.compile(r",?\s*as[ií]\s+como\s+sus\s+infraestructuras\s+asociadas", re.I), ""),
+    (re.compile(r"(?:^|\bse\s+)someten?\s+a\s+informaci[oó]n\s+p[uú]blica", re.I), "saca a información pública"),
+    (re.compile(r"^(?:por\s+(?:la|el)\s+que\s+)", re.I), ""),
+]
+
+
+def limpia_jerga(t: str) -> str:
+    for rx, rep in RX_JERGA:
+        t = rx.sub(rep, t)
+    return re.sub(r"\s{2,}", " ", t).strip(" .,-")
+
+
 def titulo_claro(it: dict, fuente: dict) -> str:
     """Quita la jerga de los boletines: números de expediente, fechas y fórmulas."""
     t = " ".join(it["titulo"].split())
@@ -639,6 +668,7 @@ def titulo_claro(it: dict, fuente: dict) -> str:
         tipo = m.group(1).lower()
         t = t[m.end():]
     t = RX_FORMULA.sub("", t).strip(" .,-")
+    t = limpia_jerga(t)
     t = re.sub(r"\s+del ayuntamiento de [\w\-áéíóúñ/ ]+$", "", t, flags=re.I)
     t = re.sub(r"\b(ordenanza(?: fiscal| municipal)?) reguladora\b", r"\1", t, flags=re.I)
     t = re.sub(r"\s{2,}", " ", t).strip(" .,-")
@@ -655,8 +685,8 @@ def titulo_claro(it: dict, fuente: dict) -> str:
     t = t[0].upper() + t[1:]
     if len(t) < 30 and not quien:          # demasiado corto: mejor el original
         return it["titulo"]
-    if len(t) > 150:
-        t = t[:150].rsplit(" ", 1)[0] + "…"
+    if len(t) > 190:
+        t = t[:190].rsplit(" ", 1)[0] + "…"
     return t or it["titulo"]
 
 
@@ -1572,6 +1602,14 @@ def main() -> int:
                 it.update(bloque="subvencion", adjudicatario=m.group(1), organismo=m.group(2))
         elif it["fuente"] == "bdns-convocatorias" and not it.get("bloque"):
             it["bloque"] = "convocatoria"
+    for it in items_hist.values():                    # titulares de boletines con las reglas de ahora
+        if it["seccion"] == "boletines" and it["fuente"] in cfg_f:
+            try:
+                it["titulo_claro"] = titulo_claro({"titulo": it["titulo"], "organismo": it.get("organismo", ""),
+                                                   "texto": it.get("resumen", ""), "municipios": it.get("municipios", [])},
+                                                  cfg_f[it["fuente"]])
+            except Exception:
+                pass
     rep_dinero = repetidos_dinero(list(items_hist.values()))
     for it in items_hist.values():
         if it["seccion"] == "buzon" or it["fuente"] in solo_cal or it["id"] in rep_dinero:

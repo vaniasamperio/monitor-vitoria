@@ -18,6 +18,11 @@ Siempre en castellano (traduce si el original está en euskera), en tono de reda
 - Sin números de expediente, fechas de resolución ni fórmulas ("por la que se…", "al objeto de…").
 - Si el lugar importa, ponlo ("Okondo regulará el cambio de lonjas a viviendas").
 - Si un elemento no aporta nada (trámite, aviso interno), no le pongas titular.
+- **Boletines (BOTHA, BOPV, BOE)**: el titular tiene que decir qué se decide, sobre qué cosa concreta y dónde, para que se entienda sin abrir el enlace. Busca el objeto al final del título original (el proyecto, la obra, la ayuda, la ordenanza, el lugar) y ponlo delante. Nombra bien al organismo: si lo firma una delegación del Gobierno Vasco, es el Gobierno Vasco, no la Diputación.
+  - Mal: "Diputación: transición Energética y Sostenibilidad de Álava, por la que se concede autorización administrativa previa…"
+  - Bien: "Gobierno Vasco saca a información pública dos plantas solares en Vitoria: 'Lovaina Solar' y 'Zaramaga FV'"
+  - Mal: "Oficio Circular 9/2026. Asunto: declaración jurada de elaboración"
+  - Bien: "La DOCa Rioja pide a bodegas y compradores de mosto la declaración jurada de elaboración de la vendimia"
 
 **tribunales** (`{"id": "qué ha pasado"}`)
 - Una o dos frases claras: qué se ha decidido, a quién afecta y si toca Álava.
