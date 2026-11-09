@@ -1,0 +1,11 @@
+candidatos:
+  - {nombre: "Etxebizitza Sindikatua", web: "https://etxebizitzasindikatua.eus/"}
+  - {nombre: "Etxebizitza Sindikatua es", web: "https://etxebizitzasindikatua.eus/es/"}
+  - {nombre: "Gedar", web: "https://gedar.eus/"}
+  - {nombre: "Gedar es", web: "https://gedar.eus/es"}
+muestras:
+  - {id: robots-etxe, url: "https://etxebizitzasindikatua.eus/robots.txt"}
+  - {id: robots-gedar, url: "https://gedar.eus/robots.txt"}
+  - {id: gedar-feed, url: "https://gedar.eus/feed"}
+  - {id: gedar-rss, url: "https://gedar.eus/rss"}
+  - {id: etxe-feed, url: "https://etxebizitzasindikatua.eus/feed/"}
