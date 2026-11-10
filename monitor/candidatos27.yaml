@@ -1,0 +1,7 @@
+candidatos:
+  - {nombre: "ACOA", web: "https://acoa-ake.org/"}
+  - {nombre: "ACOA es", web: "https://acoa-ake.org/es/"}
+muestras:
+  - {id: robots-acoa, url: "https://acoa-ake.org/robots.txt"}
+  - {id: acoa-feed, url: "https://acoa-ake.org/feed/"}
+  - {id: acoa-home, url: "https://acoa-ake.org/"}
