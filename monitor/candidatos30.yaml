@@ -1,0 +1,4 @@
+candidatos: []
+muestras:
+  - {id: robots-araba, url: "https://www.araba.eus/robots.txt"}
+  - {id: botha-pdf, url: "https://www.araba.eus/botha/Boletines/2026/127/2026_127_03112_C.pdf"}
