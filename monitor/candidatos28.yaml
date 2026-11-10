@@ -1,0 +1,3 @@
+candidatos: []
+muestras:
+  - {id: wiki-concejos, url: "https://es.wikipedia.org/wiki/Anexo:Concejos_de_%C3%81lava"}
