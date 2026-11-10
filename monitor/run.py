@@ -1028,6 +1028,24 @@ def lee_bdns(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
     return out
 
 
+# ---------------------------------------------------------------- concejos de Álava -> municipio
+try:
+    CONCEJOS = json.loads((Path(__file__).parent / "concejos.json").read_text(encoding="utf-8"))
+except Exception:                                     # pragma: no cover
+    CONCEJOS = {}
+RX_CONCEJOS = [(re.compile(r"\b" + re.escape(normaliza(k).lower()) + r"\b"), m)
+               for k, m in sorted(CONCEJOS.items(), key=lambda x: -len(x[0]))]
+
+
+def concejo_en(texto: str) -> list[str]:
+    """Municipio al que pertenece el concejo que se nombra en el texto (lista de concejos: Wikipedia)."""
+    t = normaliza(texto).lower()
+    for rx, m in RX_CONCEJOS:
+        if rx.search(t):
+            return [m]
+    return []
+
+
 # ---------------------------------------------------------------- tablón de anuncios de la sede electrónica
 TABLON_BASE = "https://sedeelectronica.vitoria-gasteiz.org"
 
@@ -1543,7 +1561,7 @@ def main() -> int:
                 previo = items_hist.get(clave)
                 seccion = fuente["seccion"]
                 if fuente.get("a_pueblos"):            # avisos para un pueblo concreto: a Pueblos, en su municipio
-                    munis_t = clasif.municipios(normaliza(it["titulo"]))
+                    munis_t = clasif.municipios(normaliza(it["titulo"])) or concejo_en(it["titulo"])
                     if munis_t:
                         seccion, it["municipios"] = "pueblos", munis_t[:3]
                         it["cuadrilla"] = next((c for n, c, _ in RX_MUNI if n == munis_t[0]), it.get("cuadrilla"))
