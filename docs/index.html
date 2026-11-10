@@ -51,6 +51,7 @@ nav.pestanas button[aria-selected="true"] .n{background:var(--ambar-f);color:#7a
 .seg{display:inline-flex;border:1px solid var(--linea);border-radius:8px;overflow:hidden;background:var(--tarjeta)}
 .seg button{border:0;background:transparent;padding:7px 11px;color:var(--suave)}
 .seg button[aria-pressed="true"]{background:var(--verde);color:#fff}
+.btn-tram[aria-pressed="true"]{background:#eee;border-color:#bbb}
 .interruptor{display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--suave);user-select:none;cursor:pointer}
 .interruptor input{accent-color:var(--verde)}
 .btn{border:1px solid var(--linea);background:var(--tarjeta);padding:7px 12px;border-radius:8px;color:var(--tinta)}
@@ -319,6 +320,7 @@ footer.pie{color:var(--suave);font-size:12.5px;text-align:center;padding:0 20px 
       <button data-dias="3" aria-pressed="true">3 días</button>
       <button data-dias="7" aria-pressed="false">7 días</button>
     </div>
+    <button class="btn btn-tram" id="btnTramites" aria-pressed="false" title="Notificaciones, multas, embargos, padrón… (ocultos por defecto)">Ver trámites</button>
     <button class="btn" id="abrirGuardados">★ Guardados <span class="n" id="nGuardados">0</span></button>
   </div>
 </div>
@@ -467,7 +469,7 @@ const CATS = {
 const colorEv = e => e.tipo === "convocatoria" ? "var(--c-conv)" : (CATS[e.categoria] || CATS.otros).c;
 
 const st = {
-  d: null, ia: {}, q: "", dias: mem.get("dias", 3), soloAlava: true, tramites: false, leidos: mem.get("leidos", {}),
+  d: null, ia: {}, q: "", dias: mem.get("dias", 3), soloAlava: true, tramites: mem.get("tramites", false), leidos: mem.get("leidos", {}),
   pestana: (location.hash || "#hoy").slice(1), tema: null, cuadrilla: null,
   guardados: mem.get("guardados", {}), abiertos: new Set(), expandidos: new Set(),
   mes: null, diaSel: null, cats: mem.get("cats", {institucional: true, pueblos: true, asociaciones: true, cultura: true, efemerides: true, otros: true}),
@@ -1159,6 +1161,7 @@ function muestra(p) {
   $$("#pestanas button").forEach(b => b.setAttribute("aria-selected", b.dataset.p === p));
   $$(".panel").forEach(s => s.hidden = s.id !== "p-" + p);
   $(".barra #periodo").style.visibility = ["hoy", "calendario"].includes(p) ? "hidden" : "visible";
+  $("#btnTramites").style.visibility = ["instituciones", "pueblos", "boletines", "asociaciones"].includes(p) ? "visible" : "hidden";
   history.replaceState(null, "", "#" + p);
 }
 $("#pestanas").addEventListener("click", e => { const b = e.target.closest("button[data-p]"); if (b) muestra(b.dataset.p); });
@@ -1189,6 +1192,9 @@ async function buscaArchivo() {
   } catch (e) { $("#archivoTit").textContent = "El archivo aún no está disponible."; }
 }
 $("#btnArchivo").addEventListener("click", () => { location.hash = "archivo"; muestra("archivo"); buscaArchivo(); });
+$("#btnTramites").addEventListener("click", () => { st.tramites = !st.tramites; mem.set("tramites", st.tramites); pintaBtnTram(); pinta(); });
+function pintaBtnTram() { const b = $("#btnTramites"); b.setAttribute("aria-pressed", st.tramites); b.textContent = st.tramites ? "Ocultar trámites" : "Ver trámites"; }
+pintaBtnTram();
 $$("#periodo button").forEach(b => {
   b.setAttribute("aria-pressed", +b.dataset.dias === st.dias);
   b.addEventListener("click", () => { st.dias = +b.dataset.dias; mem.set("dias", st.dias); $$("#periodo button").forEach(x => x.setAttribute("aria-pressed", x === b)); pinta(); });
