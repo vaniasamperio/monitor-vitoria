@@ -1,0 +1,4 @@
+candidatos: []
+muestras:
+  - {id: robots-sede, url: "https://sedeelectronica.vitoria-gasteiz.org/robots.txt"}
+  - {id: tablon, url: "https://sedeelectronica.vitoria-gasteiz.org/j07-01s/j07Index.do?idioma=es&lang=es&locale=es"}
