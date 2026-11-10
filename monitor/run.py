@@ -18,6 +18,7 @@ import html
 import json
 import os
 import re
+import urllib.parse
 import sys
 import time
 import unicodedata
@@ -157,6 +158,8 @@ RX_SUCESO = patron(["detenido", "detenida", "detenidos", "detencion", "arrestad"
 RX_JUDICIAL = patron(["juicio", "condena", "condenad", "sentencia", "audiencia provincial", "juzgado", "fiscalia",
                       "absuelto", "absuelta", "procesad", "acusad"])
 RX_RUTINA = patron(["notificacion", "notificaciones", "citacion", "emplazamiento", "edicto", "cedula",
+                    "relacion de sujetos pasivos", "liquidaciones con deuda", "vehiculos abandonados",
+                    "declaracion de herederos", "candidatos a tribunal de jurado", "listado definitivo de adjudicacion de puestos",
                     "embargo", "padron", "nombramiento", "nombra ", "delegacion de funciones",
                     "correccion de errores", "cuenta general", "cese ", "jubilacion", "comision de servicios",
                     "toma de posesion", "personal eventual", "deslinde", "operaciones de reconocimiento",
@@ -1025,6 +1028,45 @@ def lee_bdns(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
     return out
 
 
+# ---------------------------------------------------------------- tablón de anuncios de la sede electrónica
+TABLON_BASE = "https://sedeelectronica.vitoria-gasteiz.org"
+
+
+def lee_tablon(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
+    """Tablón digital de anuncios del Ayuntamiento de Vitoria-Gasteiz (una tabla con todos los anuncios vigentes)."""
+    sopa = BeautifulSoup(contenido, "html.parser")
+    out = []
+    limite = hoy - timedelta(days=fuente.get("dias", 30))
+    for tr in sopa.select("#tablaAnunciosEncontrados tr"):
+        td = tr.find_all("td")
+        if len(td) < 6:
+            continue
+        a = td[4].find("a", href=True)
+        if not a:
+            continue
+        try:
+            f = datetime.strptime(td[0].get_text(strip=True), "%Y%m%d").date()
+        except ValueError:
+            continue
+        if f < limite:
+            continue
+        href = re.sub(r"\s+", "", a["href"])
+        params = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(href).query))
+        enlace = (f"{TABLON_BASE}/j07-01s/j07DetalleAnuncioSedeAction.do?nanosol={params.get('nanosol', '')}"
+                  f"&nnumgentbl={params.get('nnumgentbl', '')}&idioma=es&origen=index&vigentes=1")
+        titulo = " ".join(a.get_text(" ").split()).strip()
+        tipo = " ".join(td[2].get_text(" ").split())
+        num = re.sub(r"\s+", "", td[3].get_text())
+        origen = " ".join(td[5].get_text(" ").split())
+        organismo = origen.title().replace(" De ", " de ").replace(" Del ", " del ").replace(" La ", " la ") if origen \
+            else "Ayuntamiento de Vitoria-Gasteiz"
+        texto = " · ".join(x for x in [tipo, f"Anuncio {num}" if num else "", organismo if origen else ""] if x)
+        out.append({"titulo": titulo, "enlace": enlace, "texto": texto, "texto_largo": texto,
+                    "fecha": datetime.combine(f, datetime.min.time(), MADRID), "categorias": [],
+                    "clave": f"tablon{params.get('nanosol', '')}-{params.get('nnumgentbl', '')}", "organismo": organismo})
+    return out
+
+
 # ---------------------------------------------------------------- contratos públicos
 RX_DIRECTA = re.compile(r"concesi[oó]n directa|nominativ|directamente|sin concurrencia", re.I)
 
@@ -1202,7 +1244,7 @@ def lee_ted(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
     return out
 
 LECTORES = {"liferay": lee_liferay, "rss": lee_rss, "html": lee_html, "diputacion": lee_diputacion, "botha": lee_botha, "boe": lee_boe,
-            "kulturklik": lee_kulturklik, "bdns": lee_bdns, "kpe": lee_kpe, "ted": lee_ted, "correo": lambda c, f, h: lee_correo(c, f)}
+            "kulturklik": lee_kulturklik, "bdns": lee_bdns, "kpe": lee_kpe, "ted": lee_ted, "tablon": lee_tablon, "correo": lambda c, f, h: lee_correo(c, f)}
 
 
 # ---------------------------------------------------------------- clasificación
