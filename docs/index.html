@@ -540,7 +540,7 @@ function chips(it, {fuente = false, muni = true} = {}) {
 }
 function elemento(it, op = {}) {
   const t = tituloDe(it), cambiado = t !== it.titulo;
-  const trib = (st.ia.tribunales || {})[it.id];
+  const trib = (st.ia.tribunales || {})[it.id] || (st.ia.explicaciones || {})[it.id];
   const marca = op.marcaAlava && it.alava;
   const tono = op.etq && typeof op.etq[it.fuente] === "object" ? ` tono${op.etq[it.fuente].c}` : "";
   return `<li class="el${st.abiertos.has(it.id) ? " abierto" : ""}${it.rutina ? " rutina" : ""}${marca ? " de-alava" : ""}${tono}">

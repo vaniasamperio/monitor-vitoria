@@ -7,6 +7,7 @@ Formato de data/ia_respuesta.json (todo opcional):
   "titulos":  {"<id>": "Titular claro, en castellano, que se entienda de un vistazo"},
   "enfoques": {"<id>": {"enfoque": "...", "preguntas": ["...", "..."], "llamar": ["...", "..."]}},
   "tribunales": {"<id>": "Qué ha pasado, en una o dos frases"},
+  "explicaciones": {"<id>": "Anuncio del tablón: qué es y qué supone, en una o dos frases"},
   "eustat":   [{"titulo": "...", "dato_alava": "...", "fecha": "AAAA-MM-DD", "enlace": "https://..."}],
   "buzon":    {"resumen": "...", "destacados": [{"titulo": "...", "por_que": "...", "area": "..."}]},
   "sucesos":  {"resumen": "...", "destacados": [{"titulo": "...", "detalle": "...", "id": "..."}]}
@@ -33,7 +34,7 @@ def limpio(t, n=220):
     return t[:n]
 
 
-for clave, n in (("titulos", 180), ("tribunales", 420)):
+for clave, n in (("titulos", 180), ("tribunales", 420), ("explicaciones", 420)):
     d = {k: v for k, v in (ia.get(clave) or {}).items() if k in vivos}
     for k, v in (resp.get(clave) or {}).items():
         if k in vivos and limpio(v):

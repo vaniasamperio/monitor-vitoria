@@ -53,12 +53,12 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/historico.json docs/datos.json docs/archivo
+          git add data/historico.json docs/datos.json docs/archivo data/tablon_cache.json
           if git diff --cached --quiet; then
             echo "Sin cambios"
           else
             git commit -m "Actualización $(date -u +'%Y-%m-%d %H:%M') UTC"
-            git pull --rebase --autostash -X theirs || { git checkout --theirs data/historico.json docs/datos.json 2>/dev/null; git add data/historico.json docs/datos.json docs/archivo; GIT_EDITOR=true git rebase --continue; }
+            git pull --rebase --autostash -X theirs || { git checkout --theirs data/historico.json docs/datos.json 2>/dev/null; git add data/historico.json docs/datos.json docs/archivo data/tablon_cache.json; GIT_EDITOR=true git rebase --continue; }
             git push
           fi
 

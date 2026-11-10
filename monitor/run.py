@@ -1050,11 +1050,60 @@ def concejo_en(texto: str) -> list[str]:
 TABLON_BASE = "https://sedeelectronica.vitoria-gasteiz.org"
 
 
+def fixtures_activas() -> bool:
+    return bool(os.environ.get("MONITOR_FIXTURES"))
+
+
+TABLON_CACHE = Path(__file__).resolve().parent.parent / "data" / "tablon_cache.json"
+
+
+def _texto_pdf(pdf: bytes, maximo: int = 2500) -> str:
+    try:
+        from pypdf import PdfReader
+        import io as _io
+        r = PdfReader(_io.BytesIO(pdf))
+        t = "\n".join((p.extract_text() or "") for p in r.pages[:3])
+    except Exception:
+        return ""
+    lineas = [l.strip() for l in t.splitlines() if l.strip()]
+    # fuera la cabecera del boletín (fecha, número, depósito legal, web…)
+    lineas = [l for l in lineas if not re.search(r"Núm\.|^\d+/\d+$|D\.L\.|ISSN|www\.araba\.eus|^\d{4}-\d{3}", l)]
+    return re.sub(r"-\s+(?=[a-záéíóúñ])", "", " ".join(lineas))[:maximo]
+
+
+def detalle_tablon(enlace: str) -> dict:
+    """Ficha del anuncio en la sede (origen, fin de exposición y, si salió en el BOTHA, el texto del boletín).
+    Los documentos propios de la sede (J07GetFileServlet) no se leen: su robots.txt lo pide."""
+    out = {"origen": "", "fin": "", "texto": ""}
+    sopa = BeautifulSoup(descarga(enlace, None, "tablon-detalle"), "html.parser")
+    txt = sopa.get_text("\n", strip=True)
+    m = re.search(r"Fecha de Fin de Publicación en Tablón:\s*(\d{2})/(\d{2})/(\d{4})", txt)
+    if m:
+        out["fin"] = f"{m.group(3)}-{m.group(2)}-{m.group(1)}"
+    m = re.search(r"\nOrigen\n(.+?)\n", txt)
+    if m:
+        out["origen"] = re.sub(r"^\d+\s*-\s*", "", m.group(1)).strip()
+    pdf = next((a["href"].strip() for a in sopa.find_all("a", href=True)
+                if re.search(r"araba\.eus/botha/Boletines/.+_C\.pdf", a["href"])), "")
+    if pdf:
+        try:
+            out["texto"] = _texto_pdf(descarga(pdf.replace("http://", "https://"), None, "tablon-botha"))
+            out["botha"] = pdf.replace("http://", "https://")
+        except Exception:
+            pass
+    return out
+
+
 def lee_tablon(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
     """Tablón digital de anuncios del Ayuntamiento de Vitoria-Gasteiz (una tabla con todos los anuncios vigentes)."""
     sopa = BeautifulSoup(contenido, "html.parser")
     out = []
     limite = hoy - timedelta(days=fuente.get("dias", 30))
+    try:
+        cache = json.loads(TABLON_CACHE.read_text(encoding="utf-8"))
+    except Exception:
+        cache = {}
+    pedidos, vigentes = 0, set()
     for tr in sopa.select("#tablaAnunciosEncontrados tr"):
         td = tr.find_all("td")
         if len(td) < 6:
@@ -1070,6 +1119,7 @@ def lee_tablon(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
             continue
         href = re.sub(r"\s+", "", a["href"])
         params = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(href).query))
+        vigentes.add(f"tablon{params.get('nanosol', '')}-{params.get('nnumgentbl', '')}")
         enlace = (f"{TABLON_BASE}/j07-01s/j07DetalleAnuncioSedeAction.do?nanosol={params.get('nanosol', '')}"
                   f"&nnumgentbl={params.get('nnumgentbl', '')}&idioma=es&origen=index&vigentes=1")
         titulo = " ".join(a.get_text(" ").split()).strip()
@@ -1079,9 +1129,32 @@ def lee_tablon(contenido: bytes, fuente: dict, hoy: date) -> list[dict]:
         organismo = origen.title().replace(" De ", " de ").replace(" Del ", " del ").replace(" La ", " la ") if origen \
             else "Ayuntamiento de Vitoria-Gasteiz"
         texto = " · ".join(x for x in [tipo, f"Anuncio {num}" if num else "", organismo if origen else ""] if x)
-        out.append({"titulo": titulo, "enlace": enlace, "texto": texto, "texto_largo": texto,
-                    "fecha": datetime.combine(f, datetime.min.time(), MADRID), "categorias": [],
-                    "clave": f"tablon{params.get('nanosol', '')}-{params.get('nnumgentbl', '')}", "organismo": organismo})
+        clave = f"tablon{params.get('nanosol', '')}-{params.get('nnumgentbl', '')}"
+        it = {"titulo": titulo, "enlace": enlace, "texto": texto, "texto_largo": texto,
+              "fecha": datetime.combine(f, datetime.min.time(), MADRID), "categorias": [],
+              "clave": clave, "organismo": organismo}
+        # anuncios que interesan (no notificaciones): ficha y texto del BOTHA, una sola vez
+        if not coincidencias(RX_RUTINA, normaliza(titulo)) and not fixtures_activas():
+            det = cache.get(clave)
+            if det is None and pedidos < fuente.get("detalles_por_lectura", 15):
+                pedidos += 1
+                try:
+                    det = cache[clave] = detalle_tablon(enlace)
+                    time.sleep(0.5)
+                except Exception as e:
+                    print(f"  tablón {clave}: {type(e).__name__}", file=sys.stderr)
+            if det:
+                partes = [texto]
+                if det.get("origen") and not origen:
+                    partes.append(det["origen"].title())
+                if det.get("fin"):
+                    partes.append(f"Expuesto hasta el {det['fin'][8:10]}/{det['fin'][5:7]}")
+                it["texto"] = it["texto_largo"] = " · ".join(partes)     # el texto del BOTHA queda en la caché para la IA
+        out.append(it)
+    try:
+        TABLON_CACHE.write_text(json.dumps({k: v for k, v in cache.items() if k in vigentes}, ensure_ascii=False), encoding="utf-8")
+    except Exception:
+        pass
     return out
 
 
@@ -1451,6 +1524,8 @@ def main() -> int:
     ap.add_argument("--fixtures", type=Path)
     ap.add_argument("--ahora")
     args = ap.parse_args()
+    if args.fixtures:
+        os.environ["MONITOR_FIXTURES"] = "1"
 
     cfg = yaml.safe_load((RAIZ / "fuentes.yaml").read_text(encoding="utf-8"))
     temas_cfg = yaml.safe_load((RAIZ / "temas.yaml").read_text(encoding="utf-8"))

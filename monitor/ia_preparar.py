@@ -10,6 +10,7 @@ Lee docs/datos.json y docs/ia.json y escribe data/ia_pendiente.json con:
   - sucesos:  partes policiales y sucesos de Álava de las últimas 36 horas (para el parte del día)
 """
 import json
+import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -53,9 +54,24 @@ sucesos = [{"id": i["id"], "fuente": nombres.get(i["fuente"], i["fuente"]), "tit
             "texto": (i.get("resumen") or "")[:400], "municipios": i.get("municipios", [])}
            for i in datos["items"] if i.get("suceso") and i.get("alava") and ref(i) >= ahora - timedelta(hours=36)]
 
-salida = {"generado": ahora.isoformat(), "titulos": titulos, "ideas": ideas,
+# anuncios del tablón de la sede electrónica: titular y explicación (con el texto del BOTHA si lo hay)
+try:
+    cache_t = json.loads((RAIZ / "data" / "tablon_cache.json").read_text(encoding="utf-8"))
+except Exception:
+    cache_t = {}
+hechos_e = set((ia.get("explicaciones") or {}).keys())
+explicar = []
+for i in datos["items"]:
+    if i["fuente"] != "ayto-tablon" or i.get("rutina") or i["id"] in hechos_e:
+        continue
+    m = re.search(r"nanosol=(\d+)&nnumgentbl=(\d+)", i["enlace"])
+    det = cache_t.get(f"tablon{m.group(1)}-{m.group(2)}", {}) if m else {}
+    explicar.append({"id": i["id"], "titulo": i["titulo"], "ficha": i.get("resumen", ""), "organismo": i.get("organismo", ""),
+                     "origen": det.get("origen", ""), "texto_botha": det.get("texto", "")[:2500]})
+
+salida = {"generado": ahora.isoformat(), "titulos": titulos, "ideas": ideas, "explicar": explicar[:40],
           "buzon": datos.get("buzon", [])[:12], "tribunales": tribunales, "sucesos": sucesos[:60]}
 (RAIZ / "data").mkdir(exist_ok=True)
 (RAIZ / "data" / "ia_pendiente.json").write_text(json.dumps(salida, ensure_ascii=False, indent=1), encoding="utf-8")
-print(f"Pendiente: {len(titulos)} titulares, {len(ideas)} ideas, {len(salida['buzon'])} áreas del buzón, "
+print(f"Pendiente: {len(salida['explicar'])} anuncios del tablón, {len(titulos)} titulares, {len(ideas)} ideas, {len(salida['buzon'])} áreas del buzón, "
       f"{len(tribunales)} notas de tribunales, {len(sucesos)} sucesos -> data/ia_pendiente.json")

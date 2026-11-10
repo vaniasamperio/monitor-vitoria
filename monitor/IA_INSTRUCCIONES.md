@@ -27,6 +27,12 @@ Siempre en castellano (traduce si el original está en euskera), en tono de reda
 **tribunales** (`{"id": "qué ha pasado"}`)
 - Una o dos frases claras: qué se ha decidido, a quién afecta y si toca Álava.
 
+**explicaciones** (`{"id": "qué es y qué supone"}`) — para la lista `explicar` (anuncios del tablón de la sede electrónica del Ayuntamiento de Vitoria)
+- Pon también un titular en `titulos` para cada uno: qué se decide, sobre qué y dónde (≤110 caracteres).
+- La explicación, en una o dos frases: qué se aprueba o se anuncia, a quién afecta, y si hay plazo para alegar o pedir algo, hasta cuándo.
+- Usa `texto_botha` cuando venga; si está vacío, explica solo con el título, la ficha y el origen, sin inventar. Si no se puede saber de qué trata (p. ej. "Trámite de información pública" sin más), dilo así: "El tablón no da más detalle; hay que abrir el documento".
+- Nunca nombres de personas particulares (arquitectos, propietarios, solicitantes). Cargos públicos, empresas e instituciones sí.
+
 **enfoques** (`{"id": {"enfoque": "...", "preguntas": [...], "llamar": [...]}}`)
 - `enfoque`: un ángulo concreto para Vitoria o Álava, en una o dos frases. Barrio, pueblo, colectivo o dato concreto; no vale "ver si pasa aquí".
 - `preguntas`: tres preguntas que se haría un periodista de verdad sobre ese tema en Álava, concretas y distintas entre sí. Nada de "¿Hay datos de Álava?".
