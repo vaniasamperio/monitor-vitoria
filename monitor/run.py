@@ -1541,8 +1541,14 @@ def main() -> int:
                          else ident(fuente["id"], normaliza(it["titulo"])) if fuente.get("clave_por_titulo")
                          else ident(fuente["id"], it["enlace"], it["titulo"] if fuente.get("tipo") == "botha" else ""))
                 previo = items_hist.get(clave)
+                seccion = fuente["seccion"]
+                if fuente.get("a_pueblos"):            # avisos para un pueblo concreto: a Pueblos, en su municipio
+                    munis_t = clasif.municipios(normaliza(it["titulo"]))
+                    if munis_t:
+                        seccion, it["municipios"] = "pueblos", munis_t[:3]
+                        it["cuadrilla"] = next((c for n, c, _ in RX_MUNI if n == munis_t[0]), it.get("cuadrilla"))
                 reg = {
-                    "id": clave, "fuente": fuente["id"], "seccion": fuente["seccion"], "tipo": tipo,
+                    "id": clave, "fuente": fuente["id"], "seccion": seccion, "tipo": tipo,
                     "titulo": it["titulo"], "titulo_claro": titulo_claro(it, fuente), "enlace": it["enlace"],
                     "resumen": recorta(it["texto"], 1800 if tipo == "convocatoria" else MAX_RESUMEN),
                     "fecha": iso(it["fecha"]), "visto": previo["visto"] if previo else iso(ahora),

@@ -106,8 +106,8 @@ fuentes:
   - {id: gasteiz-kultura, nombre: "Gasteiz Kultura (blog municipal de cultura)", url: "https://gasteizkultura.org/feed/", tipo: rss, seccion: asociaciones, local: true, municipio: Vitoria-Gasteiz, prioridad: baja}
   - {id: etxebizitza-sindikatua, nombre: "Sindicato Socialista de Vivienda (Etxebizitza Sindikatu Sozialista) · vía Gedar", url: "https://gedar.eus/rss/eu", tipo: rss, seccion: asociaciones, grupo: "Sindicato Socialista de Vivienda", etiqueta: "Gedar (euskera)", incluye: "etxebizitza sindikatu|sindicato (socialista )?de (la )?vivienda|sindicato de vivienda socialista", cada: 2}
   - {id: etxebizitza-sindikatua-es, nombre: "Sindicato Socialista de Vivienda · vía Gedar (castellano)", url: "https://gedar.eus/rss/es", tipo: rss, seccion: asociaciones, grupo: "Sindicato Socialista de Vivienda", etiqueta: "Gedar (castellano)", incluye: "etxebizitza sindikatu|sindicato (socialista )?de (la )?vivienda|sindicato de vivienda socialista", cada: 2}
-  - {id: acoa, nombre: "ACOA-AKE · Asociación de Concejos de Álava", url: "https://acoa-ake.org/feed/", tipo: rss, seccion: asociaciones, local: true, cada: 3}
-  - {id: acoa-eu, nombre: "ACOA-AKE · Asociación de Concejos de Álava (euskera)", url: "https://acoa-ake.org/eu/feed/", tipo: rss, seccion: asociaciones, local: true, cada: 6}
+  - {id: acoa, nombre: "ACOA-AKE · Asociación de Concejos de Álava", url: "https://acoa-ake.org/feed/", tipo: rss, seccion: asociaciones, local: true, a_pueblos: true, cada: 3}
+  - {id: acoa-eu, nombre: "ACOA-AKE · Asociación de Concejos de Álava (euskera)", url: "https://acoa-ake.org/eu/feed/", tipo: rss, seccion: asociaciones, local: true, a_pueblos: true, cada: 6}
   - {id: lab, nombre: "LAB (sindicato)", url: "https://www.lab.eus/es/feed/", tipo: rss, seccion: asociaciones}
   - {id: ccoo, nombre: "CCOO Euskadi", url: "https://ccoo.eus/rss.php", tipo: rss, seccion: asociaciones}
   - {id: steilas, nombre: "STEILAS (enseñanza)", url: "https://steilas.eus/feed/", tipo: rss, seccion: asociaciones}
