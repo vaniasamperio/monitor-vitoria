@@ -110,6 +110,10 @@ ul.lista{list-style:none;margin:0;padding:0}
 .vv-emb .dif{font-size:12px;text-align:right}.vv-emb .dif.baja{color:#b3261e}.vv-emb .dif.sube{color:#2f6b3d}
 @media (max-width:620px){.vv{grid-template-columns:1fr}.vv-t:nth-child(1){border-right:0}.vv-t:nth-child(2){border-top:1px solid var(--linea, #ebe5d8)}}
 .chip.etqf{background:#dfe7ec;color:#24485a}
+.chip.etq0{background:#dfe7ec;color:#24485a}.chip.etq1{background:#ece0f2;color:#5b2d73}.chip.etq2{background:#dcefdc;color:#265c2b}
+.chip.etq3{background:#f6e2c4;color:#7a4300}.chip.etq4{background:#f6dcdc;color:#7d2323}
+.el.tono0{box-shadow:inset 3px 0 0 #8fb0c2}.el.tono1{box-shadow:inset 3px 0 0 #b48fca}.el.tono2{box-shadow:inset 3px 0 0 #7fb684}
+.el.tono3{box-shadow:inset 3px 0 0 #e0a24a}.el.tono4{box-shadow:inset 3px 0 0 #d98a8a}
 .chip.nuevo{background:var(--ambar);color:#3b2604;font-weight:700;letter-spacing:.03em}
 .chip.senal{background:#efe3f4;color:#5a2d6e}
 .chip.tram{background:#eee;color:#777}
@@ -538,9 +542,10 @@ function elemento(it, op = {}) {
   const t = tituloDe(it), cambiado = t !== it.titulo;
   const trib = (st.ia.tribunales || {})[it.id];
   const marca = op.marcaAlava && it.alava;
-  return `<li class="el${st.abiertos.has(it.id) ? " abierto" : ""}${it.rutina ? " rutina" : ""}${marca ? " de-alava" : ""}">
+  const tono = op.etq && typeof op.etq[it.fuente] === "object" ? ` tono${op.etq[it.fuente].c}` : "";
+  return `<li class="el${st.abiertos.has(it.id) ? " abierto" : ""}${it.rutina ? " rutina" : ""}${marca ? " de-alava" : ""}${tono}">
     <a class="tit" data-leido="${esc(it.id)}" href="${esc(it.enlace)}" target="_blank" rel="noopener"${cambiado ? ` title="Título original: ${esc(it.titulo)}"` : ""}>${esc(t)}</a>${estrella(it)}
-    <div class="meta">${marca ? `<span class="chip alava-chip">ÁLAVA</span>` : ""}${it.fuente === "correo-cendoj" && !trib ? `<span class="chip" title="El texto de la resolución se lee desde el ordenador de la redacción; el resumen aparecerá aquí">Explicación pendiente</span>` : ""}${op.etq && op.etq[it.fuente] ? `<span class="chip etqf">${esc(op.etq[it.fuente])}</span>` : ""}${chips(it, op)}</div>
+    <div class="meta">${marca ? `<span class="chip alava-chip">ÁLAVA</span>` : ""}${it.fuente === "correo-cendoj" && !trib ? `<span class="chip" title="El texto de la resolución se lee desde el ordenador de la redacción; el resumen aparecerá aquí">Explicación pendiente</span>` : ""}${op.etq && op.etq[it.fuente] ? (typeof op.etq[it.fuente] === "object" ? `<span class="chip etq${op.etq[it.fuente].c}">${esc(op.etq[it.fuente].t)}</span>` : `<span class="chip etqf">${esc(op.etq[it.fuente])}</span>`) : ""}${chips(it, op)}</div>
     <div class="res" data-abrir="${esc(it.id)}">${esc(trib || (op.sinResumen ? "" : (it.resumen || "")))}</div></li>`;
 }
 const LIM = 6;
@@ -567,7 +572,8 @@ function porFuente(seccion, opPasa = {}) {
     const l = items.filter(i => ids.has(i.fuente));
     if (!ok && !l.length) return "";
     if (!l.length && st.q) return "";
-    const etq = g.fs.length > 1 ? Object.fromEntries(g.fs.map(f => [f.id, f.etiqueta || f.nombre])) : null;
+    // cada tipo del grupo (notas de prensa, tablón, movilidad…) con su color
+    const etq = g.fs.length > 1 ? Object.fromEntries(g.fs.map((f, k) => [f.id, {t: f.etiqueta || f.nombre, c: k % 5}])) : null;
     const ex = g.fs.find(f => f.extra)?.extra;
     const extra = ex ? `<div class="extra"><a href="${esc(ex.url)}" target="_blank" rel="noopener">${esc(ex.texto)} ↗</a>${ex.nota ? `<span>${esc(ex.nota)}</span>` : ""}</div>` : "";
     return grupo(g.id, g.nombre, l, {op: etq ? {etq} : {}, vacio: ok ? "Nada en este periodo." : '<span class="mal">No se pudo leer en la última actualización.</span>'}).replace(/<\/div>$/, extra + "</div>");
