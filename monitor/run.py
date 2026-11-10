@@ -663,7 +663,7 @@ def limpia_jerga(t: str) -> str:
 def titulo_claro(it: dict, fuente: dict) -> str:
     """Quita la jerga de los boletines: números de expediente, fechas y fórmulas."""
     t = " ".join(it["titulo"].split())
-    if fuente.get("seccion") not in ("boletines",) and len(t) < 140:
+    if fuente.get("titulo_original") or (fuente.get("seccion") not in ("boletines",) and len(t) < 140):
         return t
     m = RX_CABECERA.match(t)
     tipo = ""
