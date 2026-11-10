@@ -1,0 +1,5 @@
+candidatos: []
+muestras:
+  - {id: tab-info, url: "https://sedeelectronica.vitoria-gasteiz.org/j07-01s/j07DetalleAnuncioSedeAction.do?nanosol=2026&nnumgentbl=1496&idioma=es&origen=index&vigentes=1"}
+  - {id: tab-bando, url: "https://sedeelectronica.vitoria-gasteiz.org/j07-01s/j07DetalleAnuncioSedeAction.do?nanosol=2026&nnumgentbl=1488&idioma=es&origen=index&vigentes=1"}
+  - {id: tab-ed, url: "https://sedeelectronica.vitoria-gasteiz.org/j07-01s/j07DetalleAnuncioSedeAction.do?nanosol=2026&nnumgentbl=1415&idioma=es&origen=index&vigentes=1"}
