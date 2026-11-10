@@ -540,7 +540,7 @@ function elemento(it, op = {}) {
   const marca = op.marcaAlava && it.alava;
   return `<li class="el${st.abiertos.has(it.id) ? " abierto" : ""}${it.rutina ? " rutina" : ""}${marca ? " de-alava" : ""}">
     <a class="tit" data-leido="${esc(it.id)}" href="${esc(it.enlace)}" target="_blank" rel="noopener"${cambiado ? ` title="Título original: ${esc(it.titulo)}"` : ""}>${esc(t)}</a>${estrella(it)}
-    <div class="meta">${marca ? `<span class="chip alava-chip">ÁLAVA</span>` : ""}${op.etq && op.etq[it.fuente] ? `<span class="chip etqf">${esc(op.etq[it.fuente])}</span>` : ""}${chips(it, op)}</div>
+    <div class="meta">${marca ? `<span class="chip alava-chip">ÁLAVA</span>` : ""}${it.fuente === "correo-cendoj" && !trib ? `<span class="chip" title="El texto de la resolución se lee desde el ordenador de la redacción; el resumen aparecerá aquí">Explicación pendiente</span>` : ""}${op.etq && op.etq[it.fuente] ? `<span class="chip etqf">${esc(op.etq[it.fuente])}</span>` : ""}${chips(it, op)}</div>
     <div class="res" data-abrir="${esc(it.id)}">${esc(trib || (op.sinResumen ? "" : (it.resumen || "")))}</div></li>`;
 }
 const LIM = 6;
