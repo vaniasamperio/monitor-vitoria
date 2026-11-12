@@ -911,7 +911,10 @@ def titulo_roj(texto: str, enlace: str) -> str:
     if not m:
         return texto
     tipo, codigo, num = ROJ_TIPO.get(m.group(1), "Resolución"), m.group(2).strip(), m.group(3)
-    organo = next((o for c, o in ROJ_ORGANO if codigo == c.replace(" ", " ")), f"({codigo})")
+    cods = {c: o for c, o in ROJ_ORGANO}
+    # el ROJ a veces repite la A de auto ("AAAP VI") o no lleva la ciudad ("SJPI 3654/2026")
+    candidatos = [codigo, codigo[1:] if codigo.startswith("A") else "", codigo + " VI", codigo[1:] + " VI" if codigo.startswith("A") else ""]
+    organo = next((cods[c] for c in candidatos if c in cods), f"({codigo})")
     f = re.search(r"/(20\d\d)(\d\d)(\d\d)(?:$|[/?])", enlace)
     fecha = f" (publicada el {int(f.group(3))} de {MESES_ES[int(f.group(2)) - 1]})" if f else ""
     return f"{tipo} {organo} {num}{fecha}"
